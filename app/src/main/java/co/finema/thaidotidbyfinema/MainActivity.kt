@@ -9,7 +9,7 @@ import androidx.compose.material.lightColors
 import androidx.navigation.compose.rememberNavController
 import co.finema.thaidotidbyfinema.uis.CustomTypography
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
-import co.finema.thaidotidbyfinema.uis.screens.DocumentPlaceholderScreen
+import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscreen
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +20,12 @@ class MainActivity : ComponentActivity() {
           colors = lightColors(primary = primaryDarkBlue), typography = CustomTypography) {
             //            MainScreen()
             val navController = rememberNavController()
-            DocumentPlaceholderScreen(
-                navController = navController, documentLayout = DocumentLayout.FULL_A4)
+            //            DocumentPlaceholderScreen(
+            //                navController = navController, documentLayout =
+            // DocumentLayout.FULL_A4)
 
             //            SelectLayoutScreen(navController = navController)
+            CreatePasscodeFullscreen(navController = navController)
           }
     }
   }

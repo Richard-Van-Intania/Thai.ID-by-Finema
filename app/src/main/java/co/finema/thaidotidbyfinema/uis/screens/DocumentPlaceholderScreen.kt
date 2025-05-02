@@ -57,8 +57,9 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
   var haveImage0 by remember { mutableStateOf("") }
   var haveImage1 by remember { mutableStateOf("") }
   var haveImage2 by remember { mutableStateOf("") }
-  var showDialog by remember { mutableStateOf(false) }
-  if (showDialog) {
+  var showOptionDialog by remember { mutableStateOf(false) }
+  var showDeleteDialog by remember { mutableStateOf(false) }
+  if (showOptionDialog) {
     Dialog(onDismissRequest = {}) {
       Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -79,7 +80,7 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
           OptionButton(
               imageVector = Icons.Rounded.Description, text = R.string.pick_file, onClick = {})
           Hr()
-          TextButton(onClick = { showDialog = false }) {
+          TextButton(onClick = { showOptionDialog = false }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -131,7 +132,8 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
                     .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 48.dp),
             contentAlignment = Alignment.Center) {
               GradientButton(
-                  onClick = { showDialog = true }, text = stringResource(R.string.make_a_cert))
+                  onClick = { showOptionDialog = true },
+                  text = stringResource(R.string.make_a_cert))
             }
       },
       backgroundColor = whiteBG,
