@@ -2,6 +2,9 @@ plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
+  id("com.google.devtools.ksp")
+  kotlin("plugin.serialization") version "2.0.21"
+  id("com.google.protobuf") version "0.9.5"
 }
 
 android {
@@ -32,6 +35,13 @@ android {
   buildFeatures { compose = true }
 }
 
+protobuf {
+  protoc { artifact = "com.google.protobuf:protoc:3.23.4" }
+  generateProtoTasks {
+    all().forEach { task -> task.builtins { create("java") { option("lite") } } }
+  }
+}
+
 dependencies {
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -40,7 +50,7 @@ dependencies {
   implementation(libs.androidx.ui)
   implementation(libs.androidx.ui.graphics)
   implementation(libs.androidx.ui.tooling.preview)
-  implementation(libs.androidx.material3)
+  implementation(libs.androidx.material)
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
@@ -48,4 +58,23 @@ dependencies {
   androidTestImplementation(libs.androidx.ui.test.junit4)
   debugImplementation(libs.androidx.ui.tooling)
   debugImplementation(libs.androidx.ui.test.manifest)
+  implementation(libs.androidx.room.runtime)
+  ksp(libs.androidx.room.compiler)
+  implementation(libs.androidx.room.ktx)
+  implementation(libs.androidx.room.rxjava2)
+  implementation(libs.androidx.room.rxjava3)
+  implementation(libs.androidx.room.guava)
+  testImplementation(libs.androidx.room.testing)
+  implementation(libs.androidx.room.paging)
+  implementation(libs.androidx.material.icons.extended)
+  implementation(libs.androidx.navigation.compose)
+  implementation(libs.kotlinx.serialization.json)
+  implementation(libs.androidx.lifecycle.livedata.ktx)
+  implementation(libs.androidx.datastore.preferences)
+  implementation(libs.protobuf.javalite)
+  implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.androidx.lifecycle.runtime.compose)
+  implementation(libs.androidx.runtime.livedata)
+  implementation(libs.androidx.biometric)
+  implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
