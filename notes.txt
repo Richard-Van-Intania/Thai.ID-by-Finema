@@ -1,0 +1,30 @@
+// TODOS
+- local storage
+- passcode lock
+- biometric
+- web view
+- dynamic route
+- pdf viewer
+- save to gallery/ download
+- loading state
+- hand signature
+- camera and crop
+- load from gallery folder
+- passcode screen and logic
+- biometric screen and logic
+- biometric check avai enroll and auth
+
+
+
+
+
+              val configuration = LocalConfiguration.current
+              val screenWidthDp = configuration.screenWidthDp
+
+
+               if (screenWidthDp.dp < compactWidth)
+
+Package names are all lowercase, with consecutive words simply concatenated together (no underscores).
+package com.example.deepspace
+
+- thinks like a native dev
