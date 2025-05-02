@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "co.finema.thaidotidbyfinema";
+
+enum ViewLayout {
+  VIEW_LAYOUT_UNSPECIFIED = 0;
+  VIEW_LAYOUT_LIST = 1;
+  VIEW_LAYOUT_THUMBNAILS = 2;
+}
+
+message UserConfig {
+  string passcode = 1;
+  string salt = 2;
+  bool is_selected_never_show_again = 3;
+  bool hide_instruction = 4;
+  int32 export_count = 5;
+  string locale = 6;
+  bool use_biometric = 7;
+  ViewLayout home_view_layout = 8;
+  ViewLayout history_view_layout = 9;
+  bool is_accepted_agreements = 10;
+}
+
+message UserCard {
+  string id_string = 1;
+  string thai_prefix = 2;
+  string thai_name = 3;
+  string thai_middle_name = 4;
+  string thai_surname = 5;
+  string eng_prefix = 6;
+  string eng_name = 7;
+  string eng_middle_name = 8;
+  string eng_surname = 9;
+  string birth_date = 10;
+}
