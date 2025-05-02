@@ -90,7 +90,6 @@ fun ConfirmPasscodeFullscreen(navController: NavController, passcode: String) {
                   }
                 }
               }
-
               Text(
                   text = stringResource(R.string.set_up_pin_confirm),
                   color = primaryBlack,

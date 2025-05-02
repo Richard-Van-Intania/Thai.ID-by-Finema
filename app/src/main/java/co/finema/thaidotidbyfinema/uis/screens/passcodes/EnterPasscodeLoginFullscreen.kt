@@ -71,7 +71,6 @@ fun EnterPasscodeLoginFullscreen(navController: NavController) {
               }
             }
           }
-
           Text(
               text = stringResource(R.string.enter_pin),
               color = primaryBlack,

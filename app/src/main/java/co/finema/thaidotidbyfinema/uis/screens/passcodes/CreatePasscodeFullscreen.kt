@@ -67,7 +67,6 @@ fun CreatePasscodeFullscreen(navController: NavController) {
                       route = "${Screen.ConfirmPasscodeFullscreenKey.route}/${passcode}")
                 }
               }
-
               Text(
                   text = stringResource(R.string.set_up_pin),
                   color = primaryBlack,
