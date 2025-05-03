@@ -167,7 +167,7 @@ fun ConfirmPasscodeFullscreen(
         //        navController.popBackStack()
       }
       false -> {
-        // error dialog
+        // error dialog here
         //        navController.popBackStack()
         //        navController.popBackStack()
       }
