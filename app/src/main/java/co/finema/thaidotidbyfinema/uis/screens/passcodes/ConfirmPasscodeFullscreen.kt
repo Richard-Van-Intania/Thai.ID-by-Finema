@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -45,13 +44,13 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.authenticate
 import co.finema.thaidotidbyfinema.generateSalt
 import co.finema.thaidotidbyfinema.hashedPasscode
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
+import co.finema.thaidotidbyfinema.uis.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -73,39 +72,25 @@ fun ConfirmPasscodeFullscreen(
   val biometricManager = BiometricManager.from(context)
   val repository = remember { UserConfigRepository(context) }
   val scope = rememberCoroutineScope()
-  var showFullScreenDialog by remember { mutableStateOf(false) }
-  if (showFullScreenDialog) {
-    FullScreenDialog(onDismissRequest = { showFullScreenDialog = false }) {
-      Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("This is a full-screen dialog")
-        Button(onClick = { showFullScreenDialog = false }) { Text("Close") }
-      }
-    }
+  var showSetUpPinSuccess by remember { mutableStateOf(false) }
+  if (showSetUpPinSuccess) {
+    FullScreenDialog(
+        image = R.drawable.create_sucess, height = 160, text = R.string.set_up_pin_success)
   }
-  LaunchedEffect(authenticate.value) {
-    when (authenticate.value) {
-      true -> {
-        scope.launch { repository.updateUseBiometric(true) }
-        showFullScreenDialog = true
-        scope.launch { delay(1.seconds) }.invokeOnCompletion { showFullScreenDialog = false }
-        //        navController.popBackStack()
-        //        navController.popBackStack()
-      }
-      false -> {
-        //        navController.popBackStack()
-        //        navController.popBackStack()
-      }
-      null -> {}
-    }
+  var showSetUpBiometricSuccess by remember { mutableStateOf(false) }
+  if (showSetUpBiometricSuccess) {
+    FullScreenDialog(
+        image = R.drawable.create_sucess, height = 160, text = R.string.enable_biometrics_success)
   }
-  var acceptBiometrics by remember { mutableStateOf(false) }
-  LaunchedEffect(acceptBiometrics) {
-    if (acceptBiometrics) {
+
+  var acceptBiometric by remember { mutableStateOf(false) }
+  LaunchedEffect(acceptBiometric) {
+    if (acceptBiometric) {
       onAcceptBiometrics()
     }
   }
-  var showAuthDialog by remember { mutableStateOf(false) }
-  if (showAuthDialog) {
+  var showEnableBiometricDialog by remember { mutableStateOf(false) }
+  if (showEnableBiometricDialog) {
     Dialog(onDismissRequest = {}) {
       Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
         Column(
@@ -136,7 +121,7 @@ fun ConfirmPasscodeFullscreen(
                                 color = lightBlue07,
                                 shape = RoundedCornerShape(56.dp))
                             .clip(RoundedCornerShape(56.dp))
-                            .clickable(onClick = { showAuthDialog = false }),
+                            .clickable(onClick = { showEnableBiometricDialog = false }),
                     contentAlignment = Alignment.Center) {
                       Text(
                           text = stringResource(R.string.decline),
@@ -154,8 +139,8 @@ fun ConfirmPasscodeFullscreen(
                             .background(brush = gradient)
                             .clickable(
                                 onClick = {
-                                  showAuthDialog = false
-                                  acceptBiometrics = true
+                                  showEnableBiometricDialog = false
+                                  acceptBiometric = true
                                 }),
                     contentAlignment = Alignment.Center) {
                       Text(
@@ -169,6 +154,24 @@ fun ConfirmPasscodeFullscreen(
               Spacer(modifier = Modifier.height(32.dp))
             }
       }
+    }
+  }
+  LaunchedEffect(authenticate.value) {
+    when (authenticate.value) {
+      true -> {
+        scope.launch { repository.updateUseBiometric(true) }
+        showSetUpBiometricSuccess = true
+        scope.launch { delay(2.seconds) }.join()
+        showSetUpBiometricSuccess = false
+        //        navController.popBackStack()
+        //        navController.popBackStack()
+      }
+      false -> {
+        // error dialog
+        //        navController.popBackStack()
+        //        navController.popBackStack()
+      }
+      null -> {}
     }
   }
   Scaffold(
@@ -197,16 +200,19 @@ fun ConfirmPasscodeFullscreen(
               val shakeController = remember { ShakeController(scope) }
               LaunchedEffect(confirmPasscode) {
                 if (confirmPasscode.length == 6) {
-                  if (passcode == confirmPasscode) {
+                  if (confirmPasscode == passcode) {
                     scope.launch {
                       val salt = generateSalt()
                       val hashedPasscode = hashedPasscode(passcode, salt)
                       repository.updateSalt(salt)
                       repository.updatePasscode(hashedPasscode)
                     }
+                    showSetUpPinSuccess = true
+                    scope.launch { delay(2.seconds) }.join()
+                    showSetUpPinSuccess = false
                     if (biometricManager.canAuthenticate(BIOMETRIC_STRONG) ==
                         BiometricManager.BIOMETRIC_SUCCESS) {
-                      showAuthDialog = true
+                      showEnableBiometricDialog = true
                     } else {
                       //                      navController.popBackStack()
                       //                      navController.popBackStack()
@@ -311,17 +317,5 @@ fun ConfirmPasscodeFullscreen(
                         onClick = { confirmPasscode = confirmPasscode.dropLast(1) })
                   }
             }
-      }
-}
-
-@Composable
-fun FullScreenDialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit) {
-  Dialog(
-      onDismissRequest = onDismissRequest,
-      properties = DialogProperties(usePlatformDefaultWidth = false)) {
-        Scaffold {
-          it
-          content()
-        }
       }
 }
