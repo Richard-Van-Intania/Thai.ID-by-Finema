@@ -1,6 +1,12 @@
 package co.finema.thaidotidbyfinema.uis.screens.passcodes
 
 import androidx.activity.compose.BackHandler
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +18,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -27,25 +35,142 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.authenticate
 import co.finema.thaidotidbyfinema.generateSalt
 import co.finema.thaidotidbyfinema.hashedPasscode
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
+import co.finema.thaidotidbyfinema.uis.gradient
+import co.finema.thaidotidbyfinema.uis.lightBlue07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
+import co.finema.thaidotidbyfinema.uis.white
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun ConfirmPasscodeFullscreen(navController: NavController, passcode: String) {
+fun ConfirmPasscodeFullscreen(
+    navController: NavController,
+    passcode: String,
+    onAcceptBiometrics: () -> Unit
+) {
   BackHandler(enabled = true) {}
+  val context = LocalContext.current
+  val biometricManager = BiometricManager.from(context)
+  val repository = remember { UserConfigRepository(context) }
+  val scope = rememberCoroutineScope()
+  var showFullScreenDialog by remember { mutableStateOf(false) }
+  if (showFullScreenDialog) {
+    FullScreenDialog(onDismissRequest = { showFullScreenDialog = false }) {
+      Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Text("This is a full-screen dialog")
+        Button(onClick = { showFullScreenDialog = false }) { Text("Close") }
+      }
+    }
+  }
+  LaunchedEffect(authenticate.value) {
+    when (authenticate.value) {
+      true -> {
+        scope.launch { repository.updateUseBiometric(true) }
+        showFullScreenDialog = true
+        scope.launch { delay(1.seconds) }.invokeOnCompletion { showFullScreenDialog = false }
+        //        navController.popBackStack()
+        //        navController.popBackStack()
+      }
+      false -> {
+        //        navController.popBackStack()
+        //        navController.popBackStack()
+      }
+      null -> {}
+    }
+  }
+  var acceptBiometrics by remember { mutableStateOf(false) }
+  LaunchedEffect(acceptBiometrics) {
+    if (acceptBiometrics) {
+      onAcceptBiometrics()
+    }
+  }
+  var showAuthDialog by remember { mutableStateOf(false) }
+  if (showAuthDialog) {
+    Dialog(onDismissRequest = {}) {
+      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+              Spacer(modifier = Modifier.height(40.dp))
+              Image(
+                  painter = painterResource(id = R.drawable.fingerprint),
+                  contentDescription = null,
+                  modifier = Modifier.height(96.dp))
+              Spacer(modifier = Modifier.height(24.dp))
+              Text(
+                  text = stringResource(R.string.enable_biometrics),
+                  color = primaryBlack,
+                  fontSize = 24.sp,
+                  fontWeight = FontWeight.W400,
+                  textAlign = TextAlign.Center,
+              )
+              Spacer(modifier = Modifier.height(32.dp))
+              Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier =
+                        Modifier.height(56.dp)
+                            .weight(1f)
+                            .background(white)
+                            .border(
+                                width = 2.dp,
+                                color = lightBlue07,
+                                shape = RoundedCornerShape(56.dp))
+                            .clip(RoundedCornerShape(56.dp))
+                            .clickable(onClick = { showAuthDialog = false }),
+                    contentAlignment = Alignment.Center) {
+                      Text(
+                          text = stringResource(R.string.decline),
+                          color = lightBlue07,
+                          fontSize = 24.sp,
+                          fontWeight = FontWeight.W700,
+                      )
+                    }
+                Spacer(modifier = Modifier.width(16.dp))
+                Box(
+                    modifier =
+                        Modifier.height(56.dp)
+                            .weight(1f)
+                            .clip(RoundedCornerShape(56.dp))
+                            .background(brush = gradient)
+                            .clickable(
+                                onClick = {
+                                  showAuthDialog = false
+                                  acceptBiometrics = true
+                                }),
+                    contentAlignment = Alignment.Center) {
+                      Text(
+                          text = stringResource(R.string.accept),
+                          color = white,
+                          fontSize = 24.sp,
+                          fontWeight = FontWeight.W700,
+                      )
+                    }
+              }
+              Spacer(modifier = Modifier.height(32.dp))
+            }
+      }
+    }
+  }
   Scaffold(
       bottomBar = {
         Box(
@@ -53,8 +178,8 @@ fun ConfirmPasscodeFullscreen(navController: NavController, passcode: String) {
             contentAlignment = Alignment.Center) {
               TextButton(
                   onClick = {
-                    navController.popBackStack()
-                    navController.popBackStack()
+                    //                    navController.popBackStack()
+                    //                    navController.popBackStack()
                   }) {
                     Text(
                         text = stringResource(R.string.skip),
@@ -68,9 +193,6 @@ fun ConfirmPasscodeFullscreen(navController: NavController, passcode: String) {
             modifier = Modifier.fillMaxSize().padding(it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-              val context = LocalContext.current
-              val repository = remember { UserConfigRepository(context) }
-              val scope = rememberCoroutineScope()
               var confirmPasscode by remember { mutableStateOf("") }
               val shakeController = remember { ShakeController(scope) }
               LaunchedEffect(confirmPasscode) {
@@ -82,8 +204,13 @@ fun ConfirmPasscodeFullscreen(navController: NavController, passcode: String) {
                       repository.updateSalt(salt)
                       repository.updatePasscode(hashedPasscode)
                     }
-                    navController.popBackStack()
-                    navController.popBackStack()
+                    if (biometricManager.canAuthenticate(BIOMETRIC_STRONG) ==
+                        BiometricManager.BIOMETRIC_SUCCESS) {
+                      showAuthDialog = true
+                    } else {
+                      //                      navController.popBackStack()
+                      //                      navController.popBackStack()
+                    }
                   } else {
                     shakeController.triggerShake()
                     confirmPasscode = ""
@@ -184,5 +311,17 @@ fun ConfirmPasscodeFullscreen(navController: NavController, passcode: String) {
                         onClick = { confirmPasscode = confirmPasscode.dropLast(1) })
                   }
             }
+      }
+}
+
+@Composable
+fun FullScreenDialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit) {
+  Dialog(
+      onDismissRequest = onDismissRequest,
+      properties = DialogProperties(usePlatformDefaultWidth = false)) {
+        Scaffold {
+          it
+          content()
+        }
       }
 }

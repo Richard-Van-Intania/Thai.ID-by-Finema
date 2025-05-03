@@ -79,5 +79,6 @@ dependencies {
   implementation(libs.androidx.runtime.rxjava2)
   implementation(libs.androidx.material.icons.core)
   implementation(libs.androidx.foundation)
-  implementation(libs.androidx.biometric)
+  implementation(libs.androidx.biometric.v110)
+  implementation(libs.androidx.appcompat)
 }

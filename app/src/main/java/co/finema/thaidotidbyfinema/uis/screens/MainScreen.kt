@@ -151,7 +151,7 @@ fun MainScreen() {
               popEnterTransition = { EnterTransition.None },
               popExitTransition = { ExitTransition.None },
           ) {
-            HistoryTab(navController = navController)
+            //            HistoryTab(navController = navController)
           }
           composable(
               route = Screen.ProfileTabKey.route,
@@ -160,7 +160,8 @@ fun MainScreen() {
               popEnterTransition = { EnterTransition.None },
               popExitTransition = { ExitTransition.None },
           ) {
-            ProfileTab(navController = navController, counterState)
+            //            ProfileTab(navController = navController, counterState)
+            ProfileTab(navController = navController, onClick = {})
           }
           composable(route = Screen.SelectLayoutScreenKey.route) {
             SelectLayoutScreen(navController = navController)
@@ -183,7 +184,8 @@ fun MainScreen() {
               popExitTransition = { ExitTransition.None },
           ) { backStackEntry ->
             val passcode = backStackEntry.arguments?.getString("passcode") ?: ""
-            ConfirmPasscodeFullscreen(navController = navController, passcode = passcode)
+            ConfirmPasscodeFullscreen(
+                navController = navController, passcode = passcode, onAcceptBiometrics = {})
           }
           composable(
               route = Screen.EnterPasscodeLoginFullscreenKey.route,
