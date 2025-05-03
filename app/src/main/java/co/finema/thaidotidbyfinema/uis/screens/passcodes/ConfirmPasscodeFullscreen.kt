@@ -65,7 +65,7 @@ import kotlin.time.Duration.Companion.seconds
 fun ConfirmPasscodeFullscreen(
     navController: NavController,
     passcode: String,
-    onAcceptBiometrics: () -> Unit
+    onEnableBiometric: () -> Unit
 ) {
   BackHandler(enabled = true) {}
   val context = LocalContext.current
@@ -82,15 +82,14 @@ fun ConfirmPasscodeFullscreen(
     FullScreenDialog(
         image = R.drawable.create_sucess, height = 160, text = R.string.enable_biometrics_success)
   }
-
-  var acceptBiometric by remember { mutableStateOf(false) }
-  LaunchedEffect(acceptBiometric) {
-    if (acceptBiometric) {
-      onAcceptBiometrics()
+  var enableBiometric by remember { mutableStateOf(false) }
+  LaunchedEffect(enableBiometric) {
+    if (enableBiometric) {
+      onEnableBiometric()
     }
   }
-  var showEnableBiometricDialog by remember { mutableStateOf(false) }
-  if (showEnableBiometricDialog) {
+  var showBiometricAskedDialog by remember { mutableStateOf(false) }
+  if (showBiometricAskedDialog) {
     Dialog(onDismissRequest = {}) {
       Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
         Column(
@@ -121,10 +120,10 @@ fun ConfirmPasscodeFullscreen(
                                 color = lightBlue07,
                                 shape = RoundedCornerShape(56.dp))
                             .clip(RoundedCornerShape(56.dp))
-                            .clickable(onClick = { showEnableBiometricDialog = false }),
+                            .clickable(onClick = { showBiometricAskedDialog = false }),
                     contentAlignment = Alignment.Center) {
                       Text(
-                          text = stringResource(R.string.decline),
+                          text = stringResource(R.string.not_now),
                           color = lightBlue07,
                           fontSize = 24.sp,
                           fontWeight = FontWeight.W700,
@@ -139,12 +138,12 @@ fun ConfirmPasscodeFullscreen(
                             .background(brush = gradient)
                             .clickable(
                                 onClick = {
-                                  showEnableBiometricDialog = false
-                                  acceptBiometric = true
+                                  showBiometricAskedDialog = false
+                                  enableBiometric = true
                                 }),
                     contentAlignment = Alignment.Center) {
                       Text(
-                          text = stringResource(R.string.accept),
+                          text = stringResource(R.string.enable),
                           color = white,
                           fontSize = 24.sp,
                           fontWeight = FontWeight.W700,
@@ -156,6 +155,11 @@ fun ConfirmPasscodeFullscreen(
       }
     }
   }
+  var showErrorsDialog by remember { mutableStateOf(false) }
+  if (showErrorsDialog) {
+    //
+  }
+
   LaunchedEffect(authenticate.value) {
     when (authenticate.value) {
       true -> {
@@ -212,7 +216,7 @@ fun ConfirmPasscodeFullscreen(
                     showSetUpPinSuccess = false
                     if (biometricManager.canAuthenticate(BIOMETRIC_STRONG) ==
                         BiometricManager.BIOMETRIC_SUCCESS) {
-                      showEnableBiometricDialog = true
+                      showBiometricAskedDialog = true
                     } else {
                       //                      navController.popBackStack()
                       //                      navController.popBackStack()

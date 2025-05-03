@@ -74,7 +74,7 @@ class MainActivity : FragmentActivity() {
             ConfirmPasscodeFullscreen(
                 navController = navController,
                 passcode = "123456",
-                onAcceptBiometrics = { biometricPrompt.authenticate(promptInfo) })
+                onEnableBiometric = { biometricPrompt.authenticate(promptInfo) })
           }
     }
   }

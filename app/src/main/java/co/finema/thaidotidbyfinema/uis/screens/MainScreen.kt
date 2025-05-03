@@ -185,7 +185,7 @@ fun MainScreen() {
           ) { backStackEntry ->
             val passcode = backStackEntry.arguments?.getString("passcode") ?: ""
             ConfirmPasscodeFullscreen(
-                navController = navController, passcode = passcode, onAcceptBiometrics = {})
+                navController = navController, passcode = passcode, onEnableBiometric = {})
           }
           composable(
               route = Screen.EnterPasscodeLoginFullscreenKey.route,
