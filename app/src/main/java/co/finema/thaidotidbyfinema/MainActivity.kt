@@ -70,7 +70,7 @@ class MainActivity : FragmentActivity() {
             //                navController = navController,
             //                onClick = { biometricPrompt.authenticate(promptInfo) })
 
-            LaunchedEffect(authenticate.value) { println(authenticate.value) }
+//            LaunchedEffect(authenticate.value) { println(authenticate.value) }
             ConfirmPasscodeFullscreen(
                 navController = navController,
                 passcode = "123456",
