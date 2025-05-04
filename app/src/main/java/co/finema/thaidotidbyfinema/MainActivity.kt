@@ -51,7 +51,7 @@ class MainActivity : FragmentActivity() {
     promptInfo =
         BiometricPrompt.PromptInfo.Builder()
             .setTitle("Biometric login")
-            .setSubtitle("Please start")
+            .setSubtitle("Please start yours biometric")
             .setAllowedAuthenticators(BIOMETRIC_STRONG)
             .setNegativeButtonText("Cancel")
             .build()

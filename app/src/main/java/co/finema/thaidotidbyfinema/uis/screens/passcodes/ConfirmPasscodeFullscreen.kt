@@ -50,6 +50,7 @@ import co.finema.thaidotidbyfinema.authenticate
 import co.finema.thaidotidbyfinema.generateSalt
 import co.finema.thaidotidbyfinema.hashedPasscode
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
+import co.finema.thaidotidbyfinema.uis.ErrorDialog
 import co.finema.thaidotidbyfinema.uis.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue07
@@ -75,12 +76,14 @@ fun ConfirmPasscodeFullscreen(
   var showSetUpPinSuccess by remember { mutableStateOf(false) }
   if (showSetUpPinSuccess) {
     FullScreenDialog(
-        image = R.drawable.create_sucess, height = 160, text = R.string.set_up_pin_success)
+        image = R.drawable.create_sucess, height = 160.dp, text = R.string.set_up_pin_success)
   }
   var showSetUpBiometricSuccess by remember { mutableStateOf(false) }
   if (showSetUpBiometricSuccess) {
     FullScreenDialog(
-        image = R.drawable.create_sucess, height = 160, text = R.string.enable_biometrics_success)
+        image = R.drawable.create_sucess,
+        height = 160.dp,
+        text = R.string.enable_biometrics_success)
   }
   var enableBiometric by remember { mutableStateOf(false) }
   LaunchedEffect(enableBiometric) {
@@ -157,9 +160,13 @@ fun ConfirmPasscodeFullscreen(
   }
   var showErrorsDialog by remember { mutableStateOf(false) }
   if (showErrorsDialog) {
-    //
+    ErrorDialog(
+        text = R.string.unable_use_biometrics,
+        onClick = {
+          showErrorsDialog = false
+          //          navController.popBackStack()
+        })
   }
-
   LaunchedEffect(authenticate.value) {
     when (authenticate.value) {
       true -> {
@@ -171,6 +178,7 @@ fun ConfirmPasscodeFullscreen(
         //        navController.popBackStack()
       }
       false -> {
+        showErrorsDialog = true
         // error dialog here
         //        navController.popBackStack()
         //        navController.popBackStack()
@@ -187,6 +195,7 @@ fun ConfirmPasscodeFullscreen(
                   onClick = {
                     //                    navController.popBackStack()
                     //                    navController.popBackStack()
+                    showErrorsDialog = true
                   }) {
                     Text(
                         text = stringResource(R.string.skip),

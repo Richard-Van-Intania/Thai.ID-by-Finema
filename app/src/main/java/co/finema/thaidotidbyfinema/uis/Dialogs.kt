@@ -3,25 +3,32 @@ package co.finema.thaidotidbyfinema.uis
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import co.finema.thaidotidbyfinema.R
 
 @Composable
-fun FullScreenDialog(image: Int, height: Int, text: Int) {
+fun FullScreenDialog(image: Int, height: Dp, text: Int) {
   Dialog(
       onDismissRequest = {},
       properties =
@@ -33,7 +40,7 @@ fun FullScreenDialog(image: Int, height: Int, text: Int) {
               Image(
                   painter = painterResource(id = image),
                   contentDescription = null,
-                  modifier = Modifier.height(height.dp))
+                  modifier = Modifier.height(height))
               Spacer(modifier = Modifier.height(24.dp))
               Text(
                   text = stringResource(text),
@@ -44,4 +51,32 @@ fun FullScreenDialog(image: Int, height: Int, text: Int) {
               )
             }
       }
+}
+
+@Composable
+fun ErrorDialog(text: Int, onClick: () -> Unit) {
+  Dialog(onDismissRequest = {}) {
+    Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
+      Column(
+          modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+          horizontalAlignment = Alignment.CenterHorizontally) {
+            Spacer(modifier = Modifier.height(40.dp))
+            Image(
+                painter = painterResource(id = R.drawable.group_40126),
+                contentDescription = null,
+                modifier = Modifier.height(96.dp))
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(
+                text = stringResource(text),
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W400,
+                textAlign = TextAlign.Center,
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            GradientButton(onClick = onClick, text = stringResource(R.string.ok))
+            Spacer(modifier = Modifier.height(32.dp))
+          }
+    }
+  }
 }
