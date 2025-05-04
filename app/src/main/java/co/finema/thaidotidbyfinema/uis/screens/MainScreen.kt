@@ -194,7 +194,7 @@ fun MainScreen() {
               popEnterTransition = { EnterTransition.None },
               popExitTransition = { ExitTransition.None },
           ) {
-            EnterPasscodeLoginFullscreen(navController = navController)
+            EnterPasscodeLoginFullscreen(navController = navController, onAuthBiometric = {})
           }
         }
       }

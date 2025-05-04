@@ -39,15 +39,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.authenticate
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
+import co.finema.thaidotidbyfinema.uis.ErrorDialog
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.verifyPasscode
 import kotlin.math.roundToInt
 
 @Composable
-fun EnterPasscodeLoginFullscreen(navController: NavController) {
+fun EnterPasscodeLoginFullscreen(navController: NavController, onAuthBiometric: () -> Unit) {
   BackHandler(enabled = true) {}
+  var showErrorsDialog by remember { mutableStateOf(false) }
+  if (showErrorsDialog) {
+    ErrorDialog(text = R.string.unable_use_biometrics, onClick = { showErrorsDialog = false })
+  }
+  LaunchedEffect(authenticate.value) {
+    when (authenticate.value) {
+      true -> {
+        navController.popBackStack()
+      }
+      false -> {
+        showErrorsDialog = true
+      }
+      null -> {}
+    }
+  }
   Scaffold {
     Column(
         modifier = Modifier.fillMaxSize().padding(it),
@@ -64,6 +81,7 @@ fun EnterPasscodeLoginFullscreen(navController: NavController) {
           LaunchedEffect(confirmPasscode) {
             if (confirmPasscode.length == 6) {
               if (verifyPasscode(password = confirmPasscode, storedHash = passcode, salt = salt)) {
+                authenticate.value = true
                 navController.popBackStack()
               } else {
                 shakeController.triggerShake()
@@ -154,10 +172,7 @@ fun EnterPasscodeLoginFullscreen(navController: NavController) {
               verticalAlignment = Alignment.CenterVertically) {
                 if (useBiometric)
                     BottomButton(
-                        imageVector = Icons.Rounded.Fingerprint,
-                        onClick = {
-                          // bio auth here
-                        })
+                        imageVector = Icons.Rounded.Fingerprint, onClick = { onAuthBiometric() })
                 else Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
