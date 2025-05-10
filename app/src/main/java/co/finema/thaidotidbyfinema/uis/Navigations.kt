@@ -31,11 +31,11 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
 
   object SelectLayoutScreenNav : Screen("SelectLayoutScreenNav")
 
-  object EnterPasscodeLoginFullscreenNav : Screen("EnterPasscodeLoginFullscreenNav")
-
   object CreatePasscodeFullscreenNav : Screen("CreatePasscodeFullscreenNav")
 
   object ConfirmPasscodeFullscreenNav : Screen("ConfirmPasscodeFullscreenNav")
+
+  object EnterPasscodeLoginFullscreenNav : Screen("EnterPasscodeLoginFullscreenNav")
 }
 
 val bottomTabs = listOf(Screen.HomeTabNav, Screen.HistoryTabNav, Screen.ProfileTabNav)
