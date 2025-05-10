@@ -72,7 +72,7 @@ fun OnboardScreen(navController: NavHostController) {
             contentAlignment = Alignment.Center) {
               GradientButton(
                   onClick = {
-                    navController.navigate(route = "${Screen.TermsScreenKey.route}/true")
+                    navController.navigate(route = "${Screen.TermsScreenNav.route}/true")
                   },
                   text = stringResource(R.string.log_in))
             }
@@ -85,7 +85,7 @@ fun OnboardScreen(navController: NavHostController) {
               Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
                 TextButton(
                     onClick = {
-                      navController.navigate(route = "${Screen.TermsScreenKey.route}/true")
+                      navController.navigate(route = "${Screen.TermsScreenNav.route}/true")
                     }) {
                       Text(
                           text = stringResource(R.string.skip),

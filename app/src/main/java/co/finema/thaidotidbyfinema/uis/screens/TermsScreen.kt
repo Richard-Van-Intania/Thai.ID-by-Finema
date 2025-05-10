@@ -140,7 +140,7 @@ fun TermsScreen(navController: NavHostController, hasButton: Boolean) {
                                   .clickable(
                                       onClick = {
                                         navController.popBackStack(
-                                            route = Screen.WelcomeScreenKey.route,
+                                            route = Screen.WelcomeScreenNav.route,
                                             inclusive = false)
                                       }),
                           contentAlignment = Alignment.Center) {
@@ -164,8 +164,8 @@ fun TermsScreen(navController: NavHostController, hasButton: Boolean) {
                                   .clickable(
                                       onClick = {
                                         scope.launch { repository.updateIsAcceptedAgreements(true) }
-                                        navController.navigate(route = Screen.HomeTabKey.route) {
-                                          popUpTo(Screen.WelcomeScreenKey.route) {
+                                        navController.navigate(route = Screen.HomeRootNav.route) {
+                                          popUpTo(Screen.WelcomeScreenNav.route) {
                                             inclusive = true
                                           }
                                         }

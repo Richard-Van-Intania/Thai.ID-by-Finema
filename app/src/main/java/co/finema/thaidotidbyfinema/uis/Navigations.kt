@@ -8,27 +8,34 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import co.finema.thaidotidbyfinema.R
 
 sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVector? = null) {
-  object LoadingScreenKey : Screen("LoadingScreenKey")
 
-  object WelcomeScreenKey : Screen("WelcomeScreenKey")
+  object LoadingScreenNav : Screen("LoadingScreenNav")
 
-  object OnboardScreenKey : Screen("OnboardScreenKey")
+  object OnboardingRootNav : Screen("OnboardingRootNav")
 
-  object TermsScreenKey : Screen("TermsScreenKey")
+  object HomeRootNav : Screen("HomeRootNav")
 
-  object HomeTabKey : Screen("HomeTabKey", R.string.home, Icons.Rounded.Home)
+  object WelcomeScreenNav : Screen("WelcomeScreenNav")
 
-  object HistoryTabKey : Screen("HistoryTabKey", R.string.history, Icons.Rounded.History)
+  object OnboardScreenNav : Screen("OnboardScreenNav")
 
-  object ProfileTabKey : Screen("ProfileTabKey", R.string.profile, Icons.Rounded.AccountCircle)
+  object TermsScreenNav : Screen("TermsScreenNav")
 
-  object SelectLayoutScreenKey : Screen("SelectLayoutScreenKey")
+  object MainScreenNav : Screen("MainScreenNav")
 
-  object CreatePasscodeFullscreenKey : Screen("CreatePasscodeFullscreenKey")
+  object HomeTabNav : Screen("HomeTabNav", R.string.home, Icons.Rounded.Home)
 
-  object ConfirmPasscodeFullscreenKey : Screen("ConfirmPasscodeFullscreenKey")
+  object HistoryTabNav : Screen("HistoryTabNav", R.string.history, Icons.Rounded.History)
 
-  object EnterPasscodeLoginFullscreenKey : Screen("EnterPasscodeLoginFullscreenKey")
+  object ProfileTabNav : Screen("ProfileTabNav", R.string.profile, Icons.Rounded.AccountCircle)
+
+  object SelectLayoutScreenNav : Screen("SelectLayoutScreenNav")
+
+  object EnterPasscodeLoginFullscreenNav : Screen("EnterPasscodeLoginFullscreenNav")
+
+  object CreatePasscodeFullscreenNav : Screen("CreatePasscodeFullscreenNav")
+
+  object ConfirmPasscodeFullscreenNav : Screen("ConfirmPasscodeFullscreenNav")
 }
 
-val tabList = listOf(Screen.HomeTabKey, Screen.HistoryTabKey, Screen.ProfileTabKey)
+val bottomTabs = listOf(Screen.HomeTabNav, Screen.HistoryTabNav, Screen.ProfileTabNav)

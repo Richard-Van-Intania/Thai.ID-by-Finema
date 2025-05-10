@@ -1,5 +1,6 @@
 package co.finema.thaidotidbyfinema.uis.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,13 +33,14 @@ import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 
 @Composable
 fun WelcomeScreen(navController: NavHostController) {
+  BackHandler(enabled = true) {}
   Scaffold(
       bottomBar = {
         Box(
             modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
             contentAlignment = Alignment.Center) {
               GradientButton(
-                  onClick = { navController.navigate(route = Screen.OnboardScreenKey.route) },
+                  onClick = { navController.navigate(route = Screen.OnboardScreenNav.route) },
                   text = stringResource(R.string.get_started))
             }
       }) {
