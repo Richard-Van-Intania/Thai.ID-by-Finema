@@ -1,0 +1,2 @@
+- nav and hide bottom
+- kotlin java and view
