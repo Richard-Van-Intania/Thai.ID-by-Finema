@@ -57,11 +57,17 @@ fun EnterPasscodeLoginFullscreen(
   BackHandler(enabled = true) {}
   var showErrorsDialog by remember { mutableStateOf(false) }
   if (showErrorsDialog) {
-    ErrorDialog(text = R.string.unable_use_biometrics, onClick = { showErrorsDialog = false })
+    ErrorDialog(
+        text = R.string.unable_use_biometrics,
+        onClick = {
+          biometricAuth.value = null
+          showErrorsDialog = false
+        })
   }
   LaunchedEffect(biometricAuth.value) {
     when (biometricAuth.value) {
       true -> {
+        isLocalAuth.value = true
         navController.popBackStack()
       }
       false -> {
@@ -86,7 +92,7 @@ fun EnterPasscodeLoginFullscreen(
           LaunchedEffect(confirmPasscode) {
             if (confirmPasscode.length == 6) {
               if (verifyPasscode(password = confirmPasscode, storedHash = passcode, salt = salt)) {
-                biometricAuth.value = true
+                isLocalAuth.value = true
                 navController.popBackStack()
               } else {
                 shakeController.triggerShake()

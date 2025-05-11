@@ -29,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.bottomTabs
@@ -209,8 +210,10 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
   }
   val passcode by repository.passcode.collectAsState(initial = "")
   LaunchedEffect(passcode, isLocalAuth.value) {
-    if (passcode.isNotEmpty() && !isLocalAuth.value)
-        navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
+    if (passcode.isNotEmpty() && !isLocalAuth.value) {
+      biometricAuth.value = null
+      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
+    }
   }
   val tabController = rememberNavController()
   Scaffold(
