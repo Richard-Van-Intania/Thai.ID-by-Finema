@@ -286,7 +286,7 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
               popEnterTransition = { EnterTransition.None },
               popExitTransition = { ExitTransition.None },
           ) {
-            ProfileTab(navController = navController, onClick = {})
+            ProfileTab(navController = navController)
           }
         }
       }
