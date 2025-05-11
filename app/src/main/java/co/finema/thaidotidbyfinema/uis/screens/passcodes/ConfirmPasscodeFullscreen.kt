@@ -75,9 +75,10 @@ fun ConfirmPasscodeFullscreen(
   val biometricManager = BiometricManager.from(context)
   val repository = remember { UserConfigRepository(context) }
   val scope = rememberCoroutineScope()
-  var pop2Stack by remember { mutableStateOf(false) }
-  LaunchedEffect(pop2Stack) {
-    if (pop2Stack) {
+  var passAuth by remember { mutableStateOf(false) }
+  LaunchedEffect(passAuth) {
+    if (passAuth) {
+      biometricAuth.value = null
       isLocalAuth.value = true
       navController.popBackStack()
       navController.popBackStack()
@@ -136,7 +137,7 @@ fun ConfirmPasscodeFullscreen(
                             .clickable(
                                 onClick = {
                                   showBiometricAskedDialog = false
-                                  pop2Stack = true
+                                  passAuth = true
                                 }),
                     contentAlignment = Alignment.Center) {
                       Text(
@@ -178,7 +179,7 @@ fun ConfirmPasscodeFullscreen(
         text = R.string.unable_use_biometrics,
         onClick = {
           showErrorsDialog = false
-          pop2Stack = true
+          passAuth = true
         })
   }
   LaunchedEffect(biometricAuth.value) {
@@ -188,7 +189,7 @@ fun ConfirmPasscodeFullscreen(
         showSetUpBiometricSuccess = true
         delay(2.seconds)
         showSetUpBiometricSuccess = false
-        pop2Stack = true
+        passAuth = true
       }
       false -> {
         showErrorsDialog = true
@@ -210,7 +211,7 @@ fun ConfirmPasscodeFullscreen(
                           delay(2.seconds)
                           showSetUpPinSuccess = false
                         }
-                        .invokeOnCompletion { pop2Stack = true }
+                        .invokeOnCompletion { passAuth = true }
                   }) {
                     Text(
                         text = stringResource(R.string.skip),
@@ -243,7 +244,7 @@ fun ConfirmPasscodeFullscreen(
                         BiometricManager.BIOMETRIC_SUCCESS) {
                       showBiometricAskedDialog = true
                     } else {
-                      pop2Stack = true
+                      passAuth = true
                     }
                   } else {
                     shakeController.triggerShake()
