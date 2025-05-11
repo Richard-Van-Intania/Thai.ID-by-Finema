@@ -129,6 +129,7 @@ fun TermsScreen(navController: NavHostController) {
             val repository = remember { UserConfigRepository(context) }
             val isAcceptedAgreements by
                 repository.isAcceptedAgreements.collectAsState(initial = false)
+            val scope = rememberCoroutineScope()
             if (!isAcceptedAgreements)
                 Row(
                     modifier = Modifier.padding(vertical = 48.dp),
@@ -158,9 +159,6 @@ fun TermsScreen(navController: NavHostController) {
                             )
                           }
                       Spacer(modifier = Modifier.width(16.dp))
-                      val context = LocalContext.current
-                      val repository = remember { UserConfigRepository(context) }
-                      val scope = rememberCoroutineScope()
                       Box(
                           modifier =
                               Modifier.height(56.dp)
