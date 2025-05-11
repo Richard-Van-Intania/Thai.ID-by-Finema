@@ -75,6 +75,14 @@ fun ConfirmPasscodeFullscreen(
   val biometricManager = BiometricManager.from(context)
   val repository = remember { UserConfigRepository(context) }
   val scope = rememberCoroutineScope()
+  var pop2Stack by remember { mutableStateOf(false) }
+  LaunchedEffect(pop2Stack) {
+    if (pop2Stack) {
+      isLocalAuth.value = true
+      navController.popBackStack()
+      navController.popBackStack()
+    }
+  }
   var showSetUpPinSuccess by remember { mutableStateOf(false) }
   if (showSetUpPinSuccess) {
     FullScreenDialog(
@@ -128,9 +136,7 @@ fun ConfirmPasscodeFullscreen(
                             .clickable(
                                 onClick = {
                                   showBiometricAskedDialog = false
-                                  isLocalAuth.value = true
-                                  navController.popBackStack()
-                                  navController.popBackStack()
+                                  pop2Stack = true
                                 }),
                     contentAlignment = Alignment.Center) {
                       Text(
@@ -172,9 +178,7 @@ fun ConfirmPasscodeFullscreen(
         text = R.string.unable_use_biometrics,
         onClick = {
           showErrorsDialog = false
-          isLocalAuth.value = true
-          navController.popBackStack()
-          navController.popBackStack()
+          pop2Stack = true
         })
   }
   LaunchedEffect(biometricAuth.value) {
@@ -184,9 +188,7 @@ fun ConfirmPasscodeFullscreen(
         showSetUpBiometricSuccess = true
         delay(2.seconds)
         showSetUpBiometricSuccess = false
-        isLocalAuth.value = true
-        navController.popBackStack()
-        navController.popBackStack()
+        pop2Stack = true
       }
       false -> {
         showErrorsDialog = true
@@ -208,11 +210,7 @@ fun ConfirmPasscodeFullscreen(
                           delay(2.seconds)
                           showSetUpPinSuccess = false
                         }
-                        .invokeOnCompletion {
-                          isLocalAuth.value = true
-                          navController.popBackStack()
-                          navController.popBackStack()
-                        }
+                        .invokeOnCompletion { pop2Stack = true }
                   }) {
                     Text(
                         text = stringResource(R.string.skip),
@@ -245,9 +243,7 @@ fun ConfirmPasscodeFullscreen(
                         BiometricManager.BIOMETRIC_SUCCESS) {
                       showBiometricAskedDialog = true
                     } else {
-                      isLocalAuth.value = true
-                      navController.popBackStack()
-                      navController.popBackStack()
+                      pop2Stack = true
                     }
                   } else {
                     shakeController.triggerShake()
