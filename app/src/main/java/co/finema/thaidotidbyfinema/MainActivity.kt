@@ -1,3 +1,5 @@
+@file:Suppress("UsingMaterialAndMaterial3Libraries")
+
 package co.finema.thaidotidbyfinema
 
 import android.os.Bundle
