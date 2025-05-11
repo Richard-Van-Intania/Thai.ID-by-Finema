@@ -37,15 +37,23 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
+import co.finema.thaidotidbyfinema.uis.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.white
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun CreatePasscodeFullscreen(navController: NavController) {
   BackHandler(enabled = true) {}
+  var showSetUpPinSuccess by remember { mutableStateOf(false) }
+  if (showSetUpPinSuccess) {
+    FullScreenDialog(
+        image = R.drawable.create_sucess, height = 160.dp, text = R.string.set_up_pin_success)
+  }
   Scaffold(
       bottomBar = {
         Box(
@@ -56,8 +64,13 @@ fun CreatePasscodeFullscreen(navController: NavController) {
               val scope = rememberCoroutineScope()
               TextButton(
                   onClick = {
+                    scope.launch { repository.updatePasscodeAsked(true) }
                     scope
-                        .launch { repository.updatePasscodeAsked(true) }
+                        .launch {
+                          showSetUpPinSuccess = true
+                          delay(2.seconds)
+                          showSetUpPinSuccess = false
+                        }
                         .invokeOnCompletion { navController.popBackStack() }
                   }) {
                     Text(
