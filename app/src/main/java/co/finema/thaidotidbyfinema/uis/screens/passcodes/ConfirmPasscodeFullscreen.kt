@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
-import co.finema.thaidotidbyfinema.authenticate
+import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.generateSalt
 import co.finema.thaidotidbyfinema.hashedPasscode
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
@@ -173,8 +173,8 @@ fun ConfirmPasscodeFullscreen(
           navController.popBackStack()
         })
   }
-  LaunchedEffect(authenticate.value) {
-    when (authenticate.value) {
+  LaunchedEffect(biometricAuth.value) {
+    when (biometricAuth.value) {
       true -> {
         scope.launch { repository.updateUseBiometric(true) }
         showSetUpBiometricSuccess = true
