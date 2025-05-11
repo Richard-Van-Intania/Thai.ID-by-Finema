@@ -27,6 +27,7 @@ import androidx.compose.material.icons.automirrored.rounded.Backspace
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,7 +67,8 @@ import kotlin.time.Duration.Companion.seconds
 fun ConfirmPasscodeFullscreen(
     navController: NavController,
     passcode: String,
-    onBiometricAuth: () -> Unit
+    onBiometricAuth: () -> Unit,
+    isLocalAuth: MutableState<Boolean>
 ) {
   BackHandler(enabled = true) {}
   val context = LocalContext.current
@@ -126,6 +128,7 @@ fun ConfirmPasscodeFullscreen(
                             .clickable(
                                 onClick = {
                                   showBiometricAskedDialog = false
+                                  isLocalAuth.value = true
                                   navController.popBackStack()
                                   navController.popBackStack()
                                 }),
@@ -169,6 +172,7 @@ fun ConfirmPasscodeFullscreen(
         text = R.string.unable_use_biometrics,
         onClick = {
           showErrorsDialog = false
+          isLocalAuth.value = true
           navController.popBackStack()
           navController.popBackStack()
         })
@@ -180,6 +184,7 @@ fun ConfirmPasscodeFullscreen(
         showSetUpBiometricSuccess = true
         delay(2.seconds)
         showSetUpBiometricSuccess = false
+        isLocalAuth.value = true
         navController.popBackStack()
         navController.popBackStack()
       }
@@ -204,6 +209,7 @@ fun ConfirmPasscodeFullscreen(
                           showSetUpPinSuccess = false
                         }
                         .invokeOnCompletion {
+                          isLocalAuth.value = true
                           navController.popBackStack()
                           navController.popBackStack()
                         }
@@ -239,6 +245,7 @@ fun ConfirmPasscodeFullscreen(
                         BiometricManager.BIOMETRIC_SUCCESS) {
                       showBiometricAskedDialog = true
                     } else {
+                      isLocalAuth.value = true
                       navController.popBackStack()
                       navController.popBackStack()
                     }
