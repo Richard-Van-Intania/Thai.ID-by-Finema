@@ -1,9 +1,8 @@
 package co.finema.thaidotidbyfinema.uis.screens
 
-import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +12,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -23,120 +24,242 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
+import co.finema.thaidotidbyfinema.uis.bottomTabs
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
-import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmPasscodeFullscreen
-import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscreen
-import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeLoginFullscreen
 import co.finema.thaidotidbyfinema.uis.secondaryBlueGray
-import co.finema.thaidotidbyfinema.uis.tabList
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
 const val milliSeconds = 250
 
+// @Composable
+// fun MainScreen() {
+//  val navController = rememberNavController()
+//  val navBackStackEntry by navController.currentBackStackEntryAsState()
+//  val currentRoute = navBackStackEntry?.destination?.route
+//  val context = LocalContext.current
+//  val repository = remember { UserConfigRepository(context) }
+//  val isAcceptedAgreements by repository.isAcceptedAgreements.collectAsState(initial = null)
+//  Scaffold(
+//      bottomBar = {
+//        if (currentRoute == Screen.HomeTabKey.route ||
+//            currentRoute == Screen.HistoryTabKey.route ||
+//            currentRoute == Screen.ProfileTabKey.route)
+//            BottomNavigation(
+//                modifier =
+//                    Modifier.height(96.dp)
+//                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+//                elevation = 1.dp,
+//                backgroundColor = white) {
+//                  bottomTabs.forEach {
+//                    BottomNavigationItem(
+//                        modifier = Modifier.padding(top = 8.dp),
+//                        icon = { Icon(imageVector = it.icon!!, contentDescription = null) },
+//                        label = {
+//                          Text(
+//                              text = stringResource(it.name!!),
+//                              color =
+//                                  if (currentRoute == it.route) primaryDarkBlue
+//                                  else secondaryBlueGray,
+//                              fontSize = 12.sp,
+//                              fontWeight =
+//                                  if (currentRoute == it.route) FontWeight.W700
+//                                  else FontWeight.W400,
+//                          )
+//                        },
+//                        selected = currentRoute == it.route,
+//                        onClick = {
+//                          if (currentRoute != it.route) {
+//                            navController.navigate(it.route) {
+//                              popUpTo(navController.graph.startDestinationId) { saveState = true }
+//                              launchSingleTop = true
+//                              restoreState = true
+//                            }
+//                          }
+//                        },
+//                        selectedContentColor = primaryDarkBlue,
+//                        unselectedContentColor = secondaryBlueGray)
+//                  }
+//                }
+//      },
+//      backgroundColor = whiteBG) {
+//        val counterState = rememberCounterState()
+//        NavHost(
+//            navController = navController,
+//            startDestination =
+//                when (isAcceptedAgreements) {
+//                  true -> Screen.HomeTabKey.route
+//                  false -> Screen.WelcomeScreenKey.route
+//                  null -> Screen.LoadingScreenKey.route
+//                },
+//            modifier = Modifier.padding(it),
+//            enterTransition = {
+//              slideIntoContainer(
+//                  AnimatedContentTransitionScope.SlideDirection.Start, tween(milliSeconds))
+//            },
+//            exitTransition = {
+//              slideOutOfContainer(
+//                  AnimatedContentTransitionScope.SlideDirection.Start, tween(milliSeconds))
+//            },
+//            popEnterTransition = {
+//              slideIntoContainer(
+//                  AnimatedContentTransitionScope.SlideDirection.End, tween(milliSeconds))
+//            },
+//            popExitTransition = {
+//              slideOutOfContainer(
+//                  AnimatedContentTransitionScope.SlideDirection.End, tween(milliSeconds))
+//            },
+//        ) {
+//          composable(route = Screen.LoadingScreenKey.route) {
+//            LoadingScreen(navController = navController)
+//          }
+//          composable(route = Screen.WelcomeScreenKey.route) {
+//            WelcomeScreen(navController = navController)
+//          }
+//          composable(route = Screen.OnboardScreenKey.route) {
+//            OnboardScreen(navController = navController)
+//          }
+//          composable(
+//              route = "${Screen.TermsScreenKey.route}/{hasButton}",
+//              arguments = listOf(navArgument("hasButton") { defaultValue = false })) {
+//                  backStackEntry ->
+//                val hasButton = backStackEntry.arguments?.getBoolean("hasButton") == true
+//                TermsScreen(navController = navController, hasButton = hasButton)
+//              }
+//          composable(
+//              route = Screen.HomeTabKey.route,
+//              enterTransition = { EnterTransition.None },
+//              exitTransition = { ExitTransition.None },
+//              popEnterTransition = { EnterTransition.None },
+//              popExitTransition = { ExitTransition.None },
+//          ) {
+//            HomeTab(navController = navController, counterState)
+//          }
+//          composable(
+//              route = Screen.HistoryTabKey.route,
+//              enterTransition = { EnterTransition.None },
+//              exitTransition = { ExitTransition.None },
+//              popEnterTransition = { EnterTransition.None },
+//              popExitTransition = { ExitTransition.None },
+//          ) {
+//            //            HistoryTab(navController = navController)
+//          }
+//          composable(
+//              route = Screen.ProfileTabKey.route,
+//              enterTransition = { EnterTransition.None },
+//              exitTransition = { ExitTransition.None },
+//              popEnterTransition = { EnterTransition.None },
+//              popExitTransition = { ExitTransition.None },
+//          ) {
+//            //            ProfileTab(navController = navController, counterState)
+//            ProfileTab(navController = navController, onClick = {})
+//          }
+//          composable(route = Screen.SelectLayoutScreenKey.route) {
+//            SelectLayoutScreen(navController = navController)
+//          }
+//          composable(
+//              route = Screen.CreatePasscodeFullscreenKey.route,
+//              enterTransition = { EnterTransition.None },
+//              exitTransition = { ExitTransition.None },
+//              popEnterTransition = { EnterTransition.None },
+//              popExitTransition = { ExitTransition.None },
+//          ) {
+//            CreatePasscodeFullscreen(navController = navController)
+//          }
+//          composable(
+//              route = "${Screen.ConfirmPasscodeFullscreenKey.route}/{passcode}",
+//              arguments = listOf(navArgument("passcode") { defaultValue = "" }),
+//              enterTransition = { EnterTransition.None },
+//              exitTransition = { ExitTransition.None },
+//              popEnterTransition = { EnterTransition.None },
+//              popExitTransition = { ExitTransition.None },
+//          ) { backStackEntry ->
+//            val passcode = backStackEntry.arguments?.getString("passcode") ?: ""
+//            ConfirmPasscodeFullscreen(
+//                navController = navController, passcode = passcode, onEnableBiometric = {})
+//          }
+//          composable(
+//              route = Screen.EnterPasscodeLoginFullscreenKey.route,
+//              enterTransition = { EnterTransition.None },
+//              exitTransition = { ExitTransition.None },
+//              popEnterTransition = { EnterTransition.None },
+//              popExitTransition = { ExitTransition.None },
+//          ) {
+//            EnterPasscodeLoginFullscreen(navController = navController, onAuthBiometric = {})
+//          }
+//        }
+//      }
+// }
+
 @Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  val navBackStackEntry by navController.currentBackStackEntryAsState()
-  val currentRoute = navBackStackEntry?.destination?.route
+fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boolean>) {
+  BackHandler(enabled = true) {}
   val context = LocalContext.current
   val repository = remember { UserConfigRepository(context) }
-  val isAcceptedAgreements by repository.isAcceptedAgreements.collectAsState(initial = null)
+  val passcodeAsked by repository.passcodeAsked.collectAsState(initial = null)
+  LaunchedEffect(passcodeAsked) {
+    if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreenNav.route)
+  }
+  val passcode by repository.passcode.collectAsState(initial = "")
+  LaunchedEffect(passcode, isLocalAuth.value) {
+    if (passcode.isNotEmpty() && !isLocalAuth.value)
+        navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
+  }
+  val tabController = rememberNavController()
   Scaffold(
       bottomBar = {
-        if (currentRoute == Screen.HomeTabKey.route ||
-            currentRoute == Screen.HistoryTabKey.route ||
-            currentRoute == Screen.ProfileTabKey.route)
-            BottomNavigation(
-                modifier =
-                    Modifier.height(96.dp)
-                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
-                elevation = 1.dp,
-                backgroundColor = white) {
-                  tabList.forEach {
-                    BottomNavigationItem(
-                        modifier = Modifier.padding(top = 8.dp),
-                        icon = { Icon(imageVector = it.icon!!, contentDescription = null) },
-                        label = {
-                          Text(
-                              text = stringResource(it.name!!),
-                              color =
-                                  if (currentRoute == it.route) primaryDarkBlue
-                                  else secondaryBlueGray,
-                              fontSize = 12.sp,
-                              fontWeight =
-                                  if (currentRoute == it.route) FontWeight.W700
-                                  else FontWeight.W400,
-                          )
-                        },
-                        selected = currentRoute == it.route,
-                        onClick = {
-                          if (currentRoute != it.route) {
-                            navController.navigate(it.route) {
-                              popUpTo(navController.graph.startDestinationId) { saveState = true }
-                              launchSingleTop = true
-                              restoreState = true
-                            }
-                          }
-                        },
-                        selectedContentColor = primaryDarkBlue,
-                        unselectedContentColor = secondaryBlueGray)
-                  }
-                }
+        BottomNavigation(
+            modifier =
+                Modifier.height(96.dp).clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+            elevation = 1.dp,
+            backgroundColor = white) {
+              bottomTabs.forEach {
+                val navBackStackEntry by tabController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
+                BottomNavigationItem(
+                    modifier = Modifier.padding(top = 8.dp),
+                    icon = { Icon(imageVector = it.icon!!, contentDescription = null) },
+                    label = {
+                      Text(
+                          text = stringResource(it.name!!),
+                          color =
+                              if (currentRoute == it.route) primaryDarkBlue else secondaryBlueGray,
+                          fontSize = 12.sp,
+                          fontWeight =
+                              if (currentRoute == it.route) FontWeight.W700 else FontWeight.W400,
+                      )
+                    },
+                    selected = currentRoute == it.route,
+                    onClick = {
+                      if (currentRoute != it.route) {
+                        tabController.navigate(it.route) {
+                          popUpTo(tabController.graph.startDestinationId) { saveState = true }
+                          launchSingleTop = true
+                          restoreState = true
+                        }
+                      }
+                    },
+                    selectedContentColor = primaryDarkBlue,
+                    unselectedContentColor = secondaryBlueGray)
+              }
+            }
       },
       backgroundColor = whiteBG) {
         val counterState = rememberCounterState()
         NavHost(
-            navController = navController,
-            startDestination =
-                when (isAcceptedAgreements) {
-                  true -> Screen.HomeTabKey.route
-                  false -> Screen.WelcomeScreenKey.route
-                  null -> Screen.LoadingScreenKey.route
-                },
+            navController = tabController,
+            startDestination = Screen.HomeTabNav.route,
             modifier = Modifier.padding(it),
-            enterTransition = {
-              slideIntoContainer(
-                  AnimatedContentTransitionScope.SlideDirection.Start, tween(milliSeconds))
-            },
-            exitTransition = {
-              slideOutOfContainer(
-                  AnimatedContentTransitionScope.SlideDirection.Start, tween(milliSeconds))
-            },
-            popEnterTransition = {
-              slideIntoContainer(
-                  AnimatedContentTransitionScope.SlideDirection.End, tween(milliSeconds))
-            },
-            popExitTransition = {
-              slideOutOfContainer(
-                  AnimatedContentTransitionScope.SlideDirection.End, tween(milliSeconds))
-            },
         ) {
-          composable(route = Screen.LoadingScreenKey.route) {
-            LoadingScreen(navController = navController)
-          }
-          composable(route = Screen.WelcomeScreenKey.route) {
-            WelcomeScreen(navController = navController)
-          }
-          composable(route = Screen.OnboardScreenKey.route) {
-            OnboardScreen(navController = navController)
-          }
           composable(
-              route = "${Screen.TermsScreenKey.route}/{hasButton}",
-              arguments = listOf(navArgument("hasButton") { defaultValue = false })) {
-                  backStackEntry ->
-                val hasButton = backStackEntry.arguments?.getBoolean("hasButton") == true
-                TermsScreen(navController = navController, hasButton = hasButton)
-              }
-          composable(
-              route = Screen.HomeTabKey.route,
+              route = Screen.HomeTabNav.route,
               enterTransition = { EnterTransition.None },
               exitTransition = { ExitTransition.None },
               popEnterTransition = { EnterTransition.None },
@@ -145,56 +268,22 @@ fun MainScreen() {
             HomeTab(navController = navController, counterState)
           }
           composable(
-              route = Screen.HistoryTabKey.route,
+              route = Screen.HistoryTabNav.route,
               enterTransition = { EnterTransition.None },
               exitTransition = { ExitTransition.None },
               popEnterTransition = { EnterTransition.None },
               popExitTransition = { ExitTransition.None },
           ) {
-            //            HistoryTab(navController = navController)
+            HistoryTab(navController = navController)
           }
           composable(
-              route = Screen.ProfileTabKey.route,
+              route = Screen.ProfileTabNav.route,
               enterTransition = { EnterTransition.None },
               exitTransition = { ExitTransition.None },
               popEnterTransition = { EnterTransition.None },
               popExitTransition = { ExitTransition.None },
           ) {
-            //            ProfileTab(navController = navController, counterState)
             ProfileTab(navController = navController, onClick = {})
-          }
-          composable(route = Screen.SelectLayoutScreenKey.route) {
-            SelectLayoutScreen(navController = navController)
-          }
-          composable(
-              route = Screen.CreatePasscodeFullscreenKey.route,
-              enterTransition = { EnterTransition.None },
-              exitTransition = { ExitTransition.None },
-              popEnterTransition = { EnterTransition.None },
-              popExitTransition = { ExitTransition.None },
-          ) {
-            CreatePasscodeFullscreen(navController = navController)
-          }
-          composable(
-              route = "${Screen.ConfirmPasscodeFullscreenKey.route}/{passcode}",
-              arguments = listOf(navArgument("passcode") { defaultValue = "" }),
-              enterTransition = { EnterTransition.None },
-              exitTransition = { ExitTransition.None },
-              popEnterTransition = { EnterTransition.None },
-              popExitTransition = { ExitTransition.None },
-          ) { backStackEntry ->
-            val passcode = backStackEntry.arguments?.getString("passcode") ?: ""
-            ConfirmPasscodeFullscreen(
-                navController = navController, passcode = passcode, onEnableBiometric = {})
-          }
-          composable(
-              route = Screen.EnterPasscodeLoginFullscreenKey.route,
-              enterTransition = { EnterTransition.None },
-              exitTransition = { ExitTransition.None },
-              popEnterTransition = { EnterTransition.None },
-              popExitTransition = { ExitTransition.None },
-          ) {
-            EnterPasscodeLoginFullscreen(navController = navController, onAuthBiometric = {})
           }
         }
       }

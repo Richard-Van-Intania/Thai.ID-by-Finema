@@ -70,45 +70,45 @@ fun HomeTab(navController: NavController, counterState: CounterState) {
 
   val openDialog = remember { mutableStateOf(true) }
 
-  Scaffold(
-      backgroundColor = whiteBG,
-      floatingActionButton = { FloatingActionButton(onClick = { counterState.increment() }) {} }) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(it),
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-              Text(
-                  "CreatePasscodeFullscreenKey",
-                  modifier =
-                      Modifier.clickable(
-                          onClick = {
-                            navController.navigate(route = Screen.CreatePasscodeFullscreenKey.route)
-                          }))
-              Text(
-                  "EnterPasscodeLoginFullscreenKey",
-                  modifier =
-                      Modifier.clickable(
-                          onClick = {
-                            navController.navigate(
-                                route = Screen.EnterPasscodeLoginFullscreenKey.route)
-                          }))
-              Text(
-                  "biometric",
-                  modifier =
-                      Modifier.clickable(
-                          onClick = {
-                            //
-                          }))
-              Text(
-                  "SelectLayoutScreenKey",
-                  modifier =
-                      Modifier.clickable(
-                          onClick = {
-                            navController.navigate(route = Screen.SelectLayoutScreenKey.route)
-                          }))
-              Text(counterState.count.toString())
-            }
-      }
+//  Scaffold(
+//      backgroundColor = whiteBG,
+//      floatingActionButton = { FloatingActionButton(onClick = { counterState.increment() }) {} }) {
+//        Column(
+//            modifier = Modifier.fillMaxSize().padding(it),
+//            verticalArrangement = Arrangement.SpaceEvenly,
+//            horizontalAlignment = Alignment.CenterHorizontally) {
+//              Text(
+//                  "CreatePasscodeFullscreenKey",
+//                  modifier =
+//                      Modifier.clickable(
+//                          onClick = {
+//                            navController.navigate(route = Screen.CreatePasscodeFullscreenKey.route)
+//                          }))
+//              Text(
+//                  "EnterPasscodeLoginFullscreenKey",
+//                  modifier =
+//                      Modifier.clickable(
+//                          onClick = {
+//                            navController.navigate(
+//                                route = Screen.EnterPasscodeLoginFullscreenKey.route)
+//                          }))
+//              Text(
+//                  "biometric",
+//                  modifier =
+//                      Modifier.clickable(
+//                          onClick = {
+//                            //
+//                          }))
+//              Text(
+//                  "SelectLayoutScreenKey",
+//                  modifier =
+//                      Modifier.clickable(
+//                          onClick = {
+//                            navController.navigate(route = Screen.SelectLayoutScreenKey.route)
+//                          }))
+//              Text(counterState.count.toString())
+//            }
+//      }
 }
 
 // plain Kotlin class
