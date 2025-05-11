@@ -13,13 +13,13 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
 
   object OnboardingRootNav : Screen("OnboardingRootNav")
 
-  object HomeRootNav : Screen("HomeRootNav")
-
   object WelcomeScreenNav : Screen("WelcomeScreenNav")
 
   object OnboardScreenNav : Screen("OnboardScreenNav")
 
   object TermsScreenNav : Screen("TermsScreenNav")
+
+  object HomeRootNav : Screen("HomeRootNav")
 
   object MainScreenNav : Screen("MainScreenNav")
 
