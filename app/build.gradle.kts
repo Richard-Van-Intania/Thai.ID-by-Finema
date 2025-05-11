@@ -81,4 +81,5 @@ dependencies {
   implementation(libs.androidx.foundation)
   implementation(libs.androidx.biometric.v110)
   implementation(libs.androidx.appcompat)
+  implementation(libs.androidx.material3)
 }

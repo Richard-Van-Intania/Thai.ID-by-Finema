@@ -21,12 +21,14 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,6 +54,7 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DocumentPlaceholderScreen(navController: NavController, documentLayout: DocumentLayout) {
   var haveImage0 by remember { mutableStateOf("") }
@@ -99,30 +102,25 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
   }
   Scaffold(
       topBar = {
-        TopAppBar(
+        CenterAlignedTopAppBar(
             title = {
-              Row(
-                  modifier = Modifier.fillMaxSize().padding(top = 48.dp),
-                  verticalAlignment = Alignment.CenterVertically) {
-                    Box(modifier = Modifier.width(48.dp), contentAlignment = Alignment.Center) {
-                      IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
-                      }
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(
-                        text = stringResource(R.string.add_document),
-                        color = primaryBlack,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.W700,
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Spacer(modifier = Modifier.width(48.dp))
-                  }
+              Text(
+                  text = stringResource(R.string.add_document),
+                  color = primaryBlack,
+                  fontSize = 24.sp,
+                  fontWeight = FontWeight.W700,
+              )
             },
-            modifier = Modifier.height(112.dp),
-            elevation = 0.dp,
-            backgroundColor = white)
+            navigationIcon = {
+              IconButton(onClick = { navController.popBackStack() }) {
+                Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
+              }
+            },
+            colors =
+                TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = white,
+                    navigationIconContentColor = primaryBlack,
+                    actionIconContentColor = primaryBlack))
       },
       bottomBar = {
         Box(
