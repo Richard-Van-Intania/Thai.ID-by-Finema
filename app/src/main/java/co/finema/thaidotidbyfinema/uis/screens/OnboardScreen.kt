@@ -75,9 +75,8 @@ fun OnboardScreen(navController: NavHostController) {
                   text = stringResource(R.string.log_in))
             }
       }) {
-        it
         Column(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
               Spacer(modifier = Modifier.height(48.dp))
               Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {

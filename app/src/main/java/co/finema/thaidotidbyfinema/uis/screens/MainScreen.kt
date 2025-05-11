@@ -209,12 +209,12 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
     if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreenNav.route)
   }
   val passcode by repository.passcode.collectAsState(initial = "")
-  LaunchedEffect(passcode, isLocalAuth.value) {
-    if (passcode.isNotEmpty() && !isLocalAuth.value) {
-      biometricAuth.value = null
-      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
-    }
-  }
+//  LaunchedEffect(passcode, isLocalAuth.value) {
+//    if (passcode.isNotEmpty() && !isLocalAuth.value) {
+//      biometricAuth.value = null
+//      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
+//    }
+//  }
   val tabController = rememberNavController()
   Scaffold(
       bottomBar = {

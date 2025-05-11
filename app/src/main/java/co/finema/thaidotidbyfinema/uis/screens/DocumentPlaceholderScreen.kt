@@ -138,9 +138,8 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
       },
       backgroundColor = whiteBG,
   ) {
-    it
     Column(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
           when (documentLayout) {

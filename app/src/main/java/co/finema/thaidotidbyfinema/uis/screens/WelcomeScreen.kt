@@ -46,9 +46,8 @@ fun WelcomeScreen(navController: NavHostController) {
                   text = stringResource(R.string.get_started))
             }
       }) {
-        it
         Column(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
               Spacer(modifier = Modifier.height(72.dp))
               Image(

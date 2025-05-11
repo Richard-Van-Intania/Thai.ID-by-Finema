@@ -158,8 +158,7 @@ fun SelectLayoutScreen(navController: NavController) {
             }
       },
       backgroundColor = white) {
-        it
-        Column(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
           Box(
               modifier =
                   Modifier.fillMaxWidth()
