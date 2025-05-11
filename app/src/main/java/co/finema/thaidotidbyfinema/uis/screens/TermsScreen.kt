@@ -21,6 +21,8 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -49,7 +51,7 @@ val bodyBold = SpanStyle(color = neutral06, fontSize = 18.sp, fontWeight = FontW
 val sectionBold = SpanStyle(color = primaryBlack, fontSize = 22.sp, fontWeight = FontWeight.W700)
 
 @Composable
-fun TermsScreen(navController: NavHostController, hasButton: Boolean) {
+fun TermsScreen(navController: NavHostController) {
   Scaffold(
       topBar = {
         TopAppBar(
@@ -123,7 +125,11 @@ fun TermsScreen(navController: NavHostController, hasButton: Boolean) {
                 fontWeight = FontWeight.W400)
           }
           item {
-            if (hasButton)
+            val context = LocalContext.current
+            val repository = remember { UserConfigRepository(context) }
+            val isAcceptedAgreements by
+                repository.isAcceptedAgreements.collectAsState(initial = false)
+            if (!isAcceptedAgreements)
                 Row(
                     modifier = Modifier.padding(vertical = 48.dp),
                     verticalAlignment = Alignment.CenterVertically) {
