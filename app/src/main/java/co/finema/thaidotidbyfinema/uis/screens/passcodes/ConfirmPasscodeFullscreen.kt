@@ -66,7 +66,7 @@ import kotlin.time.Duration.Companion.seconds
 fun ConfirmPasscodeFullscreen(
     navController: NavController,
     passcode: String,
-    onEnableBiometric: () -> Unit
+    onBiometricAuth: () -> Unit
 ) {
   BackHandler(enabled = true) {}
   val context = LocalContext.current
@@ -88,7 +88,7 @@ fun ConfirmPasscodeFullscreen(
   var enableBiometric by remember { mutableStateOf(false) }
   LaunchedEffect(enableBiometric) {
     if (enableBiometric) {
-      onEnableBiometric()
+      onBiometricAuth()
     }
   }
   var showBiometricAskedDialog by remember { mutableStateOf(false) }
@@ -123,7 +123,12 @@ fun ConfirmPasscodeFullscreen(
                                 color = lightBlue07,
                                 shape = RoundedCornerShape(56.dp))
                             .clip(RoundedCornerShape(56.dp))
-                            .clickable(onClick = { showBiometricAskedDialog = false }),
+                            .clickable(
+                                onClick = {
+                                  showBiometricAskedDialog = false
+                                  navController.popBackStack()
+                                  navController.popBackStack()
+                                }),
                     contentAlignment = Alignment.Center) {
                       Text(
                           text = stringResource(R.string.not_now),
@@ -164,7 +169,8 @@ fun ConfirmPasscodeFullscreen(
         text = R.string.unable_use_biometrics,
         onClick = {
           showErrorsDialog = false
-          //          navController.popBackStack()
+          navController.popBackStack()
+          navController.popBackStack()
         })
   }
   LaunchedEffect(authenticate.value) {
@@ -172,16 +178,13 @@ fun ConfirmPasscodeFullscreen(
       true -> {
         scope.launch { repository.updateUseBiometric(true) }
         showSetUpBiometricSuccess = true
-        scope.launch { delay(2.seconds) }.join()
+        delay(2.seconds)
         showSetUpBiometricSuccess = false
-        //        navController.popBackStack()
-        //        navController.popBackStack()
+        navController.popBackStack()
+        navController.popBackStack()
       }
       false -> {
         showErrorsDialog = true
-        // error dialog here
-        //        navController.popBackStack()
-        //        navController.popBackStack()
       }
       null -> {}
     }
@@ -193,9 +196,17 @@ fun ConfirmPasscodeFullscreen(
             contentAlignment = Alignment.Center) {
               TextButton(
                   onClick = {
-                    //                    navController.popBackStack()
-                    //                    navController.popBackStack()
-                    showErrorsDialog = true
+                    scope.launch { repository.updatePasscodeAsked(true) }
+                    scope
+                        .launch {
+                          showSetUpPinSuccess = true
+                          delay(2.seconds)
+                          showSetUpPinSuccess = false
+                        }
+                        .invokeOnCompletion {
+                          navController.popBackStack()
+                          navController.popBackStack()
+                        }
                   }) {
                     Text(
                         text = stringResource(R.string.skip),
@@ -219,16 +230,17 @@ fun ConfirmPasscodeFullscreen(
                       val hashedPasscode = hashedPasscode(passcode, salt)
                       repository.updateSalt(salt)
                       repository.updatePasscode(hashedPasscode)
+                      repository.updatePasscodeAsked(true)
                     }
                     showSetUpPinSuccess = true
-                    scope.launch { delay(2.seconds) }.join()
+                    delay(2.seconds)
                     showSetUpPinSuccess = false
                     if (biometricManager.canAuthenticate(BIOMETRIC_STRONG) ==
                         BiometricManager.BIOMETRIC_SUCCESS) {
                       showBiometricAskedDialog = true
                     } else {
-                      //                      navController.popBackStack()
-                      //                      navController.popBackStack()
+                      navController.popBackStack()
+                      navController.popBackStack()
                     }
                   } else {
                     shakeController.triggerShake()
