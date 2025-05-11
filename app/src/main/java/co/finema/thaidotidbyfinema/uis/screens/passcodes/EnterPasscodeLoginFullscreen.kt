@@ -22,6 +22,7 @@ import androidx.compose.material.icons.automirrored.rounded.Backspace
 import androidx.compose.material.icons.rounded.Fingerprint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
-import co.finema.thaidotidbyfinema.authenticate
+import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.ErrorDialog
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -48,14 +49,18 @@ import co.finema.thaidotidbyfinema.verifyPasscode
 import kotlin.math.roundToInt
 
 @Composable
-fun EnterPasscodeLoginFullscreen(navController: NavController, onAuthBiometric: () -> Unit) {
+fun EnterPasscodeLoginFullscreen(
+    navController: NavController,
+    onBiometricAuth: () -> Unit,
+    isLocalAuth: MutableState<Boolean>
+) {
   BackHandler(enabled = true) {}
   var showErrorsDialog by remember { mutableStateOf(false) }
   if (showErrorsDialog) {
     ErrorDialog(text = R.string.unable_use_biometrics, onClick = { showErrorsDialog = false })
   }
-  LaunchedEffect(authenticate.value) {
-    when (authenticate.value) {
+  LaunchedEffect(biometricAuth.value) {
+    when (biometricAuth.value) {
       true -> {
         navController.popBackStack()
       }
@@ -81,7 +86,7 @@ fun EnterPasscodeLoginFullscreen(navController: NavController, onAuthBiometric: 
           LaunchedEffect(confirmPasscode) {
             if (confirmPasscode.length == 6) {
               if (verifyPasscode(password = confirmPasscode, storedHash = passcode, salt = salt)) {
-                authenticate.value = true
+                biometricAuth.value = true
                 navController.popBackStack()
               } else {
                 shakeController.triggerShake()
@@ -172,7 +177,7 @@ fun EnterPasscodeLoginFullscreen(navController: NavController, onAuthBiometric: 
               verticalAlignment = Alignment.CenterVertically) {
                 if (useBiometric)
                     BottomButton(
-                        imageVector = Icons.Rounded.Fingerprint, onClick = { onAuthBiometric() })
+                        imageVector = Icons.Rounded.Fingerprint, onClick = { onBiometricAuth() })
                 else Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
