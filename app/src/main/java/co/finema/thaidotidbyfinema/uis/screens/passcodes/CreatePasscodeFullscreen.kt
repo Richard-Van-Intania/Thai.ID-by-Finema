@@ -24,20 +24,24 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.white
+import kotlinx.coroutines.launch
 
 @Composable
 fun CreatePasscodeFullscreen(navController: NavController) {
@@ -47,13 +51,21 @@ fun CreatePasscodeFullscreen(navController: NavController) {
         Box(
             modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
             contentAlignment = Alignment.Center) {
-              TextButton(onClick = { navController.popBackStack() }) {
-                Text(
-                    text = stringResource(R.string.skip),
-                    color = primaryDarkBlue,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700)
-              }
+              val context = LocalContext.current
+              val repository = remember { UserConfigRepository(context) }
+              val scope = rememberCoroutineScope()
+              TextButton(
+                  onClick = {
+                    scope
+                        .launch { repository.updatePasscodeAsked(true) }
+                        .invokeOnCompletion { navController.popBackStack() }
+                  }) {
+                    Text(
+                        text = stringResource(R.string.skip),
+                        color = primaryDarkBlue,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.W700)
+                  }
             }
       }) {
         Column(
@@ -64,7 +76,7 @@ fun CreatePasscodeFullscreen(navController: NavController) {
               LaunchedEffect(passcode) {
                 if (passcode.length == 6) {
                   navController.navigate(
-                      route = "${Screen.ConfirmPasscodeFullscreenKey.route}/${passcode}")
+                      route = "${Screen.ConfirmPasscodeFullscreenNav.route}/${passcode}")
                 }
               }
               Text(

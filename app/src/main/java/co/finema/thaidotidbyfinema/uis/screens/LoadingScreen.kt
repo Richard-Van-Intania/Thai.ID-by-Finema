@@ -3,6 +3,7 @@ package co.finema.thaidotidbyfinema.uis.screens
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -37,8 +38,7 @@ fun LoadingScreen(navController: NavController) {
     }
   }
   Scaffold {
-    it
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
       CircularProgressIndicator()
     }
   }
