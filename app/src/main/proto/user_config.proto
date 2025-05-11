@@ -20,6 +20,7 @@ message UserConfig {
   ViewLayout home_view_layout = 8;
   ViewLayout history_view_layout = 9;
   bool is_accepted_agreements = 10;
+  bool passcode_asked = 11;
 }
 
 message UserCard {

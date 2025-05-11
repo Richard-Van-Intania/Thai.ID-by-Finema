@@ -28,6 +28,7 @@ class UserConfigRepository(private val context: Context) {
   val historyViewLayout: Flow<ViewLayout> = userConfigFlow.map { prefs -> prefs.historyViewLayout }
   val isAcceptedAgreements: Flow<Boolean> =
       userConfigFlow.map { prefs -> prefs.isAcceptedAgreements }
+  val passcodeAsked: Flow<Boolean> = userConfigFlow.map { prefs -> prefs.passcodeAsked }
 
   suspend fun updatePasscode(passcode: String) {
     context.userConfigStore.updateData { prefs -> prefs.toBuilder().setPasscode(passcode).build() }
@@ -80,6 +81,12 @@ class UserConfigRepository(private val context: Context) {
   suspend fun updateIsAcceptedAgreements(isAcceptedAgreements: Boolean) {
     context.userConfigStore.updateData { prefs ->
       prefs.toBuilder().setIsAcceptedAgreements(isAcceptedAgreements).build()
+    }
+  }
+
+  suspend fun updatePasscodeAsked(passcodeAsked: Boolean) {
+    context.userConfigStore.updateData { prefs ->
+      prefs.toBuilder().setPasscodeAsked(passcodeAsked).build()
     }
   }
 }
