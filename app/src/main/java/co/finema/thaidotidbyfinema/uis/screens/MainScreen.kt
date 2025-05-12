@@ -9,7 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -248,12 +247,11 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
                                 indication = null,
                                 interactionSource = remember { MutableInteractionSource() }),
                     horizontalAlignment = Alignment.CenterHorizontally) {
-                      Spacer(modifier = Modifier.height(8.dp))
                       Icon(
                           imageVector = it.icon!!,
                           contentDescription = null,
                           tint = if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray)
-                      Box(modifier = Modifier.height(32.dp), contentAlignment = Alignment.Center) {
+                      Box(modifier = Modifier.height(24.dp), contentAlignment = Alignment.Center) {
                         Text(
                             text = stringResource(it.name!!),
                             color =
