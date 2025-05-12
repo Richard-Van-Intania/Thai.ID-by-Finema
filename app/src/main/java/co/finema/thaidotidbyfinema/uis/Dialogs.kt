@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,7 +31,7 @@ import androidx.compose.ui.window.DialogProperties
 import co.finema.thaidotidbyfinema.R
 
 @Composable
-fun FullScreenDialog(image: Int, height: Dp, text: Int) {
+fun FullScreenDialog(painter: Painter, height: Dp, text: String) {
   Dialog(
       onDismissRequest = {},
       properties =
@@ -40,12 +41,10 @@ fun FullScreenDialog(image: Int, height: Dp, text: Int) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
               Image(
-                  painter = painterResource(id = image),
-                  contentDescription = null,
-                  modifier = Modifier.height(height))
+                  painter = painter, contentDescription = null, modifier = Modifier.height(height))
               Spacer(modifier = Modifier.height(24.dp))
               Text(
-                  text = stringResource(text),
+                  text = text,
                   color = primaryBlack,
                   fontSize = 24.sp,
                   fontWeight = FontWeight.W700,
@@ -56,7 +55,7 @@ fun FullScreenDialog(image: Int, height: Dp, text: Int) {
 }
 
 @Composable
-fun ErrorDialog(text: Int, onClick: () -> Unit) {
+fun ErrorDialog(text: String, onClick: () -> Unit) {
   Dialog(onDismissRequest = {}) {
     Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
       Column(
@@ -69,7 +68,7 @@ fun ErrorDialog(text: Int, onClick: () -> Unit) {
                 modifier = Modifier.height(96.dp))
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = stringResource(text),
+                text = text,
                 color = primaryBlack,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.W400,

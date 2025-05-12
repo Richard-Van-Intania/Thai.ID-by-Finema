@@ -68,7 +68,7 @@ fun EnterPasscodeLoginFullscreen(
   var showErrorsDialog by remember { mutableStateOf(false) }
   if (showErrorsDialog) {
     ErrorDialog(
-        text = R.string.unable_use_biometrics,
+        text = stringResource(R.string.unable_use_biometrics),
         onClick = {
           biometricAuth.value = null
           showErrorsDialog = false

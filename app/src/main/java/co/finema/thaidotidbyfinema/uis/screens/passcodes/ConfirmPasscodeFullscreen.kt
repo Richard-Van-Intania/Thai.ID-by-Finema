@@ -89,14 +89,16 @@ fun ConfirmPasscodeFullscreen(
   var showSetUpPinSuccess by remember { mutableStateOf(false) }
   if (showSetUpPinSuccess) {
     FullScreenDialog(
-        image = R.drawable.create_sucess, height = 160.dp, text = R.string.set_up_pin_success)
+        painter = painterResource(R.drawable.create_sucess),
+        height = 160.dp,
+        text = stringResource(R.string.set_up_pin_success))
   }
   var showSetUpBiometricSuccess by remember { mutableStateOf(false) }
   if (showSetUpBiometricSuccess) {
     FullScreenDialog(
-        image = R.drawable.create_sucess,
+        painter = painterResource(R.drawable.create_sucess),
         height = 160.dp,
-        text = R.string.enable_biometrics_success)
+        text = stringResource(R.string.enable_biometrics_success))
   }
   var enableBiometric by remember { mutableStateOf(false) }
   LaunchedEffect(enableBiometric) {
@@ -178,7 +180,7 @@ fun ConfirmPasscodeFullscreen(
   var showErrorsDialog by remember { mutableStateOf(false) }
   if (showErrorsDialog) {
     ErrorDialog(
-        text = R.string.unable_use_biometrics,
+        text = stringResource(R.string.unable_use_biometrics),
         onClick = {
           showErrorsDialog = false
           passAuth = true
