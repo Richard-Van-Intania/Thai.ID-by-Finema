@@ -222,7 +222,7 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
             modifier = Modifier.clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
             containerColor = white) {
               val navBackStackEntry by tabController.currentBackStackEntryAsState()
-              val currentRoute = navBackStackEntry?.destination?.route
+              val currentTab = navBackStackEntry?.destination?.route
               bottomTabs.forEach {
                 BottomNavigationItem(
                     modifier = Modifier.padding(top = 8.dp),
@@ -231,15 +231,15 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
                       Text(
                           text = stringResource(it.name!!),
                           color =
-                              if (currentRoute == it.route) primaryDarkBlue else secondaryBlueGray,
+                              if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray,
                           fontSize = 12.sp,
                           fontWeight =
-                              if (currentRoute == it.route) FontWeight.W700 else FontWeight.W400,
+                              if (currentTab == it.route) FontWeight.W700 else FontWeight.W400,
                       )
                     },
-                    selected = currentRoute == it.route,
+                    selected = currentTab == it.route,
                     onClick = {
-                      if (currentRoute != it.route) {
+                      if (currentTab != it.route) {
                         tabController.navigate(it.route) {
                           popUpTo(tabController.graph.startDestinationId) { saveState = true }
                           launchSingleTop = true
