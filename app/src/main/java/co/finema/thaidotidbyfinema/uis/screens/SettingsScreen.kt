@@ -19,6 +19,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
@@ -51,20 +53,29 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
+  val snackbarHostState = remember { SnackbarHostState() }
+  val enableBiometricsSuccess = stringResource(R.string.enable_biometrics_success)
+  val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
+  val biometricsNotSupport = stringResource(R.string.biometrics_not_support)
+  val unableUseBiometrics = stringResource(R.string.unable_use_biometrics)
   LaunchedEffect(Unit) { biometricAuth.value = null }
   LaunchedEffect(biometricAuth.value) {
     when (biometricAuth.value) {
       true -> {
-        // snamck sucess
-        // store
+        snackbarHostState.showSnackbar(enableBiometricsSuccess)
+        biometricAuth.value = null
       }
       false -> {
-        // snack error
+        snackbarHostState.showSnackbar(unableUseBiometrics)
+        biometricAuth.value = null
       }
       null -> {}
     }
   }
   Scaffold(
+      snackbarHost = {
+        SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 40.dp))
+      },
       topBar = {
         AppBarOptBack(
             containerColor = white,
@@ -77,7 +88,6 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
         val repository = remember { UserConfigRepository(context) }
         val passcode by repository.passcode.collectAsState(initial = null)
         val useBiometric by repository.useBiometric.collectAsState(initial = null)
-        val scope = rememberCoroutineScope()
         if (passcode == null || useBiometric == null)
             Box(
                 modifier = Modifier.fillMaxSize().padding(it),
@@ -86,6 +96,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                 }
         else
             Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
+              val scope = rememberCoroutineScope()
               Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(R.string.enable_pin),
@@ -104,7 +115,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                           repository.updateSalt("")
                           repository.updatePasscode("")
                           repository.updateUseBiometric(false)
-                          // snack
+                          snackbarHostState.showSnackbar(disableBiometricsSuccess)
                         }
                       }
                     },
@@ -142,12 +153,12 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                               BiometricManager.BIOMETRIC_SUCCESS) {
                             onBiometricAuth()
                           } else {
-                            // snack not support
+                            scope.launch { snackbarHostState.showSnackbar(biometricsNotSupport) }
                           }
                         } else {
                           scope.launch {
                             repository.updateUseBiometric(false)
-                            // snack off
+                            snackbarHostState.showSnackbar(disableBiometricsSuccess)
                           }
                         }
                       },
@@ -171,7 +182,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                 HorizontalLine()
                 TextButton(
                     onClick = {
-                      // nav here
+                      // navController.navigate(Screen.CreatePasscode.route)
                     }) {
                       Row(
                           modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
