@@ -5,14 +5,13 @@ package co.finema.thaidotidbyfinema.uis.screens
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -31,6 +30,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.bottomTabs
@@ -210,20 +210,18 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
     if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreenNav.route)
   }
   val passcode by repository.passcode.collectAsState(initial = "")
-  LaunchedEffect(passcode, isLocalAuth.value) {
-    if (passcode.isNotEmpty() && !isLocalAuth.value) {
-      //      biometricAuth.value = null
-      //      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
-    }
-  }
+//  LaunchedEffect(passcode, isLocalAuth.value) {
+//    if (passcode.isNotEmpty() && !isLocalAuth.value) {
+//      biometricAuth.value = null
+//      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
+//    }
+//  }
   val tabController = rememberNavController()
   Scaffold(
       bottomBar = {
-        BottomNavigation(
-            modifier =
-                Modifier.height(96.dp).clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
-            elevation = 1.dp,
-            backgroundColor = white) {
+        NavigationBar(
+            modifier = Modifier.clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+            containerColor = white) {
               bottomTabs.forEach {
                 val navBackStackEntry by tabController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
