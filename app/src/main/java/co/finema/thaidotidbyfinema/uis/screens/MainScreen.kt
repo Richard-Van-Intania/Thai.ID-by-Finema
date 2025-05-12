@@ -43,8 +43,6 @@ import co.finema.thaidotidbyfinema.uis.secondaryBlueGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
-const val milliSeconds = 250
-
 // @Composable
 // fun MainScreen() {
 //  val navController = rememberNavController()
