@@ -77,6 +77,7 @@ fun ConfirmPasscodeFullscreen(
   val biometricManager = BiometricManager.from(context)
   val repository = remember { UserConfigRepository(context) }
   val scope = rememberCoroutineScope()
+  LaunchedEffect(Unit) { biometricAuth.value = null }
   var passAuth by remember { mutableStateOf(false) }
   LaunchedEffect(passAuth) {
     if (passAuth) {

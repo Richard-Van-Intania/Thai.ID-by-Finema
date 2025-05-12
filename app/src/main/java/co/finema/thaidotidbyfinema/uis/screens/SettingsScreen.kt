@@ -2,6 +2,8 @@
 
 package co.finema.thaidotidbyfinema.uis.screens
 
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +22,7 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -34,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.HorizontalLine
@@ -46,7 +50,20 @@ import co.finema.thaidotidbyfinema.uis.white
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
+  LaunchedEffect(Unit) { biometricAuth.value = null }
+  LaunchedEffect(biometricAuth.value) {
+    when (biometricAuth.value) {
+      true -> {
+        // snamck sucess
+        // store
+      }
+      false -> {
+        // snack error
+      }
+      null -> {}
+    }
+  }
   Scaffold(
       topBar = {
         AppBarOptBack(
@@ -56,6 +73,7 @@ fun SettingsScreen(navController: NavController) {
       },
       backgroundColor = white) {
         val context = LocalContext.current
+        val biometricManager = BiometricManager.from(context)
         val repository = remember { UserConfigRepository(context) }
         val passcode by repository.passcode.collectAsState(initial = null)
         val useBiometric by repository.useBiometric.collectAsState(initial = null)
@@ -120,11 +138,16 @@ fun SettingsScreen(navController: NavController) {
                       checked = useBiometric!!,
                       onCheckedChange = {
                         if (it) {
-                          // onbio
+                          if (biometricManager.canAuthenticate(BIOMETRIC_STRONG) ==
+                              BiometricManager.BIOMETRIC_SUCCESS) {
+                            onBiometricAuth()
+                          } else {
+                            // snack not support
+                          }
                         } else {
                           scope.launch {
                             repository.updateUseBiometric(false)
-                            // snack
+                            // snack off
                           }
                         }
                       },

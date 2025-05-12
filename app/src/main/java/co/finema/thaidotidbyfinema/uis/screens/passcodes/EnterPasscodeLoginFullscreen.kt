@@ -57,6 +57,7 @@ fun EnterPasscodeLoginFullscreen(
     isLocalAuth: MutableState<Boolean>
 ) {
   BackHandler(enabled = true) {}
+  LaunchedEffect(Unit) { biometricAuth.value = null }
   var passAuth by remember { mutableStateOf(false) }
   LaunchedEffect(passAuth) {
     if (passAuth) {

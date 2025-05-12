@@ -127,7 +127,9 @@ class MainActivity : FragmentActivity() {
                           SelectLayoutScreen(navController = navController)
                         }
                         composable(route = Screen.SettingsScreenNav.route) {
-                          SettingsScreen(navController = navController)
+                          SettingsScreen(
+                              navController = navController,
+                              onBiometricAuth = { biometricPrompt.authenticate(promptInfo) })
                         }
                       }
                 }
