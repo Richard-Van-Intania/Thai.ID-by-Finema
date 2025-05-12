@@ -53,6 +53,7 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
+// all here
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DocumentPlaceholderScreen(navController: NavController, documentLayout: DocumentLayout) {
