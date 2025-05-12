@@ -138,7 +138,7 @@ fun SettingsScreen(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    modifier = Modifier.padding(end = 88.dp),
+                    modifier = Modifier.padding(end = 96.dp),
                     text = stringResource(R.string.once_you_enable),
                     color = neutral04,
                     fontSize = 16.sp,
