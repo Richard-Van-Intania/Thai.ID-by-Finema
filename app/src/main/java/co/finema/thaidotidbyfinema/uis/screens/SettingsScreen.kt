@@ -22,10 +22,8 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -61,8 +59,6 @@ fun SettingsScreen(navController: NavController) {
         val repository = remember { UserConfigRepository(context) }
         val passcode by repository.passcode.collectAsState(initial = null)
         val useBiometric by repository.useBiometric.collectAsState(initial = null)
-        var pass by remember { mutableStateOf(false) }
-        var bio by remember { mutableStateOf(false) }
         val scope = rememberCoroutineScope()
         if (passcode == null || useBiometric == null)
             Box(
