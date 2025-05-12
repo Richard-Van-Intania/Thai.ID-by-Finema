@@ -111,11 +111,14 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                       if (it) {
                         // navController.navigate(Screen.CreatePasscode.route)
                       } else {
+                        // enterPasscodeTurnOffFullscreen
                         scope.launch {
                           repository.updateSalt("")
                           repository.updatePasscode("")
-                          repository.updateUseBiometric(false)
-                          snackbarHostState.showSnackbar(disableBiometricsSuccess)
+                          if (useBiometric!!) {
+                            repository.updateUseBiometric(false)
+                            snackbarHostState.showSnackbar(disableBiometricsSuccess)
+                          }
                         }
                       }
                     },
