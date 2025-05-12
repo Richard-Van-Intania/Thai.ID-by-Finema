@@ -5,9 +5,14 @@ package co.finema.thaidotidbyfinema.uis.screens
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -18,6 +23,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -224,31 +230,40 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
               val navBackStackEntry by tabController.currentBackStackEntryAsState()
               val currentTab = navBackStackEntry?.destination?.route
               bottomTabs.forEach {
-                BottomNavigationItem(
-                    modifier = Modifier.padding(top = 8.dp),
-                    icon = { Icon(imageVector = it.icon!!, contentDescription = null) },
-                    label = {
-                      Text(
-                          text = stringResource(it.name!!),
-                          color =
-                              if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray,
-                          fontSize = 12.sp,
-                          fontWeight =
-                              if (currentTab == it.route) FontWeight.W700 else FontWeight.W400,
-                      )
-                    },
-                    selected = currentTab == it.route,
-                    onClick = {
-                      if (currentTab != it.route) {
-                        tabController.navigate(it.route) {
-                          popUpTo(tabController.graph.startDestinationId) { saveState = true }
-                          launchSingleTop = true
-                          restoreState = true
-                        }
+                Column(
+                    modifier =
+                        Modifier.weight(1f)
+                            .clickable(
+                                onClick = {
+                                  if (currentTab != it.route) {
+                                    tabController.navigate(it.route) {
+                                      popUpTo(tabController.graph.startDestinationId) {
+                                        saveState = true
+                                      }
+                                      launchSingleTop = true
+                                      restoreState = true
+                                    }
+                                  }
+                                },
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }),
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                      Spacer(modifier = Modifier.height(8.dp))
+                      Icon(
+                          imageVector = it.icon!!,
+                          contentDescription = null,
+                          tint = if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray)
+                      Box(modifier = Modifier.height(32.dp), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = stringResource(it.name!!),
+                            color =
+                                if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray,
+                            fontSize = 12.sp,
+                            fontWeight =
+                                if (currentTab == it.route) FontWeight.W700 else FontWeight.W400,
+                        )
                       }
-                    },
-                    selectedContentColor = primaryDarkBlue,
-                    unselectedContentColor = secondaryBlueGray)
+                    }
               }
             }
       },
