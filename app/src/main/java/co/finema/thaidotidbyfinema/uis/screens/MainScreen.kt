@@ -35,6 +35,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.bottomTabs
@@ -222,7 +223,8 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
   Scaffold(
       bottomBar = {
         NavigationBar(
-            modifier = Modifier.clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+            modifier =
+                Modifier.clip(RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)),
             containerColor = white) {
               val navBackStackEntry by tabController.currentBackStackEntryAsState()
               val currentTab = navBackStackEntry?.destination?.route

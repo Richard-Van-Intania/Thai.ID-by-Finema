@@ -1,2 +1,4 @@
 - nav and hide bottom
 - kotlin java and view
+
+- เอาให้สวยยิ่งกว่าเดิม

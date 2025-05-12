@@ -19,18 +19,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,6 +45,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.DocumentLayout
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.uis.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.GradientButton
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -104,25 +101,10 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
   }
   Scaffold(
       topBar = {
-        CenterAlignedTopAppBar(
-            title = {
-              Text(
-                  text = stringResource(R.string.add_document),
-                  color = primaryBlack,
-                  fontSize = 24.sp,
-                  fontWeight = FontWeight.W700,
-              )
-            },
-            navigationIcon = {
-              IconButton(onClick = { navController.popBackStack() }) {
-                Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
-              }
-            },
-            colors =
-                TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = white,
-                    navigationIconContentColor = primaryBlack,
-                    actionIconContentColor = primaryBlack))
+        AppBarOptBack(
+            containerColor = white,
+            text = stringResource(R.string.add_document),
+            onClick = { navController.popBackStack() })
       },
       bottomBar = {
         Box(

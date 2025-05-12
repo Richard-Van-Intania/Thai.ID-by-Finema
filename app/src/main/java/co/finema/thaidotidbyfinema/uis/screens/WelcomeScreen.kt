@@ -49,7 +49,7 @@ fun WelcomeScreen(navController: NavHostController) {
         Column(
             modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
-              Spacer(modifier = Modifier.height(72.dp))
+              Spacer(modifier = Modifier.height(80.dp))
               Image(
                   painter = painterResource(id = R.drawable.thai_id_logo),
                   contentDescription = null,

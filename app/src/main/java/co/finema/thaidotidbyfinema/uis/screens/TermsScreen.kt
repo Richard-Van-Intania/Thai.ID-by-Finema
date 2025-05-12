@@ -14,15 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBackIosNew
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
+import co.finema.thaidotidbyfinema.uis.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue07
@@ -58,25 +53,10 @@ val sectionBold = SpanStyle(color = primaryBlack, fontSize = 22.sp, fontWeight =
 fun TermsScreen(navController: NavHostController) {
   Scaffold(
       topBar = {
-        CenterAlignedTopAppBar(
-            title = {
-              Text(
-                  text = stringResource(R.string.terms),
-                  color = primaryBlack,
-                  fontSize = 24.sp,
-                  fontWeight = FontWeight.W700,
-              )
-            },
-            navigationIcon = {
-              IconButton(onClick = { navController.popBackStack() }) {
-                Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
-              }
-            },
-            colors =
-                TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = white,
-                    navigationIconContentColor = primaryBlack,
-                    actionIconContentColor = primaryBlack))
+        AppBarOptBack(
+            containerColor = white,
+            text = stringResource(R.string.terms),
+            onClick = { navController.popBackStack() })
       },
       backgroundColor = white) {
         LazyColumn(
