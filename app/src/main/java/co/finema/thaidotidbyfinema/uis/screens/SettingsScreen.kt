@@ -74,7 +74,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
   }
   Scaffold(
       snackbarHost = {
-        SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 40.dp))
+        SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 48.dp))
       },
       topBar = {
         AppBarOptBack(
@@ -183,6 +183,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                 TextButton(
                     onClick = {
                       // navController.navigate(Screen.CreatePasscode.route)
+                      scope.launch { snackbarHostState.showSnackbar(disableBiometricsSuccess) }
                     }) {
                       Row(
                           modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
