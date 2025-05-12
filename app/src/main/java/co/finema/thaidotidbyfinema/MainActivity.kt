@@ -27,6 +27,7 @@ import co.finema.thaidotidbyfinema.uis.screens.LoadingScreen
 import co.finema.thaidotidbyfinema.uis.screens.MainScreen
 import co.finema.thaidotidbyfinema.uis.screens.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.SelectLayoutScreen
+import co.finema.thaidotidbyfinema.uis.screens.SettingsScreen
 import co.finema.thaidotidbyfinema.uis.screens.TermsScreen
 import co.finema.thaidotidbyfinema.uis.screens.WelcomeScreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmPasscodeFullscreen
@@ -124,6 +125,9 @@ class MainActivity : FragmentActivity() {
                         }
                         composable(route = Screen.SelectLayoutScreenNav.route) {
                           SelectLayoutScreen(navController = navController)
+                        }
+                        composable(route = Screen.SettingsScreenNav.route) {
+                          SettingsScreen(navController = navController)
                         }
                       }
                 }

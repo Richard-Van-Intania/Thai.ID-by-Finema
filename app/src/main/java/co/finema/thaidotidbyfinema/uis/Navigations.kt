@@ -36,6 +36,8 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
   object ConfirmPasscodeFullscreenNav : Screen("ConfirmPasscodeFullscreenNav")
 
   object EnterPasscodeLoginFullscreenNav : Screen("EnterPasscodeLoginFullscreenNav")
+
+  object SettingsScreenNav : Screen("SettingsScreenNav")
 }
 
 val bottomTabs = listOf(Screen.HomeTabNav, Screen.HistoryTabNav, Screen.ProfileTabNav)
