@@ -81,7 +81,6 @@ fun ConfirmPasscodeFullscreen(
   var passAuth by remember { mutableStateOf(false) }
   LaunchedEffect(passAuth) {
     if (passAuth) {
-      biometricAuth.value = null
       isLocalAuth.value = true
       navController.popBackStack()
       navController.popBackStack()
