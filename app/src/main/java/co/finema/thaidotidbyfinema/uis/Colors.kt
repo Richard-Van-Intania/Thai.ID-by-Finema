@@ -18,6 +18,8 @@ val devGreen = Color(0xFF92F822)
 val whiteBG = Color(0xFFF6F7F9)
 val white = Color.White
 
+val success06 = Color(0xFF26B941)
+
 val gradient = Brush.linearGradient(colors = listOf(primaryDarkBlue, lightBlue07))
 
-// #ECEEF2 #8895A8
+// #ECEEF2 #8895A8 success06 #26B941

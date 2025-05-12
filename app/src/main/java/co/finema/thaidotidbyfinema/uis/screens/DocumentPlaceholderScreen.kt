@@ -47,6 +47,7 @@ import co.finema.thaidotidbyfinema.DocumentLayout
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.uis.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.GradientButton
+import co.finema.thaidotidbyfinema.uis.HorizontalLine
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.secondaryGray
@@ -76,13 +77,13 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
           Box(modifier = Modifier.fillMaxWidth().height(2.dp).background(neutral02))
           OptionButton(
               imageVector = Icons.Rounded.PhotoCamera, text = R.string.scan_your_card, onClick = {})
-          Hr()
+          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
           OptionButton(
               imageVector = Icons.Rounded.Image, text = R.string.import_from_album, onClick = {})
-          Hr()
+          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
           OptionButton(
               imageVector = Icons.Rounded.Description, text = R.string.pick_file, onClick = {})
-          Hr()
+          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
           TextButton(onClick = { showOptionDialog = false }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -214,9 +215,3 @@ fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
         }
   }
 }
-
-@Composable
-fun Hr() =
-    Box(
-        modifier =
-            Modifier.fillMaxWidth().height(1.dp).padding(horizontal = 16.dp).background(neutral02))

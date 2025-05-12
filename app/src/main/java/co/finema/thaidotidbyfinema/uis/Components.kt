@@ -2,6 +2,10 @@
 
 package co.finema.thaidotidbyfinema.uis
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -11,8 +15,10 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,3 +45,7 @@ fun AppBarOptBack(containerColor: Color, text: String, onClick: (() -> Unit)? = 
               navigationIconContentColor = primaryBlack,
               actionIconContentColor = primaryBlack))
 }
+
+@Composable
+fun HorizontalLine(modifier: Modifier = Modifier) =
+    Box(modifier = modifier.fillMaxWidth().height(1.dp).background(neutral02))
