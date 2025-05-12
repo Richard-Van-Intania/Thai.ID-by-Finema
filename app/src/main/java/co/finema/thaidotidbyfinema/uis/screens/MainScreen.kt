@@ -221,9 +221,9 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
         NavigationBar(
             modifier = Modifier.clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
             containerColor = white) {
+              val navBackStackEntry by tabController.currentBackStackEntryAsState()
+              val currentRoute = navBackStackEntry?.destination?.route
               bottomTabs.forEach {
-                val navBackStackEntry by tabController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.destination?.route
                 BottomNavigationItem(
                     modifier = Modifier.padding(top = 8.dp),
                     icon = { Icon(imageVector = it.icon!!, contentDescription = null) },
