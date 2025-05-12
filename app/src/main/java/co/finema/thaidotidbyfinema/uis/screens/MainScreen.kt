@@ -1,3 +1,5 @@
+@file:Suppress("UsingMaterialAndMaterial3Libraries")
+
 package co.finema.thaidotidbyfinema.uis.screens
 
 import androidx.activity.compose.BackHandler
@@ -29,7 +31,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.bottomTabs
@@ -209,12 +210,12 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
     if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreenNav.route)
   }
   val passcode by repository.passcode.collectAsState(initial = "")
-//  LaunchedEffect(passcode, isLocalAuth.value) {
-//    if (passcode.isNotEmpty() && !isLocalAuth.value) {
-//      biometricAuth.value = null
-//      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
-//    }
-//  }
+  LaunchedEffect(passcode, isLocalAuth.value) {
+    if (passcode.isNotEmpty() && !isLocalAuth.value) {
+      //      biometricAuth.value = null
+      //      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
+    }
+  }
   val tabController = rememberNavController()
   Scaffold(
       bottomBar = {
@@ -257,9 +258,9 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
       backgroundColor = whiteBG) {
         val counterState = rememberCounterState()
         NavHost(
+            modifier = Modifier.padding(it),
             navController = tabController,
             startDestination = Screen.HomeTabNav.route,
-            modifier = Modifier.padding(it),
         ) {
           composable(
               route = Screen.HomeTabNav.route,

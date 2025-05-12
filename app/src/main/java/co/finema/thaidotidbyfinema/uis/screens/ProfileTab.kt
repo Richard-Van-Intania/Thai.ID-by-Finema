@@ -46,9 +46,7 @@ fun ProfileTab(navController: NavController) {
       backgroundColor = whiteBG) {
         Column(
             modifier =
-                Modifier.padding(it)
-                    .padding(horizontal = 16.dp)
-                    .background(devGreen)
-                    .fillMaxSize()) {}
+                Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp).background(devGreen),
+        ) {}
       }
 }
