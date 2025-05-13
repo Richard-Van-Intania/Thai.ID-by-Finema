@@ -54,14 +54,14 @@ import kotlin.math.roundToInt
 fun EnterPasscodeLoginFullscreen(
     navController: NavController,
     onBiometricAuth: () -> Unit,
-    isLocalAuth: MutableState<Boolean>
+    localAuth: MutableState<Boolean>
 ) {
   BackHandler(enabled = true) {}
   LaunchedEffect(Unit) { biometricAuth.value = null }
   var passAuth by remember { mutableStateOf(false) }
   LaunchedEffect(passAuth) {
     if (passAuth) {
-      isLocalAuth.value = true
+      localAuth.value = true
       navController.popBackStack()
     }
   }

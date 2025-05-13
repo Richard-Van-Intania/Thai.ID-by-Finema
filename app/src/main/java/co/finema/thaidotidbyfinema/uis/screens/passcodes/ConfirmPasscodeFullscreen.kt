@@ -70,7 +70,7 @@ fun ConfirmPasscodeFullscreen(
     navController: NavController,
     passcode: String,
     onBiometricAuth: () -> Unit,
-    isLocalAuth: MutableState<Boolean>
+    localAuth: MutableState<Boolean>
 ) {
   BackHandler(enabled = true) {}
   val context = LocalContext.current
@@ -81,7 +81,7 @@ fun ConfirmPasscodeFullscreen(
   var passAuth by remember { mutableStateOf(false) }
   LaunchedEffect(passAuth) {
     if (passAuth) {
-      isLocalAuth.value = true
+      localAuth.value = true
       navController.popBackStack()
       navController.popBackStack()
     }
