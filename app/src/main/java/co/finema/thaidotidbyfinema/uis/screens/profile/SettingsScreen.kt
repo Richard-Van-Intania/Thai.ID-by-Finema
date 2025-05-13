@@ -42,6 +42,7 @@ import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
+import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.neutral04
@@ -98,6 +99,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
         else
             Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
               val scope = rememberCoroutineScope()
+
               Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(R.string.enable_pin),
@@ -110,17 +112,10 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                     checked = passcode!!.isNotEmpty(),
                     onCheckedChange = {
                       if (it) {
-                        // navController.navigate(Screen.CreatePasscode.route)
+                        // move logic to confirm screen
+                        //    navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
                       } else {
-                        // enterPasscodeTurnOffFullscreen
-                        scope.launch {
-                          repository.updateSalt("")
-                          repository.updatePasscode("")
-                          if (useBiometric!!) {
-                            repository.updateUseBiometric(false)
-                            snackbarHostState.showSnackbar(disableBiometricsSuccess)
-                          }
-                        }
+                        navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
                       }
                     },
                     colors =
