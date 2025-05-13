@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
-import co.finema.thaidotidbyfinema.uis.FullScreenDialog
+import co.finema.thaidotidbyfinema.uis.components.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue

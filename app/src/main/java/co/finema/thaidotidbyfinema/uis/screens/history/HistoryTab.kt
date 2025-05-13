@@ -1,6 +1,6 @@
 @file:Suppress("UsingMaterialAndMaterial3Libraries")
 
-package co.finema.thaidotidbyfinema.uis.screens
+package co.finema.thaidotidbyfinema.uis.screens.history
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

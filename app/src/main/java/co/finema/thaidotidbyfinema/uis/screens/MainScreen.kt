@@ -40,6 +40,10 @@ import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.bottomTabs
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
+import co.finema.thaidotidbyfinema.uis.screens.history.HistoryTab
+import co.finema.thaidotidbyfinema.uis.screens.history.rememberCounterState
+import co.finema.thaidotidbyfinema.uis.screens.home.HomeTab
+import co.finema.thaidotidbyfinema.uis.screens.profile.ProfileTab
 import co.finema.thaidotidbyfinema.uis.secondaryBlueGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG

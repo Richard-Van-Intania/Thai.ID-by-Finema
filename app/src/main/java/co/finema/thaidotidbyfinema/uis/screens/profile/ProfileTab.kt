@@ -1,6 +1,6 @@
 @file:Suppress("UsingMaterialAndMaterial3Libraries")
 
-package co.finema.thaidotidbyfinema.uis.screens
+package co.finema.thaidotidbyfinema.uis.screens.profile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.cornerRadius
-import co.finema.thaidotidbyfinema.uis.AppBarOptBack
+import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.neutral05
 import co.finema.thaidotidbyfinema.uis.primaryBlack

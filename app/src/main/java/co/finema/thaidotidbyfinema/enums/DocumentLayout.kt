@@ -1,4 +1,4 @@
-package co.finema.thaidotidbyfinema
+package co.finema.thaidotidbyfinema.enums
 
 enum class DocumentLayout {
   ONE_SIDE_CARD,

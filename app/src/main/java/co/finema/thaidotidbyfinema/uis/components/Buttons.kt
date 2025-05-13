@@ -1,6 +1,6 @@
 @file:Suppress("UsingMaterialAndMaterial3Libraries")
 
-package co.finema.thaidotidbyfinema.uis
+package co.finema.thaidotidbyfinema.uis.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,6 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.finema.thaidotidbyfinema.uis.gradient
+import co.finema.thaidotidbyfinema.uis.white
 
 @Composable
 fun GradientButton(onClick: () -> Unit, text: String) {

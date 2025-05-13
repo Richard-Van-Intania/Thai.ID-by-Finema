@@ -1,6 +1,6 @@
 @file:Suppress("UsingMaterialAndMaterial3Libraries")
 
-package co.finema.thaidotidbyfinema.uis.screens
+package co.finema.thaidotidbyfinema.uis.screens.onboarding
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
-import co.finema.thaidotidbyfinema.uis.AppBarOptBack
+import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue07

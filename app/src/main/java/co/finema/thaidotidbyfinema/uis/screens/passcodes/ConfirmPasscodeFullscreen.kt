@@ -53,8 +53,8 @@ import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.generateSalt
 import co.finema.thaidotidbyfinema.hashedPasscode
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
-import co.finema.thaidotidbyfinema.uis.ErrorDialog
-import co.finema.thaidotidbyfinema.uis.FullScreenDialog
+import co.finema.thaidotidbyfinema.uis.components.ErrorDialog
+import co.finema.thaidotidbyfinema.uis.components.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue07
 import co.finema.thaidotidbyfinema.uis.primaryBlack

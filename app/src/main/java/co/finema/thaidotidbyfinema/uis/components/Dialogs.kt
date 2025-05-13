@@ -1,6 +1,6 @@
 @file:Suppress("UsingMaterialAndMaterial3Libraries")
 
-package co.finema.thaidotidbyfinema.uis
+package co.finema.thaidotidbyfinema.uis.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.uis.primaryBlack
+import co.finema.thaidotidbyfinema.uis.white
 
 @Composable
 fun FullScreenDialog(painter: Painter, height: Dp, text: String) {

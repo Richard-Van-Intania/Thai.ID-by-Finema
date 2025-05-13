@@ -44,7 +44,7 @@ import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
-import co.finema.thaidotidbyfinema.uis.ErrorDialog
+import co.finema.thaidotidbyfinema.uis.components.ErrorDialog
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.verifyPasscode

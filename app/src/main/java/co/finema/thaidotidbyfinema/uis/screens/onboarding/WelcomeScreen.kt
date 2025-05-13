@@ -1,6 +1,6 @@
 @file:Suppress("UsingMaterialAndMaterial3Libraries")
 
-package co.finema.thaidotidbyfinema.uis.screens
+package co.finema.thaidotidbyfinema.uis.screens.onboarding
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import co.finema.thaidotidbyfinema.R
-import co.finema.thaidotidbyfinema.uis.GradientButton
+import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.neutral07
 import co.finema.thaidotidbyfinema.uis.primaryBlack

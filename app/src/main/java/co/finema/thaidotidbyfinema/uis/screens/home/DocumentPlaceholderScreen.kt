@@ -1,6 +1,6 @@
 @file:Suppress("UsingMaterialAndMaterial3Libraries")
 
-package co.finema.thaidotidbyfinema.uis.screens
+package co.finema.thaidotidbyfinema.uis.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -43,11 +43,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
-import co.finema.thaidotidbyfinema.DocumentLayout
+import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.R
-import co.finema.thaidotidbyfinema.uis.AppBarOptBack
-import co.finema.thaidotidbyfinema.uis.GradientButton
-import co.finema.thaidotidbyfinema.uis.HorizontalLine
+import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
+import co.finema.thaidotidbyfinema.uis.components.GradientButton
+import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.secondaryGray

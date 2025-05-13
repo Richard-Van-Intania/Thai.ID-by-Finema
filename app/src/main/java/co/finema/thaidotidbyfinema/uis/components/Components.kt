@@ -1,6 +1,6 @@
 @file:Suppress("UsingMaterialAndMaterial3Libraries")
 
-package co.finema.thaidotidbyfinema.uis
+package co.finema.thaidotidbyfinema.uis.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,6 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.finema.thaidotidbyfinema.uis.neutral02
+import co.finema.thaidotidbyfinema.uis.primaryBlack
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +45,8 @@ fun AppBarOptBack(containerColor: Color, text: String, onClick: (() -> Unit)? = 
           TopAppBarDefaults.centerAlignedTopAppBarColors(
               containerColor = containerColor,
               navigationIconContentColor = primaryBlack,
-              actionIconContentColor = primaryBlack))
+              actionIconContentColor = primaryBlack
+          ))
 }
 
 @Composable
