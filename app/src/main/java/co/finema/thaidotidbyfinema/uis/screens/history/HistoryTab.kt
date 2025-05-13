@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -28,6 +29,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HistoryTab(navController: NavController) {
+  val localAuth = remember { mutableStateOf(false) }
+  LaunchedEffect(localAuth.value) { println(localAuth.value) }
   val counterState = rememberCounterState()
   LaunchedEffect(counterState.count) { println(counterState.count) }
   val count = remember { mutableIntStateOf(0) }
