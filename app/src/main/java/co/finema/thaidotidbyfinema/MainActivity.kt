@@ -9,7 +9,6 @@ import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricPrompt
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +31,7 @@ import co.finema.thaidotidbyfinema.uis.screens.onboarding.WelcomeScreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmPasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeLoginFullscreen
+import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeTurnOffFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
 import java.util.concurrent.Executor
 
@@ -76,9 +76,8 @@ class MainActivity : FragmentActivity() {
     setContent {
       MaterialTheme(
           colors = lightColors(primary = primaryDarkBlue), typography = CustomTypography) {
-            val isLocalAuth = remember { mutableStateOf(false) }
-            LaunchedEffect(isLocalAuth.value) { println(isLocalAuth.value) }
             val navController = rememberNavController()
+            val localAuth = remember { mutableStateOf(false) }
             NavHost(
                 navController = navController, startDestination = Screen.LoadingScreenNav.route) {
                   composable(route = Screen.LoadingScreenNav.route) {
@@ -101,7 +100,7 @@ class MainActivity : FragmentActivity() {
                       startDestination = Screen.MainScreenNav.route,
                       route = Screen.HomeRootNav.route) {
                         composable(route = Screen.MainScreenNav.route) {
-                          MainScreen(navController = navController, isLocalAuth = isLocalAuth)
+                          MainScreen(navController = navController, localAuth = localAuth)
                         }
                         composable(route = Screen.CreatePasscodeFullscreenNav.route) {
                           CreatePasscodeFullscreen(navController = navController)
@@ -115,19 +114,24 @@ class MainActivity : FragmentActivity() {
                                   navController = navController,
                                   passcode = passcode,
                                   onBiometricAuth = { biometricPrompt.authenticate(promptInfo) },
-                                  isLocalAuth = isLocalAuth)
+                                  localAuth = localAuth)
                             }
                         composable(route = Screen.EnterPasscodeLoginFullscreenNav.route) {
                           EnterPasscodeLoginFullscreen(
                               navController = navController,
                               onBiometricAuth = { biometricPrompt.authenticate(promptInfo) },
-                              isLocalAuth = isLocalAuth)
+                              localAuth = localAuth)
                         }
                         composable(route = Screen.SelectLayoutScreenNav.route) {
                           SelectLayoutScreen(navController = navController)
                         }
                         composable(route = Screen.SettingsScreenNav.route) {
                           SettingsScreen(
+                              navController = navController,
+                              onBiometricAuth = { biometricPrompt.authenticate(promptInfo) })
+                        }
+                        composable(route = Screen.EnterPasscodeTurnOffFullscreenNav.route) {
+                          EnterPasscodeTurnOffFullscreen(
                               navController = navController,
                               onBiometricAuth = { biometricPrompt.authenticate(promptInfo) })
                         }
