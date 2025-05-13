@@ -25,14 +25,14 @@ import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.screens.LoadingScreen
 import co.finema.thaidotidbyfinema.uis.screens.MainScreen
-import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
-import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
+import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.TermsScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.WelcomeScreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmPasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeLoginFullscreen
+import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
 import java.util.concurrent.Executor
 
 val biometricAuth: MutableState<Boolean?> = mutableStateOf(null)

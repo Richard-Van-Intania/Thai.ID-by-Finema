@@ -19,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
@@ -42,7 +43,7 @@ import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.biometricAuth
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
-import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
+import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.neutral04
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
@@ -182,7 +183,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                     fontWeight = FontWeight.W400,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                HorizontalLine()
+                HorizontalDivider(thickness = 1.dp, color = neutral02)
                 TextButton(
                     onClick = {
                       // navController.navigate(Screen.CreatePasscode.route)
@@ -204,7 +205,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                                 tint = primaryDarkBlue)
                           }
                     }
-                HorizontalLine()
+                HorizontalDivider(thickness = 1.dp, color = neutral02)
               }
             }
       }
