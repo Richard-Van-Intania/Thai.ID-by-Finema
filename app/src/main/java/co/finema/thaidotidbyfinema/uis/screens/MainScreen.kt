@@ -208,7 +208,7 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 // }
 
 @Composable
-fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boolean>) {
+fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean>) {
   BackHandler(enabled = true) {}
   val context = LocalContext.current
   val repository = remember { UserConfigRepository(context) }
@@ -217,8 +217,8 @@ fun MainScreen(navController: NavHostController, isLocalAuth: MutableState<Boole
     if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreenNav.route)
   }
   val passcode by repository.passcode.collectAsState(initial = "")
-  LaunchedEffect(passcode, isLocalAuth.value) {
-    if (passcode.isNotEmpty() && !isLocalAuth.value) {
+  LaunchedEffect(passcode, localAuth.value) {
+    if (passcode.isNotEmpty() && !localAuth.value) {
       //      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
       navController.navigate(Screen.SettingsScreenNav.route)
     }
