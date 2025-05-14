@@ -177,7 +177,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                 HorizontalDivider(thickness = 1.dp, color = neutral02)
                 TextButton(
                     onClick = {
-                      navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
+                      navController.navigate(Screen.EnterPasscodeChangeFullscreenNav.route)
                     }) {
                       Row(
                           modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),

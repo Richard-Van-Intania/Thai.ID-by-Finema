@@ -29,9 +29,12 @@ import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.TermsScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.WelcomeScreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmNewPasscodeFullscreen
+import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmPasscodeChangeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmPasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreateNewPasscodeFullscreen
+import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeChangeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscreen
+import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeChangeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeLoginFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeTurnOffFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
@@ -147,6 +150,23 @@ class MainActivity : FragmentActivity() {
                               val tapPasscode =
                                   backStackEntry.arguments?.getString("tapPasscode") ?: ""
                               ConfirmNewPasscodeFullscreen(
+                                  navController = navController, tapPasscode = tapPasscode)
+                            }
+                        composable(route = Screen.EnterPasscodeChangeFullscreenNav.route) {
+                          EnterPasscodeChangeFullscreen(
+                              navController = navController, onBiometricAuth = startBiometricAuth)
+                        }
+                        composable(route = Screen.CreatePasscodeChangeFullscreenNav.route) {
+                          CreatePasscodeChangeFullscreen(navController = navController)
+                        }
+                        composable(
+                            route =
+                                "${Screen.ConfirmPasscodeChangeFullscreenNav.route}/{tapPasscode}",
+                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
+                                backStackEntry ->
+                              val tapPasscode =
+                                  backStackEntry.arguments?.getString("tapPasscode") ?: ""
+                              ConfirmPasscodeChangeFullscreen(
                                   navController = navController, tapPasscode = tapPasscode)
                             }
                       }

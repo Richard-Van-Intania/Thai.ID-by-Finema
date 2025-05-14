@@ -5,6 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 @Composable
-fun CreatePasscodeChangeFullscreen(navController: NavController, onBiometricAuth: () -> Unit) {
+fun CreatePasscodeChangeFullscreen(navController: NavController) {
 
 }

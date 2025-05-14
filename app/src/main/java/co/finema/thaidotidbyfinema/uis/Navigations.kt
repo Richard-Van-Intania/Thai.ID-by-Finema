@@ -43,6 +43,12 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
 
   object ConfirmNewPasscodeFullscreenNav : Screen("ConfirmNewPasscodeFullscreenNav")
 
+  object EnterPasscodeChangeFullscreenNav : Screen("EnterPasscodeChangeFullscreenNav")
+
+  object CreatePasscodeChangeFullscreenNav : Screen("CreatePasscodeChangeFullscreenNav")
+
+  object ConfirmPasscodeChangeFullscreenNav : Screen("ConfirmPasscodeChangeFullscreenNav")
+
   object SSSSSS : Screen("SSSSSS")
 
   object SettingsScreenNav : Screen("SettingsScreenNav")
@@ -50,4 +56,4 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
 
 val bottomTabs = listOf(Screen.HomeTabNav, Screen.HistoryTabNav, Screen.ProfileTabNav)
 
-// ConfirmNewPasscodeFullscreenNav
+// CreatePasscodeChangeFullscreenNav
