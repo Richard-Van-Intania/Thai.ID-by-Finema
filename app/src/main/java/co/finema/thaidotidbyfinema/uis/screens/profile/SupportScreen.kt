@@ -48,6 +48,9 @@ fun SupportScreen(navController: NavController) {
               val context = LocalContext.current
               val subject = stringResource(R.string.subject)
               val body = stringResource(R.string.body)
+              val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+              val versionName = packageInfo.versionName
+              val versionCode = packageInfo.longVersionCode
               Spacer(modifier = Modifier.height(32.dp))
               Text(
                   text = stringResource(R.string.if_you_encounter),
@@ -79,7 +82,7 @@ fun SupportScreen(navController: NavController) {
                   }
               Spacer(modifier = Modifier.weight(1f))
               Text(
-                  text = "ssssssss",
+                  text = "${stringResource(R.string.version)} $versionName build $versionCode",
                   color = neutral04,
                   fontSize = 20.sp,
                   fontWeight = FontWeight.W400)
