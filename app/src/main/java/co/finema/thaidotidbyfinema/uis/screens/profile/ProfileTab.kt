@@ -112,7 +112,11 @@ fun ProfileTab(navController: NavController) {
                       SettingsMenu(text = stringResource(R.string.language), onClick = {})
                       SettingsMenu(text = stringResource(R.string.privacy_policy), onClick = {})
                       SettingsMenu(text = stringResource(R.string.terms), onClick = {})
-                      SettingsMenu(text = stringResource(R.string.help_support), onClick = {})
+                      SettingsMenu(
+                          text = stringResource(R.string.help_support),
+                          onClick = {
+                            navController.navigate(route = Screen.SupportScreenNav.route)
+                          })
                       Spacer(modifier = Modifier.height(16.dp))
                     }
                   }

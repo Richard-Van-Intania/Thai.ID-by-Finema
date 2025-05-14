@@ -38,6 +38,7 @@ import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeChangeFull
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeLoginFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeTurnOffFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
+import co.finema.thaidotidbyfinema.uis.screens.profile.SupportScreen
 import java.util.concurrent.Executor
 
 val biometricAuth: MutableState<Boolean?> = mutableStateOf(null)
@@ -169,6 +170,9 @@ class MainActivity : FragmentActivity() {
                               ConfirmPasscodeChangeFullscreen(
                                   navController = navController, tapPasscode = tapPasscode)
                             }
+                        composable(route = Screen.SupportScreenNav.route) {
+                          SupportScreen(navController = navController)
+                        }
                       }
                 }
           }
