@@ -56,6 +56,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
   LaunchedEffect(Unit) { biometricAuth.value = null }
+  val context = LocalContext.current
+  val biometricManager = BiometricManager.from(context)
+  val repository = remember { UserConfigRepository(context) }
   val snackbarHostState = remember { SnackbarHostState() }
   val enableBiometricsSuccess = stringResource(R.string.enable_biometrics_success)
   val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
@@ -64,6 +67,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
   LaunchedEffect(biometricAuth.value) {
     when (biometricAuth.value) {
       true -> {
+        repository.updateUseBiometric(true)
         snackbarHostState.showSnackbar(enableBiometricsSuccess)
         biometricAuth.value = null
       }
@@ -85,9 +89,6 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
             onClick = { navController.popBackStack() })
       },
       backgroundColor = white) {
-        val context = LocalContext.current
-        val biometricManager = BiometricManager.from(context)
-        val repository = remember { UserConfigRepository(context) }
         val passcode by repository.passcode.collectAsState(initial = null)
         val useBiometric by repository.useBiometric.collectAsState(initial = null)
         if (passcode == null || useBiometric == null)
