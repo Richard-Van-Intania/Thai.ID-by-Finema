@@ -55,12 +55,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
+  LaunchedEffect(Unit) { biometricAuth.value = null }
   val snackbarHostState = remember { SnackbarHostState() }
   val enableBiometricsSuccess = stringResource(R.string.enable_biometrics_success)
   val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
   val biometricsNotSupport = stringResource(R.string.biometrics_not_support)
   val unableUseBiometrics = stringResource(R.string.unable_use_biometrics)
-  LaunchedEffect(Unit) { biometricAuth.value = null }
   LaunchedEffect(biometricAuth.value) {
     when (biometricAuth.value) {
       true -> {
@@ -110,12 +110,9 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                 Switch(
                     checked = passcode!!.isNotEmpty(),
                     onCheckedChange = {
-                      if (it) {
-                        //
-                        // navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
-                      } else {
-                        navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
-                      }
+                      navController.navigate(
+                          if (it) Screen.CreateNewPasscodeFullscreenNav.route
+                          else Screen.EnterPasscodeTurnOffFullscreenNav.route)
                     },
                     colors =
                         SwitchDefaults.colors(
@@ -180,8 +177,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                 HorizontalDivider(thickness = 1.dp, color = neutral02)
                 TextButton(
                     onClick = {
-                      // navController.navigate(Screen.CreatePasscode.route)
-                      scope.launch { snackbarHostState.showSnackbar(disableBiometricsSuccess) }
+                      navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
                     }) {
                       Row(
                           modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),

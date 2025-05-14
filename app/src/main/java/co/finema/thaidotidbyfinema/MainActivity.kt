@@ -29,6 +29,7 @@ import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.TermsScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.WelcomeScreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmPasscodeFullscreen
+import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreateNewPasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeLoginFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeTurnOffFullscreen
@@ -134,6 +135,9 @@ class MainActivity : FragmentActivity() {
                         composable(route = Screen.EnterPasscodeTurnOffFullscreenNav.route) {
                           EnterPasscodeTurnOffFullscreen(
                               navController = navController, onBiometricAuth = startBiometricAuth)
+                        }
+                        composable(route = Screen.CreateNewPasscodeFullscreenNav.route) {
+                          CreateNewPasscodeFullscreen(navController = navController)
                         }
                       }
                 }

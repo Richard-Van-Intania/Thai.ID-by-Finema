@@ -57,13 +57,13 @@ import kotlin.math.roundToInt
 @Composable
 fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth: () -> Unit) {
   BackHandler(enabled = true) {}
+  LaunchedEffect(Unit) { biometricAuth.value = null }
   val context = LocalContext.current
   val repository = remember { UserConfigRepository(context) }
-  val scope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
   val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
   val useBiometric by repository.useBiometric.collectAsState(initial = false)
-  LaunchedEffect(Unit) { biometricAuth.value = null }
+  val scope = rememberCoroutineScope()
   var passAuth by remember { mutableStateOf(false) }
   LaunchedEffect(passAuth) {
     if (passAuth) {
@@ -105,16 +105,13 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
         Box(
             modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
             contentAlignment = Alignment.Center) {
-              TextButton(
-                  onClick = {
-                    //
-                  }) {
-                    Text(
-                        text = stringResource(R.string.cancel),
-                        color = primaryDarkBlue,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.W700)
-                  }
+              TextButton(onClick = { navController.popBackStack() }) {
+                Text(
+                    text = stringResource(R.string.cancel),
+                    color = primaryDarkBlue,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.W700)
+              }
             }
       }) {
         Column(
