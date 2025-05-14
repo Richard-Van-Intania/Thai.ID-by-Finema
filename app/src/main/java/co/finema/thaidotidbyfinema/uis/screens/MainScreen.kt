@@ -219,8 +219,8 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
   val passcode by repository.passcode.collectAsState(initial = "")
   LaunchedEffect(passcode, localAuth.value) {
     if (passcode.isNotEmpty() && !localAuth.value) {
-      //      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
-      navController.navigate(Screen.SettingsScreenNav.route)
+      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
+      //      navController.navigate(Screen.SettingsScreenNav.route)
     }
   }
   val tabController = rememberNavController()

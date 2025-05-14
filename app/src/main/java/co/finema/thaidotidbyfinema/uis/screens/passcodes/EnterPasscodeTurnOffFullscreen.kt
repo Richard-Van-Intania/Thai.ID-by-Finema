@@ -133,7 +133,7 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
                 }
               }
               Text(
-                  text = stringResource(R.string.enter_pin),
+                  text = stringResource(R.string.enter_current_pin),
                   color = primaryBlack,
                   fontSize = 24.sp,
                   fontWeight = FontWeight.W700)
