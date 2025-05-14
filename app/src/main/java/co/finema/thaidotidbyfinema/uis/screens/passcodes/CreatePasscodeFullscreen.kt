@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
-import co.finema.thaidotidbyfinema.uis.components.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.Screen
+import co.finema.thaidotidbyfinema.uis.components.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.white
@@ -90,11 +90,11 @@ fun CreatePasscodeFullscreen(navController: NavController) {
             modifier = Modifier.fillMaxSize().padding(it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-              var passcode by remember { mutableStateOf("") }
-              LaunchedEffect(passcode) {
-                if (passcode.length == 6) {
+              var tapPasscode by remember { mutableStateOf("") }
+              LaunchedEffect(tapPasscode) {
+                if (tapPasscode.length == 6) {
                   navController.navigate(
-                      route = "${Screen.ConfirmPasscodeFullscreenNav.route}/${passcode}")
+                      route = "${Screen.ConfirmPasscodeFullscreenNav.route}/${tapPasscode}")
                 }
               }
               Text(
@@ -107,17 +107,17 @@ fun CreatePasscodeFullscreen(navController: NavController) {
                   modifier = Modifier.fillMaxWidth(),
                   horizontalArrangement = Arrangement.Center,
                   verticalAlignment = Alignment.CenterVertically) {
-                    if (passcode.isEmpty()) OutlinedDot() else FilledDot()
+                    if (tapPasscode.isEmpty()) OutlinedDot() else FilledDot()
                     Spacer(modifier = Modifier.width(24.dp))
-                    if (passcode.length < 2) OutlinedDot() else FilledDot()
+                    if (tapPasscode.length < 2) OutlinedDot() else FilledDot()
                     Spacer(modifier = Modifier.width(24.dp))
-                    if (passcode.length < 3) OutlinedDot() else FilledDot()
+                    if (tapPasscode.length < 3) OutlinedDot() else FilledDot()
                     Spacer(modifier = Modifier.width(24.dp))
-                    if (passcode.length < 4) OutlinedDot() else FilledDot()
+                    if (tapPasscode.length < 4) OutlinedDot() else FilledDot()
                     Spacer(modifier = Modifier.width(24.dp))
-                    if (passcode.length < 5) OutlinedDot() else FilledDot()
+                    if (tapPasscode.length < 5) OutlinedDot() else FilledDot()
                     Spacer(modifier = Modifier.width(24.dp))
-                    if (passcode.length < 6) OutlinedDot() else FilledDot()
+                    if (tapPasscode.length < 6) OutlinedDot() else FilledDot()
                   }
               Spacer(modifier = Modifier.height(48.dp))
               Row(
@@ -125,13 +125,13 @@ fun CreatePasscodeFullscreen(navController: NavController) {
                   horizontalArrangement = Arrangement.Center,
                   verticalAlignment = Alignment.CenterVertically) {
                     PasscodeButton(
-                        text = "1", onClick = { if (passcode.length < 6) passcode += "1" })
+                        text = "1", onClick = { if (tapPasscode.length < 6) tapPasscode += "1" })
                     Spacer(modifier = Modifier.width(32.dp))
                     PasscodeButton(
-                        text = "2", onClick = { if (passcode.length < 6) passcode += "2" })
+                        text = "2", onClick = { if (tapPasscode.length < 6) tapPasscode += "2" })
                     Spacer(modifier = Modifier.width(32.dp))
                     PasscodeButton(
-                        text = "3", onClick = { if (passcode.length < 6) passcode += "3" })
+                        text = "3", onClick = { if (tapPasscode.length < 6) tapPasscode += "3" })
                   }
               Spacer(modifier = Modifier.height(32.dp))
               Row(
@@ -139,13 +139,13 @@ fun CreatePasscodeFullscreen(navController: NavController) {
                   horizontalArrangement = Arrangement.Center,
                   verticalAlignment = Alignment.CenterVertically) {
                     PasscodeButton(
-                        text = "4", onClick = { if (passcode.length < 6) passcode += "4" })
+                        text = "4", onClick = { if (tapPasscode.length < 6) tapPasscode += "4" })
                     Spacer(modifier = Modifier.width(32.dp))
                     PasscodeButton(
-                        text = "5", onClick = { if (passcode.length < 6) passcode += "5" })
+                        text = "5", onClick = { if (tapPasscode.length < 6) tapPasscode += "5" })
                     Spacer(modifier = Modifier.width(32.dp))
                     PasscodeButton(
-                        text = "6", onClick = { if (passcode.length < 6) passcode += "6" })
+                        text = "6", onClick = { if (tapPasscode.length < 6) tapPasscode += "6" })
                   }
               Spacer(modifier = Modifier.height(32.dp))
               Row(
@@ -153,13 +153,13 @@ fun CreatePasscodeFullscreen(navController: NavController) {
                   horizontalArrangement = Arrangement.Center,
                   verticalAlignment = Alignment.CenterVertically) {
                     PasscodeButton(
-                        text = "7", onClick = { if (passcode.length < 6) passcode += "7" })
+                        text = "7", onClick = { if (tapPasscode.length < 6) tapPasscode += "7" })
                     Spacer(modifier = Modifier.width(32.dp))
                     PasscodeButton(
-                        text = "8", onClick = { if (passcode.length < 6) passcode += "8" })
+                        text = "8", onClick = { if (tapPasscode.length < 6) tapPasscode += "8" })
                     Spacer(modifier = Modifier.width(32.dp))
                     PasscodeButton(
-                        text = "9", onClick = { if (passcode.length < 6) passcode += "9" })
+                        text = "9", onClick = { if (tapPasscode.length < 6) tapPasscode += "9" })
                   }
               Spacer(modifier = Modifier.height(32.dp))
               Row(
@@ -169,11 +169,11 @@ fun CreatePasscodeFullscreen(navController: NavController) {
                     Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
                     Spacer(modifier = Modifier.width(32.dp))
                     PasscodeButton(
-                        text = "0", onClick = { if (passcode.length < 6) passcode += "0" })
+                        text = "0", onClick = { if (tapPasscode.length < 6) tapPasscode += "0" })
                     Spacer(modifier = Modifier.width(32.dp))
                     BottomButton(
                         imageVector = Icons.AutoMirrored.Rounded.Backspace,
-                        onClick = { passcode = passcode.dropLast(1) })
+                        onClick = { tapPasscode = tapPasscode.dropLast(1) })
                   }
             }
       }

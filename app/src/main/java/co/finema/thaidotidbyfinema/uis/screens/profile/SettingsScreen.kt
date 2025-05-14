@@ -99,7 +99,6 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
         else
             Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
               val scope = rememberCoroutineScope()
-
               Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(R.string.enable_pin),
@@ -112,8 +111,8 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                     checked = passcode!!.isNotEmpty(),
                     onCheckedChange = {
                       if (it) {
-                        // move logic to confirm screen
-                        //    navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
+                        //
+                        // navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
                       } else {
                         navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
                       }

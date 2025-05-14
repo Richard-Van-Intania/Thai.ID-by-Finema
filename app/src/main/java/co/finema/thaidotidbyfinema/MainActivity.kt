@@ -72,6 +72,7 @@ class MainActivity : FragmentActivity() {
             .setAllowedAuthenticators(BIOMETRIC_STRONG)
             .setNegativeButtonText("Cancel")
             .build()
+    val startBiometricAuth = { biometricPrompt.authenticate(promptInfo) }
     enableEdgeToEdge()
     setContent {
       MaterialTheme(
@@ -106,20 +107,21 @@ class MainActivity : FragmentActivity() {
                           CreatePasscodeFullscreen(navController = navController)
                         }
                         composable(
-                            route = "${Screen.ConfirmPasscodeFullscreenNav.route}/{passcode}",
-                            arguments = listOf(navArgument("passcode") { defaultValue = "" })) {
+                            route = "${Screen.ConfirmPasscodeFullscreenNav.route}/{tapPasscode}",
+                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
                                 backStackEntry ->
-                              val passcode = backStackEntry.arguments?.getString("passcode") ?: ""
+                              val tapPasscode =
+                                  backStackEntry.arguments?.getString("tapPasscode") ?: ""
                               ConfirmPasscodeFullscreen(
                                   navController = navController,
-                                  passcode = passcode,
-                                  onBiometricAuth = { biometricPrompt.authenticate(promptInfo) },
+                                  tapPasscode = tapPasscode,
+                                  onBiometricAuth = startBiometricAuth,
                                   localAuth = localAuth)
                             }
                         composable(route = Screen.EnterPasscodeLoginFullscreenNav.route) {
                           EnterPasscodeLoginFullscreen(
                               navController = navController,
-                              onBiometricAuth = { biometricPrompt.authenticate(promptInfo) },
+                              onBiometricAuth = startBiometricAuth,
                               localAuth = localAuth)
                         }
                         composable(route = Screen.SelectLayoutScreenNav.route) {
@@ -127,13 +129,11 @@ class MainActivity : FragmentActivity() {
                         }
                         composable(route = Screen.SettingsScreenNav.route) {
                           SettingsScreen(
-                              navController = navController,
-                              onBiometricAuth = { biometricPrompt.authenticate(promptInfo) })
+                              navController = navController, onBiometricAuth = startBiometricAuth)
                         }
                         composable(route = Screen.EnterPasscodeTurnOffFullscreenNav.route) {
                           EnterPasscodeTurnOffFullscreen(
-                              navController = navController,
-                              onBiometricAuth = { biometricPrompt.authenticate(promptInfo) })
+                              navController = navController, onBiometricAuth = startBiometricAuth)
                         }
                       }
                 }

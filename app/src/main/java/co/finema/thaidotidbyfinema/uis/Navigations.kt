@@ -39,6 +39,8 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
 
   object EnterPasscodeTurnOffFullscreenNav : Screen("EnterPasscodeTurnOffFullscreenNav")
 
+  object SSSSSS : Screen("SSSSSS")
+
   object SettingsScreenNav : Screen("SettingsScreenNav")
 }
 

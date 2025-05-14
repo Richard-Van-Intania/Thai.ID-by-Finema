@@ -68,7 +68,7 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun ConfirmPasscodeFullscreen(
     navController: NavController,
-    passcode: String,
+    tapPasscode: String,
     onBiometricAuth: () -> Unit,
     localAuth: MutableState<Boolean>
 ) {
@@ -233,10 +233,10 @@ fun ConfirmPasscodeFullscreen(
               val shakeController = remember { ShakeController(scope) }
               LaunchedEffect(confirmPasscode) {
                 if (confirmPasscode.length == 6) {
-                  if (confirmPasscode == passcode) {
+                  if (confirmPasscode == tapPasscode) {
                     scope.launch {
                       val salt = generateSalt()
-                      val hashedPasscode = hashedPasscode(passcode, salt)
+                      val hashedPasscode = hashedPasscode(tapPasscode, salt)
                       repository.updateSalt(salt)
                       repository.updatePasscode(hashedPasscode)
                       repository.updatePasscodeAsked(true)
