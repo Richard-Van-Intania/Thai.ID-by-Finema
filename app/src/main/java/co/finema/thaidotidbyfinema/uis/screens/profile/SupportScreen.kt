@@ -70,8 +70,9 @@ fun SupportScreen(navController: NavController) {
                             .appendQueryParameter("body", body)
                             .build()
                     val intent = Intent(Intent.ACTION_SENDTO).apply { data = uri }
-                    if (intent.resolveActivity(context.packageManager) != null)
-                        context.startActivity(intent)
+                    if (intent.resolveActivity(context.packageManager) != null) {
+                      context.startActivity(intent)
+                    }
                   }) {
                     Text(
                         text = email,
