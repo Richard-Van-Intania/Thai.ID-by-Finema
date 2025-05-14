@@ -42,12 +42,12 @@ fun SupportScreen(navController: NavController) {
             onClick = { navController.popBackStack() })
       },
       backgroundColor = white) {
-        val context = LocalContext.current
-        val subject = stringResource(R.string.subject)
-        val body = stringResource(R.string.body)
         Column(
             modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
+              val context = LocalContext.current
+              val subject = stringResource(R.string.subject)
+              val body = stringResource(R.string.body)
               Spacer(modifier = Modifier.height(32.dp))
               Text(
                   text = stringResource(R.string.if_you_encounter),
@@ -59,12 +59,14 @@ fun SupportScreen(navController: NavController) {
               Spacer(modifier = Modifier.height(8.dp))
               TextButton(
                   onClick = {
-                    val intent =
-                        Intent(Intent.ACTION_SENDTO).apply {
-                          data = "mailto:$email".toUri()
-                          putExtra(Intent.EXTRA_SUBJECT, subject)
-                          putExtra(Intent.EXTRA_TEXT, body)
-                        }
+                    val uri =
+                        "mailto:$email"
+                            .toUri()
+                            .buildUpon()
+                            .appendQueryParameter("subject", subject)
+                            .appendQueryParameter("body", body)
+                            .build()
+                    val intent = Intent(Intent.ACTION_SENDTO).apply { data = uri }
                     if (intent.resolveActivity(context.packageManager) != null)
                         context.startActivity(intent)
                   }) {
