@@ -34,6 +34,7 @@
     <string name="forgot_pin">ลืมรหัสผ่าน</string>
     <string name="enter_current_pin">ใส่ PIN ปัจจุบันของคุณ</string>
     <string name="set_up_new_pin_sucess">เปลี่ยนรหัสผ่านสำเร็จแล้ว!</string>
+    <string name="create_new_pin_sucess">สร้างรหัสผ่านสำเร็จแล้ว!</string>
     <string name="enable_biometrics_success">เปิดการใช้งาน Biometrics สำเร็จ!</string>
     <string name="unable_use_biometrics">ไม่สามารถเปิดการใช้งาน Biometrics!</string>
     <string name="disable_biometrics_success">ปิดการใช้งาน Biometrics สำเร็จ!</string>

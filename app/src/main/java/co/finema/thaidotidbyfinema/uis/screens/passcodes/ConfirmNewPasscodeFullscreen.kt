@@ -56,7 +56,7 @@ fun ConfirmNewPasscodeFullscreen(navController: NavController, tapPasscode: Stri
     FullScreenDialog(
         painter = painterResource(R.drawable.create_sucess),
         height = 160.dp,
-        text = stringResource(R.string.set_up_new_pin_sucess))
+        text = stringResource(R.string.create_new_pin_sucess))
   }
   Scaffold(
       bottomBar = {

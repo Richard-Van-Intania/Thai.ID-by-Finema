@@ -30,6 +30,7 @@
     <string name="enable">Enable</string>
     <string name="not_now">Not now</string>
     <string name="set_up_pin_success">User account created successfully!</string>
+    <string name="create_new_pin_sucess">Your PIN has created successfully!</string>
     <string name="enter_pin">Enter your PIN</string>
     <string name="forgot_pin">Forgot PIN</string>
     <string name="enter_current_pin">Enter your current PIN</string>
