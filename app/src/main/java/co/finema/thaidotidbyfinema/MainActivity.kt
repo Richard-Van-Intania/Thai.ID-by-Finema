@@ -28,6 +28,7 @@ import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.TermsScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.WelcomeScreen
+import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmNewPasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.ConfirmPasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreateNewPasscodeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscreen
@@ -139,6 +140,17 @@ class MainActivity : FragmentActivity() {
                         composable(route = Screen.CreateNewPasscodeFullscreenNav.route) {
                           CreateNewPasscodeFullscreen(navController = navController)
                         }
+                        composable(
+                            route = "${Screen.ConfirmNewPasscodeFullscreenNav.route}/{tapPasscode}",
+                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
+                                backStackEntry ->
+                              val tapPasscode =
+                                  backStackEntry.arguments?.getString("tapPasscode") ?: ""
+                              ConfirmNewPasscodeFullscreen(
+                                  navController = navController,
+                                  tapPasscode = tapPasscode,
+                                  onBiometricAuth = startBiometricAuth)
+                            }
                       }
                 }
           }

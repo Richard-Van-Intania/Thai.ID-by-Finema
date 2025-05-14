@@ -4,4 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun ConfirmNewPasscodeFullscreen(navController: NavController, onBiometricAuth: () -> Unit) {}
+fun ConfirmNewPasscodeFullscreen(
+    navController: NavController,
+    tapPasscode: String,
+    onBiometricAuth: () -> Unit
+) {}
