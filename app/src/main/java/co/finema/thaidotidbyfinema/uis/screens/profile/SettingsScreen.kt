@@ -110,9 +110,11 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                 Switch(
                     checked = passcode!!.isNotEmpty(),
                     onCheckedChange = {
-                      navController.navigate(
-                          if (it) Screen.CreateNewPasscodeFullscreenNav.route
-                          else Screen.EnterPasscodeTurnOffFullscreenNav.route)
+                      if (it) {
+                        navController.navigate(Screen.CreateNewPasscodeFullscreenNav.route)
+                      } else {
+                        navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
+                      }
                     },
                     colors =
                         SwitchDefaults.colors(
