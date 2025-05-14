@@ -62,10 +62,12 @@ fun EnterPasscodeChangeFullscreen(navController: NavController, onBiometricAuth:
   val repository = remember { UserConfigRepository(context) }
   val snackbarHostState = remember { SnackbarHostState() }
   val useBiometric by repository.useBiometric.collectAsState(initial = false)
+  var tapPasscode by remember { mutableStateOf("") }
   var passAuth by remember { mutableStateOf(false) }
   LaunchedEffect(passAuth) {
     if (passAuth) {
-      navController.navigate(Screen.CreatePasscodeChangeFullscreenNav.route)
+      navController.navigate(
+          route = "${Screen.CreatePasscodeChangeFullscreenNav.route}/${tapPasscode}")
     }
   }
   var showErrorsDialog by remember { mutableStateOf(false) }
@@ -107,7 +109,6 @@ fun EnterPasscodeChangeFullscreen(navController: NavController, onBiometricAuth:
             modifier = Modifier.fillMaxSize().padding(it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-              var tapPasscode by remember { mutableStateOf("") }
               val passcode by repository.passcode.collectAsState(initial = "")
               val salt by repository.salt.collectAsState(initial = "")
               val scope = rememberCoroutineScope()
