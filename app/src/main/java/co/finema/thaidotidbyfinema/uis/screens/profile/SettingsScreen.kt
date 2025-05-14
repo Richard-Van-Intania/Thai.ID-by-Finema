@@ -80,7 +80,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
   }
   Scaffold(
       snackbarHost = {
-        SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 48.dp))
+        SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 56.dp))
       },
       topBar = {
         AppBarOptBack(
