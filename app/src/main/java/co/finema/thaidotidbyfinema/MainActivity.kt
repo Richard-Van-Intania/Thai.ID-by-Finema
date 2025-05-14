@@ -147,9 +147,7 @@ class MainActivity : FragmentActivity() {
                               val tapPasscode =
                                   backStackEntry.arguments?.getString("tapPasscode") ?: ""
                               ConfirmNewPasscodeFullscreen(
-                                  navController = navController,
-                                  tapPasscode = tapPasscode,
-                                  onBiometricAuth = startBiometricAuth)
+                                  navController = navController, tapPasscode = tapPasscode)
                             }
                       }
                 }
