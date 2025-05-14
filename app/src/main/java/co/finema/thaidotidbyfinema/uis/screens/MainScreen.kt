@@ -214,13 +214,13 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
   val repository = remember { UserConfigRepository(context) }
   val passcodeAsked by repository.passcodeAsked.collectAsState(initial = null)
   LaunchedEffect(passcodeAsked) {
-    if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreenNav.route)
+    if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreen.route)
   }
   val passcode by repository.passcode.collectAsState(initial = "")
   LaunchedEffect(passcode, localAuth.value) {
     if (passcode.isNotEmpty() && !localAuth.value) {
-      navController.navigate(Screen.EnterPasscodeLoginFullscreenNav.route)
-      //      navController.navigate(Screen.SettingsScreenNav.route)
+      navController.navigate(Screen.EnterPasscodeLoginFullscreen.route)
+      //      navController.navigate(Screen.SettingsScreen.route)
     }
   }
   val tabController = rememberNavController()
@@ -274,10 +274,10 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
         NavHost(
             modifier = Modifier.padding(it),
             navController = tabController,
-            startDestination = Screen.HomeTabNav.route,
+            startDestination = Screen.HomeTab.route,
         ) {
           composable(
-              route = Screen.HomeTabNav.route,
+              route = Screen.HomeTab.route,
               enterTransition = { EnterTransition.None },
               exitTransition = { ExitTransition.None },
               popEnterTransition = { EnterTransition.None },
@@ -286,7 +286,7 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
             HomeTab(navController = navController, counterState)
           }
           composable(
-              route = Screen.HistoryTabNav.route,
+              route = Screen.HistoryTab.route,
               enterTransition = { EnterTransition.None },
               exitTransition = { ExitTransition.None },
               popEnterTransition = { EnterTransition.None },
@@ -295,7 +295,7 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
             HistoryTab(navController = navController)
           }
           composable(
-              route = Screen.ProfileTabNav.route,
+              route = Screen.ProfileTab.route,
               enterTransition = { EnterTransition.None },
               exitTransition = { ExitTransition.None },
               popEnterTransition = { EnterTransition.None },

@@ -107,7 +107,7 @@ fun ProfileTab(navController: NavController) {
                       SettingsMenu(
                           text = stringResource(R.string.login_settings),
                           onClick = {
-                            navController.navigate(route = Screen.SettingsScreenNav.route)
+                            navController.navigate(route = Screen.SettingsScreen.route)
                           })
                       SettingsMenu(text = stringResource(R.string.language), onClick = {})
                       SettingsMenu(text = stringResource(R.string.privacy_policy), onClick = {})
@@ -115,7 +115,7 @@ fun ProfileTab(navController: NavController) {
                       SettingsMenu(
                           text = stringResource(R.string.help_support),
                           onClick = {
-                            navController.navigate(route = Screen.SupportScreenNav.route)
+                            navController.navigate(route = Screen.SupportScreen.route)
                           })
                       Spacer(modifier = Modifier.height(16.dp))
                     }

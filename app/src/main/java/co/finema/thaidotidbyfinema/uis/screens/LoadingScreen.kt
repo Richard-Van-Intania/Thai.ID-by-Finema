@@ -29,12 +29,12 @@ fun LoadingScreen(navController: NavController) {
   LaunchedEffect(isAcceptedAgreements) {
     when (isAcceptedAgreements) {
       true ->
-          navController.navigate(route = Screen.HomeRootNav.route) {
-            popUpTo(Screen.LoadingScreenNav.route) { inclusive = true }
+          navController.navigate(route = Screen.HomeRoot.route) {
+            popUpTo(Screen.LoadingScreen.route) { inclusive = true }
           }
       false ->
-          navController.navigate(route = Screen.OnboardingRootNav.route) {
-            popUpTo(Screen.LoadingScreenNav.route) { inclusive = true }
+          navController.navigate(route = Screen.OnboardingRoot.route) {
+            popUpTo(Screen.LoadingScreen.route) { inclusive = true }
           }
       null -> {}
     }

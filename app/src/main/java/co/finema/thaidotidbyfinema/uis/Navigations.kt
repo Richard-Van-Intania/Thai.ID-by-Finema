@@ -9,53 +9,53 @@ import co.finema.thaidotidbyfinema.R
 
 sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVector? = null) {
 
-  object LoadingScreenNav : Screen("LoadingScreenNav")
+  object LoadingScreen : Screen("LoadingScreen")
 
-  object OnboardingRootNav : Screen("OnboardingRootNav")
+  object OnboardingRoot : Screen("OnboardingRoot")
 
-  object WelcomeScreenNav : Screen("WelcomeScreenNav")
+  object WelcomeScreen : Screen("WelcomeScreen")
 
-  object OnboardScreenNav : Screen("OnboardScreenNav")
+  object OnboardScreen : Screen("OnboardScreen")
 
-  object TermsScreenNav : Screen("TermsScreenNav")
+  object TermsScreen : Screen("TermsScreen")
 
-  object HomeRootNav : Screen("HomeRootNav")
+  object HomeRoot : Screen("HomeRoot")
 
-  object MainScreenNav : Screen("MainScreenNav")
+  object MainScreen : Screen("MainScreen")
 
-  object HomeTabNav : Screen("HomeTabNav", R.string.home, Icons.Rounded.Home)
+  object HomeTab : Screen("HomeTab", R.string.home, Icons.Rounded.Home)
 
-  object HistoryTabNav : Screen("HistoryTabNav", R.string.history, Icons.Rounded.Description)
+  object HistoryTab : Screen("HistoryTab", R.string.history, Icons.Rounded.Description)
 
-  object ProfileTabNav : Screen("ProfileTabNav", R.string.profile, Icons.Rounded.Person)
+  object ProfileTab : Screen("ProfileTab", R.string.profile, Icons.Rounded.Person)
 
-  object SelectLayoutScreenNav : Screen("SelectLayoutScreenNav")
+  object SelectLayoutScreen : Screen("SelectLayoutScreen")
 
-  object CreatePasscodeFullscreenNav : Screen("CreatePasscodeFullscreenNav")
+  object CreatePasscodeFullscreen : Screen("CreatePasscodeFullscreen")
 
-  object ConfirmPasscodeFullscreenNav : Screen("ConfirmPasscodeFullscreenNav")
+  object ConfirmPasscodeFullscreen : Screen("ConfirmPasscodeFullscreen")
 
-  object EnterPasscodeLoginFullscreenNav : Screen("EnterPasscodeLoginFullscreenNav")
+  object EnterPasscodeLoginFullscreen : Screen("EnterPasscodeLoginFullscreen")
 
-  object EnterPasscodeTurnOffFullscreenNav : Screen("EnterPasscodeTurnOffFullscreenNav")
+  object EnterPasscodeTurnOffFullscreen : Screen("EnterPasscodeTurnOffFullscreen")
 
-  object CreateNewPasscodeFullscreenNav : Screen("CreateNewPasscodeFullscreenNav")
+  object CreateNewPasscodeFullscreen : Screen("CreateNewPasscodeFullscreen")
 
-  object ConfirmNewPasscodeFullscreenNav : Screen("ConfirmNewPasscodeFullscreenNav")
+  object ConfirmNewPasscodeFullscreen : Screen("ConfirmNewPasscodeFullscreen")
 
-  object EnterPasscodeChangeFullscreenNav : Screen("EnterPasscodeChangeFullscreenNav")
+  object EnterPasscodeChangeFullscreen : Screen("EnterPasscodeChangeFullscreen")
 
-  object CreatePasscodeChangeFullscreenNav : Screen("CreatePasscodeChangeFullscreenNav")
+  object CreatePasscodeChangeFullscreen : Screen("CreatePasscodeChangeFullscreen")
 
-  object ConfirmPasscodeChangeFullscreenNav : Screen("ConfirmPasscodeChangeFullscreenNav")
+  object ConfirmPasscodeChangeFullscreen : Screen("ConfirmPasscodeChangeFullscreen")
 
-  object SupportScreenNav : Screen("SupportScreenNav")
+  object SupportScreen : Screen("SupportScreen")
 
-  object SettingsScreenNav : Screen("SettingsScreenNav")
+  object SettingsScreen : Screen("SettingsScreen")
 
   object SSSSSS : Screen("SSSSSS")
 }
 
-val bottomTabs = listOf(Screen.HomeTabNav, Screen.HistoryTabNav, Screen.ProfileTabNav)
+val bottomTabs = listOf(Screen.HomeTab, Screen.HistoryTab, Screen.ProfileTab)
 
-// SupportScreenNav
+// SupportScreen

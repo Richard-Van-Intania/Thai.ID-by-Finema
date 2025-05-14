@@ -112,9 +112,9 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                     checked = passcode!!.isNotEmpty(),
                     onCheckedChange = {
                       if (it) {
-                        navController.navigate(Screen.CreateNewPasscodeFullscreenNav.route)
+                        navController.navigate(Screen.CreateNewPasscodeFullscreen.route)
                       } else {
-                        navController.navigate(Screen.EnterPasscodeTurnOffFullscreenNav.route)
+                        navController.navigate(Screen.EnterPasscodeTurnOffFullscreen.route)
                       }
                     },
                     colors =
@@ -180,7 +180,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                 HorizontalDivider(thickness = 1.dp, color = neutral02)
                 TextButton(
                     onClick = {
-                      navController.navigate(Screen.EnterPasscodeChangeFullscreenNav.route)
+                      navController.navigate(Screen.EnterPasscodeChangeFullscreen.route)
                     }) {
                       Row(
                           modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),

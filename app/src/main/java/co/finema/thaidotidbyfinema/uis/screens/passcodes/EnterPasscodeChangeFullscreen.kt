@@ -66,7 +66,7 @@ fun EnterPasscodeChangeFullscreen(navController: NavController, onBiometricAuth:
   var passAuth by remember { mutableStateOf(false) }
   LaunchedEffect(passAuth) {
     if (passAuth) {
-      navController.navigate(Screen.CreatePasscodeChangeFullscreenNav.route)
+      navController.navigate(Screen.CreatePasscodeChangeFullscreen.route)
     }
   }
   var showErrorsDialog by remember { mutableStateOf(false) }

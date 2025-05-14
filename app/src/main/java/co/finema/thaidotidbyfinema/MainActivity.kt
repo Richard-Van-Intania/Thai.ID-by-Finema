@@ -86,34 +86,34 @@ class MainActivity : FragmentActivity() {
             val navController = rememberNavController()
             val localAuth = remember { mutableStateOf(false) }
             NavHost(
-                navController = navController, startDestination = Screen.LoadingScreenNav.route) {
-                  composable(route = Screen.LoadingScreenNav.route) {
+                navController = navController, startDestination = Screen.LoadingScreen.route) {
+                  composable(route = Screen.LoadingScreen.route) {
                     LoadingScreen(navController = navController)
                   }
                   navigation(
-                      startDestination = Screen.WelcomeScreenNav.route,
-                      route = Screen.OnboardingRootNav.route) {
-                        composable(route = Screen.WelcomeScreenNav.route) {
+                      startDestination = Screen.WelcomeScreen.route,
+                      route = Screen.OnboardingRoot.route) {
+                        composable(route = Screen.WelcomeScreen.route) {
                           WelcomeScreen(navController = navController)
                         }
-                        composable(route = Screen.OnboardScreenNav.route) {
+                        composable(route = Screen.OnboardScreen.route) {
                           OnboardScreen(navController = navController)
                         }
-                        composable(route = Screen.TermsScreenNav.route) {
+                        composable(route = Screen.TermsScreen.route) {
                           TermsScreen(navController = navController)
                         }
                       }
                   navigation(
-                      startDestination = Screen.MainScreenNav.route,
-                      route = Screen.HomeRootNav.route) {
-                        composable(route = Screen.MainScreenNav.route) {
+                      startDestination = Screen.MainScreen.route,
+                      route = Screen.HomeRoot.route) {
+                        composable(route = Screen.MainScreen.route) {
                           MainScreen(navController = navController, localAuth = localAuth)
                         }
-                        composable(route = Screen.CreatePasscodeFullscreenNav.route) {
+                        composable(route = Screen.CreatePasscodeFullscreen.route) {
                           CreatePasscodeFullscreen(navController = navController)
                         }
                         composable(
-                            route = "${Screen.ConfirmPasscodeFullscreenNav.route}/{tapPasscode}",
+                            route = "${Screen.ConfirmPasscodeFullscreen.route}/{tapPasscode}",
                             arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
                                 backStackEntry ->
                               val tapPasscode =
@@ -124,28 +124,28 @@ class MainActivity : FragmentActivity() {
                                   onBiometricAuth = startBiometricAuth,
                                   localAuth = localAuth)
                             }
-                        composable(route = Screen.EnterPasscodeLoginFullscreenNav.route) {
+                        composable(route = Screen.EnterPasscodeLoginFullscreen.route) {
                           EnterPasscodeLoginFullscreen(
                               navController = navController,
                               onBiometricAuth = startBiometricAuth,
                               localAuth = localAuth)
                         }
-                        composable(route = Screen.SelectLayoutScreenNav.route) {
+                        composable(route = Screen.SelectLayoutScreen.route) {
                           SelectLayoutScreen(navController = navController)
                         }
-                        composable(route = Screen.SettingsScreenNav.route) {
+                        composable(route = Screen.SettingsScreen.route) {
                           SettingsScreen(
                               navController = navController, onBiometricAuth = startBiometricAuth)
                         }
-                        composable(route = Screen.EnterPasscodeTurnOffFullscreenNav.route) {
+                        composable(route = Screen.EnterPasscodeTurnOffFullscreen.route) {
                           EnterPasscodeTurnOffFullscreen(
                               navController = navController, onBiometricAuth = startBiometricAuth)
                         }
-                        composable(route = Screen.CreateNewPasscodeFullscreenNav.route) {
+                        composable(route = Screen.CreateNewPasscodeFullscreen.route) {
                           CreateNewPasscodeFullscreen(navController = navController)
                         }
                         composable(
-                            route = "${Screen.ConfirmNewPasscodeFullscreenNav.route}/{tapPasscode}",
+                            route = "${Screen.ConfirmNewPasscodeFullscreen.route}/{tapPasscode}",
                             arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
                                 backStackEntry ->
                               val tapPasscode =
@@ -153,16 +153,16 @@ class MainActivity : FragmentActivity() {
                               ConfirmNewPasscodeFullscreen(
                                   navController = navController, tapPasscode = tapPasscode)
                             }
-                        composable(route = Screen.EnterPasscodeChangeFullscreenNav.route) {
+                        composable(route = Screen.EnterPasscodeChangeFullscreen.route) {
                           EnterPasscodeChangeFullscreen(
                               navController = navController, onBiometricAuth = startBiometricAuth)
                         }
-                        composable(route = Screen.CreatePasscodeChangeFullscreenNav.route) {
+                        composable(route = Screen.CreatePasscodeChangeFullscreen.route) {
                           CreatePasscodeChangeFullscreen(navController = navController)
                         }
                         composable(
                             route =
-                                "${Screen.ConfirmPasscodeChangeFullscreenNav.route}/{tapPasscode}",
+                                "${Screen.ConfirmPasscodeChangeFullscreen.route}/{tapPasscode}",
                             arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
                                 backStackEntry ->
                               val tapPasscode =
@@ -170,7 +170,7 @@ class MainActivity : FragmentActivity() {
                               ConfirmPasscodeChangeFullscreen(
                                   navController = navController, tapPasscode = tapPasscode)
                             }
-                        composable(route = Screen.SupportScreenNav.route) {
+                        composable(route = Screen.SupportScreen.route) {
                           SupportScreen(navController = navController)
                         }
                       }

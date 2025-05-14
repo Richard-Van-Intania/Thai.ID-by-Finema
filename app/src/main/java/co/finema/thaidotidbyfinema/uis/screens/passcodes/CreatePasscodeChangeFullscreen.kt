@@ -64,7 +64,7 @@ fun CreatePasscodeChangeFullscreen(navController: NavController) {
               LaunchedEffect(tapPasscode) {
                 if (tapPasscode.length == 6) {
                   navController.navigate(
-                      route = "${Screen.ConfirmPasscodeChangeFullscreenNav.route}/${tapPasscode}")
+                      route = "${Screen.ConfirmPasscodeChangeFullscreen.route}/${tapPasscode}")
                 }
               }
               Text(

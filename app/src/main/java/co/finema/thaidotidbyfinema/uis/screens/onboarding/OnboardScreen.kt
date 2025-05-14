@@ -73,7 +73,7 @@ fun OnboardScreen(navController: NavHostController) {
             modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
             contentAlignment = Alignment.Center) {
               GradientButton(
-                  onClick = { navController.navigate(route = Screen.TermsScreenNav.route) },
+                  onClick = { navController.navigate(route = Screen.TermsScreen.route) },
                   text = stringResource(R.string.log_in))
             }
       }) {
@@ -83,7 +83,7 @@ fun OnboardScreen(navController: NavHostController) {
               Spacer(modifier = Modifier.height(48.dp))
               Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
                 TextButton(
-                    onClick = { navController.navigate(route = Screen.TermsScreenNav.route) }) {
+                    onClick = { navController.navigate(route = Screen.TermsScreen.route) }) {
                       Text(
                           text = stringResource(R.string.skip),
                           color = secondaryBlueGray,

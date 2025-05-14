@@ -42,7 +42,7 @@ fun WelcomeScreen(navController: NavHostController) {
             modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
             contentAlignment = Alignment.Center) {
               GradientButton(
-                  onClick = { navController.navigate(route = Screen.OnboardScreenNav.route) },
+                  onClick = { navController.navigate(route = Screen.OnboardScreen.route) },
                   text = stringResource(R.string.get_started))
             }
       }) {
