@@ -85,96 +85,90 @@ class MainActivity : FragmentActivity() {
           colors = lightColors(primary = primaryDarkBlue), typography = CustomTypography) {
             val navController = rememberNavController()
             val localAuth = remember { mutableStateOf(false) }
-            NavHost(
-                navController = navController, startDestination = Screen.LoadingScreen.route) {
-                  composable(route = Screen.LoadingScreen.route) {
-                    LoadingScreen(navController = navController)
+            NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
+              composable(route = Screen.LoadingScreen.route) {
+                LoadingScreen(navController = navController)
+              }
+              navigation(
+                  startDestination = Screen.WelcomeScreen.route,
+                  route = Screen.OnboardingRoot.route) {
+                    composable(route = Screen.WelcomeScreen.route) {
+                      WelcomeScreen(navController = navController)
+                    }
+                    composable(route = Screen.OnboardScreen.route) {
+                      OnboardScreen(navController = navController)
+                    }
+                    composable(route = Screen.TermsScreen.route) {
+                      TermsScreen(navController = navController)
+                    }
                   }
-                  navigation(
-                      startDestination = Screen.WelcomeScreen.route,
-                      route = Screen.OnboardingRoot.route) {
-                        composable(route = Screen.WelcomeScreen.route) {
-                          WelcomeScreen(navController = navController)
-                        }
-                        composable(route = Screen.OnboardScreen.route) {
-                          OnboardScreen(navController = navController)
-                        }
-                        composable(route = Screen.TermsScreen.route) {
-                          TermsScreen(navController = navController)
-                        }
-                      }
-                  navigation(
-                      startDestination = Screen.MainScreen.route,
-                      route = Screen.HomeRoot.route) {
-                        composable(route = Screen.MainScreen.route) {
-                          MainScreen(navController = navController, localAuth = localAuth)
-                        }
-                        composable(route = Screen.CreatePasscodeFullscreen.route) {
-                          CreatePasscodeFullscreen(navController = navController)
-                        }
-                        composable(
-                            route = "${Screen.ConfirmPasscodeFullscreen.route}/{tapPasscode}",
-                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
-                                backStackEntry ->
-                              val tapPasscode =
-                                  backStackEntry.arguments?.getString("tapPasscode") ?: ""
-                              ConfirmPasscodeFullscreen(
-                                  navController = navController,
-                                  tapPasscode = tapPasscode,
-                                  onBiometricAuth = startBiometricAuth,
-                                  localAuth = localAuth)
-                            }
-                        composable(route = Screen.EnterPasscodeLoginFullscreen.route) {
-                          EnterPasscodeLoginFullscreen(
+              navigation(
+                  startDestination = Screen.MainScreen.route, route = Screen.HomeRoot.route) {
+                    composable(route = Screen.MainScreen.route) {
+                      MainScreen(navController = navController, localAuth = localAuth)
+                    }
+                    composable(route = Screen.CreatePasscodeFullscreen.route) {
+                      CreatePasscodeFullscreen(navController = navController)
+                    }
+                    composable(
+                        route = "${Screen.ConfirmPasscodeFullscreen.route}/{tapPasscode}",
+                        arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
+                            backStackEntry ->
+                          val tapPasscode = backStackEntry.arguments?.getString("tapPasscode") ?: ""
+                          ConfirmPasscodeFullscreen(
                               navController = navController,
+                              tapPasscode = tapPasscode,
                               onBiometricAuth = startBiometricAuth,
                               localAuth = localAuth)
                         }
-                        composable(route = Screen.SelectLayoutScreen.route) {
-                          SelectLayoutScreen(navController = navController)
+                    composable(route = Screen.EnterPasscodeLoginFullscreen.route) {
+                      EnterPasscodeLoginFullscreen(
+                          navController = navController,
+                          onBiometricAuth = startBiometricAuth,
+                          localAuth = localAuth)
+                    }
+                    composable(route = Screen.SelectLayoutScreen.route) {
+                      SelectLayoutScreen(navController = navController)
+                    }
+                    composable(route = Screen.SettingsScreen.route) {
+                      SettingsScreen(
+                          navController = navController, onBiometricAuth = startBiometricAuth)
+                    }
+                    composable(route = Screen.EnterPasscodeTurnOffFullscreen.route) {
+                      EnterPasscodeTurnOffFullscreen(
+                          navController = navController, onBiometricAuth = startBiometricAuth)
+                    }
+                    composable(route = Screen.CreateNewPasscodeFullscreen.route) {
+                      CreateNewPasscodeFullscreen(navController = navController)
+                    }
+                    composable(
+                        route = "${Screen.ConfirmNewPasscodeFullscreen.route}/{tapPasscode}",
+                        arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
+                            backStackEntry ->
+                          val tapPasscode = backStackEntry.arguments?.getString("tapPasscode") ?: ""
+                          ConfirmNewPasscodeFullscreen(
+                              navController = navController, tapPasscode = tapPasscode)
                         }
-                        composable(route = Screen.SettingsScreen.route) {
-                          SettingsScreen(
-                              navController = navController, onBiometricAuth = startBiometricAuth)
+                    composable(route = Screen.EnterPasscodeChangeFullscreen.route) {
+                      EnterPasscodeChangeFullscreen(
+                          navController = navController, onBiometricAuth = startBiometricAuth)
+                    }
+                    composable(route = Screen.CreatePasscodeChangeFullscreen.route) {
+                      CreatePasscodeChangeFullscreen(navController = navController)
+                    }
+                    composable(
+                        route = "${Screen.ConfirmPasscodeChangeFullscreen.route}/{tapPasscode}",
+                        arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
+                            backStackEntry ->
+                          val tapPasscode = backStackEntry.arguments?.getString("tapPasscode") ?: ""
+                          ConfirmPasscodeChangeFullscreen(
+                              navController = navController, tapPasscode = tapPasscode)
                         }
-                        composable(route = Screen.EnterPasscodeTurnOffFullscreen.route) {
-                          EnterPasscodeTurnOffFullscreen(
-                              navController = navController, onBiometricAuth = startBiometricAuth)
-                        }
-                        composable(route = Screen.CreateNewPasscodeFullscreen.route) {
-                          CreateNewPasscodeFullscreen(navController = navController)
-                        }
-                        composable(
-                            route = "${Screen.ConfirmNewPasscodeFullscreen.route}/{tapPasscode}",
-                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
-                                backStackEntry ->
-                              val tapPasscode =
-                                  backStackEntry.arguments?.getString("tapPasscode") ?: ""
-                              ConfirmNewPasscodeFullscreen(
-                                  navController = navController, tapPasscode = tapPasscode)
-                            }
-                        composable(route = Screen.EnterPasscodeChangeFullscreen.route) {
-                          EnterPasscodeChangeFullscreen(
-                              navController = navController, onBiometricAuth = startBiometricAuth)
-                        }
-                        composable(route = Screen.CreatePasscodeChangeFullscreen.route) {
-                          CreatePasscodeChangeFullscreen(navController = navController)
-                        }
-                        composable(
-                            route =
-                                "${Screen.ConfirmPasscodeChangeFullscreen.route}/{tapPasscode}",
-                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
-                                backStackEntry ->
-                              val tapPasscode =
-                                  backStackEntry.arguments?.getString("tapPasscode") ?: ""
-                              ConfirmPasscodeChangeFullscreen(
-                                  navController = navController, tapPasscode = tapPasscode)
-                            }
-                        composable(route = Screen.SupportScreen.route) {
-                          SupportScreen(navController = navController)
-                        }
-                      }
-                }
+                    composable(route = Screen.SupportScreen.route) {
+                      SupportScreen(navController = navController)
+                    }
+                  }
+            }
           }
     }
   }
