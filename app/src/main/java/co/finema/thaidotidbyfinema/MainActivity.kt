@@ -37,6 +37,7 @@ import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscree
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeChangeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeLoginFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeTurnOffFullscreen
+import co.finema.thaidotidbyfinema.uis.screens.profile.PolicyAndSafetyScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SupportScreen
 import java.util.concurrent.Executor
@@ -166,6 +167,9 @@ class MainActivity : FragmentActivity() {
                         }
                     composable(route = Screen.SupportScreen.route) {
                       SupportScreen(navController = navController)
+                    }
+                    composable(route = Screen.PolicyAndSafetyScreen.route) {
+                      PolicyAndSafetyScreen(navController = navController)
                     }
                   }
             }

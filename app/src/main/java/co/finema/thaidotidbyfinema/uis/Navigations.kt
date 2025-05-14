@@ -53,9 +53,11 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
 
   object SettingsScreen : Screen("SettingsScreen")
 
+  object PolicyAndSafetyScreen : Screen("PolicyAndSafetyScreen")
+
   object SSSSSS : Screen("SSSSSS")
 }
 
 val bottomTabs = listOf(Screen.HomeTab, Screen.HistoryTab, Screen.ProfileTab)
 
-// SupportScreen
+// SupportScreen PolicyAndSafetyScreen

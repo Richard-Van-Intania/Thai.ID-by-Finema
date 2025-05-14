@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import co.finema.thaidotidbyfinema.R
-import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.Screen
+import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.neutral07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryRed
@@ -82,15 +82,14 @@ fun OnboardScreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally) {
               Spacer(modifier = Modifier.height(48.dp))
               Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-                TextButton(
-                    onClick = { navController.navigate(route = Screen.TermsScreen.route) }) {
-                      Text(
-                          text = stringResource(R.string.skip),
-                          color = secondaryBlueGray,
-                          fontSize = 20.sp,
-                          fontWeight = FontWeight.W400,
-                      )
-                    }
+                TextButton(onClick = { navController.navigate(route = Screen.TermsScreen.route) }) {
+                  Text(
+                      text = stringResource(R.string.skip),
+                      color = secondaryBlueGray,
+                      fontSize = 20.sp,
+                      fontWeight = FontWeight.W400,
+                  )
+                }
               }
               Spacer(modifier = Modifier.weight(2f))
               val pagerState = rememberPagerState(pageCount = { 4 })

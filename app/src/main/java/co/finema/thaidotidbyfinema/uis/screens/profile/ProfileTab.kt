@@ -106,17 +106,19 @@ fun ProfileTab(navController: NavController) {
                       Spacer(modifier = Modifier.height(16.dp))
                       SettingsMenu(
                           text = stringResource(R.string.login_settings),
-                          onClick = {
-                            navController.navigate(route = Screen.SettingsScreen.route)
-                          })
+                          onClick = { navController.navigate(route = Screen.SettingsScreen.route) })
                       SettingsMenu(text = stringResource(R.string.language), onClick = {})
-                      SettingsMenu(text = stringResource(R.string.privacy_policy), onClick = {})
-                      SettingsMenu(text = stringResource(R.string.terms), onClick = {})
+                      SettingsMenu(
+                          text = stringResource(R.string.privacy_policy),
+                          onClick = {
+                            navController.navigate(route = Screen.PolicyAndSafetyScreen.route)
+                          })
+                      SettingsMenu(
+                          text = stringResource(R.string.terms),
+                          onClick = { navController.navigate(route = Screen.TermsScreen.route) })
                       SettingsMenu(
                           text = stringResource(R.string.help_support),
-                          onClick = {
-                            navController.navigate(route = Screen.SupportScreen.route)
-                          })
+                          onClick = { navController.navigate(route = Screen.SupportScreen.route) })
                       Spacer(modifier = Modifier.height(16.dp))
                     }
                   }
