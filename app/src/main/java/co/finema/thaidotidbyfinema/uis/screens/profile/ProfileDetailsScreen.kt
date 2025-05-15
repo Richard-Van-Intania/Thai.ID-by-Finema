@@ -33,7 +33,16 @@ fun ProfileDetailsScreen(navController: NavController) {
       backgroundColor = white) {
         val context = LocalContext.current
         val repository = remember { UserCardRepository(context) }
-        val idString by repository.idString.collectAsState(initial = null)
+        val idString by repository.idString.collectAsState(initial = "")
+        val thaiPrefix by repository.thaiPrefix.collectAsState(initial = "")
+        val thaiName by repository.thaiName.collectAsState(initial = "")
+        val thaiMiddleName by repository.thaiMiddleName.collectAsState(initial = "")
+        val thaiSurname by repository.thaiSurname.collectAsState(initial = "")
+        val engPrefix by repository.engPrefix.collectAsState(initial = "")
+        val engName by repository.engName.collectAsState(initial = "")
+        val engMiddleName by repository.engMiddleName.collectAsState(initial = "")
+        val engSurname by repository.engSurname.collectAsState(initial = "")
+        val birthDate by repository.birthDate.collectAsState(initial = "")
         Column(
             modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {}
