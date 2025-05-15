@@ -115,7 +115,7 @@ fun ProfileDetailsScreen(navController: NavController) {
                         value =
                             if (idString.isEmpty()) ""
                             else
-                                "${idString.substring(0, 1)}-${idString.substring(1, 5)}-${idString.substring(5, 10)}-${idString.substring(10, 12)}-${idString.substring(12)}",
+                                "${idString.substring(0, 1)} ${idString.substring(1, 5)} ${idString.substring(5, 10)} ${idString.substring(10, 12)} ${idString.substring(12)}",
                     )
                     Row(
                         modifier = Modifier.padding(vertical = 16.dp),
