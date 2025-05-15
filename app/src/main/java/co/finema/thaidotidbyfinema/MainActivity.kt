@@ -2,6 +2,8 @@
 
 package co.finema.thaidotidbyfinema
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.CustomTypography
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
@@ -37,14 +40,39 @@ import co.finema.thaidotidbyfinema.uis.screens.passcodes.CreatePasscodeFullscree
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeChangeFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeLoginFullscreen
 import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeTurnOffFullscreen
+import co.finema.thaidotidbyfinema.uis.screens.profile.LocalizationSettingsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.PolicyAndSafetyScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SupportScreen
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import java.util.Locale
 import java.util.concurrent.Executor
 
 val biometricAuth: MutableState<Boolean?> = mutableStateOf(null)
 
+fun readUserConfigBlocking(context: Context): UserConfig {
+  val repository = UserConfigRepository(context)
+  return runBlocking { repository.userConfigFlow.first() }
+}
+
+object LocaleHelper {
+  fun updateLocale(context: Context, locale: Locale): Context {
+    Locale.setDefault(locale)
+    val config = Configuration(context.resources.configuration)
+    config.setLocale(locale)
+    return context.createConfigurationContext(config)
+  }
+}
+
 class MainActivity : FragmentActivity() {
+  override fun attachBaseContext(newBase: Context) {
+    val localeString = readUserConfigBlocking(newBase).locale
+    val locale = Locale(if (localeString.isEmpty()) TH else localeString)
+    val context = LocaleHelper.updateLocale(newBase, locale)
+    super.attachBaseContext(context)
+  }
+
   private lateinit var executor: Executor
   private lateinit var biometricPrompt: BiometricPrompt
   private lateinit var promptInfo: BiometricPrompt.PromptInfo
@@ -170,6 +198,9 @@ class MainActivity : FragmentActivity() {
                     }
                     composable(route = Screen.PolicyAndSafetyScreen.route) {
                       PolicyAndSafetyScreen(navController = navController)
+                    }
+                    composable(route = Screen.LocalizationSettingsScreen.route) {
+                      LocalizationSettingsScreen(navController = navController)
                     }
                   }
             }
