@@ -81,12 +81,15 @@ fun ProfileTab(navController: NavController) {
                               fontWeight = FontWeight.W700,
                           )
                           Spacer(modifier = Modifier.weight(1f))
-                          IconButton(onClick = {}) {
-                            Icon(
-                                imageVector = Icons.Rounded.BorderColor,
-                                contentDescription = null,
-                                tint = neutral05)
-                          }
+                          IconButton(
+                              onClick = {
+                                navController.navigate(route = Screen.ProfileDetailsScreen.route)
+                              }) {
+                                Icon(
+                                    imageVector = Icons.Rounded.BorderColor,
+                                    contentDescription = null,
+                                    tint = neutral05)
+                              }
                         }
                   }
               Spacer(modifier = Modifier.height(16.dp))
