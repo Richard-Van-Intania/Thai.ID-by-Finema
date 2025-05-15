@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import co.finema.thaidotidbyfinema.TH
+import co.finema.thaidotidbyfinema.ViewLayout
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 
@@ -32,10 +34,14 @@ fun LoadingScreen(navController: NavController) {
           navController.navigate(route = Screen.HomeRoot.route) {
             popUpTo(Screen.LoadingScreen.route) { inclusive = true }
           }
-      false ->
-          navController.navigate(route = Screen.OnboardingRoot.route) {
-            popUpTo(Screen.LoadingScreen.route) { inclusive = true }
-          }
+      false -> {
+        repository.updateLocale(TH)
+        repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
+        repository.updateHistoryViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
+        navController.navigate(route = Screen.OnboardingRoot.route) {
+          popUpTo(Screen.LoadingScreen.route) { inclusive = true }
+        }
+      }
       null -> {}
     }
   }
