@@ -27,8 +27,8 @@ fun PolicyAndSafetyScreen(navController: NavController) {
       backgroundColor = white) {
         AndroidView(
             modifier = Modifier.padding(it),
-            factory = { context ->
-              WebView(context).apply {
+            factory = {
+              WebView(it).apply {
                 webViewClient = WebViewClient()
                 loadUrl("https://thai.id/privacy")
               }
