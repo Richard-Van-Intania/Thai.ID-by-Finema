@@ -22,16 +22,3 @@ message UserConfig {
   bool is_accepted_agreements = 10;
   bool passcode_asked = 11;
 }
-
-message UserCard {
-  string id_string = 1;
-  string thai_prefix = 2;
-  string thai_name = 3;
-  string thai_middle_name = 4;
-  string thai_surname = 5;
-  string eng_prefix = 6;
-  string eng_name = 7;
-  string eng_middle_name = 8;
-  string eng_surname = 9;
-  string birth_date = 10;
-}

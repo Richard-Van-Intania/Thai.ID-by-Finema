@@ -3,14 +3,13 @@ package co.finema.thaidotidbyfinema.repositories
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import co.finema.thaidotidbyfinema.DATA_STORE_FILE_NAME
 import co.finema.thaidotidbyfinema.UserCard
 import co.finema.thaidotidbyfinema.serializers.UserCardSerializer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 private val Context.userCardStore: DataStore<UserCard> by
-    dataStore(fileName = DATA_STORE_FILE_NAME, serializer = UserCardSerializer)
+    dataStore(fileName = "user_card.proto", serializer = UserCardSerializer)
 
 class UserCardRepository(private val context: Context) {
   val userCardFlow: Flow<UserCard> = context.userCardStore.data

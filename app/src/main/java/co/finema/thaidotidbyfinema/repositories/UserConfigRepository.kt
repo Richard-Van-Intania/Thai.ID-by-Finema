@@ -3,7 +3,6 @@ package co.finema.thaidotidbyfinema.repositories
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import co.finema.thaidotidbyfinema.DATA_STORE_FILE_NAME
 import co.finema.thaidotidbyfinema.UserConfig
 import co.finema.thaidotidbyfinema.ViewLayout
 import co.finema.thaidotidbyfinema.serializers.UserConfigSerializer
@@ -11,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 private val Context.userConfigStore: DataStore<UserConfig> by
-    dataStore(fileName = DATA_STORE_FILE_NAME, serializer = UserConfigSerializer)
+    dataStore(fileName = "user_config.proto", serializer = UserConfigSerializer)
 
 class UserConfigRepository(private val context: Context) {
   val userConfigFlow: Flow<UserConfig> = context.userConfigStore.data
