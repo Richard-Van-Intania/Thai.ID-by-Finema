@@ -66,7 +66,6 @@ fun LocalizationSettingsScreen(navController: NavController) {
                 modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally) {
                   val scope = rememberCoroutineScope()
-                  Spacer(modifier = Modifier.height(32.dp))
                   TextButton(
                       onClick = {
                         if (locale != EN)
