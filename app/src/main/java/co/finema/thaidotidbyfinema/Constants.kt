@@ -1,6 +1,8 @@
 package co.finema.thaidotidbyfinema
 
 import androidx.compose.ui.unit.dp
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 val compactWidth = 600.dp
 
@@ -10,3 +12,6 @@ const val milliSeconds = 250
 
 const val EN = "en"
 const val TH = "th"
+
+val formatterTH: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("th", "TH"))
+val formatterEN: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("en", "EN"))
