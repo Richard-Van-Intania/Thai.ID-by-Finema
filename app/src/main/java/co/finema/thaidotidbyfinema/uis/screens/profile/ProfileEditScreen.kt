@@ -5,16 +5,7 @@ package co.finema.thaidotidbyfinema.uis.screens.profile
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBackIosNew
-import androidx.compose.material.icons.rounded.BorderColor
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,49 +14,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.repositories.UserCardRepository
-import co.finema.thaidotidbyfinema.uis.Screen
-import co.finema.thaidotidbyfinema.uis.primaryBlack
+import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.white
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileDetailsScreen(navController: NavController) {
+fun ProfileEditScreen(navController: NavController) {
   Scaffold(
       topBar = {
-        CenterAlignedTopAppBar(
-            title = {
-              Text(
-                  text = stringResource(R.string.my_profile),
-                  color = primaryBlack,
-                  fontSize = 24.sp,
-                  fontWeight = FontWeight.W700,
-              )
-            },
-            navigationIcon = {
-              IconButton(onClick = { navController.popBackStack() }) {
-                Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
-              }
-            },
-            actions = {
-              IconButton(
-                  onClick = { navController.navigate(route = Screen.ProfileEditScreen.route) }) {
-                    Icon(
-                        imageVector = Icons.Rounded.BorderColor,
-                        contentDescription = null,
-                        tint = primaryBlack)
-                  }
-            },
-            colors =
-                TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = white,
-                    navigationIconContentColor = primaryBlack,
-                    actionIconContentColor = primaryBlack))
+        AppBarOptBack(
+            containerColor = white,
+            text = stringResource(R.string.id_card_info),
+            onClick = { navController.popBackStack() })
       },
       backgroundColor = white) {
         val context = LocalContext.current

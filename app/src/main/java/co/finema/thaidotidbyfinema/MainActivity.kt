@@ -43,6 +43,7 @@ import co.finema.thaidotidbyfinema.uis.screens.passcodes.EnterPasscodeTurnOffFul
 import co.finema.thaidotidbyfinema.uis.screens.profile.LocalizationSettingsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.PolicyAndSafetyScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.ProfileDetailsScreen
+import co.finema.thaidotidbyfinema.uis.screens.profile.ProfileEditScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SupportScreen
 import kotlinx.coroutines.flow.first
@@ -162,6 +163,9 @@ class MainActivity : FragmentActivity() {
                     }
                     composable(route = Screen.ProfileDetailsScreen.route) {
                       ProfileDetailsScreen(navController = navController)
+                    }
+                    composable(route = Screen.ProfileEditScreen.route) {
+                      ProfileEditScreen(navController = navController)
                     }
                     composable(route = Screen.SettingsScreen.route) {
                       SettingsScreen(
