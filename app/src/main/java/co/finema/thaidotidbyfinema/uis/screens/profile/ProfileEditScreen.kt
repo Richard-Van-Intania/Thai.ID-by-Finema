@@ -48,6 +48,7 @@ import co.finema.thaidotidbyfinema.repositories.UserCardRepository
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.FCIconic
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
+import co.finema.thaidotidbyfinema.uis.components.ProfileDetailsHr
 import co.finema.thaidotidbyfinema.uis.neutral05
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryRed
@@ -213,6 +214,13 @@ fun ProfileEditScreen(navController: NavController) {
                             tint = primaryBlack)
                       }
                     })
+                ProfileDetailsHr(text = stringResource(R.string.personal_info_thai))
+                Text(
+                    text = stringResource(R.string.title),
+                    color = primaryBlack,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.W700,
+                )
               }
             }
       }

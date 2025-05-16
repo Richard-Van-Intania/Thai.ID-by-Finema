@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -41,6 +40,7 @@ import co.finema.thaidotidbyfinema.formatterTH
 import co.finema.thaidotidbyfinema.repositories.UserCardRepository
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
+import co.finema.thaidotidbyfinema.uis.components.ProfileDetailsHr
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.neutral04
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -192,20 +192,4 @@ fun ProfileDetailsItem(text: String, value: String) {
         )
       }
   HorizontalDivider(thickness = 1.dp, color = neutral02)
-}
-
-@Composable
-fun ProfileDetailsHr(text: String) {
-  Row(
-      modifier = Modifier.padding(top = 40.dp, bottom = 16.dp),
-      verticalAlignment = Alignment.CenterVertically) {
-        Text(
-            text = text,
-            color = primaryDarkBlue,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.W700,
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        HorizontalDivider(thickness = 2.dp, color = primaryDarkBlue)
-      }
 }
