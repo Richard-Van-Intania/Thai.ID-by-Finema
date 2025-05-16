@@ -117,10 +117,28 @@ fun ProfileEditScreen(navController: NavController) {
   var thaiExpanded by remember { mutableStateOf(false) }
   var thaiSelectedValue by remember { mutableStateOf("") }
   LaunchedEffect(thaiPrefix) { thaiSelectedValue = thaiPrefix }
+  val thaiName by userCardRepository.thaiName.collectAsState(initial = "")
+  var thaiNameText by remember { mutableStateOf("") }
+  LaunchedEffect(thaiName) { thaiNameText = thaiName }
+  val thaiMiddleName by userCardRepository.thaiMiddleName.collectAsState(initial = "")
+  var thaiMiddleNameText by remember { mutableStateOf("") }
+  LaunchedEffect(thaiMiddleName) { thaiMiddleNameText = thaiMiddleName }
+  val thaiSurname by userCardRepository.thaiSurname.collectAsState(initial = "")
+  var thaiSurnameText by remember { mutableStateOf("") }
+  LaunchedEffect(thaiSurname) { thaiSurnameText = thaiSurname }
   val engPrefix by userCardRepository.engPrefix.collectAsState(initial = "")
   var engExpanded by remember { mutableStateOf(false) }
   var engSelectedValue by remember { mutableStateOf("") }
   LaunchedEffect(engPrefix) { engSelectedValue = engPrefix }
+  val engName by userCardRepository.engName.collectAsState(initial = "")
+  var engNameText by remember { mutableStateOf("") }
+  LaunchedEffect(engName) { engNameText = engName }
+  val engMiddleName by userCardRepository.engMiddleName.collectAsState(initial = "")
+  var engMiddleNameText by remember { mutableStateOf("") }
+  LaunchedEffect(engMiddleName) { engMiddleNameText = engMiddleName }
+  val engSurname by userCardRepository.engSurname.collectAsState(initial = "")
+  var engSurnameText by remember { mutableStateOf("") }
+  LaunchedEffect(engSurname) { engSurnameText = engSurname }
   Scaffold(
       topBar = {
         AppBarOptBack(
@@ -132,7 +150,13 @@ fun ProfileEditScreen(navController: NavController) {
                     .launch {
                       userCardRepository.updateIdString(idStringText)
                       userCardRepository.updateThaiPrefix(thaiSelectedValue.trim())
+                      userCardRepository.updateThaiName(thaiNameText.trim())
+                      userCardRepository.updateThaiMiddleName(thaiMiddleNameText.trim())
+                      userCardRepository.updateThaiSurname(thaiSurnameText.trim())
                       userCardRepository.updateEngPrefix(engSelectedValue.trim())
+                      userCardRepository.updateEngName(engNameText.trim())
+                      userCardRepository.updateEngMiddleName(engMiddleNameText.trim())
+                      userCardRepository.updateEngSurname(engSurnameText.trim())
                     }
                     .invokeOnCompletion { navController.popBackStack() }
               } else {
@@ -185,7 +209,7 @@ fun ProfileEditScreen(navController: NavController) {
                     keyboardOptions =
                         KeyboardOptions(
                             keyboardType = KeyboardType.Number, showKeyboardOnFocus = true),
-                    maxLines = 1,
+                    singleLine = true,
                     isError = idStringError,
                 )
                 Row(modifier = Modifier.padding(horizontal = 8.dp)) {
@@ -232,7 +256,9 @@ fun ProfileEditScreen(navController: NavController) {
                             contentDescription = null,
                             tint = primaryBlack)
                       }
-                    })
+                    },
+                    singleLine = true,
+                )
                 ProfileDetailsHr(text = stringResource(R.string.personal_info_thai))
                 Text(
                     text = stringResource(R.string.title),
@@ -258,7 +284,7 @@ fun ProfileEditScreen(navController: NavController) {
                           trailingIcon = {
                             ExposedDropdownMenuDefaults.TrailingIcon(expanded = thaiExpanded)
                           },
-                          maxLines = 1,
+                          singleLine = true,
                       )
                       ExposedDropdownMenu(
                           containerColor = whiteBG,
@@ -281,7 +307,106 @@ fun ProfileEditScreen(navController: NavController) {
                             }
                           }
                     }
+                NameTextField(
+                    text = stringResource(R.string.first_name),
+                    value = thaiNameText,
+                    onValueChange = { thaiNameText = it })
+                NameTextField(
+                    text = stringResource(R.string.middle_name),
+                    value = thaiMiddleNameText,
+                    onValueChange = { thaiMiddleNameText = it })
+                NameTextField(
+                    text = stringResource(R.string.last_name),
+                    value = thaiSurnameText,
+                    onValueChange = { thaiSurnameText = it })
+                ProfileDetailsHr(text = stringResource(R.string.personal_info_eng))
+                Text(
+                    text = stringResource(R.string.title),
+                    color = primaryBlack,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.W700,
+                )
+                ExposedDropdownMenuBox(
+                    expanded = engExpanded, onExpandedChange = { engExpanded = it }) {
+                      OutlinedTextField(
+                          value = engSelectedValue,
+                          onValueChange = { engSelectedValue = it },
+                          modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
+                          textStyle = filledStyle,
+                          placeholder = {
+                            Text(
+                                text = stringResource(R.string.title),
+                                color = neutral05,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.W400,
+                            )
+                          },
+                          trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = engExpanded)
+                          },
+                          singleLine = true,
+                      )
+                      ExposedDropdownMenu(
+                          containerColor = whiteBG,
+                          expanded = engExpanded,
+                          onDismissRequest = { engExpanded = false }) {
+                            engItems.forEach {
+                              DropdownMenuItem(
+                                  text = {
+                                    Text(
+                                        text = it,
+                                        color = primaryBlack,
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.W400,
+                                    )
+                                  },
+                                  onClick = {
+                                    engSelectedValue = it
+                                    engExpanded = false
+                                  })
+                            }
+                          }
+                    }
+                NameTextField(
+                    text = stringResource(R.string.first_name),
+                    value = engNameText,
+                    onValueChange = { engNameText = it })
+                NameTextField(
+                    text = stringResource(R.string.middle_name),
+                    value = engMiddleNameText,
+                    onValueChange = { engMiddleNameText = it })
+                NameTextField(
+                    text = stringResource(R.string.last_name),
+                    value = engSurnameText,
+                    onValueChange = { engSurnameText = it })
+                Spacer(modifier = Modifier.height(48.dp))
               }
             }
       }
+}
+
+@Composable
+fun NameTextField(text: String, value: String, onValueChange: (String) -> Unit) {
+  Spacer(modifier = Modifier.height(32.dp))
+  Text(
+      text = text,
+      color = primaryBlack,
+      fontSize = 20.sp,
+      fontWeight = FontWeight.W700,
+  )
+  OutlinedTextField(
+      value = value,
+      onValueChange = onValueChange,
+      modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+      textStyle = filledStyle,
+      placeholder = {
+        Text(
+            text = text,
+            color = neutral05,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.W400,
+        )
+      },
+      singleLine = true,
+  )
 }
