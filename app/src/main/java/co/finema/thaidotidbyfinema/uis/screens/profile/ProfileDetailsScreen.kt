@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
@@ -167,6 +168,7 @@ fun ProfileDetailsScreen(navController: NavController) {
                         text = stringResource(R.string.middle_name), value = engMiddleName)
                     ProfileDetailsItem(
                         text = stringResource(R.string.last_name), value = engSurname)
+                    Spacer(modifier = Modifier.height(48.dp))
                   }
                 }
       }
