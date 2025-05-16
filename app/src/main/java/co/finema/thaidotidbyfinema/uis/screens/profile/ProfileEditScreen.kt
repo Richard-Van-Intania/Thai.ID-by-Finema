@@ -113,11 +113,14 @@ fun ProfileEditScreen(navController: NavController) {
               scope.launch { userCardRepository.updateBirthDate(localDateTime.toString()) }
             }
       }
-
+  val thaiPrefix by userCardRepository.thaiPrefix.collectAsState(initial = "")
   var thaiExpanded by remember { mutableStateOf(false) }
   var thaiSelectedValue by remember { mutableStateOf("") }
+  LaunchedEffect(thaiPrefix) { thaiSelectedValue = thaiPrefix }
+  val engPrefix by userCardRepository.engPrefix.collectAsState(initial = "")
   var engExpanded by remember { mutableStateOf(false) }
   var engSelectedValue by remember { mutableStateOf("") }
+  LaunchedEffect(engPrefix) { engSelectedValue = engPrefix }
   Scaffold(
       topBar = {
         AppBarOptBack(
@@ -126,7 +129,11 @@ fun ProfileEditScreen(navController: NavController) {
             onClick = {
               if (idStringText.isEmpty() || idStringText.length == 13) {
                 scope
-                    .launch { userCardRepository.updateIdString(idStringText) }
+                    .launch {
+                      userCardRepository.updateIdString(idStringText)
+                      userCardRepository.updateThaiPrefix(thaiSelectedValue.trim())
+                      userCardRepository.updateEngPrefix(engSelectedValue.trim())
+                    }
                     .invokeOnCompletion { navController.popBackStack() }
               } else {
                 idStringError = true
