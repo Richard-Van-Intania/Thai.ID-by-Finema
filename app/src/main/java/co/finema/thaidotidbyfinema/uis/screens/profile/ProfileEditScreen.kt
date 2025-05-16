@@ -16,9 +16,15 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -106,6 +112,10 @@ fun ProfileEditScreen(navController: NavController) {
               scope.launch { userCardRepository.updateBirthDate(localDateTime.toString()) }
             }
       }
+
+    val options = listOf("Apple", "Banana", "Cherry", "Date", "Elderberry")
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOptionText by remember { mutableStateOf("") }
   Scaffold(
       topBar = {
         AppBarOptBack(
@@ -221,6 +231,49 @@ fun ProfileEditScreen(navController: NavController) {
                     fontSize = 20.sp,
                     fontWeight = FontWeight.W700,
                 )
+
+                  // here
+                  ExposedDropdownMenuBox(
+                      expanded = expanded,
+                      onExpandedChange = { expanded = !expanded }
+                  ) {
+
+
+                      OutlinedTextField(
+                          value = selectedOptionText,
+                          onValueChange = { selectedOptionText = it },
+                          modifier = Modifier.menuAnchor() .fillMaxWidth().padding(top = 8.dp),
+                          textStyle = filledStyle,
+                          placeholder = {
+                              Text(
+                                  text = stringResource(R.string.title),
+                                  color = neutral05,
+                                  fontSize = 20.sp,
+                                  fontWeight = FontWeight.W400,
+                              )
+                          },  trailingIcon = {
+                              ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                          },
+
+                      )
+
+                      ExposedDropdownMenu(
+                          expanded = expanded,
+                          onDismissRequest = { expanded = false }
+                      ) {
+                          options.filter {
+                              it.contains(selectedOptionText, ignoreCase = true)
+                          }.forEach { selectionOption ->
+                              DropdownMenuItem(
+                                  text = { Text(text =  selectionOption, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                                  onClick = {
+                                      selectedOptionText = selectionOption
+                                      expanded = false
+                                  }
+                              )
+                          }
+                      }
+                  }
               }
             }
       }
