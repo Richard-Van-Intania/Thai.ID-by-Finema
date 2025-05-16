@@ -264,23 +264,21 @@ fun ProfileEditScreen(navController: NavController) {
                           containerColor = whiteBG,
                           expanded = thaiExpanded,
                           onDismissRequest = { thaiExpanded = false }) {
-                            thaiItems
-                                .filter { it.contains(thaiSelectedValue, ignoreCase = true) }
-                                .forEach {
-                                  DropdownMenuItem(
-                                      text = {
-                                        Text(
-                                            text = it,
-                                            color = primaryBlack,
-                                            fontSize = 20.sp,
-                                            fontWeight = FontWeight.W400,
-                                        )
-                                      },
-                                      onClick = {
-                                        thaiSelectedValue = it
-                                        thaiExpanded = false
-                                      })
-                                }
+                            thaiItems.forEach {
+                              DropdownMenuItem(
+                                  text = {
+                                    Text(
+                                        text = it,
+                                        color = primaryBlack,
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.W400,
+                                    )
+                                  },
+                                  onClick = {
+                                    thaiSelectedValue = it
+                                    thaiExpanded = false
+                                  })
+                            }
                           }
                     }
               }
