@@ -15,3 +15,5 @@ const val TH = "th"
 
 val formatterTH: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("th", "TH"))
 val formatterEN: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("en", "EN"))
+
+val regexNumber = Regex("^[0-9]+$")
