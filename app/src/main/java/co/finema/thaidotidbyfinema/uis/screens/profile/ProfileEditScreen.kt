@@ -2,6 +2,7 @@
 
 package co.finema.thaidotidbyfinema.uis.screens.profile
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,6 +46,7 @@ import co.finema.thaidotidbyfinema.formatterTH
 import co.finema.thaidotidbyfinema.regexNumber
 import co.finema.thaidotidbyfinema.repositories.UserCardRepository
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
+import co.finema.thaidotidbyfinema.uis.FCIconic
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.neutral05
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -58,10 +60,17 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.chrono.ThaiBuddhistDate
 
+val filledStyle =
+    TextStyle(
+        fontFamily = FCIconic, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileEditScreen(navController: NavController) {
+  BackHandler(enabled = true) {}
   val context = LocalContext.current
+  val focusManager = LocalFocusManager.current
+  val scope = rememberCoroutineScope()
   val userConfigRepository = remember { UserConfigRepository(context) }
   val locale by userConfigRepository.locale.collectAsState(initial = "")
   val userCardRepository = remember { UserCardRepository(context) }
@@ -70,10 +79,8 @@ fun ProfileEditScreen(navController: NavController) {
   var idStringError by remember { mutableStateOf(false) }
   val birthDate by userCardRepository.birthDate.collectAsState(initial = "")
   var birthDateText by remember { mutableStateOf("") }
-  val focusManager = LocalFocusManager.current
-  val scope = rememberCoroutineScope()
   LaunchedEffect(idString) { idStringText = idString }
-  LaunchedEffect(birthDate) {
+  LaunchedEffect(locale, birthDate) {
     if (birthDate.isNotEmpty())
         when (locale) {
           EN -> birthDateText = formatterEN.format(LocalDateTime.parse(birthDate))
@@ -91,10 +98,12 @@ fun ProfileEditScreen(navController: NavController) {
         positiveButton(stringResource(R.string.ok))
         negativeButton(stringResource(R.string.cancel))
       }) {
-        datepicker(allowedDateValidator = { !it.isAfter(LocalDate.now()) }) {
-          val localDateTime: LocalDateTime = it.atStartOfDay()
-          scope.launch { userCardRepository.updateBirthDate(localDateTime.toString()) }
-        }
+        datepicker(
+            title = stringResource(R.string.date_of_birth),
+            allowedDateValidator = { !it.isAfter(LocalDate.now()) }) {
+              val localDateTime: LocalDateTime = it.atStartOfDay()
+              scope.launch { userCardRepository.updateBirthDate(localDateTime.toString()) }
+            }
       }
   Scaffold(
       topBar = {
@@ -144,9 +153,7 @@ fun ProfileEditScreen(navController: NavController) {
                       }
                     },
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    textStyle =
-                        TextStyle(
-                            color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400),
+                    textStyle = filledStyle,
                     placeholder = {
                       Text(
                           text = stringResource(R.string.id_number),
@@ -189,9 +196,7 @@ fun ProfileEditScreen(navController: NavController) {
                     onValueChange = {},
                     readOnly = true,
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    textStyle =
-                        TextStyle(
-                            color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400),
+                    textStyle = filledStyle,
                     placeholder = {
                       Text(
                           text = stringResource(R.string.date_format),
