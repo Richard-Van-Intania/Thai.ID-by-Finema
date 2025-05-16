@@ -31,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -145,6 +144,7 @@ fun ProfileEditScreen(navController: NavController) {
             containerColor = white,
             text = stringResource(R.string.id_card_info),
             onClick = {
+              focusManager.clearFocus()
               if (idStringText.isEmpty() || idStringText.length == 13) {
                 scope
                     .launch {
@@ -165,223 +165,210 @@ fun ProfileEditScreen(navController: NavController) {
             })
       },
       backgroundColor = white) {
-        LazyColumn(
-            modifier =
-                Modifier.fillMaxSize()
-                    .pointerInput(Unit) {
-                      awaitPointerEventScope {
-                        while (true) {
-                          val event = awaitPointerEvent()
-                          if (event.changes.any { it.pressed }) {
-                            focusManager.clearFocus()
-                          }
-                        }
-                      }
-                    }
-                    .padding(it)
-                    .padding(horizontal = 16.dp)) {
-              item {
-                Text(
-                    text = stringResource(R.string.id_number),
-                    color = primaryBlack,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700,
-                )
-                OutlinedTextField(
-                    value = idStringText,
-                    onValueChange = {
-                      val value = it.trim()
-                      if ((regexNumber.matches(value) && value.length < 14) || value.isEmpty()) {
-                        idStringText = value
-                        idStringError = false
-                      }
-                    },
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    textStyle = filledStyle,
-                    placeholder = {
-                      Text(
-                          text = stringResource(R.string.id_number),
-                          color = neutral05,
-                          fontSize = 20.sp,
-                          fontWeight = FontWeight.W400,
-                      )
-                    },
-                    keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Number, showKeyboardOnFocus = true),
-                    singleLine = true,
-                    isError = idStringError,
-                )
-                Row(modifier = Modifier.padding(horizontal = 8.dp)) {
-                  if (idStringError)
-                      Text(
-                          text = stringResource(R.string.required),
-                          color = primaryRed,
-                          fontSize = 16.sp,
-                          fontWeight = FontWeight.W400,
-                      )
-                  Spacer(modifier = Modifier.weight(1f))
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
+          item {
+            Text(
+                text = stringResource(R.string.id_number),
+                color = primaryBlack,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.W700,
+            )
+            OutlinedTextField(
+                value = idStringText,
+                onValueChange = {
+                  val value = it.trim()
+                  if ((regexNumber.matches(value) && value.length < 14) || value.isEmpty()) {
+                    idStringText = value
+                    idStringError = false
+                  }
+                },
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                textStyle = filledStyle,
+                placeholder = {
                   Text(
-                      text = "${idStringText.length}/13",
+                      text = stringResource(R.string.id_number),
                       color = neutral05,
+                      fontSize = 20.sp,
+                      fontWeight = FontWeight.W400,
+                  )
+                },
+                keyboardOptions =
+                    KeyboardOptions(keyboardType = KeyboardType.Number, showKeyboardOnFocus = true),
+                singleLine = true,
+                isError = idStringError,
+            )
+            Row(modifier = Modifier.padding(horizontal = 8.dp)) {
+              if (idStringError)
+                  Text(
+                      text = stringResource(R.string.required),
+                      color = primaryRed,
                       fontSize = 16.sp,
                       fontWeight = FontWeight.W400,
                   )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.date_of_birth),
-                    color = primaryBlack,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700,
-                )
-                OutlinedTextField(
-                    value = birthDateText,
-                    onValueChange = {},
-                    readOnly = true,
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    textStyle = filledStyle,
-                    placeholder = {
-                      Text(
-                          text = stringResource(R.string.date_format),
-                          color = neutral05,
-                          fontSize = 20.sp,
-                          fontWeight = FontWeight.W400,
-                      )
-                    },
-                    trailingIcon = {
-                      IconButton(onClick = { dialogState.show() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.CalendarMonth,
-                            contentDescription = null,
-                            tint = primaryBlack)
-                      }
-                    },
-                    singleLine = true,
-                )
-                ProfileDetailsHr(text = stringResource(R.string.personal_info_thai))
-                Text(
-                    text = stringResource(R.string.title),
-                    color = primaryBlack,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700,
-                )
-                ExposedDropdownMenuBox(
-                    expanded = thaiExpanded, onExpandedChange = { thaiExpanded = it }) {
-                      OutlinedTextField(
-                          value = thaiSelectedValue,
-                          onValueChange = { thaiSelectedValue = it },
-                          modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
-                          textStyle = filledStyle,
-                          placeholder = {
-                            Text(
-                                text = stringResource(R.string.title),
-                                color = neutral05,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.W400,
-                            )
-                          },
-                          trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = thaiExpanded)
-                          },
-                          singleLine = true,
-                      )
-                      ExposedDropdownMenu(
-                          containerColor = whiteBG,
-                          expanded = thaiExpanded,
-                          onDismissRequest = { thaiExpanded = false }) {
-                            thaiItems.forEach {
-                              DropdownMenuItem(
-                                  text = {
-                                    Text(
-                                        text = it,
-                                        color = primaryBlack,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.W400,
-                                    )
-                                  },
-                                  onClick = {
-                                    thaiSelectedValue = it
-                                    thaiExpanded = false
-                                  })
-                            }
-                          }
-                    }
-                NameTextField(
-                    text = stringResource(R.string.first_name),
-                    value = thaiNameText,
-                    onValueChange = { thaiNameText = it })
-                NameTextField(
-                    text = stringResource(R.string.middle_name),
-                    value = thaiMiddleNameText,
-                    onValueChange = { thaiMiddleNameText = it })
-                NameTextField(
-                    text = stringResource(R.string.last_name),
-                    value = thaiSurnameText,
-                    onValueChange = { thaiSurnameText = it })
-                ProfileDetailsHr(text = stringResource(R.string.personal_info_eng))
-                Text(
-                    text = stringResource(R.string.title),
-                    color = primaryBlack,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700,
-                )
-                ExposedDropdownMenuBox(
-                    expanded = engExpanded, onExpandedChange = { engExpanded = it }) {
-                      OutlinedTextField(
-                          value = engSelectedValue,
-                          onValueChange = { engSelectedValue = it },
-                          modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
-                          textStyle = filledStyle,
-                          placeholder = {
-                            Text(
-                                text = stringResource(R.string.title),
-                                color = neutral05,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.W400,
-                            )
-                          },
-                          trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = engExpanded)
-                          },
-                          singleLine = true,
-                      )
-                      ExposedDropdownMenu(
-                          containerColor = whiteBG,
-                          expanded = engExpanded,
-                          onDismissRequest = { engExpanded = false }) {
-                            engItems.forEach {
-                              DropdownMenuItem(
-                                  text = {
-                                    Text(
-                                        text = it,
-                                        color = primaryBlack,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.W400,
-                                    )
-                                  },
-                                  onClick = {
-                                    engSelectedValue = it
-                                    engExpanded = false
-                                  })
-                            }
-                          }
-                    }
-                NameTextField(
-                    text = stringResource(R.string.first_name),
-                    value = engNameText,
-                    onValueChange = { engNameText = it })
-                NameTextField(
-                    text = stringResource(R.string.middle_name),
-                    value = engMiddleNameText,
-                    onValueChange = { engMiddleNameText = it })
-                NameTextField(
-                    text = stringResource(R.string.last_name),
-                    value = engSurnameText,
-                    onValueChange = { engSurnameText = it })
-                Spacer(modifier = Modifier.height(48.dp))
-              }
+              Spacer(modifier = Modifier.weight(1f))
+              Text(
+                  text = "${idStringText.length}/13",
+                  color = neutral05,
+                  fontSize = 16.sp,
+                  fontWeight = FontWeight.W400,
+              )
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.date_of_birth),
+                color = primaryBlack,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.W700,
+            )
+            OutlinedTextField(
+                value = birthDateText,
+                onValueChange = {},
+                readOnly = true,
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                textStyle = filledStyle,
+                placeholder = {
+                  Text(
+                      text = stringResource(R.string.date_format),
+                      color = neutral05,
+                      fontSize = 20.sp,
+                      fontWeight = FontWeight.W400,
+                  )
+                },
+                trailingIcon = {
+                  IconButton(onClick = { dialogState.show() }) {
+                    Icon(
+                        imageVector = Icons.Rounded.CalendarMonth,
+                        contentDescription = null,
+                        tint = primaryBlack)
+                  }
+                },
+                singleLine = true,
+            )
+            ProfileDetailsHr(text = stringResource(R.string.personal_info_thai))
+            Text(
+                text = stringResource(R.string.title),
+                color = primaryBlack,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.W700,
+            )
+            ExposedDropdownMenuBox(
+                expanded = thaiExpanded, onExpandedChange = { thaiExpanded = it }) {
+                  OutlinedTextField(
+                      value = thaiSelectedValue,
+                      onValueChange = { thaiSelectedValue = it },
+                      modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
+                      textStyle = filledStyle,
+                      placeholder = {
+                        Text(
+                            text = stringResource(R.string.title),
+                            color = neutral05,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.W400,
+                        )
+                      },
+                      trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = thaiExpanded)
+                      },
+                      singleLine = true,
+                  )
+                  ExposedDropdownMenu(
+                      containerColor = whiteBG,
+                      expanded = thaiExpanded,
+                      onDismissRequest = { thaiExpanded = false }) {
+                        thaiItems.forEach {
+                          DropdownMenuItem(
+                              text = {
+                                Text(
+                                    text = it,
+                                    color = primaryBlack,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.W400,
+                                )
+                              },
+                              onClick = {
+                                thaiSelectedValue = it
+                                thaiExpanded = false
+                                focusManager.clearFocus()
+                              })
+                        }
+                      }
+                }
+            NameTextField(
+                text = stringResource(R.string.first_name),
+                value = thaiNameText,
+                onValueChange = { thaiNameText = it })
+            NameTextField(
+                text = stringResource(R.string.middle_name),
+                value = thaiMiddleNameText,
+                onValueChange = { thaiMiddleNameText = it })
+            NameTextField(
+                text = stringResource(R.string.last_name),
+                value = thaiSurnameText,
+                onValueChange = { thaiSurnameText = it })
+            ProfileDetailsHr(text = stringResource(R.string.personal_info_eng))
+            Text(
+                text = stringResource(R.string.title),
+                color = primaryBlack,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.W700,
+            )
+            ExposedDropdownMenuBox(
+                expanded = engExpanded, onExpandedChange = { engExpanded = it }) {
+                  OutlinedTextField(
+                      value = engSelectedValue,
+                      onValueChange = { engSelectedValue = it },
+                      modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
+                      textStyle = filledStyle,
+                      placeholder = {
+                        Text(
+                            text = stringResource(R.string.title),
+                            color = neutral05,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.W400,
+                        )
+                      },
+                      trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = engExpanded)
+                      },
+                      singleLine = true,
+                  )
+                  ExposedDropdownMenu(
+                      containerColor = whiteBG,
+                      expanded = engExpanded,
+                      onDismissRequest = { engExpanded = false }) {
+                        engItems.forEach {
+                          DropdownMenuItem(
+                              text = {
+                                Text(
+                                    text = it,
+                                    color = primaryBlack,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.W400,
+                                )
+                              },
+                              onClick = {
+                                engSelectedValue = it
+                                engExpanded = false
+                                focusManager.clearFocus()
+                              })
+                        }
+                      }
+                }
+            NameTextField(
+                text = stringResource(R.string.first_name),
+                value = engNameText,
+                onValueChange = { engNameText = it })
+            NameTextField(
+                text = stringResource(R.string.middle_name),
+                value = engMiddleNameText,
+                onValueChange = { engMiddleNameText = it })
+            NameTextField(
+                text = stringResource(R.string.last_name),
+                value = engSurnameText,
+                onValueChange = { engSurnameText = it })
+            Spacer(modifier = Modifier.height(48.dp))
+          }
+        }
       }
 }
 
