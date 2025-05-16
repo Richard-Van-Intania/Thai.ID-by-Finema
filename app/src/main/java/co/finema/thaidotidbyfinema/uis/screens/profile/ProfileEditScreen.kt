@@ -81,7 +81,7 @@ fun ProfileEditScreen(navController: NavController) {
   var birthDateText by remember { mutableStateOf("") }
   LaunchedEffect(idString) { idStringText = idString }
   LaunchedEffect(locale, birthDate) {
-    if (birthDate.isNotEmpty())
+    if (locale.isNotEmpty() && birthDate.isNotEmpty())
         when (locale) {
           EN -> birthDateText = formatterEN.format(LocalDateTime.parse(birthDate))
           TH ->
