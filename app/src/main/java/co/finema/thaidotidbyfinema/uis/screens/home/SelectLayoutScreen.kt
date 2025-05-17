@@ -44,6 +44,7 @@ import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.uis.FCIconic
+import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -135,7 +136,13 @@ fun SelectLayoutScreen(navController: NavController) {
                 Modifier.fillMaxWidth()
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
             contentAlignment = Alignment.Center) {
-              GradientButton(onClick = {}, text = stringResource(R.string.next))
+              GradientButton(
+                  onClick = {
+                    navController.navigate(
+                        route =
+                            "${Screen.DocumentPlaceholderScreen.route}/${layoutItems[index].documentLayout.name}")
+                  },
+                  text = stringResource(R.string.next))
             }
       },
       backgroundColor = white) {

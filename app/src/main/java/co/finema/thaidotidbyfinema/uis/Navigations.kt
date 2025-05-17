@@ -61,6 +61,8 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
 
   object ProfileEditScreen : Screen("ProfileEditScreen")
 
+  object DocumentPlaceholderScreen : Screen("DocumentPlaceholderScreen")
+
   object SSSSSS : Screen("SSSSSS")
 }
 

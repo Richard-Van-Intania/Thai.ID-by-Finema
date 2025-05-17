@@ -21,12 +21,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.CustomTypography
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.screens.LoadingScreen
 import co.finema.thaidotidbyfinema.uis.screens.MainScreen
+import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPlaceholderScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.TermsScreen
@@ -161,6 +163,20 @@ class MainActivity : FragmentActivity() {
                     composable(route = Screen.SelectLayoutScreen.route) {
                       SelectLayoutScreen(navController = navController)
                     }
+                    composable(
+                        route = "${Screen.DocumentPlaceholderScreen.route}/{name}",
+                        arguments =
+                            listOf(
+                                navArgument("name") {
+                                  defaultValue = DocumentLayout.ONE_SIDE_CARD.name
+                                })) { backStackEntry ->
+                          val name =
+                              backStackEntry.arguments?.getString("name")
+                                  ?: DocumentLayout.ONE_SIDE_CARD.name
+                          DocumentPlaceholderScreen(
+                              navController = navController,
+                              documentLayout = DocumentLayout.valueOf(name))
+                        }
                     composable(route = Screen.ProfileDetailsScreen.route) {
                       ProfileDetailsScreen(navController = navController)
                     }
