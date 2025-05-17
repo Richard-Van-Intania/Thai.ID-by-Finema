@@ -43,8 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
-import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
@@ -113,7 +113,7 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
             modifier =
                 Modifier.background(white)
                     .fillMaxWidth()
-                    .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 48.dp),
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
             contentAlignment = Alignment.Center) {
               GradientButton(
                   onClick = { showOptionDialog = true },
