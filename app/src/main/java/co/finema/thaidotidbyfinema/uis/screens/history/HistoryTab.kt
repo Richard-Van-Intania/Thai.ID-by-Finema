@@ -28,7 +28,7 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 import kotlinx.coroutines.launch
 
 @Composable
-fun HistoryTab(navController: NavController) {
+fun HistoryTab(navController: NavController, counterState: CounterState) {
   val localAuth = remember { mutableStateOf(false) }
   LaunchedEffect(localAuth.value) { println(localAuth.value) }
   val counterState = rememberCounterState()

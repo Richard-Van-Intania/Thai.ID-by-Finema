@@ -220,7 +220,7 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
   LaunchedEffect(passcode, localAuth.value) {
     if (passcode.isNotEmpty() && !localAuth.value) {
       navController.navigate(Screen.EnterPasscodeLoginFullscreen.route)
-//                  navController.navigate(Screen.ProfileEditScreen.route)
+      //                  navController.navigate(Screen.ProfileEditScreen.route)
     }
   }
   val tabController = rememberNavController()
@@ -283,7 +283,7 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
               popEnterTransition = { EnterTransition.None },
               popExitTransition = { ExitTransition.None },
           ) {
-            HomeTab(navController = navController, counterState)
+            HomeTab(navController = navController)
           }
           composable(
               route = Screen.HistoryTab.route,
@@ -292,7 +292,7 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
               popEnterTransition = { EnterTransition.None },
               popExitTransition = { ExitTransition.None },
           ) {
-            HistoryTab(navController = navController)
+            HistoryTab(navController = navController, counterState = counterState)
           }
           composable(
               route = Screen.ProfileTab.route,

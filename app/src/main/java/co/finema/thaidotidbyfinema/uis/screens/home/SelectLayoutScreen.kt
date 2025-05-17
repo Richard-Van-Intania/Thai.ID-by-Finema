@@ -41,8 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -132,7 +132,7 @@ fun SelectLayoutScreen(navController: NavController) {
         Box(
             modifier =
                 Modifier.fillMaxWidth()
-                    .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 48.dp),
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
             contentAlignment = Alignment.Center) {
               GradientButton(onClick = {}, text = stringResource(R.string.next))
             }
@@ -210,7 +210,6 @@ fun SelectLayoutScreen(navController: NavController) {
                   }
             }
           }
-          Spacer(modifier = Modifier.height(128.dp))
         }
       }
 }
