@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
+import co.finema.thaidotidbyfinema.uis.FCIconic
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -235,6 +236,7 @@ fun LayoutItemButton(layoutItem: LayoutItemButtonData, isSelected: Boolean, onCl
               maxLines = 1,
               style =
                   TextStyle(
+                      fontFamily = FCIconic,
                       color = primaryBlack,
                       fontSize = 16.sp,
                       fontWeight = if (isSelected) FontWeight.W700 else FontWeight.W400),
