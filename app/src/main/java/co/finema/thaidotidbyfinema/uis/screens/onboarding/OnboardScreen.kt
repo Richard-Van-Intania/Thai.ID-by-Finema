@@ -92,7 +92,7 @@ fun OnboardScreen(navController: NavHostController) {
                 }
               }
               Spacer(modifier = Modifier.weight(2f))
-              val pagerState = rememberPagerState(pageCount = { 4 })
+              val pagerState = rememberPagerState(pageCount = { tipsList.count() })
               Box(modifier = Modifier.height(560.dp), contentAlignment = Alignment.Center) {
                 HorizontalPager(state = pagerState, modifier = Modifier.fillMaxWidth()) { page ->
                   Column(
