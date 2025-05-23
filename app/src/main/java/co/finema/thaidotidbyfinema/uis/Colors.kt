@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 
 val primaryDarkBlue = Color(0xFF094483)
 val lightBlue07 = Color(0xFF0664C3)
+val lightBlue09 = Color(0xFF092548)
 val primaryBlack = Color(0xFF23272E)
 val neutral02 = Color(0xFFECEEF2)
 val neutral04 = Color(0xFFB2BAC7)
@@ -23,4 +24,4 @@ val success06 = Color(0xFF26B941)
 
 val gradient = Brush.horizontalGradient(colors = listOf(primaryDarkBlue, lightBlue07))
 
-// #ECEEF2 #8895A8 success06 #26B941 blue05 #8EACD0
+// #ECEEF2 #8895A8 success06 #26B941 blue05 #8EACD0 #092548
