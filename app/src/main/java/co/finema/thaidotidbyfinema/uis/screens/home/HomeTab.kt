@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -97,6 +99,21 @@ fun HomeTab(navController: NavController) {
               fontSize = 22.sp,
               fontWeight = FontWeight.W400,
           )
+          Spacer(modifier = Modifier.height(24.dp))
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(
+                checked = isSelectedNeverShowAgain,
+                colors = CheckboxDefaults.colors(checkedColor = primaryDarkBlue),
+                onCheckedChange = {
+                  scope.launch { repository.updateIsSelectedNeverShowAgain(it) }
+                })
+            Text(
+                text = stringResource(R.string.do_not_show),
+                color = neutral07,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.W400,
+            )
+          }
           Spacer(modifier = Modifier.height(32.dp))
           GradientButton(
               onClick = {
