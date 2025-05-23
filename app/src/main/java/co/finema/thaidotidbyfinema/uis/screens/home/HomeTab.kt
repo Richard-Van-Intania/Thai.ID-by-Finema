@@ -70,7 +70,7 @@ fun HomeTab(navController: NavController) {
       Canvas(modifier = Modifier.fillMaxSize()) {
         val canvasWidth = size.width
         translate(top = -(canvasWidth * linearHeight(screenWidthDp))) {
-          scale(scaleX = 2f, scaleY = 0.86363636f) {
+          scale(scaleX = 2.0f, scaleY = 0.86363636f) {
             drawCircle(brush = gradient, radius = canvasWidth / 2.0f)
           }
         }
@@ -206,5 +206,5 @@ fun HomeTab(navController: NavController) {
 }
 
 fun linearHeight(screenWidthDp: Int): Float {
-  return (6608.0f - screenWidthDp.toFloat()) / 7040.0f
+  return (6608 - screenWidthDp).toFloat() / 7040.0f
 }
