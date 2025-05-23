@@ -24,14 +24,22 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.BorderColor
+import androidx.compose.material.icons.rounded.GridView
+import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,7 +47,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.ViewLayout
 import co.finema.thaidotidbyfinema.cornerRadius
+import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
 import co.finema.thaidotidbyfinema.uis.gradient
@@ -48,6 +58,7 @@ import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeTab(navController: NavController) {
@@ -64,6 +75,10 @@ fun HomeTab(navController: NavController) {
       }
       Column(
           modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+            val context = LocalContext.current
+            val repository = remember { UserConfigRepository(context) }
+            val scope = rememberCoroutineScope()
+            val homeViewLayout by repository.homeViewLayout.collectAsState(initial = null)
             Spacer(modifier = Modifier.height(64.dp))
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
@@ -158,10 +173,24 @@ fun HomeTab(navController: NavController) {
                   Spacer(modifier = Modifier.weight(1f))
                   IconButton(
                       onClick = {
-                        //
+                        scope.launch {
+                          if (homeViewLayout == ViewLayout.VIEW_LAYOUT_LIST) {
+                            repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_THUMBNAILS)
+                          } else if (homeViewLayout == ViewLayout.VIEW_LAYOUT_THUMBNAILS) {
+                            repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
+                          }
+                        }
                       }) {
                         Icon(
-                            imageVector = Icons.Rounded.BorderColor,
+                            imageVector =
+                                when (homeViewLayout) {
+                                  ViewLayout.VIEW_LAYOUT_UNSPECIFIED -> Icons.Rounded.Sync
+                                  ViewLayout.VIEW_LAYOUT_LIST -> Icons.Rounded.GridView
+                                  ViewLayout.VIEW_LAYOUT_THUMBNAILS ->
+                                      Icons.AutoMirrored.Rounded.List
+                                  ViewLayout.UNRECOGNIZED -> Icons.Rounded.Sync
+                                  null -> Icons.Rounded.Sync
+                                },
                             contentDescription = null,
                             tint = primaryDarkBlue)
                       }
