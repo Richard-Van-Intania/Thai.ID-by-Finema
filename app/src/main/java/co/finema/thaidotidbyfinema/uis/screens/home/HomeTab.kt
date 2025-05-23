@@ -66,8 +66,7 @@ fun HomeTab(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.TopCenter) {
       Canvas(modifier = Modifier.fillMaxSize()) {
         val canvasWidth = size.width
-        val canvasHeight = size.height
-        translate(top = -canvasHeight / 2) {
+        translate(top = -(canvasWidth * 0.875).toFloat()) {
           scale(scaleX = 2f, scaleY = 0.86363636f) {
             drawCircle(brush = gradient, radius = canvasWidth / 2)
           }
@@ -79,7 +78,7 @@ fun HomeTab(navController: NavController) {
             val repository = remember { UserConfigRepository(context) }
             val scope = rememberCoroutineScope()
             val homeViewLayout by repository.homeViewLayout.collectAsState(initial = null)
-            Spacer(modifier = Modifier.height(64.dp))
+            Spacer(modifier = Modifier.height(80.dp))
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically) {
@@ -118,7 +117,7 @@ fun HomeTab(navController: NavController) {
                             }
                       }
                 }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Box(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 contentAlignment = Alignment.Center) {
@@ -196,6 +195,8 @@ fun HomeTab(navController: NavController) {
                       }
                 }
             Spacer(modifier = Modifier.height(16.dp))
+            // here below
+
           }
     }
   }
