@@ -21,6 +21,6 @@ val white = Color.White
 
 val success06 = Color(0xFF26B941)
 
-val gradient = Brush.linearGradient(colors = listOf(primaryDarkBlue, lightBlue07))
+val gradient = Brush.horizontalGradient(colors = listOf(primaryDarkBlue, lightBlue07))
 
 // #ECEEF2 #8895A8 success06 #26B941 blue05 #8EACD0
