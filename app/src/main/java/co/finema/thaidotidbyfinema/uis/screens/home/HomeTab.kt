@@ -44,6 +44,8 @@ import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue09
+import co.finema.thaidotidbyfinema.uis.primaryBlack
+import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
@@ -106,7 +108,7 @@ fun HomeTab(navController: NavController) {
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 contentAlignment = Alignment.Center) {
                   Card(
-                      modifier = Modifier.fillMaxWidth().height(104.dp),
+                      modifier = Modifier.fillMaxWidth().height(112.dp),
                       shape = RoundedCornerShape(cornerRadius),
                       backgroundColor = white) {
                         Box(
@@ -143,6 +145,28 @@ fun HomeTab(navController: NavController) {
                             }
                       }
                 }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                  Text(
+                      text = stringResource(R.string.my_documents_and_cards),
+                      color = primaryBlack,
+                      fontSize = 24.sp,
+                      fontWeight = FontWeight.W700,
+                  )
+                  Spacer(modifier = Modifier.weight(1f))
+                  IconButton(
+                      onClick = {
+                        //
+                      }) {
+                        Icon(
+                            imageVector = Icons.Rounded.BorderColor,
+                            contentDescription = null,
+                            tint = primaryDarkBlue)
+                      }
+                }
+            Spacer(modifier = Modifier.height(16.dp))
           }
     }
   }
