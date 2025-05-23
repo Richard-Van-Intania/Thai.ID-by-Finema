@@ -39,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -62,13 +63,15 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeTab(navController: NavController) {
+  val configuration = LocalConfiguration.current
+  val screenWidthDp = configuration.screenWidthDp
   Scaffold(backgroundColor = whiteBG) {
     Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.TopCenter) {
       Canvas(modifier = Modifier.fillMaxSize()) {
         val canvasWidth = size.width
-        translate(top = -(canvasWidth * 0.875).toFloat()) {
+        translate(top = -(canvasWidth * linearHeight(screenWidthDp))) {
           scale(scaleX = 2f, scaleY = 0.86363636f) {
-            drawCircle(brush = gradient, radius = canvasWidth / 2)
+            drawCircle(brush = gradient, radius = canvasWidth / 2.0f)
           }
         }
       }
@@ -200,4 +203,8 @@ fun HomeTab(navController: NavController) {
           }
     }
   }
+}
+
+fun linearHeight(screenWidthDp: Int): Float {
+  return (6608.0f - screenWidthDp.toFloat()) / 7040.0f
 }
