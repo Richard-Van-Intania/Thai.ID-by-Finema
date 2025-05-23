@@ -60,6 +60,7 @@ import co.finema.thaidotidbyfinema.uis.blue05
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue09
+import co.finema.thaidotidbyfinema.uis.neutral07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.white
@@ -75,32 +76,36 @@ fun HomeTab(navController: NavController) {
   val scope = rememberCoroutineScope()
   val isSelectedNeverShowAgain by
       repository.isSelectedNeverShowAgain.collectAsState(initial = false)
-  var showNeverShowAgainDialog by remember { mutableStateOf(false) }
-  if (showNeverShowAgainDialog) {
+  var showAskDialog by remember { mutableStateOf(false) }
+  if (showAskDialog) {
     Dialog(onDismissRequest = {}) {
       Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-              Spacer(modifier = Modifier.height(40.dp))
-              Image(
-                  painter = painterResource(id = R.drawable.group_40126),
-                  contentDescription = null,
-                  modifier = Modifier.height(96.dp))
-              Spacer(modifier = Modifier.height(24.dp))
-              Text(
-                  text = "text",
-                  color = primaryBlack,
-                  fontSize = 24.sp,
-                  fontWeight = FontWeight.W400,
-                  textAlign = TextAlign.Center,
-              )
-              Spacer(modifier = Modifier.height(32.dp))
-              GradientButton(
-                  onClick = { showNeverShowAgainDialog = false },
-                  text = stringResource(R.string.ok))
-              Spacer(modifier = Modifier.height(32.dp))
-            }
+        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+          Spacer(modifier = Modifier.height(32.dp))
+          Text(
+              modifier = Modifier.fillMaxWidth(),
+              text = stringResource(R.string.thai_id_not_store),
+              color = primaryBlack,
+              fontSize = 24.sp,
+              fontWeight = FontWeight.W700,
+              textAlign = TextAlign.Center,
+          )
+          Spacer(modifier = Modifier.height(24.dp))
+          Text(
+              text = stringResource(R.string.thai_id_not_store_ext),
+              color = neutral07,
+              fontSize = 22.sp,
+              fontWeight = FontWeight.W400,
+          )
+          Spacer(modifier = Modifier.height(32.dp))
+          GradientButton(
+              onClick = {
+                showAskDialog = false
+                navController.navigate(route = Screen.SelectLayoutScreen.route)
+              },
+              text = stringResource(R.string.make_a_cert))
+          Spacer(modifier = Modifier.height(32.dp))
+        }
       }
     }
   }
@@ -195,7 +200,7 @@ fun HomeTab(navController: NavController) {
                                                           navController.navigate(
                                                               route =
                                                                   Screen.SelectLayoutScreen.route)
-                                                      else showNeverShowAgainDialog = true
+                                                      else showAskDialog = true
                                                     }))
                                   }
                             }
