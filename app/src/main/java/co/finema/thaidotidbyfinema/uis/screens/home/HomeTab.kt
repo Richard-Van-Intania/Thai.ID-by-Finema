@@ -31,8 +31,10 @@ import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,8 +46,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.ViewLayout
@@ -53,6 +57,7 @@ import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
+import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue09
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -65,6 +70,40 @@ import kotlinx.coroutines.launch
 fun HomeTab(navController: NavController) {
   val configuration = LocalConfiguration.current
   val screenWidthDp = configuration.screenWidthDp
+  val context = LocalContext.current
+  val repository = remember { UserConfigRepository(context) }
+  val scope = rememberCoroutineScope()
+  val isSelectedNeverShowAgain by
+      repository.isSelectedNeverShowAgain.collectAsState(initial = false)
+  var showNeverShowAgainDialog by remember { mutableStateOf(false) }
+  if (showNeverShowAgainDialog) {
+    Dialog(onDismissRequest = {}) {
+      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+              Spacer(modifier = Modifier.height(40.dp))
+              Image(
+                  painter = painterResource(id = R.drawable.group_40126),
+                  contentDescription = null,
+                  modifier = Modifier.height(96.dp))
+              Spacer(modifier = Modifier.height(24.dp))
+              Text(
+                  text = "text",
+                  color = primaryBlack,
+                  fontSize = 24.sp,
+                  fontWeight = FontWeight.W400,
+                  textAlign = TextAlign.Center,
+              )
+              Spacer(modifier = Modifier.height(32.dp))
+              GradientButton(
+                  onClick = { showNeverShowAgainDialog = false },
+                  text = stringResource(R.string.ok))
+              Spacer(modifier = Modifier.height(32.dp))
+            }
+      }
+    }
+  }
   Scaffold(backgroundColor = whiteBG) {
     Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.TopCenter) {
       Canvas(modifier = Modifier.fillMaxSize()) {
@@ -77,9 +116,6 @@ fun HomeTab(navController: NavController) {
       }
       Column(
           modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-            val context = LocalContext.current
-            val repository = remember { UserConfigRepository(context) }
-            val scope = rememberCoroutineScope()
             val homeViewLayout by repository.homeViewLayout.collectAsState(initial = null)
             Spacer(modifier = Modifier.height(80.dp))
             Row(
@@ -155,8 +191,11 @@ fun HomeTab(navController: NavController) {
                                                 .clip(CircleShape)
                                                 .clickable(
                                                     onClick = {
-                                                      navController.navigate(
-                                                          route = Screen.SelectLayoutScreen.route)
+                                                      if (isSelectedNeverShowAgain)
+                                                          navController.navigate(
+                                                              route =
+                                                                  Screen.SelectLayoutScreen.route)
+                                                      else showNeverShowAgainDialog = true
                                                     }))
                                   }
                             }
@@ -197,7 +236,6 @@ fun HomeTab(navController: NavController) {
                             tint = primaryDarkBlue)
                       }
                 }
-            Spacer(modifier = Modifier.height(16.dp))
             // here below
 
           }
