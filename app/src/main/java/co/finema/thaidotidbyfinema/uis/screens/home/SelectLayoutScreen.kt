@@ -35,7 +35,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -55,7 +58,6 @@ import co.finema.thaidotidbyfinema.uis.FCIconic
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
-import co.finema.thaidotidbyfinema.uis.greenDev
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
@@ -146,10 +148,11 @@ fun SelectLayoutScreen(navController: NavController) {
                 dismissOnClickOutside = false,
                 usePlatformDefaultWidth = false,
                 decorFitsSystemWindows = false)) {
-          Box(modifier = Modifier.fillMaxSize().background(white.copy(alpha = 0.5f))) {
-
-            //
-          }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+              .blur(radius = 32.dp, edgeTreatment = BlurredEdgeTreatment.Rectangle).background(Color.Transparent) // Fake blur
+        ){}
         }
   }
   var index by remember { mutableIntStateOf(0) }
