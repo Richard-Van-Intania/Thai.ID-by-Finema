@@ -84,4 +84,5 @@ dependencies {
   implementation(libs.androidx.material3)
   implementation(libs.core)
   implementation(libs.datetime)
+  implementation(libs.haze)
 }

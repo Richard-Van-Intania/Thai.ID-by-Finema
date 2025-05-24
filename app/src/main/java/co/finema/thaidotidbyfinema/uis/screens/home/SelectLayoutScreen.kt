@@ -35,8 +35,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -62,6 +60,9 @@ import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 
 data class LayoutItemButtonData(
     val explanation: Int,
@@ -135,7 +136,9 @@ fun SelectLayoutScreen(navController: NavController) {
   val screenWidthDp = configuration.screenWidthDp
   val context = LocalContext.current
   val repository = remember { UserConfigRepository(context) }
+  var index by remember { mutableIntStateOf(0) }
   val scope = rememberCoroutineScope()
+  val hazeState = rememberHazeState()
   val hideInstruction by repository.hideInstruction.collectAsState(initial = true)
   var showInstructionDialog by remember { mutableStateOf(false) }
   LaunchedEffect(hideInstruction) { if (!hideInstruction) showInstructionDialog = true }
@@ -148,16 +151,16 @@ fun SelectLayoutScreen(navController: NavController) {
                 dismissOnClickOutside = false,
                 usePlatformDefaultWidth = false,
                 decorFitsSystemWindows = false)) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-              .blur(radius = 32.dp, edgeTreatment = BlurredEdgeTreatment.Rectangle).background(Color.Transparent) // Fake blur
-        ){}
+          Column(
+              modifier =
+                  Modifier.fillMaxSize()
+                      .hazeEffect(state = hazeState)
+                      .background(Color.Black.copy(alpha = 0.5f)),
+              horizontalAlignment = Alignment.CenterHorizontally) {}
         }
   }
-  var index by remember { mutableIntStateOf(0) }
-
   Scaffold(
+      modifier = Modifier.hazeSource(state = hazeState),
       topBar = {
         AppBarOptBack(
             containerColor = white,
