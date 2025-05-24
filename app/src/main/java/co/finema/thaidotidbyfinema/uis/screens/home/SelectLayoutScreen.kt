@@ -25,6 +25,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -168,6 +170,36 @@ fun SelectLayoutScreen(navController: NavController) {
                     Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = white)
                   }
                 }
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = R.drawable.group_40912),
+                    contentDescription = null,
+                    modifier = Modifier.height(176.dp))
+                Spacer(modifier = Modifier.height(48.dp))
+                Text(
+                    text = stringResource(R.string.you_can_select_document_format),
+                    color = white,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.W700,
+                    textAlign = TextAlign.Center)
+                Spacer(modifier = Modifier.height(48.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.vector_24),
+                    contentDescription = null,
+                    modifier = Modifier.height(72.dp))
+                Spacer(modifier = Modifier.weight(2f))
+                TextButton(onClick = {}) {
+                  Text(
+                      text = stringResource(R.string.do_not_show),
+                      style =
+                          TextStyle(
+                              color = white,
+                              fontSize = 24.sp,
+                              textDecoration = TextDecoration.Underline,
+                              fontFamily = FCIconic,
+                              fontWeight = FontWeight.W400))
+                }
+                Spacer(modifier = Modifier.height(56.dp))
               }
         }
   }
