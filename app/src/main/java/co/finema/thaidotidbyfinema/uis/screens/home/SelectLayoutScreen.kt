@@ -21,8 +21,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -155,8 +159,16 @@ fun SelectLayoutScreen(navController: NavController) {
               modifier =
                   Modifier.fillMaxSize()
                       .hazeEffect(state = hazeState)
-                      .background(Color.Black.copy(alpha = 0.5f)),
-              horizontalAlignment = Alignment.CenterHorizontally) {}
+                      .background(Color.Black.copy(alpha = 0.5f))
+                      .padding(horizontal = 16.dp),
+              horizontalAlignment = Alignment.CenterHorizontally) {
+                Spacer(modifier = Modifier.height(48.dp))
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+                  IconButton(onClick = { showInstructionDialog = false }) {
+                    Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = white)
+                  }
+                }
+              }
         }
   }
   Scaffold(
