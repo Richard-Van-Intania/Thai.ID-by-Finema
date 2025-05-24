@@ -69,6 +69,7 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
+import kotlinx.coroutines.launch
 
 data class LayoutItemButtonData(
     val explanation: Int,
@@ -142,8 +143,8 @@ fun SelectLayoutScreen(navController: NavController) {
   val screenWidthDp = configuration.screenWidthDp
   val context = LocalContext.current
   val repository = remember { UserConfigRepository(context) }
-  var index by remember { mutableIntStateOf(0) }
   val scope = rememberCoroutineScope()
+  var index by remember { mutableIntStateOf(0) }
   val hazeState = rememberHazeState()
   val hideInstruction by repository.hideInstruction.collectAsState(initial = true)
   var showInstructionDialog by remember { mutableStateOf(false) }
@@ -188,17 +189,21 @@ fun SelectLayoutScreen(navController: NavController) {
                     contentDescription = null,
                     modifier = Modifier.height(72.dp))
                 Spacer(modifier = Modifier.weight(2f))
-                TextButton(onClick = {}) {
-                  Text(
-                      text = stringResource(R.string.do_not_show),
-                      style =
-                          TextStyle(
-                              color = white,
-                              fontSize = 24.sp,
-                              textDecoration = TextDecoration.Underline,
-                              fontFamily = FCIconic,
-                              fontWeight = FontWeight.W400))
-                }
+                TextButton(
+                    onClick = {
+                      scope.launch { repository.updateHideInstruction(true) }
+                      showInstructionDialog = false
+                    }) {
+                      Text(
+                          text = stringResource(R.string.do_not_show),
+                          style =
+                              TextStyle(
+                                  color = white,
+                                  fontSize = 24.sp,
+                                  textDecoration = TextDecoration.Underline,
+                                  fontFamily = FCIconic,
+                                  fontWeight = FontWeight.W400))
+                    }
                 Spacer(modifier = Modifier.height(56.dp))
               }
         }
