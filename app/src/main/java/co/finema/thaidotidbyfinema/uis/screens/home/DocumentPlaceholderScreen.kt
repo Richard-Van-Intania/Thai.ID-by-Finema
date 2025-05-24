@@ -28,6 +28,8 @@ import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,12 +57,26 @@ import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
 // all here
+// room
+// camera
+// image picker
+// pdf picker
+// pdf to image
+// crop image
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DocumentPlaceholderScreen(navController: NavController, documentLayout: DocumentLayout) {
-  var haveImage0 by remember { mutableStateOf("") }
-  var haveImage1 by remember { mutableStateOf("") }
-  var haveImage2 by remember { mutableStateOf("") }
+fun DocumentPlaceholderScreen(
+    navController: NavController,
+    documentLayout: DocumentLayout,
+    placeholderFilePath0: MutableState<String>,
+    placeholderFilePath1: MutableState<String>,
+    placeholderFilePath2: MutableState<String>
+) {
+  LaunchedEffect(Unit) {
+    placeholderFilePath0.value = ""
+    placeholderFilePath1.value = ""
+    placeholderFilePath2.value = ""
+  }
   var showOptionDialog by remember { mutableStateOf(false) }
   var showDeleteDialog by remember { mutableStateOf(false) }
   if (showOptionDialog) {
@@ -128,38 +144,38 @@ fun DocumentPlaceholderScreen(navController: NavController, documentLayout: Docu
         horizontalAlignment = Alignment.CenterHorizontally) {
           when (documentLayout) {
             DocumentLayout.ONE_SIDE_CARD -> {
-              if (haveImage0.isEmpty())
+              if (placeholderFilePath0.value.isEmpty())
                   AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card, onClick = {})
               else Box {}
             }
             DocumentLayout.TWO_SIDE_CARD -> {
-              if (haveImage1.isEmpty())
+              if (placeholderFilePath1.value.isEmpty())
                   AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_1, onClick = {})
               else Box {}
               Spacer(modifier = Modifier.height(32.dp))
-              if (haveImage2.isEmpty())
+              if (placeholderFilePath2.value.isEmpty())
                   AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_2, onClick = {})
               else Box {}
             }
             DocumentLayout.ONE_SIDE_HALF_A4 -> {
-              if (haveImage0.isEmpty())
+              if (placeholderFilePath0.value.isEmpty())
                   AddImageButton(
                       ratio = 1.0 / 1.0, label = R.string.add_a_document_image, onClick = {})
               else Box {}
             }
             DocumentLayout.TWO_SIDE_HALF_A4 -> {
-              if (haveImage1.isEmpty())
+              if (placeholderFilePath1.value.isEmpty())
                   AddImageButton(
                       ratio = 297.0 / 210.0, label = R.string.add_a_document_image_1, onClick = {})
               else Box {}
               Spacer(modifier = Modifier.height(32.dp))
-              if (haveImage2.isEmpty())
+              if (placeholderFilePath2.value.isEmpty())
                   AddImageButton(
                       ratio = 297.0 / 210.0, label = R.string.add_a_document_image_2, onClick = {})
               else Box {}
             }
             DocumentLayout.FULL_A4 -> {
-              if (haveImage0.isEmpty())
+              if (placeholderFilePath0.value.isEmpty())
                   AddImageButton(
                       ratio = 210.0 / 297.0, label = R.string.add_a_document_image, onClick = {})
               else Box {}

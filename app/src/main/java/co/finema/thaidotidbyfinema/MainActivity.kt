@@ -118,6 +118,9 @@ class MainActivity : FragmentActivity() {
           colors = lightColors(primary = primaryDarkBlue), typography = CustomTypography) {
             val navController = rememberNavController()
             val localAuth = remember { mutableStateOf(false) }
+            var placeholderFilePath0 = remember { mutableStateOf("") }
+            var placeholderFilePath1 = remember { mutableStateOf("") }
+            var placeholderFilePath2 = remember { mutableStateOf("") }
             NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
               composable(route = Screen.LoadingScreen.route) {
                 LoadingScreen(navController = navController)
@@ -175,7 +178,11 @@ class MainActivity : FragmentActivity() {
                                   ?: DocumentLayout.ONE_SIDE_CARD.name
                           DocumentPlaceholderScreen(
                               navController = navController,
-                              documentLayout = DocumentLayout.valueOf(name))
+                              documentLayout = DocumentLayout.valueOf(name),
+                              placeholderFilePath0 = placeholderFilePath0,
+                              placeholderFilePath1 = placeholderFilePath1,
+                              placeholderFilePath2 = placeholderFilePath2,
+                          )
                         }
                     composable(route = Screen.ProfileDetailsScreen.route) {
                       ProfileDetailsScreen(navController = navController)
