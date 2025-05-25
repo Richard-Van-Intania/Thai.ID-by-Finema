@@ -31,6 +31,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions { jvmTarget = "11" }
     buildFeatures { compose = true }
@@ -86,4 +87,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.datetime)
     implementation(libs.haze)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.play.services.base)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
