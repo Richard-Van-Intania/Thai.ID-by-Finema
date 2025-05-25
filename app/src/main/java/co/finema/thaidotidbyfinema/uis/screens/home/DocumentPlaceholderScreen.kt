@@ -66,172 +66,179 @@ fun DocumentPlaceholderScreen(
     placeholderFilePath1: MutableState<String>,
     placeholderFilePath2: MutableState<String>,
 ) {
-  var showOptionDialog by remember { mutableStateOf(false) }
-  if (showOptionDialog) {
-    Dialog(onDismissRequest = {}) {
-      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-          Text(
-              modifier = Modifier.padding(all = 24.dp),
-              text = stringResource(R.string.options),
-              color = primaryBlack,
-              fontSize = 24.sp,
-              fontWeight = FontWeight.W700,
-          )
-          Box(modifier = Modifier.fillMaxWidth().height(2.dp).background(neutral02))
-          OptionButton(
-              imageVector = Icons.Rounded.PhotoCamera, text = R.string.scan_your_card, onClick = {})
-          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
-          OptionButton(
-              imageVector = Icons.Rounded.Image, text = R.string.import_from_album, onClick = {})
-          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
-          OptionButton(
-              imageVector = Icons.Rounded.Description, text = R.string.pick_file, onClick = {})
-          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
-          TextButton(onClick = { showOptionDialog = false }) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)) {
-                  Text(
-                      text = stringResource(R.string.cancel),
-                      color = primaryBlack,
-                      fontSize = 24.sp,
-                      fontWeight = FontWeight.W400,
-                  )
-                }
-          }
-        }
-      }
-    }
-  }
-  var showDeleteDialog by remember { mutableStateOf(false) }
-  if (showDeleteDialog) {
-    Dialog(onDismissRequest = {}) {
-      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-          //
-        }
-      }
-    }
-  }
-  Scaffold(
-      topBar = {
-        AppBarOptBack(
-            containerColor = white,
-            text = stringResource(R.string.add_document),
-            onClick = { navController.popBackStack() })
-      },
-      bottomBar = {
-        Box(
-            modifier =
-                Modifier.background(white)
+    var showOptionDialog by remember { mutableStateOf(false) }
+    if (showOptionDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(white)
                     .fillMaxWidth()
-                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
-            contentAlignment = Alignment.Center) {
-              GradientButton(
-                  onClick = { showOptionDialog = true },
-                  text = stringResource(R.string.make_a_cert))
+            ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        modifier = Modifier.padding(all = 24.dp),
+                        text = stringResource(R.string.options),
+                        color = primaryBlack,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.W700,
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2.dp)
+                            .background(neutral02)
+                    )
+                    OptionButton(
+                        imageVector = Icons.Rounded.PhotoCamera, text = R.string.scan_your_card, onClick = {})
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    OptionButton(
+                        imageVector = Icons.Rounded.Image, text = R.string.import_from_album, onClick = {})
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    OptionButton(
+                        imageVector = Icons.Rounded.Description, text = R.string.pick_file, onClick = {})
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    TextButton(onClick = { showOptionDialog = false }) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.cancel),
+                                color = primaryBlack,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.W400,
+                            )
+                        }
+                    }
+                }
             }
-      },
-      backgroundColor = whiteBG) {
+        }
+    }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    if (showDeleteDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(white)
+                    .fillMaxWidth()
+            ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    //
+                }
+            }
+        }
+    }
+    Scaffold(
+        topBar = {
+            AppBarOptBack(
+                containerColor = white, text = stringResource(R.string.add_document), onClick = { navController.popBackStack() })
+        }, bottomBar = {
+            Box(
+                modifier = Modifier
+                    .background(white)
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center
+            ) {
+                GradientButton(
+                    onClick = { showOptionDialog = true }, text = stringResource(R.string.make_a_cert)
+                )
+            }
+        }, backgroundColor = whiteBG
+    ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-              when (layoutItems[layoutIndex.intValue].documentLayout) {
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+                .padding(horizontal = 16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            when (layoutItems[layoutIndex.intValue].documentLayout) {
                 DocumentLayout.ONE_SIDE_CARD -> {
-                  if (placeholderFilePath0.value.isEmpty())
-                      AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card, onClick = {})
-                  else Box {}
+                    if (placeholderFilePath0.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card, onClick = {})
+                    else Box {}
                 }
+
                 DocumentLayout.TWO_SIDE_CARD -> {
-                  if (placeholderFilePath1.value.isEmpty())
-                      AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_1, onClick = {})
-                  else Box {}
-                  Spacer(modifier = Modifier.height(32.dp))
-                  if (placeholderFilePath2.value.isEmpty())
-                      AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_2, onClick = {})
-                  else Box {}
+                    if (placeholderFilePath1.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_1, onClick = {})
+                    else Box {}
+                    Spacer(modifier = Modifier.height(32.dp))
+                    if (placeholderFilePath2.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_2, onClick = {})
+                    else Box {}
                 }
+
                 DocumentLayout.ONE_SIDE_HALF_A4 -> {
-                  if (placeholderFilePath0.value.isEmpty())
-                      AddImageButton(
-                          ratio = 1.0 / 1.0, label = R.string.add_a_document_image, onClick = {})
-                  else Box {}
+                    if (placeholderFilePath0.value.isEmpty()) AddImageButton(
+                        ratio = 1.0 / 1.0, label = R.string.add_a_document_image, onClick = {})
+                    else Box {}
                 }
+
                 DocumentLayout.TWO_SIDE_HALF_A4 -> {
-                  if (placeholderFilePath1.value.isEmpty())
-                      AddImageButton(
-                          ratio = 297.0 / 210.0,
-                          label = R.string.add_a_document_image_1,
-                          onClick = {})
-                  else Box {}
-                  Spacer(modifier = Modifier.height(32.dp))
-                  if (placeholderFilePath2.value.isEmpty())
-                      AddImageButton(
-                          ratio = 297.0 / 210.0,
-                          label = R.string.add_a_document_image_2,
-                          onClick = {})
-                  else Box {}
+                    if (placeholderFilePath1.value.isEmpty()) AddImageButton(
+                        ratio = 297.0 / 210.0, label = R.string.add_a_document_image_1, onClick = {})
+                    else Box {}
+                    Spacer(modifier = Modifier.height(32.dp))
+                    if (placeholderFilePath2.value.isEmpty()) AddImageButton(
+                        ratio = 297.0 / 210.0, label = R.string.add_a_document_image_2, onClick = {})
+                    else Box {}
                 }
+
                 DocumentLayout.FULL_A4 -> {
-                  if (placeholderFilePath0.value.isEmpty())
-                      AddImageButton(
-                          ratio = 210.0 / 297.0,
-                          label = R.string.add_a_document_image,
-                          onClick = {})
-                  else Box {}
+                    if (placeholderFilePath0.value.isEmpty()) AddImageButton(
+                        ratio = 210.0 / 297.0, label = R.string.add_a_document_image, onClick = {})
+                    else Box {}
                 }
-              }
             }
-      }
+        }
+    }
 }
 
 @Composable
 fun AddImageButton(ratio: Double, label: Int, onClick: () -> Unit) {
-  Box(
-      modifier =
-          Modifier.fillMaxWidth()
-              .aspectRatio(ratio.toFloat())
-              .clip(RoundedCornerShape(cornerRadius))
-              .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
-              .background(white)
-              .clickable(onClick = onClick),
-      contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(ratio.toFloat())
+            .clip(RoundedCornerShape(cornerRadius))
+            .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
+            .background(white)
+            .clickable(onClick = onClick), contentAlignment = Alignment.Center
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-          Image(
-              painter = painterResource(id = R.drawable.group_284),
-              contentDescription = null,
-              modifier = Modifier.height(56.dp))
-          Spacer(modifier = Modifier.height(24.dp))
-          Text(
-              text = stringResource(label),
-              color = primaryBlack,
-              fontSize = 24.sp,
-              fontWeight = FontWeight.W400,
-          )
+            Image(
+                painter = painterResource(id = R.drawable.group_284), contentDescription = null, modifier = Modifier.height(56.dp)
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(
+                text = stringResource(label),
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W400,
+            )
         }
-      }
+    }
 }
 
 @Composable
 fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
-  TextButton(onClick = onClick) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)) {
-          Spacer(modifier = Modifier.width(16.dp))
-          Icon(imageVector = imageVector, contentDescription = null)
-          Spacer(modifier = Modifier.width(16.dp))
-          Text(
-              text = stringResource(text),
-              color = primaryBlack,
-              fontSize = 24.sp,
-              fontWeight = FontWeight.W400,
-          )
+    TextButton(onClick = onClick) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+        ) {
+            Spacer(modifier = Modifier.width(16.dp))
+            Icon(imageVector = imageVector, contentDescription = null)
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = stringResource(text),
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W400,
+            )
         }
-  }
+    }
 }
 
 // all here
