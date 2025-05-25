@@ -21,8 +21,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import co.finema.thaidotidbyfinema.databases.signatureimage.SignatureImageDatabase
-import co.finema.thaidotidbyfinema.databases.signatureimage.SignatureImageViewModel
+import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageDatabase
+import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.CustomTypography

@@ -1,4 +1,4 @@
-package co.finema.thaidotidbyfinema.databases.signatureimage
+package co.finema.thaidotidbyfinema.databases.signatureimages
 
 import android.content.Context
 import androidx.room.Database

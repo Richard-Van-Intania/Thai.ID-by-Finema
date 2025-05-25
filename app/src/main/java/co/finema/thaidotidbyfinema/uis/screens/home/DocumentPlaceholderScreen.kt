@@ -27,7 +27,6 @@ import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -48,7 +47,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
-import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
@@ -138,11 +136,7 @@ fun DocumentPlaceholderScreen(
                   text = stringResource(R.string.make_a_cert))
             }
       },
-      backgroundColor = whiteBG,
-      floatingActionButton = {
-        FloatingActionButton(
-            onClick = { navController.navigate(route = Screen.SignatureListScreen.route) }) {}
-      }) {
+      backgroundColor = whiteBG) {
         Column(
             modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Center,
