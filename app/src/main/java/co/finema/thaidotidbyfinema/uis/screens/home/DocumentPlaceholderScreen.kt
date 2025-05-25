@@ -27,6 +27,7 @@ import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -47,6 +48,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
+import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
@@ -137,53 +139,62 @@ fun DocumentPlaceholderScreen(
             }
       },
       backgroundColor = whiteBG,
-  ) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
-          when (documentLayout) {
-            DocumentLayout.ONE_SIDE_CARD -> {
-              if (placeholderFilePath0.value.isEmpty())
-                  AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card, onClick = {})
-              else Box {}
+      floatingActionButton = {
+        FloatingActionButton(
+            onClick = { navController.navigate(route = Screen.SignatureListScreen.route) }) {}
+      }) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+              when (documentLayout) {
+                DocumentLayout.ONE_SIDE_CARD -> {
+                  if (placeholderFilePath0.value.isEmpty())
+                      AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card, onClick = {})
+                  else Box {}
+                }
+                DocumentLayout.TWO_SIDE_CARD -> {
+                  if (placeholderFilePath1.value.isEmpty())
+                      AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_1, onClick = {})
+                  else Box {}
+                  Spacer(modifier = Modifier.height(32.dp))
+                  if (placeholderFilePath2.value.isEmpty())
+                      AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_2, onClick = {})
+                  else Box {}
+                }
+                DocumentLayout.ONE_SIDE_HALF_A4 -> {
+                  if (placeholderFilePath0.value.isEmpty())
+                      AddImageButton(
+                          ratio = 1.0 / 1.0, label = R.string.add_a_document_image, onClick = {})
+                  else Box {}
+                }
+                DocumentLayout.TWO_SIDE_HALF_A4 -> {
+                  if (placeholderFilePath1.value.isEmpty())
+                      AddImageButton(
+                          ratio = 297.0 / 210.0,
+                          label = R.string.add_a_document_image_1,
+                          onClick = {})
+                  else Box {}
+                  Spacer(modifier = Modifier.height(32.dp))
+                  if (placeholderFilePath2.value.isEmpty())
+                      AddImageButton(
+                          ratio = 297.0 / 210.0,
+                          label = R.string.add_a_document_image_2,
+                          onClick = {})
+                  else Box {}
+                }
+                DocumentLayout.FULL_A4 -> {
+                  if (placeholderFilePath0.value.isEmpty())
+                      AddImageButton(
+                          ratio = 210.0 / 297.0,
+                          label = R.string.add_a_document_image,
+                          onClick = {})
+                  else Box {}
+                }
+              }
+              Spacer(modifier = Modifier.height(128.dp))
             }
-            DocumentLayout.TWO_SIDE_CARD -> {
-              if (placeholderFilePath1.value.isEmpty())
-                  AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_1, onClick = {})
-              else Box {}
-              Spacer(modifier = Modifier.height(32.dp))
-              if (placeholderFilePath2.value.isEmpty())
-                  AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_2, onClick = {})
-              else Box {}
-            }
-            DocumentLayout.ONE_SIDE_HALF_A4 -> {
-              if (placeholderFilePath0.value.isEmpty())
-                  AddImageButton(
-                      ratio = 1.0 / 1.0, label = R.string.add_a_document_image, onClick = {})
-              else Box {}
-            }
-            DocumentLayout.TWO_SIDE_HALF_A4 -> {
-              if (placeholderFilePath1.value.isEmpty())
-                  AddImageButton(
-                      ratio = 297.0 / 210.0, label = R.string.add_a_document_image_1, onClick = {})
-              else Box {}
-              Spacer(modifier = Modifier.height(32.dp))
-              if (placeholderFilePath2.value.isEmpty())
-                  AddImageButton(
-                      ratio = 297.0 / 210.0, label = R.string.add_a_document_image_2, onClick = {})
-              else Box {}
-            }
-            DocumentLayout.FULL_A4 -> {
-              if (placeholderFilePath0.value.isEmpty())
-                  AddImageButton(
-                      ratio = 210.0 / 297.0, label = R.string.add_a_document_image, onClick = {})
-              else Box {}
-            }
-          }
-          Spacer(modifier = Modifier.height(128.dp))
-        }
-  }
+      }
 }
 
 @Composable
