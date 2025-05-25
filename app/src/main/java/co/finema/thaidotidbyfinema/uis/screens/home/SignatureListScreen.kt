@@ -4,6 +4,7 @@ package co.finema.thaidotidbyfinema.uis.screens.home
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
@@ -15,5 +16,6 @@ fun SignatureListScreen(
     signatureImageViewModel: SignatureImageViewModel
 ) {
   val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
+  LaunchedEffect(signatureImage) { println(signatureImage.size) }
   Scaffold { it }
 }
