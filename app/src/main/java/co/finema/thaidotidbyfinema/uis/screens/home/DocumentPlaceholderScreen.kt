@@ -2,6 +2,11 @@
 
 package co.finema.thaidotidbyfinema.uis.screens.home
 
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,7 +31,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
@@ -39,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,7 +64,6 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DocumentPlaceholderScreen(
     navController: NavController,
@@ -68,12 +72,39 @@ fun DocumentPlaceholderScreen(
     placeholderFilePath1: MutableState<String>,
     placeholderFilePath2: MutableState<String>,
 ) {
+    val context = LocalContext.current
+    var pdfUri by remember { mutableStateOf<Uri?>(null) }
+    val pickPdf = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) {
+            context.contentResolver.takePersistableUriPermission(
+                uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+            pdfUri = uri
+            // read content
+            val inputStream = context.contentResolver.openInputStream(uri)
+        }
+    }
+    val pickImage = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            println(uri)
+            // get uri here
+        }
+
+    }
     var fileSource by remember { mutableStateOf<FileSource?>(null) }
     LaunchedEffect(fileSource) {
         when (fileSource) {
             FileSource.CAMERA -> {}
-            FileSource.GALLERY -> {}
-            FileSource.PDF -> {}
+            FileSource.GALLERY -> {
+                pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
+
+            FileSource.PDF -> {
+                pickPdf.launch(arrayOf("application/pdf"))
+            }
+
             null -> {}
         }
     }
@@ -139,7 +170,7 @@ fun DocumentPlaceholderScreen(
             }
         }
     }
-    var showDeleteDialog by remember { mutableStateOf(false) }
+    val showDeleteDialog by remember { mutableStateOf(false) }
     if (showDeleteDialog) {
         Dialog(onDismissRequest = {}) {
             Box(
@@ -205,8 +236,7 @@ fun DocumentPlaceholderScreen(
                         ratio = 1.0 / 1.0, label = R.string.add_a_document_image, onClick = {
                             fileSource = null
                             showOptionDialog = true
-                        }
-                    )
+                        })
                     else Box {}
                 }
 
@@ -215,16 +245,14 @@ fun DocumentPlaceholderScreen(
                         ratio = 297.0 / 210.0, label = R.string.add_a_document_image_1, onClick = {
                             fileSource = null
                             showOptionDialog = true
-                        }
-                    )
+                        })
                     else Box {}
                     Spacer(modifier = Modifier.height(32.dp))
                     if (placeholderFilePath2.value.isEmpty()) AddImageButton(
                         ratio = 297.0 / 210.0, label = R.string.add_a_document_image_2, onClick = {
                             fileSource = null
                             showOptionDialog = true
-                        }
-                    )
+                        })
                     else Box {}
                 }
 
@@ -233,8 +261,7 @@ fun DocumentPlaceholderScreen(
                         ratio = 210.0 / 297.0, label = R.string.add_a_document_image, onClick = {
                             fileSource = null
                             showOptionDialog = true
-                        }
-                    )
+                        })
                     else Box {}
                 }
             }

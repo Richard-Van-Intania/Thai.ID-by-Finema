@@ -259,9 +259,9 @@ fun HomeTab(navController: NavController) {
                     IconButton(
                         onClick = {
                             scope.launch {
-                                if (homeViewLayout==ViewLayout.VIEW_LAYOUT_LIST) {
+                                if (homeViewLayout == ViewLayout.VIEW_LAYOUT_LIST) {
                                     repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_THUMBNAILS)
-                                } else if (homeViewLayout==ViewLayout.VIEW_LAYOUT_THUMBNAILS) {
+                                } else if (homeViewLayout == ViewLayout.VIEW_LAYOUT_THUMBNAILS) {
                                     repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
                                 }
                             }
