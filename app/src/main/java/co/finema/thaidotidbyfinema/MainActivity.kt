@@ -75,7 +75,7 @@ object LocaleHelper {
 class MainActivity : FragmentActivity() {
     override fun attachBaseContext(newBase: Context) {
         val localeString = readUserConfigBlocking(newBase).locale
-        val locale = Locale(if (localeString.isEmpty()) TH else localeString)
+        val locale = Locale(localeString.ifEmpty { TH })
         val context = LocaleHelper.updateLocale(newBase, locale)
         super.attachBaseContext(context)
     }
@@ -93,32 +93,25 @@ class MainActivity : FragmentActivity() {
 
         // biometric below
         executor = ContextCompat.getMainExecutor(this)
-        biometricPrompt =
-            BiometricPrompt(
-                this,
-                executor,
-                object : BiometricPrompt.AuthenticationCallback() {
-                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                        super.onAuthenticationError(errorCode, errString)
-                        biometricAuth.value = false
-                    }
+        biometricPrompt = BiometricPrompt(
+            this, executor, object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    biometricAuth.value = false
+                }
 
-                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                        super.onAuthenticationSucceeded(result)
-                        biometricAuth.value = true
-                    }
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    biometricAuth.value = true
+                }
 
-                    override fun onAuthenticationFailed() {
-                        super.onAuthenticationFailed()
-                        biometricAuth.value = false
-                    }
-                })
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    biometricAuth.value = false
+                }
+            })
         promptInfo =
-            BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login")
-                .setSubtitle("Please start yours biometric")
-                .setAllowedAuthenticators(BIOMETRIC_STRONG)
-                .setNegativeButtonText("Cancel")
+            BiometricPrompt.PromptInfo.Builder().setTitle("Biometric login").setSubtitle("Please start yours biometric").setAllowedAuthenticators(BIOMETRIC_STRONG).setNegativeButtonText("Cancel")
                 .build()
         val startBiometricAuth = { biometricPrompt.authenticate(promptInfo) }
         enableEdgeToEdge()
@@ -128,17 +121,16 @@ class MainActivity : FragmentActivity() {
             ) {
                 val navController = rememberNavController()
                 val localAuth = remember { mutableStateOf(false) }
-                var layoutIndex = remember { mutableIntStateOf(0) }
-                var placeholderFilePath0 = remember { mutableStateOf("") }
-                var placeholderFilePath1 = remember { mutableStateOf("") }
-                var placeholderFilePath2 = remember { mutableStateOf("") }
+                val layoutIndex = remember { mutableIntStateOf(0) }
+                val placeholderFilePath0 = remember { mutableStateOf("") }
+                val placeholderFilePath1 = remember { mutableStateOf("") }
+                val placeholderFilePath2 = remember { mutableStateOf("") }
                 NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
                     composable(route = Screen.LoadingScreen.route) {
                         LoadingScreen(navController = navController)
                     }
                     navigation(
-                        startDestination = Screen.WelcomeScreen.route,
-                        route = Screen.OnboardingRoot.route
+                        startDestination = Screen.WelcomeScreen.route, route = Screen.OnboardingRoot.route
                     ) {
                         composable(route = Screen.WelcomeScreen.route) {
                             WelcomeScreen(navController = navController)
@@ -160,22 +152,16 @@ class MainActivity : FragmentActivity() {
                             CreatePasscodeFullscreen(navController = navController)
                         }
                         composable(
-                            route = "${Screen.ConfirmPasscodeFullscreen.route}/{tapPasscode}",
-                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })
+                            route = "${Screen.ConfirmPasscodeFullscreen.route}/{tapPasscode}", arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })
                         ) { backStackEntry ->
                             val tapPasscode = backStackEntry.arguments?.getString("tapPasscode") ?: ""
                             ConfirmPasscodeFullscreen(
-                                navController = navController,
-                                tapPasscode = tapPasscode,
-                                onBiometricAuth = startBiometricAuth,
-                                localAuth = localAuth
+                                navController = navController, tapPasscode = tapPasscode, onBiometricAuth = startBiometricAuth, localAuth = localAuth
                             )
                         }
                         composable(route = Screen.EnterPasscodeLoginFullscreen.route) {
                             EnterPasscodeLoginFullscreen(
-                                navController = navController,
-                                onBiometricAuth = startBiometricAuth,
-                                localAuth = localAuth
+                                navController = navController, onBiometricAuth = startBiometricAuth, localAuth = localAuth
                             )
                         }
                         composable(route = Screen.SelectLayoutScreen.route) {
@@ -216,8 +202,7 @@ class MainActivity : FragmentActivity() {
                             CreateNewPasscodeFullscreen(navController = navController)
                         }
                         composable(
-                            route = "${Screen.ConfirmNewPasscodeFullscreen.route}/{tapPasscode}",
-                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })
+                            route = "${Screen.ConfirmNewPasscodeFullscreen.route}/{tapPasscode}", arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })
                         ) { backStackEntry ->
                             val tapPasscode = backStackEntry.arguments?.getString("tapPasscode") ?: ""
                             ConfirmNewPasscodeFullscreen(
@@ -233,8 +218,7 @@ class MainActivity : FragmentActivity() {
                             CreatePasscodeChangeFullscreen(navController = navController)
                         }
                         composable(
-                            route = "${Screen.ConfirmPasscodeChangeFullscreen.route}/{tapPasscode}",
-                            arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })
+                            route = "${Screen.ConfirmPasscodeChangeFullscreen.route}/{tapPasscode}", arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })
                         ) { backStackEntry ->
                             val tapPasscode = backStackEntry.arguments?.getString("tapPasscode") ?: ""
                             ConfirmPasscodeChangeFullscreen(
@@ -252,8 +236,7 @@ class MainActivity : FragmentActivity() {
                         }
                         composable(route = Screen.SignatureListScreen.route) {
                             SignatureListScreen(
-                                navController = navController,
-                                signatureImageViewModel = signatureImageViewModel
+                                navController = navController, signatureImageViewModel = signatureImageViewModel
                             )
                         }
                     }

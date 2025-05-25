@@ -20,5 +20,5 @@ fun hashedPasscode(password: String, salt: String): String {
 
 fun verifyPasscode(password: String, storedHash: String, salt: String): Boolean {
     val hashedInput = hashedPasscode(password, salt)
-    return hashedInput==storedHash
+    return hashedInput == storedHash
 }

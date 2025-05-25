@@ -9,65 +9,65 @@ import co.finema.thaidotidbyfinema.R
 
 sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVector? = null) {
 
-  object LoadingScreen : Screen("LoadingScreen")
+    data object LoadingScreen : Screen("LoadingScreen")
 
-  object OnboardingRoot : Screen("OnboardingRoot")
+    data object OnboardingRoot : Screen("OnboardingRoot")
 
-  object WelcomeScreen : Screen("WelcomeScreen")
+    data object WelcomeScreen : Screen("WelcomeScreen")
 
-  object OnboardScreen : Screen("OnboardScreen")
+    data object OnboardScreen : Screen("OnboardScreen")
 
-  object TermsScreen : Screen("TermsScreen")
+    data object TermsScreen : Screen("TermsScreen")
 
-  object HomeRoot : Screen("HomeRoot")
+    data object HomeRoot : Screen("HomeRoot")
 
-  object MainScreen : Screen("MainScreen")
+    data object MainScreen : Screen("MainScreen")
 
-  object HomeTab : Screen("HomeTab", R.string.home, Icons.Rounded.Home)
+    data object HomeTab : Screen("HomeTab", R.string.home, Icons.Rounded.Home)
 
-  object HistoryTab : Screen("HistoryTab", R.string.history, Icons.Rounded.Description)
+    data object HistoryTab : Screen("HistoryTab", R.string.history, Icons.Rounded.Description)
 
-  object ProfileTab : Screen("ProfileTab", R.string.profile, Icons.Rounded.Person)
+    data object ProfileTab : Screen("ProfileTab", R.string.profile, Icons.Rounded.Person)
 
-  object SelectLayoutScreen : Screen("SelectLayoutScreen")
+    data object SelectLayoutScreen : Screen("SelectLayoutScreen")
 
-  object CreatePasscodeFullscreen : Screen("CreatePasscodeFullscreen")
+    data object CreatePasscodeFullscreen : Screen("CreatePasscodeFullscreen")
 
-  object ConfirmPasscodeFullscreen : Screen("ConfirmPasscodeFullscreen")
+    data object ConfirmPasscodeFullscreen : Screen("ConfirmPasscodeFullscreen")
 
-  object EnterPasscodeLoginFullscreen : Screen("EnterPasscodeLoginFullscreen")
+    data object EnterPasscodeLoginFullscreen : Screen("EnterPasscodeLoginFullscreen")
 
-  object EnterPasscodeTurnOffFullscreen : Screen("EnterPasscodeTurnOffFullscreen")
+    data object EnterPasscodeTurnOffFullscreen : Screen("EnterPasscodeTurnOffFullscreen")
 
-  object CreateNewPasscodeFullscreen : Screen("CreateNewPasscodeFullscreen")
+    data object CreateNewPasscodeFullscreen : Screen("CreateNewPasscodeFullscreen")
 
-  object ConfirmNewPasscodeFullscreen : Screen("ConfirmNewPasscodeFullscreen")
+    data object ConfirmNewPasscodeFullscreen : Screen("ConfirmNewPasscodeFullscreen")
 
-  object EnterPasscodeChangeFullscreen : Screen("EnterPasscodeChangeFullscreen")
+    data object EnterPasscodeChangeFullscreen : Screen("EnterPasscodeChangeFullscreen")
 
-  object CreatePasscodeChangeFullscreen : Screen("CreatePasscodeChangeFullscreen")
+    data object CreatePasscodeChangeFullscreen : Screen("CreatePasscodeChangeFullscreen")
 
-  object ConfirmPasscodeChangeFullscreen : Screen("ConfirmPasscodeChangeFullscreen")
+    data object ConfirmPasscodeChangeFullscreen : Screen("ConfirmPasscodeChangeFullscreen")
 
-  object SupportScreen : Screen("SupportScreen")
+    data object SupportScreen : Screen("SupportScreen")
 
-  object SettingsScreen : Screen("SettingsScreen")
+    data object SettingsScreen : Screen("SettingsScreen")
 
-  object PolicyAndSafetyScreen : Screen("PolicyAndSafetyScreen")
+    data object PolicyAndSafetyScreen : Screen("PolicyAndSafetyScreen")
 
-  object LocalizationSettingsScreen : Screen("LocalizationSettingsScreen")
+    data object LocalizationSettingsScreen : Screen("LocalizationSettingsScreen")
 
-  object ProfileDetailsScreen : Screen("ProfileDetailsScreen")
+    data object ProfileDetailsScreen : Screen("ProfileDetailsScreen")
 
-  object ProfileEditScreen : Screen("ProfileEditScreen")
+    data object ProfileEditScreen : Screen("ProfileEditScreen")
 
-  object DocumentPlaceholderScreen : Screen("DocumentPlaceholderScreen")
+    data object DocumentPlaceholderScreen : Screen("DocumentPlaceholderScreen")
 
-  object SignatureListScreen : Screen("SignatureListScreen")
+    data object SignatureListScreen : Screen("SignatureListScreen")
 
-  object SignPadScreen : Screen("SignPadScreen")
+    data object SignPadScreen : Screen("SignPadScreen")
 
-  object SSSSSS : Screen("SSSSSS")
+    data object SSSSSS : Screen("SSSSSS")
 }
 
 val bottomTabs = listOf(Screen.HomeTab, Screen.HistoryTab, Screen.ProfileTab)
