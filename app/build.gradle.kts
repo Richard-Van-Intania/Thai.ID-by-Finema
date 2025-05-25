@@ -5,6 +5,7 @@ plugins {
   id("com.google.devtools.ksp")
   kotlin("plugin.serialization") version "2.0.21"
   id("com.google.protobuf") version "0.9.5"
+  id("kotlin-kapt")
 }
 
 android {
