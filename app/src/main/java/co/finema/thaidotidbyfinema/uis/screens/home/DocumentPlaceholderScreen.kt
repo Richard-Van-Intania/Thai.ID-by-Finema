@@ -28,7 +28,7 @@ import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,16 +61,11 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 @Composable
 fun DocumentPlaceholderScreen(
     navController: NavController,
-    documentLayout: DocumentLayout,
+    layoutIndex: MutableIntState,
     placeholderFilePath0: MutableState<String>,
     placeholderFilePath1: MutableState<String>,
     placeholderFilePath2: MutableState<String>,
 ) {
-  LaunchedEffect(Unit) {
-    placeholderFilePath0.value = ""
-    placeholderFilePath1.value = ""
-    placeholderFilePath2.value = ""
-  }
   var showOptionDialog by remember { mutableStateOf(false) }
   if (showOptionDialog) {
     Dialog(onDismissRequest = {}) {
@@ -144,7 +139,7 @@ fun DocumentPlaceholderScreen(
             modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-              when (documentLayout) {
+              when (layoutItems[layoutIndex.intValue].documentLayout) {
                 DocumentLayout.ONE_SIDE_CARD -> {
                   if (placeholderFilePath0.value.isEmpty())
                       AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card, onClick = {})

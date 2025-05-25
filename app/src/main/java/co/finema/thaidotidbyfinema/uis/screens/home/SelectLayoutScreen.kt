@@ -31,9 +31,10 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -139,13 +140,18 @@ val layoutItems =
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectLayoutScreen(navController: NavController) {
+fun SelectLayoutScreen(
+    navController: NavController,
+    layoutIndex: MutableIntState,
+    placeholderFilePath0: MutableState<String>,
+    placeholderFilePath1: MutableState<String>,
+    placeholderFilePath2: MutableState<String>,
+) {
   val configuration = LocalConfiguration.current
   val screenWidthDp = configuration.screenWidthDp
   val context = LocalContext.current
   val repository = remember { UserConfigRepository(context) }
   val scope = rememberCoroutineScope()
-  var index by remember { mutableIntStateOf(0) }
   val hazeState = rememberHazeState()
   val hideInstruction by repository.hideInstruction.collectAsState(initial = true)
   var showInstructionDialog by remember { mutableStateOf(false) }
@@ -225,9 +231,10 @@ fun SelectLayoutScreen(navController: NavController) {
             contentAlignment = Alignment.Center) {
               GradientButton(
                   onClick = {
-                    navController.navigate(
-                        route =
-                            "${Screen.DocumentPlaceholderScreen.route}/${layoutItems[index].documentLayout.name}")
+                    placeholderFilePath0.value = ""
+                    placeholderFilePath1.value = ""
+                    placeholderFilePath2.value = ""
+                    navController.navigate(route = Screen.DocumentPlaceholderScreen.route)
                   },
                   text = stringResource(R.string.next))
             }
@@ -258,7 +265,7 @@ fun SelectLayoutScreen(navController: NavController) {
                                 verticalArrangement = Arrangement.SpaceEvenly,
                                 horizontalAlignment = Alignment.CenterHorizontally) {
                                   val widthFactor =
-                                      when (index) {
+                                      when (layoutIndex.intValue) {
                                         0,
                                         1 -> 0.25
                                         2,
@@ -266,13 +273,17 @@ fun SelectLayoutScreen(navController: NavController) {
                                         else -> 0.5
                                       }
                                   Image(
-                                      painter = painterResource(id = layoutItems[index].image1),
+                                      painter =
+                                          painterResource(
+                                              id = layoutItems[layoutIndex.intValue].image1),
                                       contentDescription = null,
                                       modifier = Modifier.width((screenWidthDp * widthFactor).dp))
-                                  if (layoutItems[index].image2 != null) {
+                                  if (layoutItems[layoutIndex.intValue].image2 != null) {
                                     Spacer(modifier = Modifier.height(32.dp))
                                     Image(
-                                        painter = painterResource(id = layoutItems[index].image2!!),
+                                        painter =
+                                            painterResource(
+                                                id = layoutItems[layoutIndex.intValue].image2!!),
                                         contentDescription = null,
                                         modifier = Modifier.width((screenWidthDp * widthFactor).dp))
                                   }
@@ -280,14 +291,14 @@ fun SelectLayoutScreen(navController: NavController) {
                           }
                       Spacer(modifier = Modifier.height(16.dp))
                       Text(
-                          text = stringResource(layoutItems[index].explanation),
+                          text = stringResource(layoutItems[layoutIndex.intValue].explanation),
                           color = primaryBlack,
                           fontSize = 18.sp,
                           fontWeight = FontWeight.W700,
                           textAlign = TextAlign.Center,
                       )
                       Text(
-                          text = stringResource(layoutItems[index].example),
+                          text = stringResource(layoutItems[layoutIndex.intValue].example),
                           color = primaryBlack,
                           fontSize = 16.sp,
                           fontWeight = FontWeight.W400,
@@ -303,7 +314,9 @@ fun SelectLayoutScreen(navController: NavController) {
                   verticalArrangement = Arrangement.spacedBy(8.dp),
                   horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     for ((idx, item) in layoutItems.withIndex()) LayoutItemButton(
-                        layoutItem = item, isSelected = idx == index, onClick = { index = idx })
+                        layoutItem = item,
+                        isSelected = idx == layoutIndex.intValue,
+                        onClick = { layoutIndex.intValue = idx })
                   }
             }
           }

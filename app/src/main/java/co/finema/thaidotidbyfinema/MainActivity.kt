@@ -12,6 +12,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.core.content.ContextCompat
@@ -23,7 +24,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageDatabase
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
-import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.CustomTypography
 import co.finema.thaidotidbyfinema.uis.Screen
@@ -127,6 +127,7 @@ class MainActivity : FragmentActivity() {
           colors = lightColors(primary = primaryDarkBlue), typography = CustomTypography) {
             val navController = rememberNavController()
             val localAuth = remember { mutableStateOf(false) }
+            var layoutIndex = remember { mutableIntStateOf(0) }
             var placeholderFilePath0 = remember { mutableStateOf("") }
             var placeholderFilePath1 = remember { mutableStateOf("") }
             var placeholderFilePath2 = remember { mutableStateOf("") }
@@ -173,26 +174,23 @@ class MainActivity : FragmentActivity() {
                           localAuth = localAuth)
                     }
                     composable(route = Screen.SelectLayoutScreen.route) {
-                      SelectLayoutScreen(navController = navController)
+                      SelectLayoutScreen(
+                          navController = navController,
+                          layoutIndex = layoutIndex,
+                          placeholderFilePath0 = placeholderFilePath0,
+                          placeholderFilePath1 = placeholderFilePath1,
+                          placeholderFilePath2 = placeholderFilePath2,
+                      )
                     }
-                    composable(
-                        route = "${Screen.DocumentPlaceholderScreen.route}/{name}",
-                        arguments =
-                            listOf(
-                                navArgument("name") {
-                                  defaultValue = DocumentLayout.ONE_SIDE_CARD.name
-                                })) { backStackEntry ->
-                          val name =
-                              backStackEntry.arguments?.getString("name")
-                                  ?: DocumentLayout.ONE_SIDE_CARD.name
-                          DocumentPlaceholderScreen(
-                              navController = navController,
-                              documentLayout = DocumentLayout.valueOf(name),
-                              placeholderFilePath0 = placeholderFilePath0,
-                              placeholderFilePath1 = placeholderFilePath1,
-                              placeholderFilePath2 = placeholderFilePath2,
-                          )
-                        }
+                    composable(route = Screen.DocumentPlaceholderScreen.route) {
+                      DocumentPlaceholderScreen(
+                          navController = navController,
+                          layoutIndex = layoutIndex,
+                          placeholderFilePath0 = placeholderFilePath0,
+                          placeholderFilePath1 = placeholderFilePath1,
+                          placeholderFilePath2 = placeholderFilePath2,
+                      )
+                    }
                     composable(route = Screen.ProfileDetailsScreen.route) {
                       ProfileDetailsScreen(navController = navController)
                     }
