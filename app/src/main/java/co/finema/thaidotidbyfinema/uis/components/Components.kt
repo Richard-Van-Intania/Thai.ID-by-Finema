@@ -35,19 +35,19 @@ import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 fun AppBarOptBack(containerColor: Color, text: String, onClick: (() -> Unit)? = null) {
     CenterAlignedTopAppBar(
         title = {
-            Text(
-                text = text,
-                color = primaryBlack,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W700,
-            )
-        }, navigationIcon = {
-            if (onClick!=null) IconButton(onClick = onClick) {
-                Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
-            }
-        }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = containerColor, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack
+        Text(
+            text = text,
+            color = primaryBlack,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.W700,
         )
+    }, navigationIcon = {
+        if (onClick!=null) IconButton(onClick = onClick) {
+            Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
+        }
+    }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        containerColor = containerColor, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack
+    )
     )
 }
 

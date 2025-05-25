@@ -8,8 +8,7 @@ import co.finema.thaidotidbyfinema.serializers.UserCardSerializer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-private val Context.userCardStore: DataStore<UserCard> by
-dataStore(fileName = "user_card.proto", serializer = UserCardSerializer)
+private val Context.userCardStore: DataStore<UserCard> by dataStore(fileName = "user_card.proto", serializer = UserCardSerializer)
 
 class UserCardRepository(private val context: Context) {
     val userCardFlow: Flow<UserCard> = context.userCardStore.data

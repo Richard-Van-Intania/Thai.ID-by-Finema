@@ -22,14 +22,12 @@ import co.finema.thaidotidbyfinema.uis.white
 @Composable
 fun GradientButton(onClick: () -> Unit, text: String) {
     Box(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .clip(RoundedCornerShape(56.dp))
-                .background(brush = gradient)
-                .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .clip(RoundedCornerShape(56.dp))
+            .background(brush = gradient)
+            .clickable(onClick = onClick), contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
