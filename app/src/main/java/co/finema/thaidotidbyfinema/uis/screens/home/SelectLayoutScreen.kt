@@ -82,6 +82,7 @@ data class LayoutItemButtonData(
     val unselectedFilePath: Int,
     val selectedFilePath: Int,
     val documentLayout: DocumentLayout,
+    val widthFactor: Double,
 )
 
 val layoutItems =
@@ -95,6 +96,7 @@ val layoutItems =
             unselectedFilePath = R.drawable.card1,
             selectedFilePath = R.drawable.card2,
             documentLayout = DocumentLayout.ONE_SIDE_CARD,
+            widthFactor = 0.25,
         ),
         LayoutItemButtonData(
             explanation = R.string.twoSideCard_explanation,
@@ -105,6 +107,7 @@ val layoutItems =
             unselectedFilePath = R.drawable.card2_1,
             selectedFilePath = R.drawable.card2_2,
             documentLayout = DocumentLayout.TWO_SIDE_CARD,
+            widthFactor = 0.25,
         ),
         LayoutItemButtonData(
             explanation = R.string.twoHalfA4_explanation,
@@ -115,6 +118,7 @@ val layoutItems =
             unselectedFilePath = R.drawable.house1,
             selectedFilePath = R.drawable.house2,
             documentLayout = DocumentLayout.TWO_SIDE_HALF_A4,
+            widthFactor = 0.375,
         ),
         LayoutItemButtonData(
             explanation = R.string.oneHalfA4_explanation,
@@ -125,6 +129,7 @@ val layoutItems =
             unselectedFilePath = R.drawable.bookbank1,
             selectedFilePath = R.drawable.bookbank2,
             documentLayout = DocumentLayout.ONE_SIDE_HALF_A4,
+            widthFactor = 0.375,
         ),
         LayoutItemButtonData(
             explanation = R.string.fullA4_explanation,
@@ -135,6 +140,7 @@ val layoutItems =
             unselectedFilePath = R.drawable.doc1,
             selectedFilePath = R.drawable.doc2,
             documentLayout = DocumentLayout.FULL_A4,
+            widthFactor = 0.5,
         ),
     )
 
@@ -264,20 +270,16 @@ fun SelectLayoutScreen(
                             Column(
                                 verticalArrangement = Arrangement.SpaceEvenly,
                                 horizontalAlignment = Alignment.CenterHorizontally) {
-                                  val widthFactor =
-                                      when (layoutIndex.intValue) {
-                                        0,
-                                        1 -> 0.25
-                                        2,
-                                        3 -> 0.375
-                                        else -> 0.5
-                                      }
                                   Image(
                                       painter =
                                           painterResource(
                                               id = layoutItems[layoutIndex.intValue].image1),
                                       contentDescription = null,
-                                      modifier = Modifier.width((screenWidthDp * widthFactor).dp))
+                                      modifier =
+                                          Modifier.width(
+                                              (screenWidthDp *
+                                                      layoutItems[layoutIndex.intValue].widthFactor)
+                                                  .dp))
                                   if (layoutItems[layoutIndex.intValue].image2 != null) {
                                     Spacer(modifier = Modifier.height(32.dp))
                                     Image(
@@ -285,7 +287,12 @@ fun SelectLayoutScreen(
                                             painterResource(
                                                 id = layoutItems[layoutIndex.intValue].image2!!),
                                         contentDescription = null,
-                                        modifier = Modifier.width((screenWidthDp * widthFactor).dp))
+                                        modifier =
+                                            Modifier.width(
+                                                (screenWidthDp *
+                                                        layoutItems[layoutIndex.intValue]
+                                                            .widthFactor)
+                                                    .dp))
                                   }
                                 }
                           }
