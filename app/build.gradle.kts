@@ -70,7 +70,7 @@ dependencies {
   implementation(libs.androidx.navigation.compose)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.androidx.lifecycle.livedata.ktx)
-  implementation(libs.androidx.datastore.preferences)
+  implementation(libs.androidx.datastore)
   implementation(libs.protobuf.javalite)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.androidx.lifecycle.runtime.compose)
