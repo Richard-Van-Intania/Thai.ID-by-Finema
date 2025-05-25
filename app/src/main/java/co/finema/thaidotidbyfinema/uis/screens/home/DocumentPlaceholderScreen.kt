@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
@@ -188,7 +189,6 @@ fun DocumentPlaceholderScreen(
                   else Box {}
                 }
               }
-              Spacer(modifier = Modifier.height(128.dp))
             }
       }
 }
@@ -199,8 +199,8 @@ fun AddImageButton(ratio: Double, label: Int, onClick: () -> Unit) {
       modifier =
           Modifier.fillMaxWidth()
               .aspectRatio(ratio.toFloat())
-              .clip(RoundedCornerShape(16.dp))
-              .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(16.dp))
+              .clip(RoundedCornerShape(cornerRadius))
+              .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
               .background(white)
               .clickable(onClick = onClick),
       contentAlignment = Alignment.Center) {

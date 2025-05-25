@@ -56,6 +56,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.FCIconic
@@ -236,9 +237,11 @@ fun SelectLayoutScreen(navController: NavController) {
           Box(
               modifier =
                   Modifier.fillMaxWidth()
-                      .clip(RoundedCornerShape(16.dp))
+                      .clip(RoundedCornerShape(cornerRadius))
                       .border(
-                          width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(16.dp))
+                          width = 1.dp,
+                          color = secondaryGray,
+                          shape = RoundedCornerShape(cornerRadius))
                       .background(whiteBG)) {
                 Column(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
