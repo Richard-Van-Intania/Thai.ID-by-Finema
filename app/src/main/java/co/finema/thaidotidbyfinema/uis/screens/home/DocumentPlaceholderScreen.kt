@@ -28,6 +28,7 @@ import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -48,6 +49,7 @@ import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
+import co.finema.thaidotidbyfinema.enums.FileSource
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
@@ -66,6 +68,15 @@ fun DocumentPlaceholderScreen(
     placeholderFilePath1: MutableState<String>,
     placeholderFilePath2: MutableState<String>,
 ) {
+    var fileSource by remember { mutableStateOf<FileSource?>(null) }
+    LaunchedEffect(fileSource) {
+        when (fileSource) {
+            FileSource.CAMERA -> {}
+            FileSource.GALLERY -> {}
+            FileSource.PDF -> {}
+            null -> {}
+        }
+    }
     var showOptionDialog by remember { mutableStateOf(false) }
     if (showOptionDialog) {
         Dialog(onDismissRequest = {}) {
@@ -90,15 +101,27 @@ fun DocumentPlaceholderScreen(
                             .background(neutral02)
                     )
                     OptionButton(
-                        imageVector = Icons.Rounded.PhotoCamera, text = R.string.scan_your_card, onClick = {})
+                        imageVector = Icons.Rounded.PhotoCamera, text = R.string.scan_your_card, onClick = {
+                            fileSource = FileSource.CAMERA
+                            showOptionDialog = false
+                        })
                     HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
                     OptionButton(
-                        imageVector = Icons.Rounded.Image, text = R.string.import_from_album, onClick = {})
+                        imageVector = Icons.Rounded.Image, text = R.string.import_from_album, onClick = {
+                            fileSource = FileSource.GALLERY
+                            showOptionDialog = false
+                        })
                     HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
                     OptionButton(
-                        imageVector = Icons.Rounded.Description, text = R.string.pick_file, onClick = {})
+                        imageVector = Icons.Rounded.Description, text = R.string.pick_file, onClick = {
+                            fileSource = FileSource.PDF
+                            showOptionDialog = false
+                        })
                     HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
-                    TextButton(onClick = { showOptionDialog = false }) {
+                    TextButton(onClick = {
+                        fileSource = null
+                        showOptionDialog = false
+                    }) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier
                                 .fillMaxWidth()
@@ -143,7 +166,7 @@ fun DocumentPlaceholderScreen(
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center
             ) {
                 GradientButton(
-                    onClick = { showOptionDialog = true }, text = stringResource(R.string.make_a_cert)
+                    onClick = { }, text = stringResource(R.string.make_a_cert)
                 )
             }
         }, backgroundColor = whiteBG
@@ -156,37 +179,62 @@ fun DocumentPlaceholderScreen(
         ) {
             when (layoutItems[layoutIndex.intValue].documentLayout) {
                 DocumentLayout.ONE_SIDE_CARD -> {
-                    if (placeholderFilePath0.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card, onClick = {})
+                    if (placeholderFilePath0.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card, onClick = {
+                        fileSource = null
+                        showOptionDialog = true
+                    })
                     else Box {}
                 }
 
                 DocumentLayout.TWO_SIDE_CARD -> {
-                    if (placeholderFilePath1.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_1, onClick = {})
+                    if (placeholderFilePath1.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_1, onClick = {
+                        fileSource = null
+                        showOptionDialog = true
+                    })
                     else Box {}
                     Spacer(modifier = Modifier.height(32.dp))
-                    if (placeholderFilePath2.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_2, onClick = {})
+                    if (placeholderFilePath2.value.isEmpty()) AddImageButton(ratio = 8.6 / 5.4, label = R.string.add_card_2, onClick = {
+                        fileSource = null
+                        showOptionDialog = true
+                    })
                     else Box {}
                 }
 
                 DocumentLayout.ONE_SIDE_HALF_A4 -> {
                     if (placeholderFilePath0.value.isEmpty()) AddImageButton(
-                        ratio = 1.0 / 1.0, label = R.string.add_a_document_image, onClick = {})
+                        ratio = 1.0 / 1.0, label = R.string.add_a_document_image, onClick = {
+                            fileSource = null
+                            showOptionDialog = true
+                        }
+                    )
                     else Box {}
                 }
 
                 DocumentLayout.TWO_SIDE_HALF_A4 -> {
                     if (placeholderFilePath1.value.isEmpty()) AddImageButton(
-                        ratio = 297.0 / 210.0, label = R.string.add_a_document_image_1, onClick = {})
+                        ratio = 297.0 / 210.0, label = R.string.add_a_document_image_1, onClick = {
+                            fileSource = null
+                            showOptionDialog = true
+                        }
+                    )
                     else Box {}
                     Spacer(modifier = Modifier.height(32.dp))
                     if (placeholderFilePath2.value.isEmpty()) AddImageButton(
-                        ratio = 297.0 / 210.0, label = R.string.add_a_document_image_2, onClick = {})
+                        ratio = 297.0 / 210.0, label = R.string.add_a_document_image_2, onClick = {
+                            fileSource = null
+                            showOptionDialog = true
+                        }
+                    )
                     else Box {}
                 }
 
                 DocumentLayout.FULL_A4 -> {
                     if (placeholderFilePath0.value.isEmpty()) AddImageButton(
-                        ratio = 210.0 / 297.0, label = R.string.add_a_document_image, onClick = {})
+                        ratio = 210.0 / 297.0, label = R.string.add_a_document_image, onClick = {
+                            fileSource = null
+                            showOptionDialog = true
+                        }
+                    )
                     else Box {}
                 }
             }
