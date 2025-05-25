@@ -41,19 +41,18 @@ fun HistoryTab(navController: NavController, counterState: CounterState) {
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 8.dp))
-        },
-        backgroundColor = whiteBG
+        }, backgroundColor = whiteBG
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(it), contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it), contentAlignment = Alignment.Center
+        ) {
             Text(
-                "HistoryTab",
-                modifier =
-                    Modifier.clickable(
-                        onClick = {
-                            scope.launch { snackbarHostState.showSnackbar(disableBiometricsSuccess) }
-                        })
+                "HistoryTab", modifier = Modifier.clickable(
+                    onClick = {
+                        scope.launch { snackbarHostState.showSnackbar(disableBiometricsSuccess) }
+                    })
             )
         }
     }
