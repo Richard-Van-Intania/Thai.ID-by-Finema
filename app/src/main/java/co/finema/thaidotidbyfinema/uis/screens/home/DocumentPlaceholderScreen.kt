@@ -30,7 +30,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,7 +46,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
-import co.finema.thaidotidbyfinema.databases.signatureimage.SignatureImageViewModel
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
@@ -59,7 +57,7 @@ import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
 // all here
-// room
+
 // camera
 // image picker
 // pdf picker
@@ -73,9 +71,7 @@ fun DocumentPlaceholderScreen(
     placeholderFilePath0: MutableState<String>,
     placeholderFilePath1: MutableState<String>,
     placeholderFilePath2: MutableState<String>,
-    signatureImageViewModel: SignatureImageViewModel
 ) {
-  val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
   LaunchedEffect(Unit) {
     placeholderFilePath0.value = ""
     placeholderFilePath1.value = ""

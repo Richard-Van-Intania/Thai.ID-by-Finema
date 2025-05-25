@@ -32,6 +32,7 @@ import co.finema.thaidotidbyfinema.uis.screens.LoadingScreen
 import co.finema.thaidotidbyfinema.uis.screens.MainScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPlaceholderScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
+import co.finema.thaidotidbyfinema.uis.screens.home.SignatureListScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.TermsScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.WelcomeScreen
@@ -189,7 +190,6 @@ class MainActivity : FragmentActivity() {
                               placeholderFilePath0 = placeholderFilePath0,
                               placeholderFilePath1 = placeholderFilePath1,
                               placeholderFilePath2 = placeholderFilePath2,
-                              signatureImageViewModel = signatureImageViewModel,
                           )
                         }
                     composable(route = Screen.ProfileDetailsScreen.route) {
@@ -240,6 +240,11 @@ class MainActivity : FragmentActivity() {
                     }
                     composable(route = Screen.LocalizationSettingsScreen.route) {
                       LocalizationSettingsScreen(navController = navController)
+                    }
+                    composable(route = Screen.SignatureListScreen.route) {
+                      SignatureListScreen(
+                          navController = navController,
+                          signatureImageViewModel = signatureImageViewModel)
                     }
                   }
             }
