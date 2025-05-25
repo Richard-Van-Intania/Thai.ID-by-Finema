@@ -91,6 +91,7 @@ class MainActivity : FragmentActivity() {
     val signatureImageViewModel = SignatureImageViewModel(signatureImageDao)
     // more db below
 
+    // biometric below
     executor = ContextCompat.getMainExecutor(this)
     biometricPrompt =
         BiometricPrompt(
