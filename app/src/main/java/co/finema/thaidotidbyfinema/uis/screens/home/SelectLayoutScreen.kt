@@ -211,24 +211,24 @@ fun SelectLayoutScreen(
     }
     Scaffold(
         modifier = Modifier.hazeSource(state = hazeState), topBar = {
-        AppBarOptBack(
-            containerColor = white, text = stringResource(R.string.select_document_format), onClick = { navController.popBackStack() })
-    }, bottomBar = {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center
-        ) {
-            GradientButton(
-                onClick = {
-                    placeholderFilePath0.value = ""
-                    placeholderFilePath1.value = ""
-                    placeholderFilePath2.value = ""
-                    navController.navigate(route = Screen.DocumentPlaceholderScreen.route)
-                }, text = stringResource(R.string.next)
-            )
-        }
-    }, backgroundColor = white
+            AppBarOptBack(
+                containerColor = white, text = stringResource(R.string.select_document_format), onClick = { navController.popBackStack() })
+        }, bottomBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center
+            ) {
+                GradientButton(
+                    onClick = {
+                        placeholderFilePath0.value = ""
+                        placeholderFilePath1.value = ""
+                        placeholderFilePath2.value = ""
+                        navController.navigate(route = Screen.DocumentPlaceholderScreen.route)
+                    }, text = stringResource(R.string.next)
+                )
+            }
+        }, backgroundColor = white
     ) {
         Column(
             modifier = Modifier
