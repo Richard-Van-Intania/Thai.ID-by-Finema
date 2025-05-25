@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
-import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.Screen
+import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue07
 import co.finema.thaidotidbyfinema.uis.neutral06
@@ -51,124 +51,137 @@ val sectionBold = SpanStyle(color = primaryBlack, fontSize = 22.sp, fontWeight =
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TermsScreen(navController: NavHostController) {
-  Scaffold(
-      topBar = {
-        AppBarOptBack(
-            containerColor = white,
-            text = stringResource(R.string.terms),
-            onClick = { navController.popBackStack() })
-      },
-      backgroundColor = white) {
+    Scaffold(
+        topBar = {
+            AppBarOptBack(
+                containerColor = white,
+                text = stringResource(R.string.terms),
+                onClick = { navController.popBackStack() })
+        },
+        backgroundColor = white
+    ) {
         LazyColumn(
-            modifier = Modifier.padding(it), contentPadding = PaddingValues(horizontal = 16.dp)) {
-              item {
+            modifier = Modifier.padding(it), contentPadding = PaddingValues(horizontal = 16.dp)
+        ) {
+            item {
                 Text(
                     text =
                         buildAnnotatedString {
-                          append(text = paragraph1)
-                          withStyle(style = bodyBold) { append(text = company) }
-                          append(text = paragraph2Android)
-                          withStyle(style = bodyBold) { append(text = thaidotid) }
-                          append(text = paragraph3)
-                          withStyle(style = bodyBold) { append(text = terms) }
-                          append(text = paragraph4)
-                          withStyle(style = bodyBold) { append(text = service) }
-                          append(text = paragraph5)
-                          withStyle(style = sectionBold) { append(text = section1) }
-                          append(text = section11)
-                          withStyle(style = sectionBold) { append(text = section2) }
-                          append(text = section21)
-                          withStyle(style = sectionBold) { append(text = section3) }
-                          append(text = section31)
-                          withStyle(style = sectionBold) { append(text = section4) }
-                          withStyle(style = bodyBold) { append(text = section41) }
-                          append(text = section411)
-                          withStyle(style = bodyBold) { append(text = section42) }
-                          append(text = section421)
-                          withStyle(style = bodyBold) { append(text = section43) }
-                          append(text = section431)
-                          withStyle(style = bodyBold) { append(text = section44) }
-                          append(text = section441)
-                          append(text = section442)
-                          withStyle(
-                              style =
-                                  SpanStyle(
-                                      color = primaryBlack,
-                                      fontSize = 18.sp,
-                                      fontWeight = FontWeight.W700)) {
+                            append(text = paragraph1)
+                            withStyle(style = bodyBold) { append(text = company) }
+                            append(text = paragraph2Android)
+                            withStyle(style = bodyBold) { append(text = thaidotid) }
+                            append(text = paragraph3)
+                            withStyle(style = bodyBold) { append(text = terms) }
+                            append(text = paragraph4)
+                            withStyle(style = bodyBold) { append(text = service) }
+                            append(text = paragraph5)
+                            withStyle(style = sectionBold) { append(text = section1) }
+                            append(text = section11)
+                            withStyle(style = sectionBold) { append(text = section2) }
+                            append(text = section21)
+                            withStyle(style = sectionBold) { append(text = section3) }
+                            append(text = section31)
+                            withStyle(style = sectionBold) { append(text = section4) }
+                            withStyle(style = bodyBold) { append(text = section41) }
+                            append(text = section411)
+                            withStyle(style = bodyBold) { append(text = section42) }
+                            append(text = section421)
+                            withStyle(style = bodyBold) { append(text = section43) }
+                            append(text = section431)
+                            withStyle(style = bodyBold) { append(text = section44) }
+                            append(text = section441)
+                            append(text = section442)
+                            withStyle(
+                                style =
+                                    SpanStyle(
+                                        color = primaryBlack,
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.W700
+                                    )
+                            ) {
                                 append(text = agree)
-                              }
+                            }
                         },
                     color = neutral06,
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.W400)
-              }
-              item {
+                    fontWeight = FontWeight.W400
+                )
+            }
+            item {
                 val context = LocalContext.current
                 val repository = remember { UserConfigRepository(context) }
                 val isAcceptedAgreements by
-                    repository.isAcceptedAgreements.collectAsState(initial = false)
+                repository.isAcceptedAgreements.collectAsState(initial = false)
                 val scope = rememberCoroutineScope()
                 if (!isAcceptedAgreements)
                     Row(
                         modifier = Modifier.padding(vertical = 48.dp),
-                        verticalAlignment = Alignment.CenterVertically) {
-                          Box(
-                              modifier =
-                                  Modifier.height(56.dp)
-                                      .weight(1f)
-                                      .background(white)
-                                      .border(
-                                          width = 2.dp,
-                                          color = lightBlue07,
-                                          shape = RoundedCornerShape(56.dp))
-                                      .clip(RoundedCornerShape(56.dp))
-                                      .clickable(
-                                          onClick = {
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .height(56.dp)
+                                    .weight(1f)
+                                    .background(white)
+                                    .border(
+                                        width = 2.dp,
+                                        color = lightBlue07,
+                                        shape = RoundedCornerShape(56.dp)
+                                    )
+                                    .clip(RoundedCornerShape(56.dp))
+                                    .clickable(
+                                        onClick = {
                                             navController.popBackStack(
                                                 route = Screen.WelcomeScreen.route,
-                                                inclusive = false)
-                                          }),
-                              contentAlignment = Alignment.Center) {
-                                Text(
-                                    text = stringResource(R.string.decline),
-                                    color = lightBlue07,
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.W700,
-                                )
-                              }
-                          Spacer(modifier = Modifier.width(16.dp))
-                          Box(
-                              modifier =
-                                  Modifier.height(56.dp)
-                                      .weight(1f)
-                                      .clip(RoundedCornerShape(56.dp))
-                                      .background(brush = gradient)
-                                      .clickable(
-                                          onClick = {
+                                                inclusive = false
+                                            )
+                                        }),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = stringResource(R.string.decline),
+                                color = lightBlue07,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.W700,
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Box(
+                            modifier =
+                                Modifier
+                                    .height(56.dp)
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(56.dp))
+                                    .background(brush = gradient)
+                                    .clickable(
+                                        onClick = {
                                             scope.launch {
-                                              repository.updateIsAcceptedAgreements(true)
+                                                repository.updateIsAcceptedAgreements(true)
                                             }
                                             navController.navigate(
-                                                route = Screen.HomeRoot.route) {
-                                                  popUpTo(Screen.WelcomeScreen.route) {
+                                                route = Screen.HomeRoot.route
+                                            ) {
+                                                popUpTo(Screen.WelcomeScreen.route) {
                                                     inclusive = true
-                                                  }
                                                 }
-                                          }),
-                              contentAlignment = Alignment.Center) {
-                                Text(
-                                    text = stringResource(R.string.accept),
-                                    color = white,
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.W700,
-                                )
-                              }
+                                            }
+                                        }),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = stringResource(R.string.accept),
+                                color = white,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.W700,
+                            )
                         }
+                    }
                 else Spacer(modifier = Modifier.height(48.dp))
-              }
             }
-      }
+        }
+    }
 }
 
 private const val paragraph1 = "บริษัท ฟินีม่า จำกัด (ซึ่งต่อไปในประกาศนี้ เรียกว่า "

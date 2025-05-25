@@ -8,15 +8,15 @@ import java.io.InputStream
 import java.io.OutputStream
 
 object UserConfigSerializer : Serializer<UserConfig> {
-  override val defaultValue: UserConfig = UserConfig.getDefaultInstance()
+    override val defaultValue: UserConfig = UserConfig.getDefaultInstance()
 
-  override suspend fun readFrom(input: InputStream): UserConfig {
-    try {
-      return UserConfig.parseFrom(input)
-    } catch (exception: InvalidProtocolBufferException) {
-      throw CorruptionException("Cannot read proto.", exception)
+    override suspend fun readFrom(input: InputStream): UserConfig {
+        try {
+            return UserConfig.parseFrom(input)
+        } catch (exception: InvalidProtocolBufferException) {
+            throw CorruptionException("Cannot read proto.", exception)
+        }
     }
-  }
 
-  override suspend fun writeTo(t: UserConfig, output: OutputStream) = t.writeTo(output)
+    override suspend fun writeTo(t: UserConfig, output: OutputStream) = t.writeTo(output)
 }

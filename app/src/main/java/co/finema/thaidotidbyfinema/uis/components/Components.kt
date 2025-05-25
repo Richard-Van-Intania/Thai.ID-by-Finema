@@ -33,37 +33,37 @@ import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBarOptBack(containerColor: Color, text: String, onClick: (() -> Unit)? = null) {
-  CenterAlignedTopAppBar(
-      title = {
-        Text(
-            text = text,
-            color = primaryBlack,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.W700,
-        )
-      },
-      navigationIcon = {
-        if (onClick != null)
-            IconButton(onClick = onClick) {
-              Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = text,
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W700,
+            )
+        }, navigationIcon = {
+            if (onClick!=null) IconButton(onClick = onClick) {
+                Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
             }
-      },
-      colors =
-          TopAppBarDefaults.centerAlignedTopAppBarColors(
-              containerColor = containerColor,
-              navigationIconContentColor = primaryBlack,
-              actionIconContentColor = primaryBlack))
+        }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = containerColor, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack
+        )
+    )
 }
 
 @Composable
-fun HorizontalLine(modifier: Modifier = Modifier) =
-    Box(modifier = modifier.fillMaxWidth().height(1.dp).background(neutral02))
+fun HorizontalLine(modifier: Modifier = Modifier) = Box(
+    modifier = modifier
+        .fillMaxWidth()
+        .height(1.dp)
+        .background(neutral02)
+)
 
 @Composable
 fun ProfileDetailsHr(text: String) {
-  Row(
-      modifier = Modifier.padding(top = 40.dp, bottom = 16.dp),
-      verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.padding(top = 40.dp, bottom = 16.dp), verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
             text = text,
             color = primaryDarkBlue,
@@ -72,5 +72,5 @@ fun ProfileDetailsHr(text: String) {
         )
         Spacer(modifier = Modifier.width(16.dp))
         HorizontalDivider(thickness = 2.dp, color = primaryDarkBlue)
-      }
+    }
 }

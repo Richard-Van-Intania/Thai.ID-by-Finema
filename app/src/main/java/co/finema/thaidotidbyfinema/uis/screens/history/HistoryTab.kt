@@ -29,42 +29,46 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HistoryTab(navController: NavController, counterState: CounterState) {
-  val localAuth = remember { mutableStateOf(false) }
-  LaunchedEffect(localAuth.value) { println(localAuth.value) }
-  val counterState = rememberCounterState()
-  LaunchedEffect(counterState.count) { println(counterState.count) }
-  val count = remember { mutableIntStateOf(0) }
-  LaunchedEffect(count.intValue) { println(count.intValue) }
-  val snackbarHostState = remember { SnackbarHostState() }
-  val scope = rememberCoroutineScope()
-  val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
-  Scaffold(
-      snackbarHost = {
-        SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 8.dp))
-      },
-      backgroundColor = whiteBG) {
-        Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
-          Text(
-              "HistoryTab",
-              modifier =
-                  Modifier.clickable(
-                      onClick = {
-                        scope.launch { snackbarHostState.showSnackbar(disableBiometricsSuccess) }
-                      }))
+    val localAuth = remember { mutableStateOf(false) }
+    LaunchedEffect(localAuth.value) { println(localAuth.value) }
+    val counterState = rememberCounterState()
+    LaunchedEffect(counterState.count) { println(counterState.count) }
+    val count = remember { mutableIntStateOf(0) }
+    LaunchedEffect(count.intValue) { println(count.intValue) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 8.dp))
+        },
+        backgroundColor = whiteBG
+    ) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(it), contentAlignment = Alignment.Center) {
+            Text(
+                "HistoryTab",
+                modifier =
+                    Modifier.clickable(
+                        onClick = {
+                            scope.launch { snackbarHostState.showSnackbar(disableBiometricsSuccess) }
+                        })
+            )
         }
-      }
+    }
 }
 
 class CounterState {
-  var count by mutableIntStateOf(0)
-    private set
+    var count by mutableIntStateOf(0)
+        private set
 
-  fun increment() {
-    count++
-  }
+    fun increment() {
+        count++
+    }
 }
 
 @Composable
 fun rememberCounterState(): CounterState {
-  return remember { CounterState() }
+    return remember { CounterState() }
 }

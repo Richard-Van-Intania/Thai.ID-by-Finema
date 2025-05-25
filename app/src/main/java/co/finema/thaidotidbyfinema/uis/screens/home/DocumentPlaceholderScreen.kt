@@ -133,20 +133,20 @@ fun DocumentPlaceholderScreen(
     }
     Scaffold(
         topBar = {
-            AppBarOptBack(
-                containerColor = white, text = stringResource(R.string.add_document), onClick = { navController.popBackStack() })
-        }, bottomBar = {
-            Box(
-                modifier = Modifier
-                    .background(white)
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center
-            ) {
-                GradientButton(
-                    onClick = { showOptionDialog = true }, text = stringResource(R.string.make_a_cert)
-                )
-            }
-        }, backgroundColor = whiteBG
+        AppBarOptBack(
+            containerColor = white, text = stringResource(R.string.add_document), onClick = { navController.popBackStack() })
+    }, bottomBar = {
+        Box(
+            modifier = Modifier
+                .background(white)
+                .fillMaxWidth()
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center
+        ) {
+            GradientButton(
+                onClick = { showOptionDialog = true }, text = stringResource(R.string.make_a_cert)
+            )
+        }
+    }, backgroundColor = whiteBG
     ) {
         Column(
             modifier = Modifier
