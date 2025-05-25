@@ -56,13 +56,6 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
-// all here
-
-// camera
-// image picker
-// pdf picker
-// pdf to image
-// crop image
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DocumentPlaceholderScreen(
@@ -78,7 +71,6 @@ fun DocumentPlaceholderScreen(
     placeholderFilePath2.value = ""
   }
   var showOptionDialog by remember { mutableStateOf(false) }
-  var showDeleteDialog by remember { mutableStateOf(false) }
   if (showOptionDialog) {
     Dialog(onDismissRequest = {}) {
       Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
@@ -113,6 +105,16 @@ fun DocumentPlaceholderScreen(
                   )
                 }
           }
+        }
+      }
+    }
+  }
+  var showDeleteDialog by remember { mutableStateOf(false) }
+  if (showDeleteDialog) {
+    Dialog(onDismissRequest = {}) {
+      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+          //
         }
       }
     }
@@ -236,3 +238,11 @@ fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
         }
   }
 }
+
+// all here
+
+// camera
+// image picker
+// pdf picker
+// pdf to image
+// crop image
