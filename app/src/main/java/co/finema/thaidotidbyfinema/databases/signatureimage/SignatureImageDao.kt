@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface SignatureImageDao {
   @Query("SELECT * from signature_image ORDER BY id ASC")
-  fun getAllSignatureImage(): List<SignatureImage>
+  suspend fun getAllSignatureImage(): List<SignatureImage>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   suspend fun insertSignatureImage(signatureImage: SignatureImage)

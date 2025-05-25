@@ -21,6 +21,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import co.finema.thaidotidbyfinema.databases.signatureimage.SignatureImageDatabase
+import co.finema.thaidotidbyfinema.databases.signatureimage.SignatureImageViewModel
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.CustomTypography
@@ -83,6 +85,11 @@ class MainActivity : FragmentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    val signatureImageDatabase = SignatureImageDatabase.getDatabase(this)
+    val signatureImageDao = signatureImageDatabase.signatureImageDao()
+    val signatureImageViewModel = SignatureImageViewModel(signatureImageDao)
+    // more db below
+
     executor = ContextCompat.getMainExecutor(this)
     biometricPrompt =
         BiometricPrompt(
@@ -182,6 +189,7 @@ class MainActivity : FragmentActivity() {
                               placeholderFilePath0 = placeholderFilePath0,
                               placeholderFilePath1 = placeholderFilePath1,
                               placeholderFilePath2 = placeholderFilePath2,
+                              signatureImageViewModel = signatureImageViewModel,
                           )
                         }
                     composable(route = Screen.ProfileDetailsScreen.route) {
