@@ -143,7 +143,7 @@ val layoutItems = listOf(
     ),
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun SelectLayoutScreen(
     navController: NavController,
@@ -269,7 +269,7 @@ fun SelectLayoutScreen(
                                     (screenWidthDp * layoutItems[layoutIndex.intValue].widthFactor).dp
                                 )
                             )
-                            if (layoutItems[layoutIndex.intValue].image2!=null) {
+                            if (layoutItems[layoutIndex.intValue].image2 != null) {
                                 Spacer(modifier = Modifier.height(32.dp))
                                 Image(
                                     painter = painterResource(
@@ -306,7 +306,7 @@ fun SelectLayoutScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         for ((idx, item) in layoutItems.withIndex()) LayoutItemButton(
-                            layoutItem = item, isSelected = idx==layoutIndex.intValue, onClick = { layoutIndex.intValue = idx })
+                            layoutItem = item, isSelected = idx == layoutIndex.intValue, onClick = { layoutIndex.intValue = idx })
                     }
                 }
             }
