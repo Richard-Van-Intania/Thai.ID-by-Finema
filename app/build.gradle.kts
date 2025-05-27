@@ -90,4 +90,11 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.play.services.base)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.mlkit.vision)
+    implementation(libs.androidx.camera.extensions)
+    implementation(libs.androidx.camera.core)
+
 }
