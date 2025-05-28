@@ -345,7 +345,6 @@ fun AddImageButton(ratio: Double, label: Int, onClick: () -> Unit) {
     }
   }
 }
-
 @Composable
 fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
   TextButton(onClick = onClick) {
