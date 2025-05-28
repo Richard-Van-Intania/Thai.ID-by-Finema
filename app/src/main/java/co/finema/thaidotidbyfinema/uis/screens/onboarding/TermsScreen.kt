@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,7 +47,6 @@ import kotlinx.coroutines.launch
 val bodyBold = SpanStyle(color = neutral06, fontSize = 18.sp, fontWeight = FontWeight.W700)
 val sectionBold = SpanStyle(color = primaryBlack, fontSize = 22.sp, fontWeight = FontWeight.W700)
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TermsScreen(navController: NavHostController) {
     Scaffold(

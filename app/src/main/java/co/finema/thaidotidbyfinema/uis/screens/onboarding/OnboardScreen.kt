@@ -117,7 +117,7 @@ fun OnboardScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 repeat(pagerState.pageCount) { iteration ->
-                    val color = if (pagerState.currentPage==iteration) primaryRed else secondaryGray
+                    val color = if (pagerState.currentPage == iteration) primaryRed else secondaryGray
                     Box(
                         modifier = Modifier
                             .padding(horizontal = 4.dp)

@@ -9,11 +9,12 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import co.finema.thaidotidbyfinema.R
 
-val FCIconic = FontFamily(
+val FCIconic =
+  FontFamily(
     Font(R.font.fc_iconic_bold, FontWeight.Bold, FontStyle.Normal),
     Font(R.font.fc_iconic_bold_italic, FontWeight.Bold, FontStyle.Italic),
     Font(R.font.fc_iconic_italic, FontWeight.Normal, FontStyle.Italic),
-    Font(R.font.fc_iconic_regular, FontWeight.Normal, FontStyle.Normal)
-)
+    Font(R.font.fc_iconic_regular, FontWeight.Normal, FontStyle.Normal),
+  )
 
 val CustomTypography = Typography(defaultFontFamily = FCIconic)

@@ -24,35 +24,30 @@ import co.finema.thaidotidbyfinema.uis.Screen
 
 @Composable
 fun LoadingScreen(navController: NavController) {
-    BackHandler(enabled = true) {}
-    val context = LocalContext.current
-    val repository = remember { UserConfigRepository(context) }
-    val isAcceptedAgreements by repository.isAcceptedAgreements.collectAsState(initial = null)
-    LaunchedEffect(isAcceptedAgreements) {
-        when (isAcceptedAgreements) {
-            true -> navController.navigate(route = Screen.HomeRoot.route) {
-                popUpTo(Screen.LoadingScreen.route) { inclusive = true }
-            }
-
-            false -> {
-                repository.updateLocale(TH)
-                repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
-                repository.updateHistoryViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
-                navController.navigate(route = Screen.OnboardingRoot.route) {
-                    popUpTo(Screen.LoadingScreen.route) { inclusive = true }
-                }
-            }
-
-            null -> {}
+  BackHandler(enabled = true) {}
+  val context = LocalContext.current
+  val repository = remember { UserConfigRepository(context) }
+  val isAcceptedAgreements by repository.isAcceptedAgreements.collectAsState(initial = null)
+  LaunchedEffect(isAcceptedAgreements) {
+    when (isAcceptedAgreements) {
+      true ->
+        navController.navigate(route = Screen.HomeRoot.route) {
+          popUpTo(Screen.LoadingScreen.route) { inclusive = true }
         }
-    }
-    Scaffold {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it), contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
+      false -> {
+        repository.updateLocale(TH)
+        repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
+        repository.updateHistoryViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
+        navController.navigate(route = Screen.OnboardingRoot.route) {
+          popUpTo(Screen.LoadingScreen.route) { inclusive = true }
         }
+      }
+      null -> {}
     }
+  }
+  Scaffold {
+    Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
+      CircularProgressIndicator()
+    }
+  }
 }
