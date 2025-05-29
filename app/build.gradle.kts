@@ -95,6 +95,5 @@ dependencies {
   implementation(libs.androidx.camera.view)
   implementation(libs.androidx.camera.mlkit.vision)
   implementation(libs.androidx.camera.extensions)
-  implementation(libs.androidx.camera.core)
   implementation(libs.coil.compose)
 }
