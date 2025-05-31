@@ -44,6 +44,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.black
 import co.finema.thaidotidbyfinema.uis.white
 import java.io.File
@@ -87,7 +88,9 @@ fun takePhoto(context: Context, imageCapture: ImageCapture, onImageSaved: (Uri?)
 fun CameraScreen(navController: NavController, imageUri: MutableState<Uri?>) {
   val context = LocalContext.current
   var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
-  LaunchedEffect(imageUri.value) { if (imageUri.value != null) navController.popBackStack() }
+  LaunchedEffect(imageUri.value) {
+    if (imageUri.value != null) navController.navigate(route = Screen.CropImageScreen.route)
+  }
   Scaffold(
     topBar = {
       CenterAlignedTopAppBar(

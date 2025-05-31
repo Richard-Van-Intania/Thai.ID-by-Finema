@@ -32,6 +32,7 @@ import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.screens.LoadingScreen
 import co.finema.thaidotidbyfinema.uis.screens.MainScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.CameraScreen
+import co.finema.thaidotidbyfinema.uis.screens.home.CropImageScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPlaceholderScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SignatureListScreen
@@ -136,7 +137,7 @@ class MainActivity : FragmentActivity() {
         val placeholderFilePath0 = remember { mutableStateOf("") }
         val placeholderFilePath1 = remember { mutableStateOf("") }
         val placeholderFilePath2 = remember { mutableStateOf("") }
-        var imageUri = remember { mutableStateOf<Uri?>(null) }
+        val imageUri = remember { mutableStateOf<Uri?>(null) }
         NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
           composable(route = Screen.LoadingScreen.route) {
             LoadingScreen(navController = navController)
@@ -202,6 +203,9 @@ class MainActivity : FragmentActivity() {
             }
             composable(route = Screen.CameraScreen.route) {
               CameraScreen(navController = navController, imageUri = imageUri)
+            }
+            composable(route = Screen.CropImageScreen.route) {
+              CropImageScreen(navController = navController, imageUri = imageUri)
             }
             composable(route = Screen.ProfileDetailsScreen.route) {
               ProfileDetailsScreen(navController = navController)
