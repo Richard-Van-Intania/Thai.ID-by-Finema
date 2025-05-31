@@ -13,17 +13,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Camera
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -69,6 +71,7 @@ fun takePhoto(context: Context, imageCapture: ImageCapture) {
     object : ImageCapture.OnImageSavedCallback {
       override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
         println("Photo saved: ${photoFile.absolutePath}")
+        outputFileResults.savedUri
       }
 
       override fun onError(exception: ImageCaptureException) {
@@ -83,6 +86,12 @@ fun takePhoto(context: Context, imageCapture: ImageCapture) {
 fun CameraScreen(navController: NavController) {
   val context = LocalContext.current
   var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
+  LaunchedEffect(imageCapture) {
+    if (imageCapture != null) {
+      //
+      //        println(imageCapture.)
+    }
+  }
   Scaffold(
     topBar = {
       CenterAlignedTopAppBar(
@@ -113,11 +122,13 @@ fun CameraScreen(navController: NavController) {
           Modifier.fillMaxWidth().padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
         contentAlignment = Alignment.Center,
       ) {
-        Button(
-          onClick = { imageCapture?.let { takePhoto(context, it) } },
-          modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp),
-        ) {
-          Text("Capture")
+        IconButton(onClick = { imageCapture?.let { takePhoto(context, it) } }) {
+          Icon(
+            imageVector = Icons.Rounded.Camera,
+            contentDescription = null,
+            tint = white,
+            modifier = Modifier.size(64.dp),
+          )
         }
       }
     },
