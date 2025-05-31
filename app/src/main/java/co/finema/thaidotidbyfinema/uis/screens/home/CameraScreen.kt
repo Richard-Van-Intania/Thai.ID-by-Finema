@@ -117,7 +117,7 @@ fun CameraScreen(navController: NavController, imageUri: MutableState<Uri?>) {
     },
     bottomBar = {
       Box(
-        modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 48.dp, horizontal = 16.dp),
         contentAlignment = Alignment.Center,
       ) {
         IconButton(
