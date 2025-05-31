@@ -32,8 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.navigation.NavController
-import co.finema.thaidotidbyfinema.FILENAME_FORMAT
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.getFileInstance
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.black
 import co.finema.thaidotidbyfinema.uis.components.ErrorDialog
@@ -45,8 +45,6 @@ import io.moyuru.cropify.rememberCropifyState
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -102,11 +100,7 @@ fun CropImageScreen(
         uri = uri,
         state = state,
         onImageCropped = { imageBitmap ->
-          val photoFile =
-            File(
-              getOutputDirectory(context),
-              "IMG_${SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())}.JPEG",
-            )
+          val photoFile = getFileInstance(context)
           if (saveImageBitmapAsJpeg(imageBitmap, photoFile)) {
             imageUri.value = photoFile.toUri()
             navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
