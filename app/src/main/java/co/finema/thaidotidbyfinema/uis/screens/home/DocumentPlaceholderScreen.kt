@@ -78,6 +78,9 @@ fun DocumentPlaceholderScreen(
   imageUri: MutableState<Uri?>,
 ) {
   val context = LocalContext.current
+  LaunchedEffect(imageUri.value) { println(imageUri.value.toString()) }
+
+  //
   var startCameraLive by remember { mutableStateOf(false) }
   var hasCameraPermission by remember { mutableStateOf(false) }
   val cameraPermissionLauncher =
@@ -91,9 +94,6 @@ fun DocumentPlaceholderScreen(
       navController.navigate(route = Screen.CameraScreen.route)
     }
   }
-
-  LaunchedEffect(imageUri.value) { println(imageUri.value.toString()) }
-
   var pdfUri by remember { mutableStateOf<Uri?>(null) }
   val pickPdf =
     rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
