@@ -13,6 +13,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
@@ -79,6 +80,16 @@ fun CropImageScreen(
               fontSize = 24.sp,
               fontWeight = FontWeight.W700,
             )
+          },
+          navigationIcon = {
+            IconButton(
+              onClick = {
+                imageUri.value = null
+                navController.popBackStack()
+              }
+            ) {
+              Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = white)
+            }
           },
           actions = {
             IconButton(onClick = { state.crop() }) {
