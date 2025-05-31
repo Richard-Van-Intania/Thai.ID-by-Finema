@@ -81,7 +81,8 @@ data class LayoutItemButtonData(
   val unselectedFilePath: Int,
   val selectedFilePath: Int,
   val documentLayout: DocumentLayout,
-  val widthFactor: Double,
+  val widthFactor: Float,
+  val aspectRatio: Float,
 )
 
 val layoutItems =
@@ -95,7 +96,8 @@ val layoutItems =
       unselectedFilePath = R.drawable.card1,
       selectedFilePath = R.drawable.card2,
       documentLayout = DocumentLayout.ONE_SIDE_CARD,
-      widthFactor = 0.25,
+      widthFactor = 0.25f,
+      aspectRatio = (8.6 / 5.4).toFloat(),
     ),
     LayoutItemButtonData(
       explanation = R.string.twoSideCard_explanation,
@@ -106,7 +108,8 @@ val layoutItems =
       unselectedFilePath = R.drawable.card2_1,
       selectedFilePath = R.drawable.card2_2,
       documentLayout = DocumentLayout.TWO_SIDE_CARD,
-      widthFactor = 0.25,
+      widthFactor = 0.25f,
+      aspectRatio = (8.6 / 5.4).toFloat(),
     ),
     LayoutItemButtonData(
       explanation = R.string.twoHalfA4_explanation,
@@ -117,7 +120,8 @@ val layoutItems =
       unselectedFilePath = R.drawable.house1,
       selectedFilePath = R.drawable.house2,
       documentLayout = DocumentLayout.TWO_SIDE_HALF_A4,
-      widthFactor = 0.375,
+      widthFactor = 0.375f,
+      aspectRatio = (297.0 / 210.0).toFloat(),
     ),
     LayoutItemButtonData(
       explanation = R.string.oneHalfA4_explanation,
@@ -128,7 +132,8 @@ val layoutItems =
       unselectedFilePath = R.drawable.bookbank1,
       selectedFilePath = R.drawable.bookbank2,
       documentLayout = DocumentLayout.ONE_SIDE_HALF_A4,
-      widthFactor = 0.375,
+      widthFactor = 0.375f,
+      aspectRatio = (1.0 / 1.0).toFloat(),
     ),
     LayoutItemButtonData(
       explanation = R.string.fullA4_explanation,
@@ -139,7 +144,8 @@ val layoutItems =
       unselectedFilePath = R.drawable.doc1,
       selectedFilePath = R.drawable.doc2,
       documentLayout = DocumentLayout.FULL_A4,
-      widthFactor = 0.5,
+      widthFactor = 0.5f,
+      aspectRatio = (210.0 / 297.0).toFloat(),
     ),
   )
 

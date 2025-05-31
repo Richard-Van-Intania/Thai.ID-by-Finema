@@ -35,7 +35,6 @@ import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -77,7 +76,6 @@ fun DocumentPlaceholderScreen(
   placeholderFilePath1: MutableState<String>,
   placeholderFilePath2: MutableState<String>,
   imageUri: MutableState<Uri?>,
-  cropAspectRatio: MutableFloatState,
 ) {
   val context = LocalContext.current
   LaunchedEffect(imageUri.value) { println(imageUri.value.toString()) }
@@ -240,7 +238,7 @@ fun DocumentPlaceholderScreen(
         DocumentLayout.ONE_SIDE_CARD -> {
           if (placeholderFilePath0.value.isEmpty())
             AddImageButton(
-              ratio = 8.6 / 5.4,
+              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card,
               onClick = {
                 fileSource = null
@@ -252,7 +250,7 @@ fun DocumentPlaceholderScreen(
         DocumentLayout.TWO_SIDE_CARD -> {
           if (placeholderFilePath1.value.isEmpty())
             AddImageButton(
-              ratio = 8.6 / 5.4,
+              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card_1,
               onClick = {
                 fileSource = null
@@ -263,7 +261,7 @@ fun DocumentPlaceholderScreen(
           Spacer(modifier = Modifier.height(32.dp))
           if (placeholderFilePath2.value.isEmpty())
             AddImageButton(
-              ratio = 8.6 / 5.4,
+              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card_2,
               onClick = {
                 fileSource = null
@@ -275,7 +273,7 @@ fun DocumentPlaceholderScreen(
         DocumentLayout.ONE_SIDE_HALF_A4 -> {
           if (placeholderFilePath0.value.isEmpty())
             AddImageButton(
-              ratio = 1.0 / 1.0,
+              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image,
               onClick = {
                 fileSource = null
@@ -287,7 +285,7 @@ fun DocumentPlaceholderScreen(
         DocumentLayout.TWO_SIDE_HALF_A4 -> {
           if (placeholderFilePath1.value.isEmpty())
             AddImageButton(
-              ratio = 297.0 / 210.0,
+              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image_1,
               onClick = {
                 fileSource = null
@@ -298,7 +296,7 @@ fun DocumentPlaceholderScreen(
           Spacer(modifier = Modifier.height(32.dp))
           if (placeholderFilePath2.value.isEmpty())
             AddImageButton(
-              ratio = 297.0 / 210.0,
+              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image_2,
               onClick = {
                 fileSource = null
@@ -310,7 +308,7 @@ fun DocumentPlaceholderScreen(
         DocumentLayout.FULL_A4 -> {
           if (placeholderFilePath0.value.isEmpty())
             AddImageButton(
-              ratio = 210.0 / 297.0,
+              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image,
               onClick = {
                 fileSource = null
@@ -325,11 +323,11 @@ fun DocumentPlaceholderScreen(
 }
 
 @Composable
-fun AddImageButton(ratio: Double, label: Int, onClick: () -> Unit) {
+fun AddImageButton(ratio: Float, label: Int, onClick: () -> Unit) {
   Box(
     modifier =
       Modifier.fillMaxWidth()
-        .aspectRatio(ratio.toFloat())
+        .aspectRatio(ratio)
         .clip(RoundedCornerShape(cornerRadius))
         .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
         .background(white)

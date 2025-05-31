@@ -18,7 +18,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableFloatState
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,7 +52,7 @@ import java.io.IOException
 fun CropImageScreen(
   navController: NavController,
   imageUri: MutableState<Uri?>,
-  cropAspectRatio: MutableFloatState,
+  layoutIndex: MutableIntState,
 ) {
   BackHandler(enabled = true) {}
   val context = LocalContext.current
@@ -122,7 +122,11 @@ fun CropImageScreen(
           }
         },
         onFailedToLoadImage = { showErrorsDialog = true },
-        option = CropifyOption(frameSize = CropifySize.FixedAspectRatio(cropAspectRatio.floatValue)),
+        option =
+          CropifyOption(
+            frameSize =
+              CropifySize.FixedAspectRatio(1.0f / layoutItems[layoutIndex.intValue].aspectRatio)
+          ),
       )
     }
   }
