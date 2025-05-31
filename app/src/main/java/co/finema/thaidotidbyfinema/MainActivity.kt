@@ -4,6 +4,7 @@ package co.finema.thaidotidbyfinema
 
 import android.content.Context
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -135,6 +136,7 @@ class MainActivity : FragmentActivity() {
         val placeholderFilePath0 = remember { mutableStateOf("") }
         val placeholderFilePath1 = remember { mutableStateOf("") }
         val placeholderFilePath2 = remember { mutableStateOf("") }
+        var imageUri = remember { mutableStateOf<Uri?>(null) }
         NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
           composable(route = Screen.LoadingScreen.route) {
             LoadingScreen(navController = navController)
@@ -195,10 +197,11 @@ class MainActivity : FragmentActivity() {
                 placeholderFilePath0 = placeholderFilePath0,
                 placeholderFilePath1 = placeholderFilePath1,
                 placeholderFilePath2 = placeholderFilePath2,
+                imageUri = imageUri,
               )
             }
             composable(route = Screen.CameraScreen.route) {
-              CameraScreen(navController = navController)
+              CameraScreen(navController = navController, imageUri = imageUri)
             }
             composable(route = Screen.ProfileDetailsScreen.route) {
               ProfileDetailsScreen(navController = navController)

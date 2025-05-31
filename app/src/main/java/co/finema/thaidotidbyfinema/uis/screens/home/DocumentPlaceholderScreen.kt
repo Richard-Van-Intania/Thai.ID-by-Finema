@@ -75,6 +75,7 @@ fun DocumentPlaceholderScreen(
   placeholderFilePath0: MutableState<String>,
   placeholderFilePath1: MutableState<String>,
   placeholderFilePath2: MutableState<String>,
+  imageUri: MutableState<Uri?>,
 ) {
   val context = LocalContext.current
   var startCameraLive by remember { mutableStateOf(false) }
@@ -85,8 +86,10 @@ fun DocumentPlaceholderScreen(
       onResult = { isGranted -> hasCameraPermission = isGranted },
     )
   LaunchedEffect(hasCameraPermission, startCameraLive) {
-    if (hasCameraPermission && startCameraLive)
+    if (hasCameraPermission && startCameraLive) {
+      imageUri.value = null
       navController.navigate(route = Screen.CameraScreen.route)
+    }
   }
 
   var pdfUri by remember { mutableStateOf<Uri?>(null) }

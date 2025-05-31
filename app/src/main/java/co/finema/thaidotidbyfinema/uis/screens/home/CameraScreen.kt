@@ -3,6 +3,7 @@
 package co.finema.thaidotidbyfinema.uis.screens.home
 
 import android.content.Context
+import android.net.Uri
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -26,6 +27,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,11 +60,11 @@ fun getOutputDirectory(context: Context): File {
 
 private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 
-fun takePhoto(context: Context, imageCapture: ImageCapture) {
+fun takePhoto(context: Context, imageCapture: ImageCapture, onImageSaved: (Uri?) -> Unit) {
   val photoFile =
     File(
       getOutputDirectory(context),
-      SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg",
+      "IMG_${SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())}.jpg",
     )
   val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
   imageCapture.takePicture(
@@ -70,12 +72,11 @@ fun takePhoto(context: Context, imageCapture: ImageCapture) {
     ContextCompat.getMainExecutor(context),
     object : ImageCapture.OnImageSavedCallback {
       override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-        println("Photo saved: ${photoFile.absolutePath}")
-        outputFileResults.savedUri
+        onImageSaved(outputFileResults.savedUri)
       }
 
       override fun onError(exception: ImageCaptureException) {
-        println("Capture failed: ${exception.message}")
+        onImageSaved(null)
       }
     },
   )
@@ -83,15 +84,10 @@ fun takePhoto(context: Context, imageCapture: ImageCapture) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CameraScreen(navController: NavController) {
+fun CameraScreen(navController: NavController, imageUri: MutableState<Uri?>) {
   val context = LocalContext.current
   var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
-  LaunchedEffect(imageCapture) {
-    if (imageCapture != null) {
-      //
-      //        println(imageCapture.)
-    }
-  }
+  LaunchedEffect(imageUri.value) { if (imageUri.value != null) navController.popBackStack() }
   Scaffold(
     topBar = {
       CenterAlignedTopAppBar(
@@ -122,7 +118,9 @@ fun CameraScreen(navController: NavController) {
           Modifier.fillMaxWidth().padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
         contentAlignment = Alignment.Center,
       ) {
-        IconButton(onClick = { imageCapture?.let { takePhoto(context, it) } }) {
+        IconButton(
+          onClick = { imageCapture?.let { takePhoto(context, it) { uri -> imageUri.value = uri } } }
+        ) {
           Icon(
             imageVector = Icons.Rounded.Camera,
             contentDescription = null,
