@@ -86,7 +86,7 @@ fun DocumentPlaceholderScreen(
     )
   LaunchedEffect(hasCameraPermission, startCameraLive) {
     if (hasCameraPermission && startCameraLive)
-      navController.navigate(route = Screen.CameraLiveScreen.route)
+      navController.navigate(route = Screen.CameraScreen.route)
   }
 
   var pdfUri by remember { mutableStateOf<Uri?>(null) }

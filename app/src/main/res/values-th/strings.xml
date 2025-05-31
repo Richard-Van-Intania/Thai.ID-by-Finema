@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ไทยดอทไอดีบายฟินีม่า</string>
+    <string name="app_directory">thaidotidbyfinema</string>
     <string name="calendar">543</string>
     <string name="language">ภาษา</string>
     <string name="date_format">วว/ดด/ปปปป</string>

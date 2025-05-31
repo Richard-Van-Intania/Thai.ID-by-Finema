@@ -19,6 +19,7 @@ val greenDev = Color(0xFF92F822)
 val blue05 = Color(0xFF8EACD0)
 val whiteBG = Color(0xFFF6F7F9)
 val white = Color.White
+val black = Color.Black
 
 val success06 = Color(0xFF26B941)
 

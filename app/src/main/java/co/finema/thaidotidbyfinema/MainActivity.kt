@@ -30,7 +30,7 @@ import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.screens.LoadingScreen
 import co.finema.thaidotidbyfinema.uis.screens.MainScreen
-import co.finema.thaidotidbyfinema.uis.screens.home.CameraLiveScreen
+import co.finema.thaidotidbyfinema.uis.screens.home.CameraScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPlaceholderScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SignatureListScreen
@@ -197,8 +197,8 @@ class MainActivity : FragmentActivity() {
                 placeholderFilePath2 = placeholderFilePath2,
               )
             }
-            composable(route = Screen.CameraLiveScreen.route) {
-              CameraLiveScreen(navController = navController)
+            composable(route = Screen.CameraScreen.route) {
+              CameraScreen(navController = navController)
             }
             composable(route = Screen.ProfileDetailsScreen.route) {
               ProfileDetailsScreen(navController = navController)

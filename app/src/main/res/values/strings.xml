@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Thai.ID by Finema</string>
+    <string name="app_directory">thaidotidbyfinema</string>
     <string name="calendar">0</string>
     <string name="language">Language</string>
     <string name="date_format">DD/MM/YYYY</string>
