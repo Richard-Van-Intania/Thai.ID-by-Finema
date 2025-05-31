@@ -2,6 +2,7 @@
 
 package co.finema.thaidotidbyfinema.uis.screens.home
 
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,10 +24,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.navigation.NavController
+import co.finema.thaidotidbyfinema.FILENAME_FORMAT
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.black
@@ -36,6 +42,11 @@ import io.moyuru.cropify.Cropify
 import io.moyuru.cropify.CropifyOption
 import io.moyuru.cropify.CropifySize
 import io.moyuru.cropify.rememberCropifyState
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +56,7 @@ fun CropImageScreen(
   cropAspectRatio: MutableFloatState,
 ) {
   BackHandler(enabled = true) {}
+  val context = LocalContext.current
   var showErrorsDialog by remember { mutableStateOf(false) }
   if (showErrorsDialog) {
     ErrorDialog(
@@ -89,11 +101,19 @@ fun CropImageScreen(
         modifier = Modifier.fillMaxSize().padding(it),
         uri = uri,
         state = state,
-        onImageCropped = {
-          //
-          println(it.width)
-          navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
-            popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
+        onImageCropped = { imageBitmap ->
+          val photoFile =
+            File(
+              getOutputDirectory(context),
+              "IMG_${SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())}.JPEG",
+            )
+          if (saveImageBitmapAsJpeg(imageBitmap, photoFile)) {
+            imageUri.value = photoFile.toUri()
+            navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
+              popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
+            }
+          } else {
+            showErrorsDialog = true
           }
         },
         onFailedToLoadImage = { showErrorsDialog = true },
@@ -101,4 +121,17 @@ fun CropImageScreen(
       )
     }
   }
+}
+
+fun saveImageBitmapAsJpeg(imageBitmap: ImageBitmap, file: File): Boolean {
+  val androidBitmap = imageBitmap.asAndroidBitmap()
+  var success = false
+  try {
+    FileOutputStream(file).use {
+      success = androidBitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+    }
+  } catch (e: IOException) {
+    e.printStackTrace()
+  }
+  return success
 }

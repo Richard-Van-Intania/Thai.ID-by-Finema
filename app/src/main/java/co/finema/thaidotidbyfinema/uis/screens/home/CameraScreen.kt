@@ -43,6 +43,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
+import co.finema.thaidotidbyfinema.FILENAME_FORMAT
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.black
@@ -59,13 +60,11 @@ fun getOutputDirectory(context: Context): File {
   return if (mediaDir.exists()) mediaDir else context.filesDir
 }
 
-private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-
 fun takePhoto(context: Context, imageCapture: ImageCapture, onImageSaved: (Uri?) -> Unit) {
   val photoFile =
     File(
       getOutputDirectory(context),
-      "IMG_${SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())}.jpg",
+      "IMG_${SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())}.JPEG",
     )
   val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
   imageCapture.takePicture(

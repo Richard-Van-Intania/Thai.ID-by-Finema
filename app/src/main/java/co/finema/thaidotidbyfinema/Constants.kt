@@ -17,3 +17,5 @@ val formatterTH: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", 
 val formatterEN: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("en", "EN"))
 
 val regexNumber = Regex("^[0-9]+$")
+
+const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
