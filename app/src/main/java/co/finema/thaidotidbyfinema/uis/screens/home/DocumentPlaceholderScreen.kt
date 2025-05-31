@@ -92,6 +92,8 @@ fun DocumentPlaceholderScreen(
     }
   }
 
+  LaunchedEffect(imageUri.value) { println(imageUri.value.toString()) }
+
   var pdfUri by remember { mutableStateOf<Uri?>(null) }
   val pickPdf =
     rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
