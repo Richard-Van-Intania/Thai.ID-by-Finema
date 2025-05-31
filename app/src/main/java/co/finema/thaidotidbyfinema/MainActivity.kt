@@ -13,6 +13,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -138,6 +139,7 @@ class MainActivity : FragmentActivity() {
         val placeholderFilePath1 = remember { mutableStateOf("") }
         val placeholderFilePath2 = remember { mutableStateOf("") }
         val imageUri = remember { mutableStateOf<Uri?>(null) }
+        val cropAspectRatio = remember { mutableFloatStateOf(1.0f) }
         NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
           composable(route = Screen.LoadingScreen.route) {
             LoadingScreen(navController = navController)
@@ -199,13 +201,18 @@ class MainActivity : FragmentActivity() {
                 placeholderFilePath1 = placeholderFilePath1,
                 placeholderFilePath2 = placeholderFilePath2,
                 imageUri = imageUri,
+                cropAspectRatio = cropAspectRatio,
               )
             }
             composable(route = Screen.CameraScreen.route) {
               CameraScreen(navController = navController, imageUri = imageUri)
             }
             composable(route = Screen.CropImageScreen.route) {
-              CropImageScreen(navController = navController, imageUri = imageUri)
+              CropImageScreen(
+                navController = navController,
+                imageUri = imageUri,
+                cropAspectRatio = cropAspectRatio,
+              )
             }
             composable(route = Screen.ProfileDetailsScreen.route) {
               ProfileDetailsScreen(navController = navController)

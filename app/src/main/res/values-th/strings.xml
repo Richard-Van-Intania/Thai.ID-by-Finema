@@ -49,6 +49,7 @@
     <string name="thai_id_not_store_ext">Thai.ID จะไม่เก็บข้อมูลในเอกสาร หรือข้อมูลส่วนตัวอื่นใด หากลบแอปพลิเคชัน Thai.ID ข้อมูลของคุณจะหายไป\n\nหากในอนาคต Thai.ID มีบริการเสริมที่จัดเก็บข้อมูลส่วนบุคคล เราจะแจ้งให้คุณทราบอีกครั้ง</string>
     <string name="do_not_show">ไม่ต้องแสดงข้อความนี้อีก</string>
     <string name="scan_your_card">ถ่ายรูป</string>
+    <string name="crop_image">ครอบตัดรูปภาพ</string>
     <string name="import_from_album">เลือกจากอัลบั้ม</string>
     <string name="dont_worry">ไม่ต้องกังวลไป\nคุณสามารถเพิ่มบัตรใหม่ได้ทุกเมื่อ</string>
     <string name="unable_add_image">ไม่สามารถเพิ่มภาพได้!</string>
@@ -187,4 +188,5 @@
     <string name="enter_document_name_here">ใส่ชื่อเอกสารที่นี่</string>
     <string name="pick_file">เลือกไฟล์</string>
     <string name="importing">กำลังนำเข้าเอกสาร</string>
+    <string name="wrong">มีบางอย่างผิดพลาด!</string>
 </resources>

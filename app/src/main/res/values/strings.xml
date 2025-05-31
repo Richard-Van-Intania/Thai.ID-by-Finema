@@ -49,6 +49,7 @@
     <string name="thai_id_not_store_ext">Thai.ID does not collect any personal data from your documents. If you delete the Thai.ID application, all of your uploaded documents will also be deleted.\n\nIf Thai.ID offers additional services that involve personal data storage in the future, we will notify you later.</string>
     <string name="do_not_show">Don\'t show this message again</string>
     <string name="scan_your_card">Take Photo</string>
+    <string name="crop_image">Crop Image</string>
     <string name="import_from_album">Import from Album</string>
     <string name="dont_worry">Don\'t worry, you can add a new card anytime.</string>
     <string name="unable_add_image">Unable to add images!</string>
@@ -187,4 +188,5 @@
     <string name="enter_document_name_here">Enter name here</string>
     <string name="pick_file">Choose PDF file</string>
     <string name="importing">Importing Document</string>
+    <string name="wrong">Something Went Wrong!</string>
 </resources>

@@ -35,6 +35,7 @@ import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -76,6 +77,7 @@ fun DocumentPlaceholderScreen(
   placeholderFilePath1: MutableState<String>,
   placeholderFilePath2: MutableState<String>,
   imageUri: MutableState<Uri?>,
+  cropAspectRatio: MutableFloatState,
 ) {
   val context = LocalContext.current
   LaunchedEffect(imageUri.value) { println(imageUri.value.toString()) }
