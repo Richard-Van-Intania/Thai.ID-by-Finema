@@ -49,6 +49,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -63,6 +64,8 @@ import co.finema.thaidotidbyfinema.uis.black
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
+import co.finema.thaidotidbyfinema.uis.gradient
+import co.finema.thaidotidbyfinema.uis.lightBlue07
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.secondaryGray
@@ -72,399 +75,470 @@ import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun DocumentPlaceholderScreen(
-  navController: NavController,
-  layoutIndex: MutableIntState,
-  placeholderFilePath0: MutableState<Uri?>,
-  placeholderFilePath1: MutableState<Uri?>,
-  placeholderFilePath2: MutableState<Uri?>,
-  imageUri: MutableState<Uri?>,
-  imageIndex: MutableIntState,
+    navController: NavController,
+    layoutIndex: MutableIntState,
+    placeholderFilePath0: MutableState<Uri?>,
+    placeholderFilePath1: MutableState<Uri?>,
+    placeholderFilePath2: MutableState<Uri?>,
+    imageUri: MutableState<Uri?>,
+    imageIndex: MutableIntState,
 ) {
-  val context = LocalContext.current
-  var startCameraLive by remember { mutableStateOf(false) }
-  var hasCameraPermission by remember { mutableStateOf(false) }
-  val cameraPermissionLauncher =
-    rememberLauncherForActivityResult(
-      contract = ActivityResultContracts.RequestPermission(),
-      onResult = { isGranted -> hasCameraPermission = isGranted },
-    )
-  LaunchedEffect(hasCameraPermission, startCameraLive) {
-    if (hasCameraPermission && startCameraLive) {
-      imageUri.value = null
-      navController.navigate(route = Screen.CameraScreen.route)
-    }
-  }
-  var pdfUri by remember { mutableStateOf<Uri?>(null) }
-  val pickPdf =
-    rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-      if (uri != null) {
-        context.contentResolver.takePersistableUriPermission(
-          uri,
-          Intent.FLAG_GRANT_READ_URI_PERMISSION,
+    val context = LocalContext.current
+    var startCameraLive by remember { mutableStateOf(false) }
+    var hasCameraPermission by remember { mutableStateOf(false) }
+    val cameraPermissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission(),
+            onResult = { isGranted -> hasCameraPermission = isGranted },
         )
-        pdfUri = uri
-        // read content
-        val inputStream = context.contentResolver.openInputStream(uri)
-      }
-    }
-  val pickImage =
-    rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-      if (uri != null) {
-        println(uri)
-        // get uri here
-      }
-    }
-  var fileSource by remember { mutableStateOf<FileSource?>(null) }
-  LaunchedEffect(fileSource) {
-    when (fileSource) {
-      FileSource.CAMERA -> {
-        hasCameraPermission =
-          ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
-            PackageManager.PERMISSION_GRANTED
-        if (!hasCameraPermission) {
-          cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+    LaunchedEffect(hasCameraPermission, startCameraLive) {
+        if (hasCameraPermission && startCameraLive) {
+            imageUri.value = null
+            navController.navigate(route = Screen.CameraScreen.route)
         }
-        startCameraLive = true
-      }
-      FileSource.GALLERY -> {
-        pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-      }
-      FileSource.PDF -> {
-        pickPdf.launch(arrayOf("application/pdf"))
-      }
-      null -> {}
     }
-  }
-  var showOptionDialog by remember { mutableStateOf(false) }
-  if (showOptionDialog) {
-    Dialog(onDismissRequest = {}) {
-      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-          Text(
-            modifier = Modifier.padding(all = 24.dp),
-            text = stringResource(R.string.options),
-            color = primaryBlack,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.W700,
-          )
-          Box(modifier = Modifier.fillMaxWidth().height(2.dp).background(neutral02))
-          OptionButton(
-            imageVector = Icons.Rounded.PhotoCamera,
-            text = R.string.scan_your_card,
-            onClick = {
-              fileSource = FileSource.CAMERA
-              showOptionDialog = false
-            },
-          )
-          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
-          OptionButton(
-            imageVector = Icons.Rounded.Image,
-            text = R.string.import_from_album,
-            onClick = {
-              fileSource = FileSource.GALLERY
-              showOptionDialog = false
-            },
-          )
-          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
-          OptionButton(
-            imageVector = Icons.Rounded.Description,
-            text = R.string.pick_file,
-            onClick = {
-              fileSource = FileSource.PDF
-              showOptionDialog = false
-            },
-          )
-          HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
-          TextButton(
-            onClick = {
-              fileSource = null
-              showOptionDialog = false
+    var pdfUri by remember { mutableStateOf<Uri?>(null) }
+    val pickPdf =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                context.contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
+                )
+                pdfUri = uri
+                // read content
+                val inputStream = context.contentResolver.openInputStream(uri)
             }
-          ) {
-            Row(
-              verticalAlignment = Alignment.CenterVertically,
-              horizontalArrangement = Arrangement.Center,
-              modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp),
+        }
+    val pickImage =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                println(uri)
+                // get uri here
+            }
+        }
+    var fileSource by remember { mutableStateOf<FileSource?>(null) }
+    LaunchedEffect(fileSource) {
+        when (fileSource) {
+            FileSource.CAMERA -> {
+                hasCameraPermission =
+                    ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
+                        PackageManager.PERMISSION_GRANTED
+                if (!hasCameraPermission) {
+                    cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                }
+                startCameraLive = true
+            }
+            FileSource.GALLERY -> {
+                pickImage.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            }
+            FileSource.PDF -> {
+                pickPdf.launch(arrayOf("application/pdf"))
+            }
+            null -> {}
+        }
+    }
+    var showOptionDialog by remember { mutableStateOf(false) }
+    if (showOptionDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()
             ) {
-              Text(
-                text = stringResource(R.string.cancel),
-                color = primaryBlack,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W400,
-              )
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        modifier = Modifier.padding(all = 24.dp),
+                        text = stringResource(R.string.options),
+                        color = primaryBlack,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.W700,
+                    )
+                    Box(modifier = Modifier.fillMaxWidth().height(2.dp).background(neutral02))
+                    OptionButton(
+                        imageVector = Icons.Rounded.PhotoCamera,
+                        text = R.string.scan_your_card,
+                        onClick = {
+                            fileSource = FileSource.CAMERA
+                            showOptionDialog = false
+                        },
+                    )
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    OptionButton(
+                        imageVector = Icons.Rounded.Image,
+                        text = R.string.import_from_album,
+                        onClick = {
+                            fileSource = FileSource.GALLERY
+                            showOptionDialog = false
+                        },
+                    )
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    OptionButton(
+                        imageVector = Icons.Rounded.Description,
+                        text = R.string.pick_file,
+                        onClick = {
+                            fileSource = FileSource.PDF
+                            showOptionDialog = false
+                        },
+                    )
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    TextButton(
+                        onClick = {
+                            fileSource = null
+                            showOptionDialog = false
+                        }
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.cancel),
+                                color = primaryBlack,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.W400,
+                            )
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
-  var showDeleteDialog by remember { mutableStateOf(false) }
-  if (showDeleteDialog) {
-    Dialog(onDismissRequest = {}) {
-      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-          //
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    if (showDeleteDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Spacer(modifier = Modifier.height(40.dp))
+                    Text(
+                        text = stringResource(R.string.do_you_want_to_delete_this_photo),
+                        color = primaryBlack,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.W700,
+                        textAlign = TextAlign.Center,
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier =
+                                Modifier.height(56.dp)
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(56.dp))
+                                    .background(brush = gradient)
+                                    .clickable(
+                                        onClick = {
+                                            when (imageIndex.intValue) {
+                                                0 -> placeholderFilePath0.value = null
+                                                1 -> placeholderFilePath1.value = null
+                                                2 -> placeholderFilePath2.value = null
+                                            }
+                                            showDeleteDialog = false
+                                        }
+                                    ),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.delete),
+                                color = white,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.W700,
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Box(
+                            modifier =
+                                Modifier.height(56.dp)
+                                    .weight(1f)
+                                    .background(white)
+                                    .border(
+                                        width = 2.dp,
+                                        color = lightBlue07,
+                                        shape = RoundedCornerShape(56.dp),
+                                    )
+                                    .clip(RoundedCornerShape(56.dp))
+                                    .clickable(onClick = { showDeleteDialog = false }),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.cancel),
+                                color = lightBlue07,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.W700,
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
+            }
         }
-      }
     }
-  }
-  Scaffold(
-    topBar = {
-      AppBarOptBack(
-        containerColor = white,
-        text = stringResource(R.string.add_document),
-        onClick = { navController.popBackStack() },
-      )
-    },
-    bottomBar = {
-      Box(
-        modifier =
-          Modifier.background(white)
-            .fillMaxWidth()
-            .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
-        contentAlignment = Alignment.Center,
-      ) {
-        GradientButton(onClick = {}, text = stringResource(R.string.make_a_cert))
-      }
-    },
-    backgroundColor = whiteBG,
-  ) {
-    Column(
-      modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
-      verticalArrangement = Arrangement.Center,
-      horizontalAlignment = Alignment.CenterHorizontally,
+    Scaffold(
+        topBar = {
+            AppBarOptBack(
+                containerColor = white,
+                text = stringResource(R.string.add_document),
+                onClick = { navController.popBackStack() },
+            )
+        },
+        bottomBar = {
+            Box(
+                modifier =
+                    Modifier.background(white)
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                GradientButton(onClick = {}, text = stringResource(R.string.make_a_cert))
+            }
+        },
+        backgroundColor = whiteBG,
     ) {
-      when (layoutItems[layoutIndex.intValue].documentLayout) {
-        DocumentLayout.ONE_SIDE_CARD -> {
-          if (placeholderFilePath0.value == null)
-            AddImageButton(
-              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-              label = R.string.add_card,
-              onClick = {
-                imageIndex.intValue = 0
-                fileSource = null
-                showOptionDialog = true
-              },
-            )
-          else
-            PlaceholderImagePreview(
-              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-              placeholderFilePath = placeholderFilePath0,
-              onClick = {
-                imageIndex.intValue = 0
-                showDeleteDialog = true
-              },
-            )
+        Column(
+            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            when (layoutItems[layoutIndex.intValue].documentLayout) {
+                DocumentLayout.ONE_SIDE_CARD -> {
+                    if (placeholderFilePath0.value == null)
+                        AddImageButton(
+                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            label = R.string.add_card,
+                            onClick = {
+                                imageIndex.intValue = 0
+                                fileSource = null
+                                showOptionDialog = true
+                            },
+                        )
+                    else
+                        PlaceholderImagePreview(
+                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            placeholderFilePath = placeholderFilePath0,
+                            onClick = {
+                                imageIndex.intValue = 0
+                                showDeleteDialog = true
+                            },
+                        )
+                }
+                DocumentLayout.TWO_SIDE_CARD -> {
+                    if (placeholderFilePath1.value == null)
+                        AddImageButton(
+                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            label = R.string.add_card_1,
+                            onClick = {
+                                imageIndex.intValue = 1
+                                fileSource = null
+                                showOptionDialog = true
+                            },
+                        )
+                    else
+                        PlaceholderImagePreview(
+                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            placeholderFilePath = placeholderFilePath1,
+                            onClick = {
+                                imageIndex.intValue = 1
+                                showDeleteDialog = true
+                            },
+                        )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    if (placeholderFilePath2.value == null)
+                        AddImageButton(
+                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            label = R.string.add_card_2,
+                            onClick = {
+                                imageIndex.intValue = 2
+                                fileSource = null
+                                showOptionDialog = true
+                            },
+                        )
+                    else
+                        PlaceholderImagePreview(
+                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            placeholderFilePath = placeholderFilePath2,
+                            onClick = {
+                                imageIndex.intValue = 2
+                                showDeleteDialog = true
+                            },
+                        )
+                }
+                DocumentLayout.ONE_SIDE_HALF_A4 -> {
+                    if (placeholderFilePath0.value == null)
+                        AddImageButton(
+                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            label = R.string.add_a_document_image,
+                            onClick = {
+                                imageIndex.intValue = 0
+                                fileSource = null
+                                showOptionDialog = true
+                            },
+                        )
+                    else
+                        PlaceholderImagePreview(
+                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            placeholderFilePath = placeholderFilePath0,
+                            onClick = {
+                                imageIndex.intValue = 0
+                                showDeleteDialog = true
+                            },
+                        )
+                }
+                DocumentLayout.TWO_SIDE_HALF_A4 -> {
+                    if (placeholderFilePath1.value == null)
+                        AddImageButton(
+                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            label = R.string.add_a_document_image_1,
+                            onClick = {
+                                imageIndex.intValue = 1
+                                fileSource = null
+                                showOptionDialog = true
+                            },
+                        )
+                    else
+                        PlaceholderImagePreview(
+                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            placeholderFilePath = placeholderFilePath1,
+                            onClick = {
+                                imageIndex.intValue = 1
+                                showDeleteDialog = true
+                            },
+                        )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    if (placeholderFilePath2.value == null)
+                        AddImageButton(
+                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            label = R.string.add_a_document_image_2,
+                            onClick = {
+                                imageIndex.intValue = 2
+                                fileSource = null
+                                showOptionDialog = true
+                            },
+                        )
+                    else
+                        PlaceholderImagePreview(
+                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            placeholderFilePath = placeholderFilePath2,
+                            onClick = {
+                                imageIndex.intValue = 2
+                                showDeleteDialog = true
+                            },
+                        )
+                }
+                DocumentLayout.FULL_A4 -> {
+                    if (placeholderFilePath0.value == null)
+                        AddImageButton(
+                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            label = R.string.add_a_document_image,
+                            onClick = {
+                                imageIndex.intValue = 0
+                                fileSource = null
+                                showOptionDialog = true
+                            },
+                        )
+                    else
+                        PlaceholderImagePreview(
+                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+                            placeholderFilePath = placeholderFilePath0,
+                            onClick = {
+                                imageIndex.intValue = 0
+                                showDeleteDialog = true
+                            },
+                        )
+                }
+            }
         }
-        DocumentLayout.TWO_SIDE_CARD -> {
-          if (placeholderFilePath1.value == null)
-            AddImageButton(
-              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-              label = R.string.add_card_1,
-              onClick = {
-                imageIndex.intValue = 1
-                fileSource = null
-                showOptionDialog = true
-              },
-            )
-          else
-            PlaceholderImagePreview(
-              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-              placeholderFilePath = placeholderFilePath1,
-              onClick = {
-                imageIndex.intValue = 1
-                showDeleteDialog = true
-              },
-            )
-          Spacer(modifier = Modifier.height(32.dp))
-          if (placeholderFilePath2.value == null)
-            AddImageButton(
-              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-              label = R.string.add_card_2,
-              onClick = {
-                imageIndex.intValue = 2
-                fileSource = null
-                showOptionDialog = true
-              },
-            )
-          else
-            PlaceholderImagePreview(
-              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-              placeholderFilePath = placeholderFilePath2,
-              onClick = {
-                imageIndex.intValue = 2
-                showDeleteDialog = true
-              },
-            )
-        }
-        DocumentLayout.ONE_SIDE_HALF_A4 -> {
-          if (placeholderFilePath0.value == null)
-            AddImageButton(
-              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-              label = R.string.add_a_document_image,
-              onClick = {
-                imageIndex.intValue = 0
-                fileSource = null
-                showOptionDialog = true
-              },
-            )
-          else
-            PlaceholderImagePreview(
-              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-              placeholderFilePath = placeholderFilePath0,
-              onClick = {
-                imageIndex.intValue = 0
-                showDeleteDialog = true
-              },
-            )
-        }
-        DocumentLayout.TWO_SIDE_HALF_A4 -> {
-          if (placeholderFilePath1.value == null)
-            AddImageButton(
-              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-              label = R.string.add_a_document_image_1,
-              onClick = {
-                imageIndex.intValue = 1
-                fileSource = null
-                showOptionDialog = true
-              },
-            )
-          else
-            PlaceholderImagePreview(
-              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-              placeholderFilePath = placeholderFilePath1,
-              onClick = {
-                imageIndex.intValue = 1
-                showDeleteDialog = true
-              },
-            )
-          Spacer(modifier = Modifier.height(32.dp))
-          if (placeholderFilePath2.value == null)
-            AddImageButton(
-              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-              label = R.string.add_a_document_image_2,
-              onClick = {
-                imageIndex.intValue = 2
-                fileSource = null
-                showOptionDialog = true
-              },
-            )
-          else
-            PlaceholderImagePreview(
-              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-              placeholderFilePath = placeholderFilePath2,
-              onClick = {
-                imageIndex.intValue = 2
-                showDeleteDialog = true
-              },
-            )
-        }
-        DocumentLayout.FULL_A4 -> {
-          if (placeholderFilePath0.value == null)
-            AddImageButton(
-              ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-              label = R.string.add_a_document_image,
-              onClick = {
-                imageIndex.intValue = 0
-                fileSource = null
-                showOptionDialog = true
-              },
-            )
-          else
-            PlaceholderImagePreview(
-              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-              placeholderFilePath = placeholderFilePath0,
-              onClick = {
-                imageIndex.intValue = 0
-                showDeleteDialog = true
-              },
-            )
-        }
-      }
     }
-  }
 }
 
 @Composable
 fun AddImageButton(ratio: Float, label: Int, onClick: () -> Unit) {
-  Box(
-    modifier =
-      Modifier.fillMaxWidth()
-        .aspectRatio(ratio)
-        .clip(RoundedCornerShape(cornerRadius))
-        .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
-        .background(white)
-        .clickable(onClick = onClick),
-    contentAlignment = Alignment.Center,
-  ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-      Image(
-        painter = painterResource(id = R.drawable.group_284),
-        contentDescription = null,
-        modifier = Modifier.height(56.dp),
-      )
-      Spacer(modifier = Modifier.height(24.dp))
-      Text(
-        text = stringResource(label),
-        color = primaryBlack,
-        fontSize = 24.sp,
-        fontWeight = FontWeight.W400,
-      )
+    Box(
+        modifier =
+            Modifier.fillMaxWidth()
+                .aspectRatio(ratio)
+                .clip(RoundedCornerShape(cornerRadius))
+                .border(
+                    width = 1.dp,
+                    color = secondaryGray,
+                    shape = RoundedCornerShape(cornerRadius),
+                )
+                .background(white)
+                .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Image(
+                painter = painterResource(id = R.drawable.group_284),
+                contentDescription = null,
+                modifier = Modifier.height(56.dp),
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(
+                text = stringResource(label),
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W400,
+            )
+        }
     }
-  }
 }
 
 @Composable
 fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
-  TextButton(onClick = onClick) {
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-      modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
-    ) {
-      Spacer(modifier = Modifier.width(16.dp))
-      Icon(imageVector = imageVector, contentDescription = null)
-      Spacer(modifier = Modifier.width(16.dp))
-      Text(
-        text = stringResource(text),
-        color = primaryBlack,
-        fontSize = 24.sp,
-        fontWeight = FontWeight.W400,
-      )
+    TextButton(onClick = onClick) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+        ) {
+            Spacer(modifier = Modifier.width(16.dp))
+            Icon(imageVector = imageVector, contentDescription = null)
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = stringResource(text),
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W400,
+            )
+        }
     }
-  }
 }
 
 @Composable
 fun PlaceholderImagePreview(
-  aspectRatio: Float,
-  placeholderFilePath: MutableState<Uri?>,
-  onClick: () -> Unit,
+    aspectRatio: Float,
+    placeholderFilePath: MutableState<Uri?>,
+    onClick: () -> Unit,
 ) {
-  Box(
-    modifier =
-      Modifier.fillMaxWidth().aspectRatio(aspectRatio).clip(RoundedCornerShape(cornerRadius)),
-    contentAlignment = Alignment.TopEnd,
-  ) {
-    Image(
-      modifier = Modifier.fillMaxWidth(),
-      painter = rememberAsyncImagePainter(model = placeholderFilePath.value),
-      contentDescription = null,
-    )
     Box(
-      modifier =
-        Modifier.padding(all = 16.dp)
-          .clip(RoundedCornerShape(32.dp))
-          .background(black.copy(alpha = 0.55f))
-          .clickable(onClick = onClick),
-      contentAlignment = Alignment.Center,
+        modifier =
+            Modifier.fillMaxWidth().aspectRatio(aspectRatio).clip(RoundedCornerShape(cornerRadius)),
+        contentAlignment = Alignment.TopEnd,
     ) {
-      Text(
-        modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp),
-        text = stringResource(R.string.delete),
-        color = white,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.W400,
-      )
+        Image(
+            modifier = Modifier.fillMaxWidth(),
+            painter = rememberAsyncImagePainter(model = placeholderFilePath.value),
+            contentDescription = null,
+        )
+        Box(
+            modifier =
+                Modifier.padding(all = 16.dp)
+                    .clip(RoundedCornerShape(32.dp))
+                    .background(black.copy(alpha = 0.55f))
+                    .clickable(onClick = onClick),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp),
+                text = stringResource(R.string.delete),
+                color = white,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.W400,
+            )
+        }
     }
-  }
 }
