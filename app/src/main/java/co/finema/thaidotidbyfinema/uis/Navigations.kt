@@ -71,6 +71,8 @@ sealed class Screen(val route: String, val name: Int? = null, val icon: ImageVec
 
     data object CropImageScreen : Screen("CropImageScreen")
 
+    data object PdfPageSelectScreen : Screen("PdfPageSelectScreen")
+
     data object SSSSSS : Screen("SSSSSS")
 }
 

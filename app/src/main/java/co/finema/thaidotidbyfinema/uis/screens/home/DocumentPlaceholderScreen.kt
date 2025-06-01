@@ -3,7 +3,6 @@
 package co.finema.thaidotidbyfinema.uis.screens.home
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -98,17 +97,11 @@ fun DocumentPlaceholderScreen(
             navController.navigate(route = Screen.CameraScreen.route)
         }
     }
-    val pdfUri = remember { mutableStateOf<Uri?>(null) }
     val pickPdf =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                context.contentResolver.takePersistableUriPermission(
-                    uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
-                )
-                pdfUri.value = uri
-                // read content
-                val inputStream = context.contentResolver.openInputStream(uri)
+                imageUri.value = uri
+                navController.navigate(route = Screen.PdfPageSelectScreen.route)
             }
         }
     val pickImage =

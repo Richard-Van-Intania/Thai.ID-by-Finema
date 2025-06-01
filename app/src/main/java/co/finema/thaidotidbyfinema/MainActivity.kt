@@ -34,6 +34,7 @@ import co.finema.thaidotidbyfinema.uis.screens.MainScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.CameraScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.CropImageScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPlaceholderScreen
+import co.finema.thaidotidbyfinema.uis.screens.home.PdfPageSelectScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SignatureListScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
@@ -54,10 +55,10 @@ import co.finema.thaidotidbyfinema.uis.screens.profile.ProfileDetailsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.ProfileEditScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SupportScreen
-import java.util.Locale
-import java.util.concurrent.Executor
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import java.util.Locale
+import java.util.concurrent.Executor
 
 val biometricAuth: MutableState<Boolean?> = mutableStateOf(null)
 
@@ -214,6 +215,9 @@ class MainActivity : FragmentActivity() {
                         }
                         composable(route = Screen.CameraScreen.route) {
                             CameraScreen(navController = navController, imageUri = imageUri)
+                        }
+                        composable(route = Screen.PdfPageSelectScreen.route) {
+                            PdfPageSelectScreen(navController = navController, imageUri = imageUri)
                         }
                         composable(route = Screen.CropImageScreen.route) {
                             CropImageScreen(
