@@ -16,3 +16,5 @@ import androidx.navigation.NavController
 //imageUri.value = uri
 //// read content
 //val inputStream = context.contentResolver.openInputStream(uri)
+
+// select page then crop
