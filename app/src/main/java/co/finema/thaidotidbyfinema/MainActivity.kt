@@ -134,9 +134,9 @@ class MainActivity : FragmentActivity() {
         val navController = rememberNavController()
         val localAuth = remember { mutableStateOf(false) }
         val layoutIndex = remember { mutableIntStateOf(0) }
-        val placeholderFilePath0 = remember { mutableStateOf("") }
-        val placeholderFilePath1 = remember { mutableStateOf("") }
-        val placeholderFilePath2 = remember { mutableStateOf("") }
+        val placeholderFilePath0 = remember { mutableStateOf<Uri?>(null) }
+        val placeholderFilePath1 = remember { mutableStateOf<Uri?>(null) }
+        val placeholderFilePath2 = remember { mutableStateOf<Uri?>(null) }
         val imageIndex = remember { mutableIntStateOf(0) }
         val imageUri = remember { mutableStateOf<Uri?>(null) }
         NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {

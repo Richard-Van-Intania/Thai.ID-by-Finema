@@ -72,9 +72,9 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 fun DocumentPlaceholderScreen(
   navController: NavController,
   layoutIndex: MutableIntState,
-  placeholderFilePath0: MutableState<String>,
-  placeholderFilePath1: MutableState<String>,
-  placeholderFilePath2: MutableState<String>,
+  placeholderFilePath0: MutableState<Uri?>,
+  placeholderFilePath1: MutableState<Uri?>,
+  placeholderFilePath2: MutableState<Uri?>,
   imageUri: MutableState<Uri?>,
   imageIndex: MutableIntState,
 ) {
@@ -237,7 +237,7 @@ fun DocumentPlaceholderScreen(
     ) {
       when (layoutItems[layoutIndex.intValue].documentLayout) {
         DocumentLayout.ONE_SIDE_CARD -> {
-          if (placeholderFilePath0.value.isEmpty())
+          if (placeholderFilePath0.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card,
@@ -249,7 +249,7 @@ fun DocumentPlaceholderScreen(
           else Box {}
         }
         DocumentLayout.TWO_SIDE_CARD -> {
-          if (placeholderFilePath1.value.isEmpty())
+          if (placeholderFilePath1.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card_1,
@@ -260,7 +260,7 @@ fun DocumentPlaceholderScreen(
             )
           else Box {}
           Spacer(modifier = Modifier.height(32.dp))
-          if (placeholderFilePath2.value.isEmpty())
+          if (placeholderFilePath2.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card_2,
@@ -272,7 +272,7 @@ fun DocumentPlaceholderScreen(
           else Box {}
         }
         DocumentLayout.ONE_SIDE_HALF_A4 -> {
-          if (placeholderFilePath0.value.isEmpty())
+          if (placeholderFilePath0.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image,
@@ -284,7 +284,7 @@ fun DocumentPlaceholderScreen(
           else Box {}
         }
         DocumentLayout.TWO_SIDE_HALF_A4 -> {
-          if (placeholderFilePath1.value.isEmpty())
+          if (placeholderFilePath1.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image_1,
@@ -295,7 +295,7 @@ fun DocumentPlaceholderScreen(
             )
           else Box {}
           Spacer(modifier = Modifier.height(32.dp))
-          if (placeholderFilePath2.value.isEmpty())
+          if (placeholderFilePath2.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image_2,
@@ -307,7 +307,7 @@ fun DocumentPlaceholderScreen(
           else Box {}
         }
         DocumentLayout.FULL_A4 -> {
-          if (placeholderFilePath0.value.isEmpty())
+          if (placeholderFilePath0.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image,

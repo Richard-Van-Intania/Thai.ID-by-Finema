@@ -2,6 +2,7 @@
 
 package co.finema.thaidotidbyfinema.uis.screens.home
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -153,9 +154,9 @@ val layoutItems =
 fun SelectLayoutScreen(
   navController: NavController,
   layoutIndex: MutableIntState,
-  placeholderFilePath0: MutableState<String>,
-  placeholderFilePath1: MutableState<String>,
-  placeholderFilePath2: MutableState<String>,
+  placeholderFilePath0: MutableState<Uri?>,
+  placeholderFilePath1: MutableState<Uri?>,
+  placeholderFilePath2: MutableState<Uri?>,
 ) {
   val configuration = LocalConfiguration.current
   val screenWidthDp = configuration.screenWidthDp
@@ -251,9 +252,9 @@ fun SelectLayoutScreen(
       ) {
         GradientButton(
           onClick = {
-            placeholderFilePath0.value = ""
-            placeholderFilePath1.value = ""
-            placeholderFilePath2.value = ""
+            placeholderFilePath0.value = null
+            placeholderFilePath1.value = null
+            placeholderFilePath2.value = null
             navController.navigate(route = Screen.DocumentPlaceholderScreen.route)
           },
           text = stringResource(R.string.next),
