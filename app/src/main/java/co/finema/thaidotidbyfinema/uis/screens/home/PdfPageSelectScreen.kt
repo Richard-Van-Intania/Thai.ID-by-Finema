@@ -10,7 +10,7 @@ import android.os.ParcelFileDescriptor
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.awaitHorizontalDragOrCancellation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,10 +42,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.createBitmap
@@ -116,11 +118,19 @@ fun PdfPageSelectScreen(navController: NavController, contentUri: MutableState<U
                     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                         for (page in 1..totalPages) {
                             DropdownMenuItem(
-                                text = { Text(page.toString()) },
-                                onClick = {
-                                    expanded = false
-                                    pageIndex = page - 1
+                                text = {
+                                    Text(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        text = page.toString(),
+                                        color = primaryBlack,
+                                        fontSize = 24.sp,
+                                        fontWeight =
+                                            if (currentPageIndex.value == page - 1) FontWeight.W700
+                                            else FontWeight.W400,
+                                        textAlign = TextAlign.Center,
+                                    )
                                 },
+                                onClick = { pageIndex = page - 1 },
                             )
                         }
                     }
@@ -155,14 +165,30 @@ fun PdfPageSelectScreen(navController: NavController, contentUri: MutableState<U
                 imageBitmap != null -> {
                     Box(
                         modifier =
-                            Modifier.fillMaxSize().pointerInput(Unit) {
-                                detectHorizontalDragGestures { _, dragAmount ->
-                                    if (dragAmount > 20 && currentPageIndex.value > 0) {
-                                        pageIndex--
-                                    } else if (
-                                        dragAmount < -20 && currentPageIndex.value < totalPages - 1
-                                    ) {
-                                        pageIndex++
+                            Modifier.fillMaxSize().pointerInput(
+                                totalPages,
+                                currentPageIndex.value,
+                            ) {
+                                awaitPointerEventScope {
+                                    while (true) {
+                                        val down =
+                                            awaitPointerEvent().changes.firstOrNull() ?: continue
+                                        if (down.pressed) {
+                                            val drag = awaitHorizontalDragOrCancellation(down.id)
+                                            drag?.let {
+                                                val dragThreshold = 100
+                                                when {
+                                                    it.positionChange().x > dragThreshold &&
+                                                        currentPageIndex.value > 0 -> {
+                                                        pageIndex--
+                                                    }
+                                                    it.positionChange().x < -dragThreshold &&
+                                                        currentPageIndex.value < totalPages - 1 -> {
+                                                        pageIndex++
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             },
