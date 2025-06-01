@@ -1,2 +1,2 @@
-- pdf page selectable
+- set img and go to crop screen
 - fix fast fill
