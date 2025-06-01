@@ -59,14 +59,16 @@ import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.enums.FileSource
 import co.finema.thaidotidbyfinema.uis.Screen
+import co.finema.thaidotidbyfinema.uis.black
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
+import co.finema.thaidotidbyfinema.uis.greenDev
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
-import co.finema.thaidotidbyfinema.uis.whiteBG
+import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun DocumentPlaceholderScreen(
@@ -225,7 +227,7 @@ fun DocumentPlaceholderScreen(
         GradientButton(onClick = {}, text = stringResource(R.string.make_a_cert))
       }
     },
-    backgroundColor = whiteBG,
+    backgroundColor = greenDev,
   ) {
     Column(
       modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
@@ -244,7 +246,36 @@ fun DocumentPlaceholderScreen(
                 showOptionDialog = true
               },
             )
-          else Box {}
+          else
+            Box(
+              modifier =
+                Modifier.fillMaxWidth()
+                  .aspectRatio(layoutItems[layoutIndex.intValue].aspectRatio)
+                  .clip(RoundedCornerShape(cornerRadius)),
+              contentAlignment = Alignment.TopEnd,
+            ) {
+              Image(
+                modifier = Modifier.fillMaxWidth(),
+                painter = rememberAsyncImagePainter(model = placeholderFilePath0.value),
+                contentDescription = null,
+              )
+              Box(
+                modifier =
+                  Modifier.padding(all = 16.dp)
+                    .clip(RoundedCornerShape(32.dp))
+                    .background(black.copy(alpha = 0.55f))
+                    .clickable(onClick = {}),
+                contentAlignment = Alignment.Center,
+              ) {
+                Text(
+                  modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp),
+                  text = stringResource(R.string.delete),
+                  color = white,
+                  fontSize = 20.sp,
+                  fontWeight = FontWeight.W400,
+                )
+              }
+            }
         }
         DocumentLayout.TWO_SIDE_CARD -> {
           if (placeholderFilePath1.value == null)
