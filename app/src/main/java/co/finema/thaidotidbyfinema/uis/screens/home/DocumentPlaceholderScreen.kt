@@ -79,9 +79,6 @@ fun DocumentPlaceholderScreen(
   imageIndex: MutableIntState,
 ) {
   val context = LocalContext.current
-  LaunchedEffect(imageUri.value) { println(imageUri.value.toString()) }
-
-  //
   var startCameraLive by remember { mutableStateOf(false) }
   var hasCameraPermission by remember { mutableStateOf(false) }
   val cameraPermissionLauncher =
@@ -242,6 +239,7 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card,
               onClick = {
+                imageIndex.intValue = 0
                 fileSource = null
                 showOptionDialog = true
               },
@@ -254,6 +252,7 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card_1,
               onClick = {
+                imageIndex.intValue = 0
                 fileSource = null
                 showOptionDialog = true
               },
@@ -265,6 +264,7 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card_2,
               onClick = {
+                imageIndex.intValue = 1
                 fileSource = null
                 showOptionDialog = true
               },
@@ -277,6 +277,7 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image,
               onClick = {
+                imageIndex.intValue = 0
                 fileSource = null
                 showOptionDialog = true
               },
@@ -289,6 +290,7 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image_1,
               onClick = {
+                imageIndex.intValue = 0
                 fileSource = null
                 showOptionDialog = true
               },
@@ -300,6 +302,7 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image_2,
               onClick = {
+                imageIndex.intValue = 1
                 fileSource = null
                 showOptionDialog = true
               },
@@ -312,6 +315,7 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image,
               onClick = {
+                imageIndex.intValue = 0
                 fileSource = null
                 showOptionDialog = true
               },

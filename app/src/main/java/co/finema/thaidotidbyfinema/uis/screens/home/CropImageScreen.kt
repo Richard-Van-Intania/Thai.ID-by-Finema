@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.navigation.NavController
@@ -66,6 +67,7 @@ fun CropImageScreen(
       text = stringResource(R.string.wrong),
       onClick = {
         showErrorsDialog = false
+        imageUri.value = null
         navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
           popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
         }
@@ -111,13 +113,18 @@ fun CropImageScreen(
       backgroundColor = black,
     ) {
       Cropify(
-        modifier = Modifier.fillMaxSize().padding(it),
+        modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
         uri = uri,
         state = state,
         onImageCropped = { imageBitmap ->
           val photoFile = getFileInstance(context)
           if (saveImageBitmapAsJpeg(imageBitmap, photoFile)) {
-            imageUri.value = photoFile.toUri()
+            when (imageIndex.intValue) {
+              0 -> placeholderFilePath0.value = photoFile.toUri()
+              1 -> placeholderFilePath1.value = photoFile.toUri()
+              2 -> placeholderFilePath2.value = photoFile.toUri()
+            }
+            imageUri.value = null
             navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
               popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
             }

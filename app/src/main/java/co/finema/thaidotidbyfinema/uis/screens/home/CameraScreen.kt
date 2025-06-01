@@ -119,14 +119,14 @@ fun CameraScreen(navController: NavController, imageUri: MutableState<Uri?>) {
     backgroundColor = black,
   ) {
     CameraPreviewView(
-      modifier = Modifier.fillMaxSize().padding(it),
+      modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
       onImageCaptureReady = { capture -> imageCapture = capture },
     )
   }
 }
 
 @Composable
-fun CameraPreviewView(modifier: Modifier = Modifier, onImageCaptureReady: (ImageCapture) -> Unit) {
+fun CameraPreviewView(modifier: Modifier, onImageCaptureReady: (ImageCapture) -> Unit) {
   val lifecycleOwner = LocalLifecycleOwner.current
   AndroidView(
     factory = { context ->
@@ -156,6 +156,6 @@ fun CameraPreviewView(modifier: Modifier = Modifier, onImageCaptureReady: (Image
       )
       previewView
     },
-    modifier = modifier.fillMaxSize(),
+    modifier = modifier,
   )
 }
