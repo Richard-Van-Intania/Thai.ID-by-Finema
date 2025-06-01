@@ -76,6 +76,7 @@ fun DocumentPlaceholderScreen(
   placeholderFilePath1: MutableState<String>,
   placeholderFilePath2: MutableState<String>,
   imageUri: MutableState<Uri?>,
+  imageIndex: MutableIntState,
 ) {
   val context = LocalContext.current
   LaunchedEffect(imageUri.value) { println(imageUri.value.toString()) }

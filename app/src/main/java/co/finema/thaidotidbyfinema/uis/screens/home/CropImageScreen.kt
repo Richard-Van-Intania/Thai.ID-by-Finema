@@ -50,9 +50,13 @@ import java.io.IOException
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CropImageScreen(
-  navController: NavController,
-  imageUri: MutableState<Uri?>,
-  layoutIndex: MutableIntState,
+    navController: NavController,
+    imageUri: MutableState<Uri?>,
+    layoutIndex: MutableIntState,
+    imageIndex: MutableIntState,
+    placeholderFilePath0: MutableState<String>,
+    placeholderFilePath1: MutableState<String>,
+    placeholderFilePath2: MutableState<String>,
 ) {
   BackHandler(enabled = true) {}
   val context = LocalContext.current

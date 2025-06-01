@@ -1,6 +1,2 @@
-- nav and hide bottom
-- kotlin java and view
-
-- เอาให้สวยยิ่งกว่าเดิม
-
-- passcode screen remaining
+- pdf page selectable
+- fix fast fill

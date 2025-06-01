@@ -137,6 +137,7 @@ class MainActivity : FragmentActivity() {
         val placeholderFilePath0 = remember { mutableStateOf("") }
         val placeholderFilePath1 = remember { mutableStateOf("") }
         val placeholderFilePath2 = remember { mutableStateOf("") }
+        val imageIndex = remember { mutableIntStateOf(0) }
         val imageUri = remember { mutableStateOf<Uri?>(null) }
         NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
           composable(route = Screen.LoadingScreen.route) {
@@ -199,6 +200,7 @@ class MainActivity : FragmentActivity() {
                 placeholderFilePath1 = placeholderFilePath1,
                 placeholderFilePath2 = placeholderFilePath2,
                 imageUri = imageUri,
+                imageIndex = imageIndex,
               )
             }
             composable(route = Screen.CameraScreen.route) {
@@ -209,6 +211,10 @@ class MainActivity : FragmentActivity() {
                 navController = navController,
                 imageUri = imageUri,
                 layoutIndex = layoutIndex,
+                imageIndex = imageIndex,
+                placeholderFilePath0 = placeholderFilePath0,
+                placeholderFilePath1 = placeholderFilePath1,
+                placeholderFilePath2 = placeholderFilePath2,
               )
             }
             composable(route = Screen.ProfileDetailsScreen.route) {
