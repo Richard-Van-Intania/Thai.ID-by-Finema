@@ -98,7 +98,7 @@ fun DocumentPlaceholderScreen(
             navController.navigate(route = Screen.CameraScreen.route)
         }
     }
-    var pdfUri by remember { mutableStateOf<Uri?>(null) }
+    val pdfUri = remember { mutableStateOf<Uri?>(null) }
     val pickPdf =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
@@ -106,7 +106,7 @@ fun DocumentPlaceholderScreen(
                     uri,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION,
                 )
-                pdfUri = uri
+                pdfUri.value = uri
                 // read content
                 val inputStream = context.contentResolver.openInputStream(uri)
             }
