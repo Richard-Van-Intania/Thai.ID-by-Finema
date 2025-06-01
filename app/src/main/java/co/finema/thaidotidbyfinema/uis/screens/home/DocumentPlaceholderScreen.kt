@@ -63,11 +63,11 @@ import co.finema.thaidotidbyfinema.uis.black
 import co.finema.thaidotidbyfinema.uis.components.AppBarOptBack
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
-import co.finema.thaidotidbyfinema.uis.greenDev
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
+import co.finema.thaidotidbyfinema.uis.whiteBG
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
@@ -138,7 +138,10 @@ fun DocumentPlaceholderScreen(
   var showOptionDialog by remember { mutableStateOf(false) }
   if (showOptionDialog) {
     Dialog(onDismissRequest = {}) {
-      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
+      Box(modifier = Modifier
+        .clip(RoundedCornerShape(8.dp))
+        .background(white)
+        .fillMaxWidth()) {
         Column(modifier = Modifier.fillMaxWidth()) {
           Text(
             modifier = Modifier.padding(all = 24.dp),
@@ -147,7 +150,10 @@ fun DocumentPlaceholderScreen(
             fontSize = 24.sp,
             fontWeight = FontWeight.W700,
           )
-          Box(modifier = Modifier.fillMaxWidth().height(2.dp).background(neutral02))
+          Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(2.dp)
+            .background(neutral02))
           OptionButton(
             imageVector = Icons.Rounded.PhotoCamera,
             text = R.string.scan_your_card,
@@ -184,7 +190,9 @@ fun DocumentPlaceholderScreen(
             Row(
               verticalAlignment = Alignment.CenterVertically,
               horizontalArrangement = Arrangement.Center,
-              modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp),
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 24.dp),
             ) {
               Text(
                 text = stringResource(R.string.cancel),
@@ -198,10 +206,13 @@ fun DocumentPlaceholderScreen(
       }
     }
   }
-  val showDeleteDialog by remember { mutableStateOf(false) }
+  var showDeleteDialog by remember { mutableStateOf(false) }
   if (showDeleteDialog) {
     Dialog(onDismissRequest = {}) {
-      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
+      Box(modifier = Modifier
+        .clip(RoundedCornerShape(8.dp))
+        .background(white)
+        .fillMaxWidth()) {
         Column(modifier = Modifier.fillMaxWidth()) {
           //
         }
@@ -219,7 +230,8 @@ fun DocumentPlaceholderScreen(
     bottomBar = {
       Box(
         modifier =
-          Modifier.background(white)
+          Modifier
+            .background(white)
             .fillMaxWidth()
             .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
         contentAlignment = Alignment.Center,
@@ -227,10 +239,13 @@ fun DocumentPlaceholderScreen(
         GradientButton(onClick = {}, text = stringResource(R.string.make_a_cert))
       }
     },
-    backgroundColor = greenDev,
+    backgroundColor = whiteBG,
   ) {
     Column(
-      modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(it)
+        .padding(horizontal = 16.dp),
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -247,35 +262,14 @@ fun DocumentPlaceholderScreen(
               },
             )
           else
-            Box(
-              modifier =
-                Modifier.fillMaxWidth()
-                  .aspectRatio(layoutItems[layoutIndex.intValue].aspectRatio)
-                  .clip(RoundedCornerShape(cornerRadius)),
-              contentAlignment = Alignment.TopEnd,
-            ) {
-              Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = rememberAsyncImagePainter(model = placeholderFilePath0.value),
-                contentDescription = null,
-              )
-              Box(
-                modifier =
-                  Modifier.padding(all = 16.dp)
-                    .clip(RoundedCornerShape(32.dp))
-                    .background(black.copy(alpha = 0.55f))
-                    .clickable(onClick = {}),
-                contentAlignment = Alignment.Center,
-              ) {
-                Text(
-                  modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp),
-                  text = stringResource(R.string.delete),
-                  color = white,
-                  fontSize = 20.sp,
-                  fontWeight = FontWeight.W400,
-                )
-              }
-            }
+            PlaceholderImagePreview(
+              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+              placeholderFilePath = placeholderFilePath0,
+              onClick = {
+                imageIndex.intValue = 0
+                showDeleteDialog = true
+              },
+            )
         }
         DocumentLayout.TWO_SIDE_CARD -> {
           if (placeholderFilePath1.value == null)
@@ -283,24 +277,40 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card_1,
               onClick = {
-                imageIndex.intValue = 0
+                imageIndex.intValue = 1
                 fileSource = null
                 showOptionDialog = true
               },
             )
-          else Box {}
+          else
+            PlaceholderImagePreview(
+              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+              placeholderFilePath = placeholderFilePath1,
+              onClick = {
+                imageIndex.intValue = 1
+                showDeleteDialog = true
+              },
+            )
           Spacer(modifier = Modifier.height(32.dp))
           if (placeholderFilePath2.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_card_2,
               onClick = {
-                imageIndex.intValue = 1
+                imageIndex.intValue = 2
                 fileSource = null
                 showOptionDialog = true
               },
             )
-          else Box {}
+          else
+            PlaceholderImagePreview(
+              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+              placeholderFilePath = placeholderFilePath2,
+              onClick = {
+                imageIndex.intValue = 2
+                showDeleteDialog = true
+              },
+            )
         }
         DocumentLayout.ONE_SIDE_HALF_A4 -> {
           if (placeholderFilePath0.value == null)
@@ -313,7 +323,15 @@ fun DocumentPlaceholderScreen(
                 showOptionDialog = true
               },
             )
-          else Box {}
+          else
+            PlaceholderImagePreview(
+              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+              placeholderFilePath = placeholderFilePath0,
+              onClick = {
+                imageIndex.intValue = 0
+                showDeleteDialog = true
+              },
+            )
         }
         DocumentLayout.TWO_SIDE_HALF_A4 -> {
           if (placeholderFilePath1.value == null)
@@ -321,24 +339,40 @@ fun DocumentPlaceholderScreen(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image_1,
               onClick = {
-                imageIndex.intValue = 0
+                imageIndex.intValue = 1
                 fileSource = null
                 showOptionDialog = true
               },
             )
-          else Box {}
+          else
+            PlaceholderImagePreview(
+              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+              placeholderFilePath = placeholderFilePath1,
+              onClick = {
+                imageIndex.intValue = 1
+                showDeleteDialog = true
+              },
+            )
           Spacer(modifier = Modifier.height(32.dp))
           if (placeholderFilePath2.value == null)
             AddImageButton(
               ratio = layoutItems[layoutIndex.intValue].aspectRatio,
               label = R.string.add_a_document_image_2,
               onClick = {
-                imageIndex.intValue = 1
+                imageIndex.intValue = 2
                 fileSource = null
                 showOptionDialog = true
               },
             )
-          else Box {}
+          else
+            PlaceholderImagePreview(
+              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+              placeholderFilePath = placeholderFilePath2,
+              onClick = {
+                imageIndex.intValue = 2
+                showDeleteDialog = true
+              },
+            )
         }
         DocumentLayout.FULL_A4 -> {
           if (placeholderFilePath0.value == null)
@@ -351,7 +385,15 @@ fun DocumentPlaceholderScreen(
                 showOptionDialog = true
               },
             )
-          else Box {}
+          else
+            PlaceholderImagePreview(
+              aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
+              placeholderFilePath = placeholderFilePath0,
+              onClick = {
+                imageIndex.intValue = 0
+                showDeleteDialog = true
+              },
+            )
         }
       }
     }
@@ -362,7 +404,8 @@ fun DocumentPlaceholderScreen(
 fun AddImageButton(ratio: Float, label: Int, onClick: () -> Unit) {
   Box(
     modifier =
-      Modifier.fillMaxWidth()
+      Modifier
+        .fillMaxWidth()
         .aspectRatio(ratio)
         .clip(RoundedCornerShape(cornerRadius))
         .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
@@ -392,7 +435,9 @@ fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
   TextButton(onClick = onClick) {
     Row(
       verticalAlignment = Alignment.CenterVertically,
-      modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 16.dp),
     ) {
       Spacer(modifier = Modifier.width(16.dp))
       Icon(imageVector = imageVector, contentDescription = null)
@@ -401,6 +446,45 @@ fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
         text = stringResource(text),
         color = primaryBlack,
         fontSize = 24.sp,
+        fontWeight = FontWeight.W400,
+      )
+    }
+  }
+}
+
+@Composable
+fun PlaceholderImagePreview(
+  aspectRatio: Float,
+  placeholderFilePath: MutableState<Uri?>,
+  onClick: () -> Unit,
+) {
+  Box(
+    modifier =
+      Modifier
+        .fillMaxWidth()
+        .aspectRatio(aspectRatio)
+        .clip(RoundedCornerShape(cornerRadius)),
+    contentAlignment = Alignment.TopEnd,
+  ) {
+    Image(
+      modifier = Modifier.fillMaxWidth(),
+      painter = rememberAsyncImagePainter(model = placeholderFilePath.value),
+      contentDescription = null,
+    )
+    Box(
+      modifier =
+        Modifier
+          .padding(all = 16.dp)
+          .clip(RoundedCornerShape(32.dp))
+          .background(black.copy(alpha = 0.55f))
+          .clickable(onClick = onClick),
+      contentAlignment = Alignment.Center,
+    ) {
+      Text(
+        modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp),
+        text = stringResource(R.string.delete),
+        color = white,
+        fontSize = 20.sp,
         fontWeight = FontWeight.W400,
       )
     }
