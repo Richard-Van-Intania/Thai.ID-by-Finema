@@ -113,8 +113,8 @@ fun DocumentPlaceholderScreen(
     val pickImage =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                println(uri)
-                // get uri here
+                imageUri.value = uri
+                navController.navigate(route = Screen.CropImageScreen.route)
             }
         }
     var fileSource by remember { mutableStateOf<FileSource?>(null) }
