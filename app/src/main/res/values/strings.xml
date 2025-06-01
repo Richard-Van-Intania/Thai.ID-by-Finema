@@ -189,4 +189,5 @@
     <string name="pick_file">Choose PDF file</string>
     <string name="importing">Importing Document</string>
     <string name="wrong">Something Went Wrong!</string>
+    <string name="select_one_page">Select One Page</string>
 </resources>

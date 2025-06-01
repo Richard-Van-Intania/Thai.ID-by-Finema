@@ -189,4 +189,5 @@
     <string name="pick_file">เลือกไฟล์</string>
     <string name="importing">กำลังนำเข้าเอกสาร</string>
     <string name="wrong">มีบางอย่างผิดพลาด!</string>
+    <string name="select_one_page">เลือกหนึ่งหน้า</string>
 </resources>

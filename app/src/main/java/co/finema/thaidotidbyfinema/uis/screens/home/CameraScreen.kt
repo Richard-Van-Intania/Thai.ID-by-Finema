@@ -4,6 +4,7 @@ package co.finema.thaidotidbyfinema.uis.screens.home
 
 import android.content.Context
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -70,6 +71,7 @@ fun takePhoto(context: Context, imageCapture: ImageCapture, onImageSaved: (Uri?)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CameraScreen(navController: NavController, contentUri: MutableState<Uri?>) {
+    BackHandler(enabled = true) {}
     val context = LocalContext.current
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
     LaunchedEffect(contentUri.value) {
