@@ -51,107 +51,117 @@ import java.io.IOException
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CropImageScreen(
-  navController: NavController,
-  imageUri: MutableState<Uri?>,
-  layoutIndex: MutableIntState,
-  imageIndex: MutableIntState,
-  placeholderFilePath0: MutableState<Uri?>,
-  placeholderFilePath1: MutableState<Uri?>,
-  placeholderFilePath2: MutableState<Uri?>,
+    navController: NavController,
+    imageUri: MutableState<Uri?>,
+    layoutIndex: MutableIntState,
+    imageIndex: MutableIntState,
+    placeholderFilePath0: MutableState<Uri?>,
+    placeholderFilePath1: MutableState<Uri?>,
+    placeholderFilePath2: MutableState<Uri?>,
 ) {
-  BackHandler(enabled = true) {}
-  val context = LocalContext.current
-  var showErrorsDialog by remember { mutableStateOf(false) }
-  if (showErrorsDialog) {
-    ErrorDialog(
-      text = stringResource(R.string.wrong),
-      onClick = {
-        showErrorsDialog = false
-        imageUri.value = null
-        navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
-          popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
-        }
-      },
-    )
-  }
-  val state = rememberCropifyState()
-  imageUri.value?.let { uri ->
-    Scaffold(
-      topBar = {
-        CenterAlignedTopAppBar(
-          title = {
-            Text(
-              text = stringResource(R.string.crop_image),
-              color = white,
-              fontSize = 24.sp,
-              fontWeight = FontWeight.W700,
-            )
-          },
-          navigationIcon = {
-            IconButton(
-              onClick = {
+    BackHandler(enabled = true) {}
+    val context = LocalContext.current
+    var showErrorsDialog by remember { mutableStateOf(false) }
+    if (showErrorsDialog) {
+        ErrorDialog(
+            text = stringResource(R.string.wrong),
+            onClick = {
+                showErrorsDialog = false
                 imageUri.value = null
-                navController.popBackStack()
-              }
-            ) {
-              Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = white)
-            }
-          },
-          actions = {
-            IconButton(onClick = { state.crop() }) {
-              Icon(imageVector = Icons.Rounded.Check, contentDescription = null, tint = white)
-            }
-          },
-          colors =
-            TopAppBarDefaults.centerAlignedTopAppBarColors(
-              containerColor = black,
-              navigationIconContentColor = white,
-              actionIconContentColor = white,
-            ),
+                navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
+                    popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
+                }
+            },
         )
-      },
-      backgroundColor = black,
-    ) {
-      Cropify(
-        modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
-        uri = uri,
-        state = state,
-        onImageCropped = { imageBitmap ->
-          val photoFile = getFileInstance(context)
-          if (saveImageBitmapAsJpeg(imageBitmap, photoFile)) {
-            when (imageIndex.intValue) {
-              0 -> placeholderFilePath0.value = photoFile.toUri()
-              1 -> placeholderFilePath1.value = photoFile.toUri()
-              2 -> placeholderFilePath2.value = photoFile.toUri()
-            }
-            imageUri.value = null
-            navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
-              popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
-            }
-          } else {
-            showErrorsDialog = true
-          }
-        },
-        onFailedToLoadImage = { showErrorsDialog = true },
-        option =
-          CropifyOption(
-            frameSize =
-              CropifySize.FixedAspectRatio(1.0f / layoutItems[layoutIndex.intValue].aspectRatio)
-          ),
-      )
     }
-  }
+    val state = rememberCropifyState()
+    imageUri.value?.let { uri ->
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            text = stringResource(R.string.crop_image),
+                            color = white,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.W700,
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(
+                            onClick = {
+                                imageUri.value = null
+                                navController.popBackStack()
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Close,
+                                contentDescription = null,
+                                tint = white,
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { state.crop() }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Check,
+                                contentDescription = null,
+                                tint = white,
+                            )
+                        }
+                    },
+                    colors =
+                        TopAppBarDefaults.centerAlignedTopAppBarColors(
+                            containerColor = black,
+                            navigationIconContentColor = white,
+                            actionIconContentColor = white,
+                        ),
+                )
+            },
+            backgroundColor = black,
+        ) {
+            Cropify(
+                modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
+                uri = uri,
+                state = state,
+                onImageCropped = { imageBitmap ->
+                    val photoFile = getFileInstance(context)
+                    if (saveImageBitmapAsJpeg(imageBitmap, photoFile)) {
+                        when (imageIndex.intValue) {
+                            0 -> placeholderFilePath0.value = photoFile.toUri()
+                            1 -> placeholderFilePath1.value = photoFile.toUri()
+                            2 -> placeholderFilePath2.value = photoFile.toUri()
+                        }
+                        imageUri.value = null
+                        navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
+                            popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
+                        }
+                    } else {
+                        showErrorsDialog = true
+                    }
+                },
+                onFailedToLoadImage = { showErrorsDialog = true },
+                option =
+                    CropifyOption(
+                        frameSize =
+                            CropifySize.FixedAspectRatio(
+                                1.0f / layoutItems[layoutIndex.intValue].aspectRatio
+                            )
+                    ),
+            )
+        }
+    }
 }
 
 fun saveImageBitmapAsJpeg(imageBitmap: ImageBitmap, file: File): Boolean {
-  val androidBitmap = imageBitmap.asAndroidBitmap()
-  var success = false
-  try {
-    FileOutputStream(file).use {
-      success = androidBitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+    val androidBitmap = imageBitmap.asAndroidBitmap()
+    var success = false
+    try {
+        FileOutputStream(file).use {
+            success = androidBitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
     }
-  } catch (e: IOException) {
-    e.printStackTrace()
-  }
-  return success
+    return success
 }

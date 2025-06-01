@@ -8,7 +8,8 @@ import co.finema.thaidotidbyfinema.serializers.UserCardSerializer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-private val Context.userCardStore: DataStore<UserCard> by dataStore(fileName = "user_card.proto", serializer = UserCardSerializer)
+private val Context.userCardStore: DataStore<UserCard> by
+    dataStore(fileName = "user_card.proto", serializer = UserCardSerializer)
 
 class UserCardRepository(private val context: Context) {
     val userCardFlow: Flow<UserCard> = context.userCardStore.data
@@ -25,7 +26,9 @@ class UserCardRepository(private val context: Context) {
     val birthDate: Flow<String> = userCardFlow.map { prefs -> prefs.birthDate }
 
     suspend fun updateIdString(idString: String) {
-        context.userCardStore.updateData { prefs -> prefs.toBuilder().setIdString(idString).build() }
+        context.userCardStore.updateData { prefs ->
+            prefs.toBuilder().setIdString(idString).build()
+        }
     }
 
     suspend fun updateThaiPrefix(thaiPrefix: String) {
@@ -35,7 +38,9 @@ class UserCardRepository(private val context: Context) {
     }
 
     suspend fun updateThaiName(thaiName: String) {
-        context.userCardStore.updateData { prefs -> prefs.toBuilder().setThaiName(thaiName).build() }
+        context.userCardStore.updateData { prefs ->
+            prefs.toBuilder().setThaiName(thaiName).build()
+        }
     }
 
     suspend fun updateThaiMiddleName(thaiMiddleName: String) {
@@ -51,7 +56,9 @@ class UserCardRepository(private val context: Context) {
     }
 
     suspend fun updateEngPrefix(engPrefix: String) {
-        context.userCardStore.updateData { prefs -> prefs.toBuilder().setEngPrefix(engPrefix).build() }
+        context.userCardStore.updateData { prefs ->
+            prefs.toBuilder().setEngPrefix(engPrefix).build()
+        }
     }
 
     suspend fun updateEngName(engName: String) {
@@ -71,6 +78,8 @@ class UserCardRepository(private val context: Context) {
     }
 
     suspend fun updateBirthDate(birthDate: String) {
-        context.userCardStore.updateData { prefs -> prefs.toBuilder().setBirthDate(birthDate).build() }
+        context.userCardStore.updateData { prefs ->
+            prefs.toBuilder().setBirthDate(birthDate).build()
+        }
     }
 }

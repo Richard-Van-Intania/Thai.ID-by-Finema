@@ -55,15 +55,16 @@ fun CreatePasscodeFullscreen(navController: NavController) {
     var showSetUpPinSuccess by remember { mutableStateOf(false) }
     if (showSetUpPinSuccess) {
         FullScreenDialog(
-            painter = painterResource(R.drawable.create_sucess), height = 160.dp, text = stringResource(R.string.set_up_pin_success)
+            painter = painterResource(R.drawable.create_sucess),
+            height = 160.dp,
+            text = stringResource(R.string.set_up_pin_success),
         )
     }
     Scaffold(
         bottomBar = {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 48.dp), contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 val context = LocalContext.current
                 val repository = remember { UserConfigRepository(context) }
@@ -71,37 +72,49 @@ fun CreatePasscodeFullscreen(navController: NavController) {
                 TextButton(
                     onClick = {
                         scope.launch { repository.updatePasscodeAsked(true) }
-                        scope.launch {
-                            showSetUpPinSuccess = true
-                            delay(2.seconds)
-                            showSetUpPinSuccess = false
-                        }.invokeOnCompletion { navController.popBackStack() }
-                    }) {
+                        scope
+                            .launch {
+                                showSetUpPinSuccess = true
+                                delay(2.seconds)
+                                showSetUpPinSuccess = false
+                            }
+                            .invokeOnCompletion { navController.popBackStack() }
+                    }
+                ) {
                     Text(
-                        text = stringResource(R.string.skip), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700
+                        text = stringResource(R.string.skip),
+                        color = primaryDarkBlue,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.W700,
                     )
                 }
             }
-        }) {
+        }
+    ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxSize().padding(it),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             var tapPasscode by remember { mutableStateOf("") }
             LaunchedEffect(tapPasscode) {
-                if (tapPasscode.length==6) {
+                if (tapPasscode.length == 6) {
                     navController.navigate(
                         route = "${Screen.ConfirmPasscodeFullscreen.route}/${tapPasscode}"
                     )
                 }
             }
             Text(
-                text = stringResource(R.string.set_up_pin), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700
+                text = stringResource(R.string.set_up_pin),
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W700,
             )
             Spacer(modifier = Modifier.height(48.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (tapPasscode.isEmpty()) OutlinedDot() else FilledDot()
                 Spacer(modifier = Modifier.width(24.dp))
@@ -117,59 +130,84 @@ fun CreatePasscodeFullscreen(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(48.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 PasscodeButton(
-                    text = "1", onClick = { if (tapPasscode.length < 6) tapPasscode += "1" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "2", onClick = { if (tapPasscode.length < 6) tapPasscode += "2" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "3", onClick = { if (tapPasscode.length < 6) tapPasscode += "3" })
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
-            ) {
-                PasscodeButton(
-                    text = "4", onClick = { if (tapPasscode.length < 6) tapPasscode += "4" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "5", onClick = { if (tapPasscode.length < 6) tapPasscode += "5" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "6", onClick = { if (tapPasscode.length < 6) tapPasscode += "6" })
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
-            ) {
-                PasscodeButton(
-                    text = "7", onClick = { if (tapPasscode.length < 6) tapPasscode += "7" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "8", onClick = { if (tapPasscode.length < 6) tapPasscode += "8" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "9", onClick = { if (tapPasscode.length < 6) tapPasscode += "9" })
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .clip(CircleShape)
-                        .background(white)
+                    text = "1",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "1" },
                 )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "0", onClick = { if (tapPasscode.length < 6) tapPasscode += "0" })
+                    text = "2",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "2" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "3",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "3" },
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                PasscodeButton(
+                    text = "4",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "4" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "5",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "5" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "6",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "6" },
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                PasscodeButton(
+                    text = "7",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "7" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "8",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "8" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "9",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "9" },
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "0",
+                    onClick = { if (tapPasscode.length < 6) tapPasscode += "0" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 BottomButton(
-                    imageVector = Icons.AutoMirrored.Rounded.Backspace, onClick = { tapPasscode = tapPasscode.dropLast(1) })
+                    imageVector = Icons.AutoMirrored.Rounded.Backspace,
+                    onClick = { tapPasscode = tapPasscode.dropLast(1) },
+                )
             }
         }
     }

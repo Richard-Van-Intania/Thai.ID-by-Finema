@@ -42,45 +42,48 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 
 data class TipsData(val imageResource: Int, val head: Int, val body: Int)
 
-val tipsList = listOf(
-    TipsData(
-        imageResource = R.drawable.welcome3,
-        head = R.string.certified_true_copy,
-        body = R.string.easily_make,
-    ), TipsData(
-        imageResource = R.drawable.welcome2,
-        head = R.string.identity_wallet,
-        body = R.string.securely_store,
-    ), TipsData(
-        imageResource = R.drawable.welcome4,
-        head = R.string.conveniently_create,
-        body = R.string.create_and_verify,
-    ), TipsData(
-        imageResource = R.drawable.welcome5,
-        head = R.string.save_and_share,
-        body = R.string.save_and_share_documents,
+val tipsList =
+    listOf(
+        TipsData(
+            imageResource = R.drawable.welcome3,
+            head = R.string.certified_true_copy,
+            body = R.string.easily_make,
+        ),
+        TipsData(
+            imageResource = R.drawable.welcome2,
+            head = R.string.identity_wallet,
+            body = R.string.securely_store,
+        ),
+        TipsData(
+            imageResource = R.drawable.welcome4,
+            head = R.string.conveniently_create,
+            body = R.string.create_and_verify,
+        ),
+        TipsData(
+            imageResource = R.drawable.welcome5,
+            head = R.string.save_and_share,
+            body = R.string.save_and_share_documents,
+        ),
     )
-)
 
 @Composable
 fun OnboardScreen(navController: NavHostController) {
     Scaffold(
         bottomBar = {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 48.dp), contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 GradientButton(
-                    onClick = { navController.navigate(route = Screen.TermsScreen.route) }, text = stringResource(R.string.log_in)
+                    onClick = { navController.navigate(route = Screen.TermsScreen.route) },
+                    text = stringResource(R.string.log_in),
                 )
             }
-        }) {
+        }
+    ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(48.dp))
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
@@ -98,18 +101,29 @@ fun OnboardScreen(navController: NavHostController) {
             Box(modifier = Modifier.height(560.dp), contentAlignment = Alignment.Center) {
                 HorizontalPager(state = pagerState, modifier = Modifier.fillMaxWidth()) { page ->
                     Column(
-                        modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Image(
-                            painter = painterResource(id = tipsList[page].imageResource), contentDescription = null, modifier = Modifier.height(328.dp)
+                            painter = painterResource(id = tipsList[page].imageResource),
+                            contentDescription = null,
+                            modifier = Modifier.height(328.dp),
                         )
                         Spacer(modifier = Modifier.height(56.dp))
                         Text(
-                            text = stringResource(tipsList[page].head), color = primaryBlack, fontSize = 32.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center
+                            text = stringResource(tipsList[page].head),
+                            color = primaryBlack,
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.W700,
+                            textAlign = TextAlign.Center,
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = stringResource(tipsList[page].body), color = neutral07, fontSize = 24.sp, fontWeight = FontWeight.W400, textAlign = TextAlign.Center
+                            text = stringResource(tipsList[page].body),
+                            color = neutral07,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.W400,
+                            textAlign = TextAlign.Center,
                         )
                     }
                 }
@@ -117,13 +131,14 @@ fun OnboardScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.weight(1f))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 repeat(pagerState.pageCount) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) primaryRed else secondaryGray
+                    val color =
+                        if (pagerState.currentPage == iteration) primaryRed else secondaryGray
                     Box(
-                        modifier = Modifier
-                            .padding(horizontal = 4.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(12.dp)
+                        modifier =
+                            Modifier.padding(horizontal = 4.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                                .size(12.dp)
                     )
                 }
             }

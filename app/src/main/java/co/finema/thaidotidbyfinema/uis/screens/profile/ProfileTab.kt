@@ -52,31 +52,33 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 @Composable
 fun ProfileTab(navController: NavController) {
     Scaffold(
-        topBar = { AppBarOptBack(containerColor = whiteBG, text = stringResource(R.string.profile)) }, backgroundColor = whiteBG
+        topBar = {
+            AppBarOptBack(containerColor = whiteBG, text = stringResource(R.string.profile))
+        },
+        backgroundColor = whiteBG,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Card(
-                modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(cornerRadius), backgroundColor = white
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(cornerRadius),
+                backgroundColor = white,
             ) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 16.dp), verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth().padding(all = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.thai_id_app_icon),
                         contentDescription = null,
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .size(64.dp)
-                            .border(BorderStroke(1.dp, secondaryGray), CircleShape)
-                            .padding(4.dp)
-                            .clip(CircleShape)
+                        modifier =
+                            Modifier.size(64.dp)
+                                .border(BorderStroke(1.dp, secondaryGray), CircleShape)
+                                .padding(4.dp)
+                                .clip(CircleShape),
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(
@@ -89,23 +91,26 @@ fun ProfileTab(navController: NavController) {
                     IconButton(
                         onClick = {
                             navController.navigate(route = Screen.ProfileDetailsScreen.route)
-                        }) {
+                        }
+                    ) {
                         Icon(
-                            imageVector = Icons.Rounded.BorderColor, contentDescription = null, tint = neutral05
+                            imageVector = Icons.Rounded.BorderColor,
+                            contentDescription = null,
+                            tint = neutral05,
                         )
                     }
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
             Card(
-                modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(cornerRadius), backgroundColor = white
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(cornerRadius),
+                backgroundColor = white,
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Spacer(modifier = Modifier.height(32.dp))
                     Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 24.dp),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
                         text = stringResource(R.string.settings),
                         color = primaryBlack,
                         fontSize = 20.sp,
@@ -113,19 +118,29 @@ fun ProfileTab(navController: NavController) {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     SettingsMenu(
-                        text = stringResource(R.string.login_settings), onClick = { navController.navigate(route = Screen.SettingsScreen.route) })
+                        text = stringResource(R.string.login_settings),
+                        onClick = { navController.navigate(route = Screen.SettingsScreen.route) },
+                    )
                     SettingsMenu(
-                        text = stringResource(R.string.language), onClick = {
+                        text = stringResource(R.string.language),
+                        onClick = {
                             navController.navigate(route = Screen.LocalizationSettingsScreen.route)
-                        })
+                        },
+                    )
                     SettingsMenu(
-                        text = stringResource(R.string.privacy_policy), onClick = {
+                        text = stringResource(R.string.privacy_policy),
+                        onClick = {
                             navController.navigate(route = Screen.PolicyAndSafetyScreen.route)
-                        })
+                        },
+                    )
                     SettingsMenu(
-                        text = stringResource(R.string.terms), onClick = { navController.navigate(route = Screen.TermsScreen.route) })
+                        text = stringResource(R.string.terms),
+                        onClick = { navController.navigate(route = Screen.TermsScreen.route) },
+                    )
                     SettingsMenu(
-                        text = stringResource(R.string.help_support), onClick = { navController.navigate(route = Screen.SupportScreen.route) })
+                        text = stringResource(R.string.help_support),
+                        onClick = { navController.navigate(route = Screen.SupportScreen.route) },
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
@@ -137,19 +152,15 @@ fun ProfileTab(navController: NavController) {
 fun SettingsMenu(text: String, onClick: () -> Unit) {
     TextButton(onClick = onClick) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp, horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = text,
-                color = primaryBlack,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W400,
-            )
+            Text(text = text, color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W400)
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                imageVector = Icons.AutoMirrored.Rounded.ArrowForwardIos, contentDescription = null, tint = primaryDarkBlue
+                imageVector = Icons.AutoMirrored.Rounded.ArrowForwardIos,
+                contentDescription = null,
+                tint = primaryDarkBlue,
             )
         }
     }

@@ -24,13 +24,13 @@ import co.finema.thaidotidbyfinema.uis.white
 @Composable
 fun PasscodeButton(text: String, onClick: () -> Unit) {
     Box(
-        modifier = Modifier
-            .size(80.dp)
-            .clip(CircleShape)
-            .background(white)
-            .border(width = 1.dp, color = primaryDarkBlue, shape = CircleShape)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier.size(80.dp)
+                .clip(CircleShape)
+                .background(white)
+                .border(width = 1.dp, color = primaryDarkBlue, shape = CircleShape)
+                .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
     ) {
         Text(text = text, color = primaryDarkBlue, fontSize = 24.sp, fontWeight = FontWeight.W700)
     }
@@ -39,29 +39,23 @@ fun PasscodeButton(text: String, onClick: () -> Unit) {
 @Composable
 fun BottomButton(imageVector: ImageVector, onClick: () -> Unit) {
     Box(
-        modifier = Modifier
-            .size(80.dp)
-            .clip(CircleShape)
-            .background(white)
-            .clickable(onClick = onClick), contentAlignment = Alignment.Center
+        modifier =
+            Modifier.size(80.dp).clip(CircleShape).background(white).clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
     ) {
         Icon(imageVector = imageVector, tint = primaryDarkBlue, contentDescription = null)
     }
 }
 
 @Composable
-fun FilledDot() = Box(
-    modifier = Modifier
-        .size(16.dp)
-        .clip(CircleShape)
-        .background(primaryDarkBlue)
-)
+fun FilledDot() = Box(modifier = Modifier.size(16.dp).clip(CircleShape).background(primaryDarkBlue))
 
 @Composable
-fun OutlinedDot() = Box(
-    modifier = Modifier
-        .size(16.dp)
-        .clip(CircleShape)
-        .background(white)
-        .border(width = 1.dp, color = primaryDarkBlue, shape = CircleShape)
-)
+fun OutlinedDot() =
+    Box(
+        modifier =
+            Modifier.size(16.dp)
+                .clip(CircleShape)
+                .background(white)
+                .border(width = 1.dp, color = primaryDarkBlue, shape = CircleShape)
+    )

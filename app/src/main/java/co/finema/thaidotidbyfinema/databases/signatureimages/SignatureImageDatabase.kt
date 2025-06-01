@@ -10,15 +10,19 @@ abstract class SignatureImageDatabase : RoomDatabase() {
     abstract fun signatureImageDao(): SignatureImageDao
 
     companion object {
-        @Volatile
-        private var Instance: SignatureImageDatabase? = null
+        @Volatile private var Instance: SignatureImageDatabase? = null
 
         fun getDatabase(context: Context): SignatureImageDatabase {
-            return Instance ?: synchronized(this) {
-                Room.databaseBuilder(
-                    context, SignatureImageDatabase::class.java, "signature_image_database"
-                ).build().also { Instance = it }
-            }
+            return Instance
+                ?: synchronized(this) {
+                    Room.databaseBuilder(
+                            context,
+                            SignatureImageDatabase::class.java,
+                            "signature_image_database",
+                        )
+                        .build()
+                        .also { Instance = it }
+                }
         }
     }
 }

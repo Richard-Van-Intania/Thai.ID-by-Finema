@@ -54,32 +54,38 @@ fun ConfirmPasscodeChangeFullscreen(navController: NavController, tapPasscode: S
     var showSetUpPinSuccess by remember { mutableStateOf(false) }
     if (showSetUpPinSuccess) {
         FullScreenDialog(
-            painter = painterResource(R.drawable.create_sucess), height = 160.dp, text = stringResource(R.string.set_up_new_pin_sucess)
+            painter = painterResource(R.drawable.create_sucess),
+            height = 160.dp,
+            text = stringResource(R.string.set_up_new_pin_sucess),
         )
     }
     Scaffold(
         bottomBar = {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 48.dp), contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 TextButton(
                     onClick = {
                         navController.popBackStack()
                         navController.popBackStack()
                         navController.popBackStack()
-                    }) {
+                    }
+                ) {
                     Text(
-                        text = stringResource(R.string.cancel), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700
+                        text = stringResource(R.string.cancel),
+                        color = primaryDarkBlue,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.W700,
                     )
                 }
             }
-        }) {
+        }
+    ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxSize().padding(it),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val context = LocalContext.current
             val repository = remember { UserConfigRepository(context) }
@@ -87,8 +93,8 @@ fun ConfirmPasscodeChangeFullscreen(navController: NavController, tapPasscode: S
             val shakeController = remember { ShakeController(scope) }
             var confirmPasscode by remember { mutableStateOf("") }
             LaunchedEffect(confirmPasscode) {
-                if (confirmPasscode.length==6) {
-                    if (confirmPasscode==tapPasscode) {
+                if (confirmPasscode.length == 6) {
+                    if (confirmPasscode == tapPasscode) {
                         val salt = generateSalt()
                         val hashedPasscode = hashedPasscode(tapPasscode, salt)
                         repository.updateSalt(salt)
@@ -106,15 +112,19 @@ fun ConfirmPasscodeChangeFullscreen(navController: NavController, tapPasscode: S
                 }
             }
             Text(
-                text = stringResource(R.string.set_up_pin_confirm), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700
+                text = stringResource(R.string.set_up_pin_confirm),
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W700,
             )
             Spacer(modifier = Modifier.height(48.dp))
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .offset {
+                modifier =
+                    Modifier.fillMaxWidth().offset {
                         IntOffset(shakeController.offset.value.roundToInt(), 0)
-                    }, horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (confirmPasscode.isEmpty()) OutlinedDot() else FilledDot()
                 Spacer(modifier = Modifier.width(24.dp))
@@ -130,55 +140,87 @@ fun ConfirmPasscodeChangeFullscreen(navController: NavController, tapPasscode: S
             }
             Spacer(modifier = Modifier.height(48.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 PasscodeButton(
-                    text = "1", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "1" })
+                    text = "1",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "1" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "2", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "2" })
+                    text = "2",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "2" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "3", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "3" })
+                    text = "3",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "3" },
+                )
             }
             Spacer(modifier = Modifier.height(32.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 PasscodeButton(
-                    text = "4", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "4" })
+                    text = "4",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "4" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "5", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "5" })
+                    text = "5",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "5" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "6", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "6" })
+                    text = "6",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "6" },
+                )
             }
             Spacer(modifier = Modifier.height(32.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 PasscodeButton(
-                    text = "7", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "7" })
+                    text = "7",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "7" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "8", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "8" })
+                    text = "8",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "8" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "9", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "9" })
+                    text = "9",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "9" },
+                )
             }
             Spacer(modifier = Modifier.height(32.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 BottomButton(
-                    imageVector = Icons.Rounded.Delete, onClick = { navController.popBackStack() })
+                    imageVector = Icons.Rounded.Delete,
+                    onClick = { navController.popBackStack() },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "0", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "0" })
+                    text = "0",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "0" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 BottomButton(
-                    imageVector = Icons.AutoMirrored.Rounded.Backspace, onClick = { confirmPasscode = confirmPasscode.dropLast(1) })
+                    imageVector = Icons.AutoMirrored.Rounded.Backspace,
+                    onClick = { confirmPasscode = confirmPasscode.dropLast(1) },
+                )
             }
         }
     }

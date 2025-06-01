@@ -35,16 +35,16 @@ import co.finema.thaidotidbyfinema.uis.white
 @Composable
 fun FullScreenDialog(painter: Painter, height: Dp, text: String) {
     Dialog(
-        onDismissRequest = {}, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)
+        onDismissRequest = {},
+        properties =
+            DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false),
     ) {
         Column(
-            Modifier
-                .fillMaxSize()
-                .background(white), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+            Modifier.fillMaxSize().background(white),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                painter = painter, contentDescription = null, modifier = Modifier.height(height)
-            )
+            Image(painter = painter, contentDescription = null, modifier = Modifier.height(height))
             Spacer(modifier = Modifier.height(24.dp))
             Text(
                 text = text,
@@ -60,20 +60,16 @@ fun FullScreenDialog(painter: Painter, height: Dp, text: String) {
 @Composable
 fun ErrorDialog(text: String, onClick: () -> Unit) {
     Dialog(onDismissRequest = {}) {
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .background(white)
-                .fillMaxWidth()
-        ) {
+        Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(modifier = Modifier.height(40.dp))
                 Image(
-                    painter = painterResource(id = R.drawable.group_40126), contentDescription = null, modifier = Modifier.height(96.dp)
+                    painter = painterResource(id = R.drawable.group_40126),
+                    contentDescription = null,
+                    modifier = Modifier.height(96.dp),
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(

@@ -214,7 +214,7 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
     val repository = remember { UserConfigRepository(context) }
     val passcodeAsked by repository.passcodeAsked.collectAsState(initial = null)
     LaunchedEffect(passcodeAsked) {
-        if (passcodeAsked==false) navController.navigate(Screen.CreatePasscodeFullscreen.route)
+        if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreen.route)
     }
     val passcode by repository.passcode.collectAsState(initial = "")
     LaunchedEffect(passcode, localAuth.value) {
@@ -227,41 +227,60 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
     Scaffold(
         bottomBar = {
             NavigationBar(
-                modifier = Modifier.clip(RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)), containerColor = white
+                modifier =
+                    Modifier.clip(
+                        RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)
+                    ),
+                containerColor = white,
             ) {
                 val navBackStackEntry by tabController.currentBackStackEntryAsState()
                 val currentTab = navBackStackEntry?.destination?.route
                 bottomTabs.forEach {
                     Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clickable(onClick = {
-                                if (currentTab!=it.route) {
-                                    tabController.navigate(it.route) {
-                                        popUpTo(tabController.graph.startDestinationId) {
-                                            saveState = true
+                        modifier =
+                            Modifier.weight(1f)
+                                .clickable(
+                                    onClick = {
+                                        if (currentTab != it.route) {
+                                            tabController.navigate(it.route) {
+                                                popUpTo(tabController.graph.startDestinationId) {
+                                                    saveState = true
+                                                }
+                                                launchSingleTop = true
+                                                restoreState = true
+                                            }
                                         }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                            }, indication = null, interactionSource = remember { MutableInteractionSource() }), horizontalAlignment = Alignment.CenterHorizontally
+                                    },
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() },
+                                ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Icon(
-                            imageVector = it.icon!!, contentDescription = null, tint = if (currentTab==it.route) primaryDarkBlue else secondaryBlueGray
+                            imageVector = it.icon!!,
+                            contentDescription = null,
+                            tint =
+                                if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray,
                         )
-                        Box(modifier = Modifier.height(24.dp), contentAlignment = Alignment.Center) {
+                        Box(
+                            modifier = Modifier.height(24.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
                             Text(
                                 text = stringResource(it.name!!),
-                                color = if (currentTab==it.route) primaryDarkBlue else secondaryBlueGray,
+                                color =
+                                    if (currentTab == it.route) primaryDarkBlue
+                                    else secondaryBlueGray,
                                 fontSize = 12.sp,
-                                fontWeight = if (currentTab==it.route) FontWeight.W700 else FontWeight.W400,
+                                fontWeight =
+                                    if (currentTab == it.route) FontWeight.W700 else FontWeight.W400,
                             )
                         }
                     }
                 }
             }
-        }, backgroundColor = whiteBG
+        },
+        backgroundColor = whiteBG,
     ) {
         val counterState = rememberCounterState()
         NavHost(
