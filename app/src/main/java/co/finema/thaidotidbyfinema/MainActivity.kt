@@ -141,7 +141,7 @@ class MainActivity : FragmentActivity() {
                 val placeholderFilePath1 = remember { mutableStateOf<Uri?>(null) }
                 val placeholderFilePath2 = remember { mutableStateOf<Uri?>(null) }
                 val imageIndex = remember { mutableIntStateOf(0) }
-                val imageUri = remember { mutableStateOf<Uri?>(null) }
+                val contentUri = remember { mutableStateOf<Uri?>(null) }
                 NavHost(
                     navController = navController,
                     startDestination = Screen.LoadingScreen.route,
@@ -209,20 +209,23 @@ class MainActivity : FragmentActivity() {
                                 placeholderFilePath0 = placeholderFilePath0,
                                 placeholderFilePath1 = placeholderFilePath1,
                                 placeholderFilePath2 = placeholderFilePath2,
-                                imageUri = imageUri,
+                                contentUri = contentUri,
                                 imageIndex = imageIndex,
                             )
                         }
                         composable(route = Screen.CameraScreen.route) {
-                            CameraScreen(navController = navController, imageUri = imageUri)
+                            CameraScreen(navController = navController, contentUri = contentUri)
                         }
                         composable(route = Screen.PdfPageSelectScreen.route) {
-                            PdfPageSelectScreen(navController = navController, imageUri = imageUri)
+                            PdfPageSelectScreen(
+                                navController = navController,
+                                contentUri = contentUri,
+                            )
                         }
                         composable(route = Screen.CropImageScreen.route) {
                             CropImageScreen(
                                 navController = navController,
-                                imageUri = imageUri,
+                                contentUri = contentUri,
                                 layoutIndex = layoutIndex,
                                 imageIndex = imageIndex,
                                 placeholderFilePath0 = placeholderFilePath0,
