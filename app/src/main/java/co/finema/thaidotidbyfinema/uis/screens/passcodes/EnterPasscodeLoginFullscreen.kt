@@ -52,7 +52,9 @@ import kotlin.math.roundToInt
 
 @Composable
 fun EnterPasscodeLoginFullscreen(
-    navController: NavController, onBiometricAuth: () -> Unit, localAuth: MutableState<Boolean>
+    navController: NavController,
+    onBiometricAuth: () -> Unit,
+    localAuth: MutableState<Boolean>,
 ) {
     BackHandler(enabled = true) {}
     LaunchedEffect(Unit) { biometricAuth.value = null }
@@ -66,7 +68,9 @@ fun EnterPasscodeLoginFullscreen(
     var showErrorsDialog by remember { mutableStateOf(false) }
     if (showErrorsDialog) {
         ErrorDialog(
-                text = stringResource(R.string.unable_use_biometrics), onClick = { showErrorsDialog = false })
+            text = stringResource(R.string.unable_use_biometrics),
+            onClick = { showErrorsDialog = false },
+        )
     }
     LaunchedEffect(biometricAuth.value) {
         when (biometricAuth.value) {
@@ -84,9 +88,9 @@ fun EnterPasscodeLoginFullscreen(
     }
     Scaffold {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxSize().padding(it),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val context = LocalContext.current
             val repository = remember { UserConfigRepository(context) }
@@ -97,8 +101,14 @@ fun EnterPasscodeLoginFullscreen(
             val salt by repository.salt.collectAsState(initial = "")
             val useBiometric by repository.useBiometric.collectAsState(initial = false)
             LaunchedEffect(confirmPasscode) {
-                if (confirmPasscode.length==6) {
-                    if (verifyPasscode(password = confirmPasscode, storedHash = passcode, salt = salt)) {
+                if (confirmPasscode.length == 6) {
+                    if (
+                        verifyPasscode(
+                            password = confirmPasscode,
+                            storedHash = passcode,
+                            salt = salt,
+                        )
+                    ) {
                         passAuth = true
                     } else {
                         shakeController.triggerShake()
@@ -107,15 +117,19 @@ fun EnterPasscodeLoginFullscreen(
                 }
             }
             Text(
-                text = stringResource(R.string.enter_pin), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700
+                text = stringResource(R.string.enter_pin),
+                color = primaryBlack,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W700,
             )
             Spacer(modifier = Modifier.height(48.dp))
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .offset {
+                modifier =
+                    Modifier.fillMaxWidth().offset {
                         IntOffset(shakeController.offset.value.roundToInt(), 0)
-                    }, horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (confirmPasscode.isEmpty()) OutlinedDot() else FilledDot()
                 Spacer(modifier = Modifier.width(24.dp))
@@ -131,61 +145,89 @@ fun EnterPasscodeLoginFullscreen(
             }
             Spacer(modifier = Modifier.height(48.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 PasscodeButton(
-                    text = "1", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "1" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "2", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "2" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "3", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "3" })
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
-            ) {
-                PasscodeButton(
-                    text = "4", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "4" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "5", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "5" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "6", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "6" })
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
-            ) {
-                PasscodeButton(
-                    text = "7", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "7" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "8", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "8" })
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "9", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "9" })
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (useBiometric) BottomButton(
-                    imageVector = Icons.Rounded.Fingerprint, onClick = { onBiometricAuth() })
-                else Box(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .clip(CircleShape)
-                        .background(white)
+                    text = "1",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "1" },
                 )
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(
-                    text = "0", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "0" })
+                    text = "2",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "2" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "3",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "3" },
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                PasscodeButton(
+                    text = "4",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "4" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "5",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "5" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "6",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "6" },
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                PasscodeButton(
+                    text = "7",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "7" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "8",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "8" },
+                )
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "9",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "9" },
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (useBiometric)
+                    BottomButton(
+                        imageVector = Icons.Rounded.Fingerprint,
+                        onClick = { onBiometricAuth() },
+                    )
+                else Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
+                Spacer(modifier = Modifier.width(32.dp))
+                PasscodeButton(
+                    text = "0",
+                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "0" },
+                )
                 Spacer(modifier = Modifier.width(32.dp))
                 BottomButton(
-                    imageVector = Icons.AutoMirrored.Rounded.Backspace, onClick = { confirmPasscode = confirmPasscode.dropLast(1) })
+                    imageVector = Icons.AutoMirrored.Rounded.Backspace,
+                    onClick = { confirmPasscode = confirmPasscode.dropLast(1) },
+                )
             }
         }
     }

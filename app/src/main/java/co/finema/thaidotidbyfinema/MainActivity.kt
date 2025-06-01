@@ -54,10 +54,10 @@ import co.finema.thaidotidbyfinema.uis.screens.profile.ProfileDetailsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.ProfileEditScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SettingsScreen
 import co.finema.thaidotidbyfinema.uis.screens.profile.SupportScreen
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import java.util.Locale
 import java.util.concurrent.Executor
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 val biometricAuth: MutableState<Boolean?> = mutableStateOf(null)
 
