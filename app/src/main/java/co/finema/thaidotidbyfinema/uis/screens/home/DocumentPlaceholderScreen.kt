@@ -138,10 +138,7 @@ fun DocumentPlaceholderScreen(
   var showOptionDialog by remember { mutableStateOf(false) }
   if (showOptionDialog) {
     Dialog(onDismissRequest = {}) {
-      Box(modifier = Modifier
-        .clip(RoundedCornerShape(8.dp))
-        .background(white)
-        .fillMaxWidth()) {
+      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
         Column(modifier = Modifier.fillMaxWidth()) {
           Text(
             modifier = Modifier.padding(all = 24.dp),
@@ -150,10 +147,7 @@ fun DocumentPlaceholderScreen(
             fontSize = 24.sp,
             fontWeight = FontWeight.W700,
           )
-          Box(modifier = Modifier
-            .fillMaxWidth()
-            .height(2.dp)
-            .background(neutral02))
+          Box(modifier = Modifier.fillMaxWidth().height(2.dp).background(neutral02))
           OptionButton(
             imageVector = Icons.Rounded.PhotoCamera,
             text = R.string.scan_your_card,
@@ -190,9 +184,7 @@ fun DocumentPlaceholderScreen(
             Row(
               verticalAlignment = Alignment.CenterVertically,
               horizontalArrangement = Arrangement.Center,
-              modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 24.dp),
+              modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp),
             ) {
               Text(
                 text = stringResource(R.string.cancel),
@@ -209,10 +201,7 @@ fun DocumentPlaceholderScreen(
   var showDeleteDialog by remember { mutableStateOf(false) }
   if (showDeleteDialog) {
     Dialog(onDismissRequest = {}) {
-      Box(modifier = Modifier
-        .clip(RoundedCornerShape(8.dp))
-        .background(white)
-        .fillMaxWidth()) {
+      Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
         Column(modifier = Modifier.fillMaxWidth()) {
           //
         }
@@ -230,8 +219,7 @@ fun DocumentPlaceholderScreen(
     bottomBar = {
       Box(
         modifier =
-          Modifier
-            .background(white)
+          Modifier.background(white)
             .fillMaxWidth()
             .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
         contentAlignment = Alignment.Center,
@@ -242,10 +230,7 @@ fun DocumentPlaceholderScreen(
     backgroundColor = whiteBG,
   ) {
     Column(
-      modifier = Modifier
-        .fillMaxSize()
-        .padding(it)
-        .padding(horizontal = 16.dp),
+      modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -404,8 +389,7 @@ fun DocumentPlaceholderScreen(
 fun AddImageButton(ratio: Float, label: Int, onClick: () -> Unit) {
   Box(
     modifier =
-      Modifier
-        .fillMaxWidth()
+      Modifier.fillMaxWidth()
         .aspectRatio(ratio)
         .clip(RoundedCornerShape(cornerRadius))
         .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
@@ -435,9 +419,7 @@ fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
   TextButton(onClick = onClick) {
     Row(
       verticalAlignment = Alignment.CenterVertically,
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 16.dp),
+      modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
     ) {
       Spacer(modifier = Modifier.width(16.dp))
       Icon(imageVector = imageVector, contentDescription = null)
@@ -460,10 +442,7 @@ fun PlaceholderImagePreview(
 ) {
   Box(
     modifier =
-      Modifier
-        .fillMaxWidth()
-        .aspectRatio(aspectRatio)
-        .clip(RoundedCornerShape(cornerRadius)),
+      Modifier.fillMaxWidth().aspectRatio(aspectRatio).clip(RoundedCornerShape(cornerRadius)),
     contentAlignment = Alignment.TopEnd,
   ) {
     Image(
@@ -473,8 +452,7 @@ fun PlaceholderImagePreview(
     )
     Box(
       modifier =
-        Modifier
-          .padding(all = 16.dp)
+        Modifier.padding(all = 16.dp)
           .clip(RoundedCornerShape(32.dp))
           .background(black.copy(alpha = 0.55f))
           .clickable(onClick = onClick),
