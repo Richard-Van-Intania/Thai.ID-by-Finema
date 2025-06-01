@@ -16,15 +16,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.DropdownMenu
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
-import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.FormatListNumberedRtl
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,15 +66,21 @@ fun PdfPageSelectScreen(navController: NavController, contentUri: MutableState<U
     BackHandler(enabled = true) {}
     val context = LocalContext.current
     var pageIndex by remember { mutableIntStateOf(0) }
+    var totalPages by remember { mutableIntStateOf(0) }
+    var expanded by remember { mutableStateOf(false) }
     var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     var isLoading by remember { mutableStateOf(true) }
+    val currentPageIndex = rememberUpdatedState(pageIndex)
     LaunchedEffect(contentUri.value, pageIndex) {
         contentUri.value?.let { uri ->
             isLoading = true
             imageBitmap =
                 withContext(Dispatchers.IO) {
                     val file = context.getFileFromContentUri(uri)
-                    file?.let { renderPdfPage(it, pageIndex)?.asImageBitmap() }
+                    file?.let {
+                        totalPages = getPdfPageCount(it)
+                        renderPdfPage(it, pageIndex)?.asImageBitmap()
+                    }
                 }
             isLoading = false
         }
@@ -98,8 +107,22 @@ fun PdfPageSelectScreen(navController: NavController, contentUri: MutableState<U
                     }
                 },
                 actions = {
-                    IconButton(onClick = {}) {
-                        Icon(imageVector = Icons.Rounded.MoreVert, contentDescription = null)
+                    IconButton(onClick = { expanded = !expanded }) {
+                        Icon(
+                            imageVector = Icons.Rounded.FormatListNumberedRtl,
+                            contentDescription = null,
+                        )
+                    }
+                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                        for (page in 1..totalPages) {
+                            DropdownMenuItem(
+                                text = { Text(page.toString()) },
+                                onClick = {
+                                    expanded = false
+                                    pageIndex = page - 1
+                                },
+                            )
+                        }
                     }
                 },
                 colors =
@@ -115,32 +138,31 @@ fun PdfPageSelectScreen(navController: NavController, contentUri: MutableState<U
                 modifier =
                     Modifier.background(white)
                         .fillMaxWidth()
-                        .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
+                        .padding(horizontal = 16.dp, vertical = 24.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 GradientButton(onClick = {}, text = stringResource(R.string.next))
             }
         },
-        backgroundColor = whiteBG,
-    ) {
-        Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
+        containerColor = whiteBG,
+    ) { padding ->
+        Box(
+            modifier = Modifier.fillMaxSize().padding(padding),
+            contentAlignment = Alignment.Center,
+        ) {
             when {
                 isLoading -> CircularProgressIndicator()
-                imageBitmap != null ->
+                imageBitmap != null -> {
                     Box(
                         modifier =
-                            Modifier.fillMaxSize().pointerInput(pageIndex) {
-                                detectHorizontalDragGestures { change, dragAmount ->
-                                    if (dragAmount > 0) {
-                                        if (pageIndex > 0) pageIndex--
-                                    } else {
-                                        contentUri.value?.let { uri ->
-                                            val file = context.getFileFromContentUri(uri)
-                                            file?.let {
-                                                val totalPages = getPdfPageCount(it)
-                                                if (pageIndex < totalPages - 1) pageIndex++
-                                            }
-                                        }
+                            Modifier.fillMaxSize().pointerInput(Unit) {
+                                detectHorizontalDragGestures { _, dragAmount ->
+                                    if (dragAmount > 20 && currentPageIndex.value > 0) {
+                                        pageIndex--
+                                    } else if (
+                                        dragAmount < -20 && currentPageIndex.value < totalPages - 1
+                                    ) {
+                                        pageIndex++
                                     }
                                 }
                             },
@@ -153,7 +175,7 @@ fun PdfPageSelectScreen(navController: NavController, contentUri: MutableState<U
                             contentScale = ContentScale.Fit,
                         )
                     }
-                else -> {}
+                }
             }
         }
     }
@@ -194,10 +216,9 @@ fun renderPdfPage(file: File, pageIndex: Int): Bitmap? {
 }
 
 fun getPdfPageCount(file: File): Int {
-    val fileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
-    val renderer = PdfRenderer(fileDescriptor)
-    val count = renderer.pageCount
-    renderer.close()
-    fileDescriptor.close()
-    return count
+    ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY).use { fileDescriptor ->
+        PdfRenderer(fileDescriptor).use { renderer ->
+            return renderer.pageCount
+        }
+    }
 }
