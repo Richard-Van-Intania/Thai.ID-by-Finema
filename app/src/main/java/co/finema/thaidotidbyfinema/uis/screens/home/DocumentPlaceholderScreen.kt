@@ -101,6 +101,7 @@ fun DocumentPlaceholderScreen(
     val pickPdf =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
+                imageUri.value = null
                 pdfUrl.value = uri
                 navController.navigate(route = Screen.PdfPageSelectScreen.route)
             }

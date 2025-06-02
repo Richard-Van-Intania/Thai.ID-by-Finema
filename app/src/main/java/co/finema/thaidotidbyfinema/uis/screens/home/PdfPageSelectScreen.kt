@@ -51,8 +51,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.createBitmap
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.getFileInstance
+import co.finema.thaidotidbyfinema.saveImageBitmapAsJpeg
+import co.finema.thaidotidbyfinema.uis.Screen
+import co.finema.thaidotidbyfinema.uis.components.ErrorDialog
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.white
@@ -91,6 +96,10 @@ fun PdfPageSelectScreen(
             isLoading = false
         }
     }
+    var showErrorsDialog by remember { mutableStateOf(false) }
+    if (showErrorsDialog) {
+        ErrorDialog(text = stringResource(R.string.wrong), onClick = { showErrorsDialog = false })
+    }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -105,6 +114,7 @@ fun PdfPageSelectScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
+                            imageUri.value = null
                             pdfUrl.value = null
                             navController.popBackStack()
                         }
@@ -157,7 +167,15 @@ fun PdfPageSelectScreen(
             ) {
                 GradientButton(
                     onClick = {
-                        //
+                        imageBitmap?.let { imageBitmap ->
+                            val photoFile = getFileInstance(context)
+                            if (saveImageBitmapAsJpeg(imageBitmap, photoFile)) {
+                                imageUri.value = photoFile.toUri()
+                                navController.navigate(route = Screen.CropImageScreen.route)
+                            } else {
+                                showErrorsDialog = true
+                            }
+                        }
                     },
                     text = stringResource(R.string.next),
                 )
