@@ -155,7 +155,12 @@ fun PdfPageSelectScreen(
                         .padding(horizontal = 16.dp, vertical = 24.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                GradientButton(onClick = {}, text = stringResource(R.string.next))
+                GradientButton(
+                    onClick = {
+                        //
+                    },
+                    text = stringResource(R.string.next),
+                )
             }
         },
         containerColor = whiteBG,
