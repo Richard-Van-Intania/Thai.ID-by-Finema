@@ -290,7 +290,12 @@ fun DocumentPlaceholderScreen(
                         .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                GradientButton(onClick = {}, text = stringResource(R.string.make_a_cert))
+                GradientButton(
+                    onClick = {
+                        // here
+                    },
+                    text = stringResource(R.string.make_a_cert),
+                )
             }
         },
         backgroundColor = whiteBG,
