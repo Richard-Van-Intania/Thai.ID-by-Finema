@@ -64,7 +64,11 @@ import java.io.FileOutputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PdfPageSelectScreen(navController: NavController, imageUri: MutableState<Uri?>) {
+fun PdfPageSelectScreen(
+    navController: NavController,
+    imageUri: MutableState<Uri?>,
+    pdfUrl: MutableState<Uri?>,
+) {
     BackHandler(enabled = true) {}
     val context = LocalContext.current
     var pageIndex by remember { mutableIntStateOf(0) }
@@ -73,8 +77,8 @@ fun PdfPageSelectScreen(navController: NavController, imageUri: MutableState<Uri
     var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     val currentPageIndex = rememberUpdatedState(pageIndex)
-    LaunchedEffect(imageUri.value, pageIndex) {
-        imageUri.value?.let { uri ->
+    LaunchedEffect(pdfUrl.value, pageIndex) {
+        pdfUrl.value?.let { uri ->
             isLoading = true
             imageBitmap =
                 withContext(Dispatchers.IO) {
@@ -101,7 +105,7 @@ fun PdfPageSelectScreen(navController: NavController, imageUri: MutableState<Uri
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            imageUri.value = null
+                            pdfUrl.value = null
                             navController.popBackStack()
                         }
                     ) {
@@ -182,6 +186,7 @@ fun PdfPageSelectScreen(navController: NavController, imageUri: MutableState<Uri
                                                         currentPageIndex.value > 0 -> {
                                                         pageIndex--
                                                     }
+
                                                     it.positionChange().x < -dragThreshold &&
                                                         currentPageIndex.value < totalPages - 1 -> {
                                                         pageIndex++

@@ -212,13 +212,18 @@ class MainActivity : FragmentActivity() {
                                 placeholderFilePath2 = placeholderFilePath2,
                                 imageUri = imageUri,
                                 imageIndex = imageIndex,
+                                pdfUrl = pdfUrl,
                             )
                         }
                         composable(route = Screen.CameraScreen.route) {
                             CameraScreen(navController = navController, imageUri = imageUri)
                         }
                         composable(route = Screen.PdfPageSelectScreen.route) {
-                            PdfPageSelectScreen(navController = navController, imageUri = imageUri)
+                            PdfPageSelectScreen(
+                                navController = navController,
+                                pdfUrl = pdfUrl,
+                                imageUri = imageUri,
+                            )
                         }
                         composable(route = Screen.CropImageScreen.route) {
                             CropImageScreen(

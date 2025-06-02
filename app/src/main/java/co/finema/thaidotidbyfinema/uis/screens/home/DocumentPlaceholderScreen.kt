@@ -82,6 +82,7 @@ fun DocumentPlaceholderScreen(
     placeholderFilePath2: MutableState<Uri?>,
     imageUri: MutableState<Uri?>,
     imageIndex: MutableIntState,
+    pdfUrl: MutableState<Uri?>,
 ) {
     val context = LocalContext.current
     var startCameraLive by remember { mutableStateOf(false) }
@@ -100,7 +101,7 @@ fun DocumentPlaceholderScreen(
     val pickPdf =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                imageUri.value = uri
+                pdfUrl.value = uri
                 navController.navigate(route = Screen.PdfPageSelectScreen.route)
             }
         }
