@@ -141,7 +141,8 @@ class MainActivity : FragmentActivity() {
                 val placeholderFilePath1 = remember { mutableStateOf<Uri?>(null) }
                 val placeholderFilePath2 = remember { mutableStateOf<Uri?>(null) }
                 val imageIndex = remember { mutableIntStateOf(0) }
-                val contentUri = remember { mutableStateOf<Uri?>(null) }
+                val imageUri = remember { mutableStateOf<Uri?>(null) }
+                val pdfUrl = remember { mutableStateOf<Uri?>(null) }
                 NavHost(
                     navController = navController,
                     startDestination = Screen.LoadingScreen.route,
@@ -209,23 +210,20 @@ class MainActivity : FragmentActivity() {
                                 placeholderFilePath0 = placeholderFilePath0,
                                 placeholderFilePath1 = placeholderFilePath1,
                                 placeholderFilePath2 = placeholderFilePath2,
-                                contentUri = contentUri,
+                                imageUri = imageUri,
                                 imageIndex = imageIndex,
                             )
                         }
                         composable(route = Screen.CameraScreen.route) {
-                            CameraScreen(navController = navController, contentUri = contentUri)
+                            CameraScreen(navController = navController, imageUri = imageUri)
                         }
                         composable(route = Screen.PdfPageSelectScreen.route) {
-                            PdfPageSelectScreen(
-                                navController = navController,
-                                contentUri = contentUri,
-                            )
+                            PdfPageSelectScreen(navController = navController, imageUri = imageUri)
                         }
                         composable(route = Screen.CropImageScreen.route) {
                             CropImageScreen(
                                 navController = navController,
-                                contentUri = contentUri,
+                                imageUri = imageUri,
                                 layoutIndex = layoutIndex,
                                 imageIndex = imageIndex,
                                 placeholderFilePath0 = placeholderFilePath0,

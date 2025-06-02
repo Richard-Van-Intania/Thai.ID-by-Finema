@@ -70,12 +70,12 @@ fun takePhoto(context: Context, imageCapture: ImageCapture, onImageSaved: (Uri?)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CameraScreen(navController: NavController, contentUri: MutableState<Uri?>) {
+fun CameraScreen(navController: NavController, imageUri: MutableState<Uri?>) {
     BackHandler(enabled = true) {}
     val context = LocalContext.current
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
-    LaunchedEffect(contentUri.value) {
-        if (contentUri.value != null) navController.navigate(route = Screen.CropImageScreen.route)
+    LaunchedEffect(imageUri.value) {
+        if (imageUri.value != null) navController.navigate(route = Screen.CropImageScreen.route)
     }
     Scaffold(
         topBar = {
@@ -114,9 +114,7 @@ fun CameraScreen(navController: NavController, contentUri: MutableState<Uri?>) {
             ) {
                 IconButton(
                     onClick = {
-                        imageCapture?.let {
-                            takePhoto(context, it) { uri -> contentUri.value = uri }
-                        }
+                        imageCapture?.let { takePhoto(context, it) { uri -> imageUri.value = uri } }
                     }
                 ) {
                     Icon(

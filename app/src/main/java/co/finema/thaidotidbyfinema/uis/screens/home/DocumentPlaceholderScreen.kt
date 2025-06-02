@@ -80,7 +80,7 @@ fun DocumentPlaceholderScreen(
     placeholderFilePath0: MutableState<Uri?>,
     placeholderFilePath1: MutableState<Uri?>,
     placeholderFilePath2: MutableState<Uri?>,
-    contentUri: MutableState<Uri?>,
+    imageUri: MutableState<Uri?>,
     imageIndex: MutableIntState,
 ) {
     val context = LocalContext.current
@@ -93,21 +93,21 @@ fun DocumentPlaceholderScreen(
         )
     LaunchedEffect(hasCameraPermission, startCameraLive) {
         if (hasCameraPermission && startCameraLive) {
-            contentUri.value = null
+            imageUri.value = null
             navController.navigate(route = Screen.CameraScreen.route)
         }
     }
     val pickPdf =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                contentUri.value = uri
+                imageUri.value = uri
                 navController.navigate(route = Screen.PdfPageSelectScreen.route)
             }
         }
     val pickImage =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                contentUri.value = uri
+                imageUri.value = uri
                 navController.navigate(route = Screen.CropImageScreen.route)
             }
         }

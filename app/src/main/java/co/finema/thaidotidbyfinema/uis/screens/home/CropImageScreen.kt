@@ -52,7 +52,7 @@ import java.io.IOException
 @Composable
 fun CropImageScreen(
     navController: NavController,
-    contentUri: MutableState<Uri?>,
+    imageUri: MutableState<Uri?>,
     layoutIndex: MutableIntState,
     imageIndex: MutableIntState,
     placeholderFilePath0: MutableState<Uri?>,
@@ -67,7 +67,7 @@ fun CropImageScreen(
             text = stringResource(R.string.wrong),
             onClick = {
                 showErrorsDialog = false
-                contentUri.value = null
+                imageUri.value = null
                 navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
                     popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
                 }
@@ -75,7 +75,7 @@ fun CropImageScreen(
         )
     }
     val state = rememberCropifyState()
-    contentUri.value?.let { uri ->
+    imageUri.value?.let { uri ->
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
@@ -90,7 +90,7 @@ fun CropImageScreen(
                     navigationIcon = {
                         IconButton(
                             onClick = {
-                                contentUri.value = null
+                                imageUri.value = null
                                 navController.popBackStack()
                             }
                         ) {
@@ -132,7 +132,7 @@ fun CropImageScreen(
                             1 -> placeholderFilePath1.value = photoFile.toUri()
                             2 -> placeholderFilePath2.value = photoFile.toUri()
                         }
-                        contentUri.value = null
+                        imageUri.value = null
                         navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
                             popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
                         }
