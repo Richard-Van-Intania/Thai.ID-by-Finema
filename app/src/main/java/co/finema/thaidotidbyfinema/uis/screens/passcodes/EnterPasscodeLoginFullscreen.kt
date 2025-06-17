@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -116,118 +117,127 @@ fun EnterPasscodeLoginFullscreen(
                     }
                 }
             }
-            Text(
-                text = stringResource(R.string.enter_pin),
-                color = primaryBlack,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W700,
-            )
-            Spacer(modifier = Modifier.height(48.dp))
-            Row(
-                modifier =
-                    Modifier.fillMaxWidth().offset {
-                        IntOffset(shakeController.offset.value.roundToInt(), 0)
-                    },
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (confirmPasscode.isEmpty()) OutlinedDot() else FilledDot()
-                Spacer(modifier = Modifier.width(24.dp))
-                if (confirmPasscode.length < 2) OutlinedDot() else FilledDot()
-                Spacer(modifier = Modifier.width(24.dp))
-                if (confirmPasscode.length < 3) OutlinedDot() else FilledDot()
-                Spacer(modifier = Modifier.width(24.dp))
-                if (confirmPasscode.length < 4) OutlinedDot() else FilledDot()
-                Spacer(modifier = Modifier.width(24.dp))
-                if (confirmPasscode.length < 5) OutlinedDot() else FilledDot()
-                Spacer(modifier = Modifier.width(24.dp))
-                if (confirmPasscode.length < 6) OutlinedDot() else FilledDot()
-            }
-            Spacer(modifier = Modifier.height(48.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                PasscodeButton(
-                    text = "1",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "1" },
+            if (passcode.isEmpty() || salt.isEmpty())
+                Box(
+                    modifier = Modifier.fillMaxSize().padding(it),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
+            else {
+                Text(
+                    text = stringResource(R.string.enter_pin),
+                    color = primaryBlack,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.W700,
                 )
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "2",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "2" },
-                )
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "3",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "3" },
-                )
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                PasscodeButton(
-                    text = "4",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "4" },
-                )
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "5",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "5" },
-                )
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "6",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "6" },
-                )
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                PasscodeButton(
-                    text = "7",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "7" },
-                )
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "8",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "8" },
-                )
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "9",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "9" },
-                )
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (useBiometric)
-                    BottomButton(
-                        imageVector = Icons.Rounded.Fingerprint,
-                        onClick = { onBiometricAuth() },
+                Spacer(modifier = Modifier.height(48.dp))
+                Row(
+                    modifier =
+                        Modifier.fillMaxWidth().offset {
+                            IntOffset(shakeController.offset.value.roundToInt(), 0)
+                        },
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (confirmPasscode.isEmpty()) OutlinedDot() else FilledDot()
+                    Spacer(modifier = Modifier.width(24.dp))
+                    if (confirmPasscode.length < 2) OutlinedDot() else FilledDot()
+                    Spacer(modifier = Modifier.width(24.dp))
+                    if (confirmPasscode.length < 3) OutlinedDot() else FilledDot()
+                    Spacer(modifier = Modifier.width(24.dp))
+                    if (confirmPasscode.length < 4) OutlinedDot() else FilledDot()
+                    Spacer(modifier = Modifier.width(24.dp))
+                    if (confirmPasscode.length < 5) OutlinedDot() else FilledDot()
+                    Spacer(modifier = Modifier.width(24.dp))
+                    if (confirmPasscode.length < 6) OutlinedDot() else FilledDot()
+                }
+                Spacer(modifier = Modifier.height(48.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    PasscodeButton(
+                        text = "1",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "1" },
                     )
-                else Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
-                Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "0",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "0" },
-                )
-                Spacer(modifier = Modifier.width(32.dp))
-                BottomButton(
-                    imageVector = Icons.AutoMirrored.Rounded.Backspace,
-                    onClick = { confirmPasscode = confirmPasscode.dropLast(1) },
-                )
+                    Spacer(modifier = Modifier.width(32.dp))
+                    PasscodeButton(
+                        text = "2",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "2" },
+                    )
+                    Spacer(modifier = Modifier.width(32.dp))
+                    PasscodeButton(
+                        text = "3",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "3" },
+                    )
+                }
+                Spacer(modifier = Modifier.height(32.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    PasscodeButton(
+                        text = "4",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "4" },
+                    )
+                    Spacer(modifier = Modifier.width(32.dp))
+                    PasscodeButton(
+                        text = "5",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "5" },
+                    )
+                    Spacer(modifier = Modifier.width(32.dp))
+                    PasscodeButton(
+                        text = "6",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "6" },
+                    )
+                }
+                Spacer(modifier = Modifier.height(32.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    PasscodeButton(
+                        text = "7",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "7" },
+                    )
+                    Spacer(modifier = Modifier.width(32.dp))
+                    PasscodeButton(
+                        text = "8",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "8" },
+                    )
+                    Spacer(modifier = Modifier.width(32.dp))
+                    PasscodeButton(
+                        text = "9",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "9" },
+                    )
+                }
+                Spacer(modifier = Modifier.height(32.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (useBiometric)
+                        BottomButton(
+                            imageVector = Icons.Rounded.Fingerprint,
+                            onClick = { onBiometricAuth() },
+                        )
+                    else Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
+                    Spacer(modifier = Modifier.width(32.dp))
+                    PasscodeButton(
+                        text = "0",
+                        onClick = { if (confirmPasscode.length < 6) confirmPasscode += "0" },
+                    )
+                    Spacer(modifier = Modifier.width(32.dp))
+                    BottomButton(
+                        imageVector = Icons.AutoMirrored.Rounded.Backspace,
+                        onClick = { confirmPasscode = confirmPasscode.dropLast(1) },
+                    )
+                }
             }
         }
     }

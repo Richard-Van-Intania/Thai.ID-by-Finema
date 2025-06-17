@@ -60,10 +60,10 @@ import co.finema.thaidotidbyfinema.uis.lightBlue07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.white
-import kotlin.math.roundToInt
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun ConfirmPasscodeFullscreen(

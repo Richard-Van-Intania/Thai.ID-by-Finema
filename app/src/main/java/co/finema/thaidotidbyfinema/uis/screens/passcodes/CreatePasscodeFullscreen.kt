@@ -45,9 +45,9 @@ import co.finema.thaidotidbyfinema.uis.components.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.white
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun CreatePasscodeFullscreen(navController: NavController) {

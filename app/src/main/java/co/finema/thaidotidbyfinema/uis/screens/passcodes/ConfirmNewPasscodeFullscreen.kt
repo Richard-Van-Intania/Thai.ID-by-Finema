@@ -44,9 +44,9 @@ import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.components.FullScreenDialog
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
+import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
-import kotlinx.coroutines.delay
 
 @Composable
 fun ConfirmNewPasscodeFullscreen(navController: NavController, tapPasscode: String) {
