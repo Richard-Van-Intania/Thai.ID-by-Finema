@@ -32,6 +32,7 @@ fun HistoryTab(navController: NavController, counterState: CounterState) {
     val localAuth = remember { mutableStateOf(false) }
     LaunchedEffect(localAuth.value) { println(localAuth.value) }
     val counterState = rememberCounterState()
+    val counterState2 = remember { CounterState() }
     LaunchedEffect(counterState.count) { println(counterState.count) }
     val count = remember { mutableIntStateOf(0) }
     LaunchedEffect(count.intValue) { println(count.intValue) }
