@@ -50,24 +50,6 @@ import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.black
 import co.finema.thaidotidbyfinema.uis.white
 
-fun takePhoto(context: Context, imageCapture: ImageCapture, onImageSaved: (Uri?) -> Unit) {
-    val photoFile = getFileInstance(context)
-    val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-    imageCapture.takePicture(
-        outputOptions,
-        ContextCompat.getMainExecutor(context),
-        object : ImageCapture.OnImageSavedCallback {
-            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                onImageSaved(outputFileResults.savedUri)
-            }
-
-            override fun onError(exception: ImageCaptureException) {
-                onImageSaved(null)
-            }
-        },
-    )
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CameraScreen(navController: NavController, imageUri: MutableState<Uri?>) {
@@ -169,5 +151,23 @@ fun CameraPreviewView(modifier: Modifier, onImageCaptureReady: (ImageCapture) ->
             previewView
         },
         modifier = modifier,
+    )
+}
+
+fun takePhoto(context: Context, imageCapture: ImageCapture, onImageSaved: (Uri?) -> Unit) {
+    val photoFile = getFileInstance(context)
+    val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+    imageCapture.takePicture(
+        outputOptions,
+        ContextCompat.getMainExecutor(context),
+        object : ImageCapture.OnImageSavedCallback {
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                onImageSaved(outputFileResults.savedUri)
+            }
+
+            override fun onError(exception: ImageCaptureException) {
+                onImageSaved(null)
+            }
+        },
     )
 }
