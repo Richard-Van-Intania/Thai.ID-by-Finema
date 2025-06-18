@@ -292,7 +292,7 @@ fun DocumentPlaceholderScreen(
             ) {
                 GradientButton(
                     onClick = {
-                        // here
+
                         // create template history
                         // go create cert
                     },
