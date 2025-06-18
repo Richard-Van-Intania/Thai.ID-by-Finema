@@ -40,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
@@ -168,8 +169,13 @@ fun PdfPageSelectScreen(
                 GradientButton(
                     onClick = {
                         imageBitmap?.let { imageBitmap ->
+                            val bitmap = imageBitmap.asAndroidBitmap()
+                            val newBitmap = createBitmap(bitmap.width, bitmap.height)
+                            val canvas = android.graphics.Canvas(newBitmap)
+                            canvas.drawColor(android.graphics.Color.WHITE)
+                            canvas.drawBitmap(bitmap, 0f, 0f, null)
                             val photoFile = getFileInstance(context)
-                            if (saveImageBitmapAsJpeg(imageBitmap, photoFile)) {
+                            if (saveImageBitmapAsJpeg(newBitmap.asImageBitmap(), photoFile)) {
                                 imageUri.value = photoFile.toUri()
                                 navController.navigate(route = Screen.CropImageScreen.route)
                             } else {
