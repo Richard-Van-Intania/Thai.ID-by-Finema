@@ -293,6 +293,8 @@ fun DocumentPlaceholderScreen(
                 GradientButton(
                     onClick = {
                         // here
+                        // create template history
+                        // go create cert
                     },
                     text = stringResource(R.string.make_a_cert),
                 )
