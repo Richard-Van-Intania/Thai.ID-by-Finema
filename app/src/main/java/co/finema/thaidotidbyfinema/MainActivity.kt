@@ -36,6 +36,7 @@ import co.finema.thaidotidbyfinema.uis.screens.home.CropImageScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPlaceholderScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.PdfPageSelectScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
+import co.finema.thaidotidbyfinema.uis.screens.home.SignPadScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SignatureListScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.OnboardScreen
 import co.finema.thaidotidbyfinema.uis.screens.onboarding.TermsScreen
@@ -236,6 +237,20 @@ class MainActivity : FragmentActivity() {
                                 placeholderFilePath2 = placeholderFilePath2,
                             )
                         }
+                        composable(route = Screen.SignatureListScreen.route) {
+                            SignatureListScreen(
+                                navController = navController,
+                                signatureImageViewModel = signatureImageViewModel,
+                            )
+                        }
+                        composable(route = Screen.SignPadScreen.route) {
+                            SignPadScreen(
+                                navController = navController,
+                                signatureImageViewModel = signatureImageViewModel,
+                            )
+                        }
+
+                        // here
                         composable(route = Screen.ProfileDetailsScreen.route) {
                             ProfileDetailsScreen(navController = navController)
                         }
@@ -296,12 +311,6 @@ class MainActivity : FragmentActivity() {
                         }
                         composable(route = Screen.LocalizationSettingsScreen.route) {
                             LocalizationSettingsScreen(navController = navController)
-                        }
-                        composable(route = Screen.SignatureListScreen.route) {
-                            SignatureListScreen(
-                                navController = navController,
-                                signatureImageViewModel = signatureImageViewModel,
-                            )
                         }
                     }
                 }
