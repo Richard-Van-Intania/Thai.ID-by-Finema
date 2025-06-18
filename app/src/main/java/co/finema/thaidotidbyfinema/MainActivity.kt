@@ -32,6 +32,7 @@ import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.screens.LoadingScreen
 import co.finema.thaidotidbyfinema.uis.screens.MainScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.CameraScreen
+import co.finema.thaidotidbyfinema.uis.screens.home.CreateCertifiedScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.CropImageScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPlaceholderScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.PdfPageSelectScreen
@@ -232,6 +233,15 @@ class MainActivity : FragmentActivity() {
                                 imageUri = imageUri,
                                 layoutIndex = layoutIndex,
                                 imageIndex = imageIndex,
+                                placeholderFilePath0 = placeholderFilePath0,
+                                placeholderFilePath1 = placeholderFilePath1,
+                                placeholderFilePath2 = placeholderFilePath2,
+                            )
+                        }
+                        composable(route = Screen.CreateCertifiedScreen.route) {
+                            CreateCertifiedScreen(
+                                navController = navController,
+                                layoutIndex = layoutIndex,
                                 placeholderFilePath0 = placeholderFilePath0,
                                 placeholderFilePath1 = placeholderFilePath1,
                                 placeholderFilePath2 = placeholderFilePath2,

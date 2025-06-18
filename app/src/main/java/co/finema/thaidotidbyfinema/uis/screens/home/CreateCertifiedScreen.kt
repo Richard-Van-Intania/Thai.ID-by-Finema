@@ -1,6 +1,7 @@
 package co.finema.thaidotidbyfinema.uis.screens.home
 
 import android.net.Uri
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
@@ -13,4 +14,6 @@ fun CreateCertifiedScreen(
     placeholderFilePath0: MutableState<Uri?>,
     placeholderFilePath1: MutableState<Uri?>,
     placeholderFilePath2: MutableState<Uri?>,
-) {}
+) {
+    Scaffold { it }
+}
