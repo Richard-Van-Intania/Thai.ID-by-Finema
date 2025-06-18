@@ -61,7 +61,7 @@ fun EnterPasscodeChangeFullscreen(navController: NavController, onBiometricAuth:
     LaunchedEffect(Unit) { biometricAuth.value = null }
     val context = LocalContext.current
     val repository = remember { UserConfigRepository(context) }
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarState = remember { SnackbarHostState() }
     val useBiometric by repository.useBiometric.collectAsState(initial = false)
     var tapPasscode by remember { mutableStateOf("") }
     var passAuth by remember { mutableStateOf(false) }
@@ -93,7 +93,7 @@ fun EnterPasscodeChangeFullscreen(navController: NavController, onBiometricAuth:
     }
     Scaffold(
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 48.dp))
+            SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(bottom = 48.dp))
         },
         bottomBar = {
             Box(

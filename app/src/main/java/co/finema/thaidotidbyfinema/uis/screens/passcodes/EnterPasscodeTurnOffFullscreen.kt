@@ -61,7 +61,7 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
     LaunchedEffect(Unit) { biometricAuth.value = null }
     val context = LocalContext.current
     val repository = remember { UserConfigRepository(context) }
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarState = remember { SnackbarHostState() }
     val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
     val useBiometric by repository.useBiometric.collectAsState(initial = false)
     val scope = rememberCoroutineScope()
@@ -74,7 +74,7 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
                     repository.updatePasscode("")
                     if (useBiometric) {
                         repository.updateUseBiometric(false)
-                        snackbarHostState.showSnackbar(disableBiometricsSuccess)
+                        snackbarState.showSnackbar(disableBiometricsSuccess)
                     }
                 }
                 .invokeOnCompletion { navController.popBackStack() }
@@ -103,7 +103,7 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
     }
     Scaffold(
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 48.dp))
+            SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(bottom = 48.dp))
         },
         bottomBar = {
             Box(

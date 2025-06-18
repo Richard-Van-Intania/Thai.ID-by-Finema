@@ -59,7 +59,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
     val context = LocalContext.current
     val biometricManager = BiometricManager.from(context)
     val repository = remember { UserConfigRepository(context) }
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarState = remember { SnackbarHostState() }
     val enableBiometricsSuccess = stringResource(R.string.enable_biometrics_success)
     val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
     val biometricsNotSupport = stringResource(R.string.biometrics_not_support)
@@ -68,12 +68,12 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
         when (biometricAuth.value) {
             true -> {
                 repository.updateUseBiometric(true)
-                snackbarHostState.showSnackbar(enableBiometricsSuccess)
+                snackbarState.showSnackbar(enableBiometricsSuccess)
                 biometricAuth.value = null
             }
 
             false -> {
-                snackbarHostState.showSnackbar(unableUseBiometrics)
+                snackbarState.showSnackbar(unableUseBiometrics)
                 biometricAuth.value = null
             }
 
@@ -82,7 +82,7 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
     }
     Scaffold(
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState, modifier = Modifier.padding(bottom = 56.dp))
+            SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(bottom = 56.dp))
         },
         topBar = {
             AppBarOptBack(
@@ -161,13 +161,13 @@ fun SettingsScreen(navController: NavController, onBiometricAuth: () -> Unit) {
                                         onBiometricAuth()
                                     } else {
                                         scope.launch {
-                                            snackbarHostState.showSnackbar(biometricsNotSupport)
+                                            snackbarState.showSnackbar(biometricsNotSupport)
                                         }
                                     }
                                 } else {
                                     scope.launch {
                                         repository.updateUseBiometric(false)
-                                        snackbarHostState.showSnackbar(disableBiometricsSuccess)
+                                        snackbarState.showSnackbar(disableBiometricsSuccess)
                                     }
                                 }
                             },
