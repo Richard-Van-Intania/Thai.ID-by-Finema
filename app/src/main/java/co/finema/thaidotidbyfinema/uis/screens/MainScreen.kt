@@ -36,6 +36,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import co.finema.thaidotidbyfinema.cornerRadius
+import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.bottomTabs
@@ -208,7 +209,11 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 // }
 
 @Composable
-fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean>) {
+fun MainScreen(
+    navController: NavHostController,
+    localAuth: MutableState<Boolean>,
+    layoutHistoryViewModel: LayoutHistoryViewModel,
+) {
     BackHandler(enabled = true) {}
     val context = LocalContext.current
     val repository = remember { UserConfigRepository(context) }
@@ -295,7 +300,10 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
                 popEnterTransition = { EnterTransition.None },
                 popExitTransition = { ExitTransition.None },
             ) {
-                HomeTab(navController = navController)
+                HomeTab(
+                    navController = navController,
+                    layoutHistoryViewModel = layoutHistoryViewModel,
+                )
             }
             composable(
                 route = Screen.HistoryTab.route,

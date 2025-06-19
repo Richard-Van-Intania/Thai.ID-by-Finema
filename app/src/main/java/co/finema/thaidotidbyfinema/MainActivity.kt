@@ -178,7 +178,11 @@ class MainActivity : FragmentActivity() {
                         route = Screen.HomeRoot.route,
                     ) {
                         composable(route = Screen.MainScreen.route) {
-                            MainScreen(navController = navController, localAuth = localAuth)
+                            MainScreen(
+                                navController = navController,
+                                localAuth = localAuth,
+                                layoutHistoryViewModel = layoutHistoryViewModel,
+                            )
                         }
                         composable(route = Screen.CreatePasscodeFullscreen.route) {
                             CreatePasscodeFullscreen(navController = navController)

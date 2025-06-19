@@ -56,6 +56,7 @@ import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.ViewLayout
 import co.finema.thaidotidbyfinema.cornerRadius
+import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
@@ -70,7 +71,7 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeTab(navController: NavController) {
+fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryViewModel) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
     val context = LocalContext.current
@@ -145,6 +146,7 @@ fun HomeTab(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 val homeViewLayout by repository.homeViewLayout.collectAsState(initial = null)
+                val layoutHistory by layoutHistoryViewModel.layoutHistory.collectAsState()
                 Spacer(modifier = Modifier.height(80.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
