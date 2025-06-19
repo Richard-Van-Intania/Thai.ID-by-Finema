@@ -302,8 +302,9 @@ fun HomeTab(
                             )
                         }
                 }
+                Spacer(modifier = Modifier.height(8.dp))
                 if (layoutHistory.isEmpty()) {
-                    Spacer(modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                     Image(
                         painter = painterResource(id = R.drawable.group_40772),
                         contentDescription = null,
@@ -324,112 +325,122 @@ fun HomeTab(
                     ) {
                         itemsIndexed(layoutHistory) { index, item ->
                             val documentLayout = DocumentLayout.valueOf(item.documentLayout)
-                            Box(
-                                modifier =
-                                    Modifier.clip(RoundedCornerShape(cornerRadius))
-                                        .background(white)
-                                        .fillMaxWidth()
-                                        .padding(
-                                            start = 16.dp,
-                                            top = 16.dp,
-                                            end = 8.dp,
-                                            bottom = 16.dp,
-                                        ),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically,
+                            Box(modifier = Modifier.padding(bottom = 16.dp)) {
+                                Box(
+                                    modifier =
+                                        Modifier.clip(RoundedCornerShape(cornerRadius))
+                                            .background(white)
+                                            .fillMaxWidth()
+                                            .padding(
+                                                start = 16.dp,
+                                                top = 16.dp,
+                                                end = 8.dp,
+                                                bottom = 16.dp,
+                                            ),
+                                    contentAlignment = Alignment.Center,
                                 ) {
-                                    Box(
-                                        modifier =
-                                            Modifier.size(88.dp)
-                                                .clip(RoundedCornerShape(1.dp))
-                                                .border(
-                                                    width = 1.dp,
-                                                    color = secondaryGray,
-                                                    shape = RoundedCornerShape(1.dp),
-                                                )
-                                                .background(neutral01)
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
                                     ) {
-                                        Column(
-                                            modifier = Modifier.fillMaxSize().padding(all = 4.dp),
-                                            verticalArrangement = Arrangement.Center,
-                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                        Box(
+                                            modifier =
+                                                Modifier.size(88.dp)
+                                                    .clip(RoundedCornerShape(1.dp))
+                                                    .border(
+                                                        width = 1.dp,
+                                                        color = secondaryGray,
+                                                        shape = RoundedCornerShape(1.dp),
+                                                    )
+                                                    .background(neutral01)
                                         ) {
-                                            if (
-                                                documentLayout == DocumentLayout.ONE_SIDE_CARD ||
+                                            Column(
+                                                modifier =
+                                                    Modifier.fillMaxSize().padding(all = 4.dp),
+                                                verticalArrangement = Arrangement.Center,
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                if (
                                                     documentLayout ==
-                                                        DocumentLayout.ONE_SIDE_HALF_A4 ||
-                                                    documentLayout == DocumentLayout.FULL_A4
-                                            )
-                                                Image(
-                                                    modifier = Modifier.fillMaxSize().weight(1f),
-                                                    painter =
-                                                        rememberAsyncImagePainter(
-                                                            model =
-                                                                item.layoutRawImagefileName0
-                                                                    ?.toUri()
-                                                        ),
-                                                    contentDescription = null,
-                                                    contentScale = ContentScale.Fit,
+                                                        DocumentLayout.ONE_SIDE_CARD ||
+                                                        documentLayout ==
+                                                            DocumentLayout.ONE_SIDE_HALF_A4 ||
+                                                        documentLayout == DocumentLayout.FULL_A4
                                                 )
-                                            else {
-                                                Image(
-                                                    modifier = Modifier.fillMaxSize().weight(1f),
-                                                    painter =
-                                                        rememberAsyncImagePainter(
-                                                            model =
-                                                                item.layoutRawImagefileName1
-                                                                    ?.toUri()
-                                                        ),
-                                                    contentDescription = null,
-                                                    contentScale = ContentScale.Fit,
-                                                )
-                                                Spacer(modifier = Modifier.height(4.dp))
-                                                Image(
-                                                    modifier = Modifier.fillMaxSize().weight(1f),
-                                                    painter =
-                                                        rememberAsyncImagePainter(
-                                                            model =
-                                                                item.layoutRawImagefileName2
-                                                                    ?.toUri()
-                                                        ),
-                                                    contentDescription = null,
-                                                    contentScale = ContentScale.Fit,
-                                                )
+                                                    Image(
+                                                        modifier =
+                                                            Modifier.fillMaxSize().weight(1f),
+                                                        painter =
+                                                            rememberAsyncImagePainter(
+                                                                model =
+                                                                    item.layoutRawImagefileName0
+                                                                        ?.toUri()
+                                                            ),
+                                                        contentDescription = null,
+                                                        contentScale = ContentScale.Fit,
+                                                    )
+                                                else {
+                                                    Image(
+                                                        modifier =
+                                                            Modifier.fillMaxSize().weight(1f),
+                                                        painter =
+                                                            rememberAsyncImagePainter(
+                                                                model =
+                                                                    item.layoutRawImagefileName1
+                                                                        ?.toUri()
+                                                            ),
+                                                        contentDescription = null,
+                                                        contentScale = ContentScale.Fit,
+                                                    )
+                                                    Spacer(modifier = Modifier.height(4.dp))
+                                                    Image(
+                                                        modifier =
+                                                            Modifier.fillMaxSize().weight(1f),
+                                                        painter =
+                                                            rememberAsyncImagePainter(
+                                                                model =
+                                                                    item.layoutRawImagefileName2
+                                                                        ?.toUri()
+                                                            ),
+                                                        contentDescription = null,
+                                                        contentScale = ContentScale.Fit,
+                                                    )
+                                                }
                                             }
                                         }
-                                    }
-                                    Spacer(modifier = Modifier.width(24.dp))
-                                    Column {
-                                        Text(
-                                            text =
-                                                item.userDefinedName
-                                                    ?: (stringResource(R.string.untitled_document) +
-                                                        " (${index + 1})"),
-                                            color = primaryBlack,
-                                            fontSize = 20.sp,
-                                            fontWeight = FontWeight.W400,
-                                        )
-                                        Text(
-                                            text = item.dateCreated,
-                                            color = neutral04,
-                                            fontSize = 20.sp,
-                                            fontWeight = FontWeight.W400,
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.weight(1f))
-                                    IconButton(
-                                        onClick = {
-                                            //
+                                        Spacer(modifier = Modifier.width(24.dp))
+                                        Column {
+                                            Text(
+                                                text =
+                                                    item.userDefinedName
+                                                        ?: (stringResource(
+                                                            R.string.untitled_document
+                                                        ) + " (${index + 1})"),
+                                                color = primaryBlack,
+                                                fontSize = 20.sp,
+                                                fontWeight = FontWeight.W400,
+                                            )
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            Text(
+                                                text = item.dateCreated,
+                                                color = neutral04,
+                                                fontSize = 20.sp,
+                                                fontWeight = FontWeight.W400,
+                                            )
                                         }
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.MoreHoriz,
-                                            contentDescription = null,
-                                            tint = blue05,
-                                        )
+                                        Spacer(modifier = Modifier.weight(1f))
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        IconButton(
+                                            onClick = {
+                                                //
+                                            }
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Rounded.MoreHoriz,
+                                                contentDescription = null,
+                                                tint = blue05,
+                                            )
+                                        }
                                     }
                                 }
                             }
