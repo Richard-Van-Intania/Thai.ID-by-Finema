@@ -66,6 +66,7 @@ import co.finema.thaidotidbyfinema.uis.blue05
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue09
+import co.finema.thaidotidbyfinema.uis.neutral04
 import co.finema.thaidotidbyfinema.uis.neutral07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
@@ -289,16 +290,32 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                             )
                         }
                 }
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Top,
-                ) {
-                    items(layoutHistory) {
-                        Text(
-                            "id:${it.id} dateCreated:${it.dateCreated} dateLastUsed:${it.dateLastUsed}",
-                            fontSize = 16.sp,
-                        )
+                if (layoutHistory.isEmpty()) {
+                    Spacer(modifier = Modifier.height(40.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.group_40772),
+                        contentDescription = null,
+                        modifier = Modifier.height(88.dp),
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Text(
+                        text =
+                            stringResource(R.string.there_are_no_documents_displayed_on_this_page),
+                        color = neutral04,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.W400,
+                    )
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                        verticalArrangement = Arrangement.Top,
+                    ) {
+                        items(layoutHistory) {
+                            Text(
+                                "id:${it.id} dateCreated:${it.dateCreated} dateLastUsed:${it.dateLastUsed}",
+                                fontSize = 16.sp,
+                            )
+                        }
                     }
                 }
             }
