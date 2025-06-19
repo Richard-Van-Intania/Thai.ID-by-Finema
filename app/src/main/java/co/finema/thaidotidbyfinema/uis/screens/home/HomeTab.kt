@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -32,6 +32,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.BorderColor
 import androidx.compose.material.icons.rounded.GridView
+import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
@@ -315,22 +316,48 @@ fun HomeTab(
                         modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
                         verticalArrangement = Arrangement.Top,
                     ) {
-                        items(layoutHistory) {
+                        itemsIndexed(layoutHistory) { index, item ->
                             Box(
                                 modifier =
                                     Modifier.clip(RoundedCornerShape(cornerRadius))
                                         .background(white)
-                                        .fillMaxWidth(),
+                                        .fillMaxWidth()
+                                        .height(112.dp),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    Text(
-                                        "id:${it.id} dateCreated:${it.dateCreated} dateLastUsed:${it.dateLastUsed}",
-                                        fontSize = 16.sp,
-                                    )
+                                    Column {
+                                        Text(
+                                            text =
+                                                item.userDefinedName
+                                                    ?: (stringResource(R.string.untitled_document) +
+                                                        " (${index + 1})"),
+                                            color = primaryBlack,
+                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.W400,
+                                        )
+                                        Text(
+                                            text = item.dateCreated,
+                                            color = neutral04,
+                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.W400,
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.weight(1f))
+                                    IconButton(
+                                        onClick = {
+                                            //
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.MoreHoriz,
+                                            contentDescription = null,
+                                            tint = blue05,
+                                        )
+                                    }
                                 }
                             }
                         }
