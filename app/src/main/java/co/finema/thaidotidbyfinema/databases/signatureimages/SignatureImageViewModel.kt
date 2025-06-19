@@ -32,16 +32,16 @@ class SignatureImageViewModel(private val signatureImageDao: SignatureImageDao) 
         }
     }
 
-    fun removeSignatureImage(id: Int) {
+    fun newDateLastUsed(id: Int, dateLastUsed: String) {
         viewModelScope.launch {
-            signatureImageDao.deleteSignatureImage(id = id)
+            signatureImageDao.updateLastUsed(id = id, dateLastUsed = dateLastUsed)
             loadSignatureImages()
         }
     }
 
-    fun newDateLastUsed(id: Int, dateLastUsed: String) {
+    fun removeSignatureImage(id: Int) {
         viewModelScope.launch {
-            signatureImageDao.updateLastUsed(id = id, dateLastUsed = dateLastUsed)
+            signatureImageDao.deleteSignatureImage(id = id)
             loadSignatureImages()
         }
     }
