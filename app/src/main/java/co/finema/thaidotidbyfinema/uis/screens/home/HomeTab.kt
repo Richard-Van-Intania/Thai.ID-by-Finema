@@ -353,6 +353,11 @@ fun HomeTab(
                                                         shape = RoundedCornerShape(1.dp),
                                                     )
                                                     .background(neutral01)
+                                                    .clickable(
+                                                        onClick = {
+                                                            //
+                                                        }
+                                                    )
                                         ) {
                                             Column(
                                                 modifier =
