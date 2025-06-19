@@ -50,4 +50,18 @@ class LayoutHistoryViewModel(private val layoutHistoryDao: LayoutHistoryDao) : V
             loadLayoutHistory()
         }
     }
+
+    fun newUserDefinedName(id: Int, userDefinedName: String) {
+        viewModelScope.launch {
+            layoutHistoryDao.updateUserDefinedName(id = id, userDefinedName = userDefinedName)
+            loadLayoutHistory()
+        }
+    }
+
+    fun removeLayoutHistory(id: Int) {
+        viewModelScope.launch {
+            layoutHistoryDao.deleteLayoutHistory(id = id)
+            loadLayoutHistory()
+        }
+    }
 }
