@@ -95,7 +95,7 @@ class MainActivity : FragmentActivity() {
         val signatureImageDatabase = SignatureImageDatabase.getDatabase(this)
         val signatureImageDao = signatureImageDatabase.signatureImageDao()
         val signatureImageViewModel = SignatureImageViewModel(signatureImageDao)
-        // more db below
+        // more db below LayoutHistory ExportHistory
 
         // biometric below
         executor = ContextCompat.getMainExecutor(this)
