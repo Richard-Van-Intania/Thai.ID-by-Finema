@@ -73,6 +73,7 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 import coil.compose.rememberAsyncImagePainter
+import java.time.LocalDateTime
 
 @Composable
 fun DocumentPlaceholderScreen(
@@ -294,9 +295,17 @@ fun DocumentPlaceholderScreen(
             ) {
                 GradientButton(
                     onClick = {
-
-                        // create template history
-                        // go create cert
+                        val now = LocalDateTime.now().toString()
+                        layoutHistoryViewModel.addLayoutHistory(
+                            documentLayout = layoutItems[layoutIndex.intValue].documentLayout.name,
+                            dateCreated = now,
+                            dateLastUsed = now,
+                            layoutRawImagefileName0 = placeholderFilePath0.value?.toString(),
+                            layoutRawImagefileName1 = placeholderFilePath1.value?.toString(),
+                            layoutRawImagefileName2 = placeholderFilePath2.value?.toString(),
+                            userDefinedName = null,
+                        )
+                        navController.navigate(route = Screen.CreateCertifiedScreen.route)
                     },
                     text = stringResource(R.string.make_a_cert),
                 )
