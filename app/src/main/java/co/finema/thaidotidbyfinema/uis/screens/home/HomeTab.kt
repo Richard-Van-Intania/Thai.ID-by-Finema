@@ -316,10 +316,23 @@ fun HomeTab(
                         verticalArrangement = Arrangement.Top,
                     ) {
                         items(layoutHistory) {
-                            Text(
-                                "id:${it.id} dateCreated:${it.dateCreated} dateLastUsed:${it.dateLastUsed}",
-                                fontSize = 16.sp,
-                            )
+                            Box(
+                                modifier =
+                                    Modifier.clip(RoundedCornerShape(cornerRadius))
+                                        .background(white)
+                                        .fillMaxWidth(),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Text(
+                                        "id:${it.id} dateCreated:${it.dateCreated} dateLastUsed:${it.dateLastUsed}",
+                                        fontSize = 16.sp,
+                                    )
+                                }
+                            }
                         }
                     }
                 }
