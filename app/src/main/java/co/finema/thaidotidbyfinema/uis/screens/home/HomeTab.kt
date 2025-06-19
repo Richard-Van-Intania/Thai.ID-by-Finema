@@ -34,6 +34,7 @@ import androidx.compose.material.icons.rounded.BorderColor
 import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -75,7 +76,11 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryViewModel) {
+fun HomeTab(
+    navController: NavController,
+    layoutHistoryViewModel: LayoutHistoryViewModel,
+    layoutHistoryId: MutableIntState,
+) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
     val context = LocalContext.current

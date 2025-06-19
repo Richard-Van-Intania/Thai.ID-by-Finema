@@ -18,6 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -213,6 +214,7 @@ fun MainScreen(
     navController: NavHostController,
     localAuth: MutableState<Boolean>,
     layoutHistoryViewModel: LayoutHistoryViewModel,
+    layoutHistoryId: MutableIntState,
 ) {
     BackHandler(enabled = true) {}
     val context = LocalContext.current
@@ -302,6 +304,7 @@ fun MainScreen(
             ) {
                 HomeTab(
                     navController = navController,
+                    layoutHistoryId = layoutHistoryId,
                     layoutHistoryViewModel = layoutHistoryViewModel,
                 )
             }

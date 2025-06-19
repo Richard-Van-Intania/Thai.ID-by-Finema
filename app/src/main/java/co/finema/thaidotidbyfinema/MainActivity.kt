@@ -37,6 +37,7 @@ import co.finema.thaidotidbyfinema.uis.screens.home.CameraScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.CreateCertifiedScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.CropImageScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPlaceholderScreen
+import co.finema.thaidotidbyfinema.uis.screens.home.DocumentPreviewScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.PdfPageSelectScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SelectLayoutScreen
 import co.finema.thaidotidbyfinema.uis.screens.home.SignPadScreen
@@ -152,6 +153,7 @@ class MainActivity : FragmentActivity() {
                 val imageIndex = remember { mutableIntStateOf(0) }
                 val imageUri = remember { mutableStateOf<Uri?>(null) }
                 val pdfUrl = remember { mutableStateOf<Uri?>(null) }
+                val layoutHistoryId = remember { mutableIntStateOf(0) }
                 NavHost(
                     navController = navController,
                     startDestination = Screen.LoadingScreen.route,
@@ -182,6 +184,7 @@ class MainActivity : FragmentActivity() {
                                 navController = navController,
                                 localAuth = localAuth,
                                 layoutHistoryViewModel = layoutHistoryViewModel,
+                                layoutHistoryId = layoutHistoryId,
                             )
                         }
                         composable(route = Screen.CreatePasscodeFullscreen.route) {
@@ -248,6 +251,13 @@ class MainActivity : FragmentActivity() {
                                 placeholderFilePath0 = placeholderFilePath0,
                                 placeholderFilePath1 = placeholderFilePath1,
                                 placeholderFilePath2 = placeholderFilePath2,
+                            )
+                        }
+                        composable(route = Screen.DocumentPreviewScreen.route) {
+                            DocumentPreviewScreen(
+                                navController = navController,
+                                layoutHistoryViewModel = layoutHistoryViewModel,
+                                layoutHistoryId = layoutHistoryId,
                             )
                         }
                         composable(route = Screen.CreateCertifiedScreen.route) {
