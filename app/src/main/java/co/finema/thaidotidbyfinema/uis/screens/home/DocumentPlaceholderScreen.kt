@@ -57,6 +57,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.cornerRadius
+import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.enums.FileSource
 import co.finema.thaidotidbyfinema.uis.Screen
@@ -83,6 +84,7 @@ fun DocumentPlaceholderScreen(
     imageUri: MutableState<Uri?>,
     imageIndex: MutableIntState,
     pdfUrl: MutableState<Uri?>,
+    layoutHistoryViewModel: LayoutHistoryViewModel,
 ) {
     val context = LocalContext.current
     var startCameraLive by remember { mutableStateOf(false) }

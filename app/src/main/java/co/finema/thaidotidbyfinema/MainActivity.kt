@@ -23,6 +23,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryDatabase
+import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageDatabase
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
@@ -95,6 +97,11 @@ class MainActivity : FragmentActivity() {
         val signatureImageDatabase = SignatureImageDatabase.getDatabase(this)
         val signatureImageDao = signatureImageDatabase.signatureImageDao()
         val signatureImageViewModel = SignatureImageViewModel(signatureImageDao)
+
+        val layoutHistoryDatabase = LayoutHistoryDatabase.getDatabase(this)
+        val layoutHistoryDao = layoutHistoryDatabase.layoutHistoryDao()
+        val layoutHistoryViewModel = LayoutHistoryViewModel(layoutHistoryDao)
+
         // more db below LayoutHistory ExportHistory
 
         // biometric below
@@ -215,6 +222,7 @@ class MainActivity : FragmentActivity() {
                                 imageUri = imageUri,
                                 imageIndex = imageIndex,
                                 pdfUrl = pdfUrl,
+                                layoutHistoryViewModel = layoutHistoryViewModel,
                             )
                         }
                         composable(route = Screen.CameraScreen.route) {
