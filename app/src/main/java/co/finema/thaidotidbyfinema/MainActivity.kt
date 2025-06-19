@@ -102,7 +102,7 @@ class MainActivity : FragmentActivity() {
         val layoutHistoryDao = layoutHistoryDatabase.layoutHistoryDao()
         val layoutHistoryViewModel = LayoutHistoryViewModel(layoutHistoryDao)
 
-        // more db below LayoutHistory ExportHistory
+        // more  ExportHistory
 
         // biometric below
         executor = ContextCompat.getMainExecutor(this)
