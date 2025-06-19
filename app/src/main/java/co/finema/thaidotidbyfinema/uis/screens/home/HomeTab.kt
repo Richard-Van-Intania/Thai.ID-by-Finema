@@ -254,34 +254,37 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                         fontWeight = FontWeight.W700,
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    IconButton(
-                        onClick = {
-                            scope.launch {
-                                if (homeViewLayout == ViewLayout.VIEW_LAYOUT_LIST) {
-                                    repository.updateHomeViewLayout(
-                                        ViewLayout.VIEW_LAYOUT_THUMBNAILS
-                                    )
-                                } else if (homeViewLayout == ViewLayout.VIEW_LAYOUT_THUMBNAILS) {
-                                    repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
+                    if (layoutHistory.isNotEmpty())
+                        IconButton(
+                            onClick = {
+                                scope.launch {
+                                    if (homeViewLayout == ViewLayout.VIEW_LAYOUT_LIST) {
+                                        repository.updateHomeViewLayout(
+                                            ViewLayout.VIEW_LAYOUT_THUMBNAILS
+                                        )
+                                    } else if (
+                                        homeViewLayout == ViewLayout.VIEW_LAYOUT_THUMBNAILS
+                                    ) {
+                                        repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
+                                    }
                                 }
                             }
-                        }
-                    ) {
-                        Icon(
-                            imageVector =
-                                when (homeViewLayout) {
-                                    ViewLayout.VIEW_LAYOUT_UNSPECIFIED -> Icons.Rounded.Sync
-                                    ViewLayout.VIEW_LAYOUT_LIST -> Icons.Rounded.GridView
-                                    ViewLayout.VIEW_LAYOUT_THUMBNAILS ->
-                                        Icons.AutoMirrored.Rounded.List
+                        ) {
+                            Icon(
+                                imageVector =
+                                    when (homeViewLayout) {
+                                        ViewLayout.VIEW_LAYOUT_UNSPECIFIED -> Icons.Rounded.Sync
+                                        ViewLayout.VIEW_LAYOUT_LIST -> Icons.Rounded.GridView
+                                        ViewLayout.VIEW_LAYOUT_THUMBNAILS ->
+                                            Icons.AutoMirrored.Rounded.List
 
-                                    ViewLayout.UNRECOGNIZED -> Icons.Rounded.Sync
-                                    null -> Icons.Rounded.Sync
-                                },
-                            contentDescription = null,
-                            tint = primaryDarkBlue,
-                        )
-                    }
+                                        ViewLayout.UNRECOGNIZED -> Icons.Rounded.Sync
+                                        null -> Icons.Rounded.Sync
+                                    },
+                                contentDescription = null,
+                                tint = primaryDarkBlue,
+                            )
+                        }
                 }
                 // here below
 
