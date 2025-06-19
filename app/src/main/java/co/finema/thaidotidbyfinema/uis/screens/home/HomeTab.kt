@@ -5,6 +5,7 @@ package co.finema.thaidotidbyfinema.uis.screens.home
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -57,23 +58,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.ViewLayout
 import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
+import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.lightBlue09
+import co.finema.thaidotidbyfinema.uis.neutral01
 import co.finema.thaidotidbyfinema.uis.neutral04
 import co.finema.thaidotidbyfinema.uis.neutral07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
+import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
+import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.launch
 
 @Composable
@@ -317,18 +323,85 @@ fun HomeTab(
                         verticalArrangement = Arrangement.Top,
                     ) {
                         itemsIndexed(layoutHistory) { index, item ->
+                            val documentLayout = DocumentLayout.valueOf(item.documentLayout)
                             Box(
                                 modifier =
                                     Modifier.clip(RoundedCornerShape(cornerRadius))
                                         .background(white)
                                         .fillMaxWidth()
-                                        .height(112.dp),
+                                        .padding(
+                                            start = 16.dp,
+                                            top = 16.dp,
+                                            end = 8.dp,
+                                            bottom = 16.dp,
+                                        ),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
+                                    Box(
+                                        modifier =
+                                            Modifier.size(88.dp)
+                                                .clip(RoundedCornerShape(1.dp))
+                                                .border(
+                                                    width = 1.dp,
+                                                    color = secondaryGray,
+                                                    shape = RoundedCornerShape(1.dp),
+                                                )
+                                                .background(neutral01)
+                                    ) {
+                                        Column(
+                                            modifier = Modifier.fillMaxSize().padding(all = 4.dp),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                        ) {
+                                            if (
+                                                documentLayout == DocumentLayout.ONE_SIDE_CARD ||
+                                                    documentLayout ==
+                                                        DocumentLayout.ONE_SIDE_HALF_A4 ||
+                                                    documentLayout == DocumentLayout.FULL_A4
+                                            )
+                                                Image(
+                                                    modifier = Modifier.fillMaxSize().weight(1f),
+                                                    painter =
+                                                        rememberAsyncImagePainter(
+                                                            model =
+                                                                item.layoutRawImagefileName0
+                                                                    ?.toUri()
+                                                        ),
+                                                    contentDescription = null,
+                                                    contentScale = ContentScale.Fit,
+                                                )
+                                            else {
+                                                Image(
+                                                    modifier = Modifier.fillMaxSize().weight(1f),
+                                                    painter =
+                                                        rememberAsyncImagePainter(
+                                                            model =
+                                                                item.layoutRawImagefileName1
+                                                                    ?.toUri()
+                                                        ),
+                                                    contentDescription = null,
+                                                    contentScale = ContentScale.Fit,
+                                                )
+                                                Spacer(modifier = Modifier.height(4.dp))
+                                                Image(
+                                                    modifier = Modifier.fillMaxSize().weight(1f),
+                                                    painter =
+                                                        rememberAsyncImagePainter(
+                                                            model =
+                                                                item.layoutRawImagefileName2
+                                                                    ?.toUri()
+                                                        ),
+                                                    contentDescription = null,
+                                                    contentScale = ContentScale.Fit,
+                                                )
+                                            }
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.width(24.dp))
                                     Column {
                                         Text(
                                             text =
