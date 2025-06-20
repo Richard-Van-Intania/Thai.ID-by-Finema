@@ -351,6 +351,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                         if (homeViewLayout == ViewLayout.VIEW_LAYOUT_THUMBNAILS) item {
                             FlowRow(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                                 layoutHistory.forEachIndexed { index, item ->
+                                    val documentLayout = DocumentLayout.valueOf(item.documentLayout)
                                     Column {
                                         Box(
                                             modifier = Modifier
@@ -372,7 +373,43 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                         //
                                                     }),
                                             contentAlignment = Alignment.Center,
-                                           ) { Text(text = item.id.toString()) }
+                                           ) {
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .padding(all = 4.dp),
+                                                verticalArrangement = Arrangement.Center,
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                                  ) {
+                                                if (documentLayout == DocumentLayout.ONE_SIDE_CARD || documentLayout == DocumentLayout.ONE_SIDE_HALF_A4 || documentLayout == DocumentLayout.FULL_A4) Image(
+                                                    modifier = Modifier
+                                                        .fillMaxSize()
+                                                        .weight(1f),
+                                                    painter = rememberAsyncImagePainter(model = item.layoutRawImagefileName0?.toUri()),
+                                                    contentDescription = null,
+                                                    contentScale = ContentScale.Fit,
+                                                                                                                                                                                                          )
+                                                else {
+                                                    Image(
+                                                        modifier = Modifier
+                                                            .fillMaxSize()
+                                                            .weight(1f),
+                                                        painter = rememberAsyncImagePainter(model = item.layoutRawImagefileName1?.toUri()),
+                                                        contentDescription = null,
+                                                        contentScale = ContentScale.Fit,
+                                                         )
+                                                    Spacer(modifier = Modifier.height(8.dp))
+                                                    Image(
+                                                        modifier = Modifier
+                                                            .fillMaxSize()
+                                                            .weight(1f),
+                                                        painter = rememberAsyncImagePainter(model = item.layoutRawImagefileName2?.toUri()),
+                                                        contentDescription = null,
+                                                        contentScale = ContentScale.Fit,
+                                                         )
+                                                }
+                                            }
+                                        }
                                         Box(
                                             modifier = Modifier
                                                 .width(184.dp)
