@@ -70,11 +70,7 @@ import java.io.FileOutputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PdfPageSelectScreen(
-    navController: NavController,
-    imageUri: MutableState<Uri?>,
-    pdfUrl: MutableState<Uri?>,
-) {
+fun PdfPageSelectScreen(navController: NavController, imageUri: MutableState<Uri?>, pdfUrl: MutableState<Uri?>) {
     BackHandler(enabled = true) {}
     val context = LocalContext.current
     var pageIndex by remember { mutableIntStateOf(0) }
@@ -104,14 +100,7 @@ fun PdfPageSelectScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.select_one_page),
-                        color = primaryBlack,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.W700,
-                    )
-                },
+                title = { Text(text = stringResource(R.string.select_one_page), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
                 navigationIcon = {
                     IconButton(
                         onClick = {
@@ -124,12 +113,7 @@ fun PdfPageSelectScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { expanded = !expanded }) {
-                        Icon(
-                            imageVector = Icons.Rounded.FormatListNumberedRtl,
-                            contentDescription = null,
-                        )
-                    }
+                    IconButton(onClick = { expanded = !expanded }) { Icon(imageVector = Icons.Rounded.FormatListNumberedRtl, contentDescription = null) }
                     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                         for (page in 1..totalPages) {
                             DropdownMenuItem(
@@ -139,9 +123,7 @@ fun PdfPageSelectScreen(
                                         text = page.toString(),
                                         color = primaryBlack,
                                         fontSize = 24.sp,
-                                        fontWeight =
-                                            if (currentPageIndex.value == page - 1) FontWeight.W700
-                                            else FontWeight.W400,
+                                        fontWeight = if (currentPageIndex.value == page - 1) FontWeight.W700 else FontWeight.W400,
                                         textAlign = TextAlign.Center,
                                     )
                                 },
@@ -150,22 +132,14 @@ fun PdfPageSelectScreen(
                         }
                     }
                 },
-                colors =
-                    TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = white,
-                        navigationIconContentColor = primaryBlack,
-                        actionIconContentColor = primaryBlack,
-                    ),
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
             )
         },
         bottomBar = {
-            Box(
-                modifier =
-                    Modifier.background(white)
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 24.dp),
-                contentAlignment = Alignment.Center,
-            ) {
+            Box(modifier = Modifier
+                .background(white)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 24.dp), contentAlignment = Alignment.Center) {
                 GradientButton(
                     onClick = {
                         imageBitmap?.let { imageBitmap ->
@@ -189,35 +163,29 @@ fun PdfPageSelectScreen(
         },
         containerColor = whiteBG,
     ) { padding ->
-        Box(
-            modifier = Modifier.fillMaxSize().padding(padding),
-            contentAlignment = Alignment.Center,
-        ) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(padding), contentAlignment = Alignment.Center) {
             when {
                 isLoading -> CircularProgressIndicator()
                 imageBitmap != null -> {
                     Box(
-                        modifier =
-                            Modifier.fillMaxSize().pointerInput(
-                                totalPages,
-                                currentPageIndex.value,
-                            ) {
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .pointerInput(totalPages, currentPageIndex.value) {
                                 awaitPointerEventScope {
                                     while (true) {
-                                        val down =
-                                            awaitPointerEvent().changes.firstOrNull() ?: continue
+                                        val down = awaitPointerEvent().changes.firstOrNull() ?: continue
                                         if (down.pressed) {
                                             val drag = awaitHorizontalDragOrCancellation(down.id)
                                             drag?.let {
                                                 val dragThreshold = 100
                                                 when {
-                                                    it.positionChange().x > dragThreshold &&
-                                                        currentPageIndex.value > 0 -> {
+                                                    it.positionChange().x > dragThreshold && currentPageIndex.value > 0 -> {
                                                         pageIndex--
                                                     }
 
-                                                    it.positionChange().x < -dragThreshold &&
-                                                        currentPageIndex.value < totalPages - 1 -> {
+                                                    it.positionChange().x < -dragThreshold && currentPageIndex.value < totalPages - 1 -> {
                                                         pageIndex++
                                                     }
                                                 }
@@ -228,12 +196,7 @@ fun PdfPageSelectScreen(
                             },
                         contentAlignment = Alignment.Center,
                     ) {
-                        Image(
-                            bitmap = imageBitmap!!,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Fit,
-                        )
+                        Image(bitmap = imageBitmap!!, contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Fit)
                     }
                 }
             }

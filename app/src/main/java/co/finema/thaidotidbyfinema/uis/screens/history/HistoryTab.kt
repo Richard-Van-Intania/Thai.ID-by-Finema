@@ -39,22 +39,11 @@ fun HistoryTab(navController: NavController, counterState: CounterState) {
     val snackbarState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val disableBiometricsSuccess = stringResource(R.string.disable_biometrics_success)
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(bottom = 8.dp))
-        },
-        backgroundColor = whiteBG,
-    ) {
-        Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
-            Text(
-                "HistoryTab",
-                modifier =
-                    Modifier.clickable(
-                        onClick = {
-                            scope.launch { snackbarState.showSnackbar(disableBiometricsSuccess) }
-                        }
-                    ),
-            )
+    Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(bottom = 8.dp)) }, backgroundColor = whiteBG) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(it), contentAlignment = Alignment.Center) {
+            Text("HistoryTab", modifier = Modifier.clickable(onClick = { scope.launch { snackbarState.showSnackbar(disableBiometricsSuccess) } }))
         }
     }
 }

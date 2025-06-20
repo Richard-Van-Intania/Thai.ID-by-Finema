@@ -13,16 +13,7 @@ abstract class SignatureImageDatabase : RoomDatabase() {
         @Volatile private var Instance: SignatureImageDatabase? = null
 
         fun getDatabase(context: Context): SignatureImageDatabase {
-            return Instance
-                ?: synchronized(this) {
-                    Room.databaseBuilder(
-                            context,
-                            SignatureImageDatabase::class.java,
-                            "signature_image_database",
-                        )
-                        .build()
-                        .also { Instance = it }
-                }
+            return Instance ?: synchronized(this) { Room.databaseBuilder(context, SignatureImageDatabase::class.java, "signature_image_database").build().also { Instance = it } }
         }
     }
 }

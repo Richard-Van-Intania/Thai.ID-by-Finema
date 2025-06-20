@@ -30,24 +30,17 @@ fun LoadingScreen(navController: NavController) {
     val isAcceptedAgreements by repository.isAcceptedAgreements.collectAsState(initial = null)
     LaunchedEffect(isAcceptedAgreements) {
         when (isAcceptedAgreements) {
-            true ->
-                navController.navigate(route = Screen.HomeRoot.route) {
-                    popUpTo(Screen.LoadingScreen.route) { inclusive = true }
-                }
+            true -> navController.navigate(route = Screen.HomeRoot.route) { popUpTo(Screen.LoadingScreen.route) { inclusive = true } }
             false -> {
                 repository.updateLocale(TH)
                 repository.updateHomeViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
                 repository.updateHistoryViewLayout(ViewLayout.VIEW_LAYOUT_LIST)
-                navController.navigate(route = Screen.OnboardingRoot.route) {
-                    popUpTo(Screen.LoadingScreen.route) { inclusive = true }
-                }
+                navController.navigate(route = Screen.OnboardingRoot.route) { popUpTo(Screen.LoadingScreen.route) { inclusive = true } }
             }
             null -> {}
         }
     }
-    Scaffold {
-        Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    }
+    Scaffold { Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(it), contentAlignment = Alignment.Center) { CircularProgressIndicator() } }
 }

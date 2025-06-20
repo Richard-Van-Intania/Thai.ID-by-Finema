@@ -17,16 +17,7 @@ import co.finema.thaidotidbyfinema.uis.white
 
 @Composable
 fun PolicyAndSafetyScreen(navController: NavController) {
-    Scaffold(
-        topBar = {
-            AppBarOptBack(
-                containerColor = white,
-                text = stringResource(R.string.privacy_policy),
-                onClick = { navController.popBackStack() },
-            )
-        },
-        backgroundColor = white,
-    ) {
+    Scaffold(topBar = { AppBarOptBack(containerColor = white, text = stringResource(R.string.privacy_policy), onClick = { navController.popBackStack() }) }, backgroundColor = white) {
         AndroidView(
             modifier = Modifier.padding(it),
             factory = {

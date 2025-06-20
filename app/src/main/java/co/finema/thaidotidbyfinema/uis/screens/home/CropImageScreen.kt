@@ -63,9 +63,7 @@ fun CropImageScreen(
             onClick = {
                 showErrorsDialog = false
                 imageUri.value = null
-                navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
-                    popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
-                }
+                navController.navigate(route = Screen.DocumentPlaceholderScreen.route) { popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true } }
             },
         )
     }
@@ -74,14 +72,7 @@ fun CropImageScreen(
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.crop_image),
-                            color = white,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.W700,
-                        )
-                    },
+                    title = { Text(text = stringResource(R.string.crop_image), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700) },
                     navigationIcon = {
                         IconButton(
                             onClick = {
@@ -89,34 +80,20 @@ fun CropImageScreen(
                                 navController.popBackStack()
                             }
                         ) {
-                            Icon(
-                                imageVector = Icons.Rounded.Close,
-                                contentDescription = null,
-                                tint = white,
-                            )
+                            Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = white)
                         }
                     },
-                    actions = {
-                        IconButton(onClick = { state.crop() }) {
-                            Icon(
-                                imageVector = Icons.Rounded.Check,
-                                contentDescription = null,
-                                tint = white,
-                            )
-                        }
-                    },
-                    colors =
-                        TopAppBarDefaults.centerAlignedTopAppBarColors(
-                            containerColor = black,
-                            navigationIconContentColor = white,
-                            actionIconContentColor = white,
-                        ),
+                    actions = { IconButton(onClick = { state.crop() }) { Icon(imageVector = Icons.Rounded.Check, contentDescription = null, tint = white) } },
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = black, navigationIconContentColor = white, actionIconContentColor = white),
                 )
             },
             backgroundColor = black,
         ) {
             Cropify(
-                modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+                    .padding(horizontal = 16.dp),
                 uri = uri,
                 state = state,
                 onImageCropped = { imageBitmap ->
@@ -128,21 +105,13 @@ fun CropImageScreen(
                             2 -> placeholderFilePath2.value = photoFile.toUri()
                         }
                         imageUri.value = null
-                        navController.navigate(route = Screen.DocumentPlaceholderScreen.route) {
-                            popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true }
-                        }
+                        navController.navigate(route = Screen.DocumentPlaceholderScreen.route) { popUpTo(Screen.DocumentPlaceholderScreen.route) { inclusive = true } }
                     } else {
                         showErrorsDialog = true
                     }
                 },
                 onFailedToLoadImage = { showErrorsDialog = true },
-                option =
-                    CropifyOption(
-                        frameSize =
-                            CropifySize.FixedAspectRatio(
-                                1.0f / layoutItems[layoutIndex.intValue].aspectRatio
-                            )
-                    ),
+                option = CropifyOption(frameSize = CropifySize.FixedAspectRatio(1.0f / layoutItems[layoutIndex.intValue].aspectRatio)),
             )
         }
     }

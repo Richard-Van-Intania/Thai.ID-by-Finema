@@ -49,20 +49,8 @@ val sectionBold = SpanStyle(color = primaryBlack, fontSize = 22.sp, fontWeight =
 
 @Composable
 fun TermsScreen(navController: NavHostController) {
-    Scaffold(
-        topBar = {
-            AppBarOptBack(
-                containerColor = white,
-                text = stringResource(R.string.terms),
-                onClick = { navController.popBackStack() },
-            )
-        },
-        backgroundColor = white,
-    ) {
-        LazyColumn(
-            modifier = Modifier.padding(it),
-            contentPadding = PaddingValues(horizontal = 16.dp),
-        ) {
+    Scaffold(topBar = { AppBarOptBack(containerColor = white, text = stringResource(R.string.terms), onClick = { navController.popBackStack() }) }, backgroundColor = white) {
+        LazyColumn(modifier = Modifier.padding(it), contentPadding = PaddingValues(horizontal = 16.dp)) {
             item {
                 Text(
                     text =
@@ -92,16 +80,7 @@ fun TermsScreen(navController: NavHostController) {
                             withStyle(style = bodyBold) { append(text = section44) }
                             append(text = section441)
                             append(text = section442)
-                            withStyle(
-                                style =
-                                    SpanStyle(
-                                        color = primaryBlack,
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.W700,
-                                    )
-                            ) {
-                                append(text = agree)
-                            }
+                            withStyle(style = SpanStyle(color = primaryBlack, fontSize = 18.sp, fontWeight = FontWeight.W700)) { append(text = agree) }
                         },
                     color = neutral06,
                     fontSize = 18.sp,
@@ -111,69 +90,38 @@ fun TermsScreen(navController: NavHostController) {
             item {
                 val context = LocalContext.current
                 val repository = remember { UserConfigRepository(context) }
-                val isAcceptedAgreements by
-                    repository.isAcceptedAgreements.collectAsState(initial = false)
+                val isAcceptedAgreements by repository.isAcceptedAgreements.collectAsState(initial = false)
                 val scope = rememberCoroutineScope()
-                if (!isAcceptedAgreements)
-                    Row(
-                        modifier = Modifier.padding(vertical = 48.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
+                if (!isAcceptedAgreements) Row(modifier = Modifier.padding(vertical = 48.dp), verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier =
-                                Modifier.height(56.dp)
+                                Modifier
+                                    .height(56.dp)
                                     .weight(1f)
                                     .background(white)
-                                    .border(
-                                        width = 2.dp,
-                                        color = lightBlue07,
-                                        shape = RoundedCornerShape(56.dp),
-                                    )
+                                    .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
                                     .clip(RoundedCornerShape(56.dp))
-                                    .clickable(
-                                        onClick = {
-                                            navController.popBackStack(
-                                                route = Screen.WelcomeScreen.route,
-                                                inclusive = false,
-                                            )
-                                        }
-                                    ),
+                                    .clickable(onClick = { navController.popBackStack(route = Screen.WelcomeScreen.route, inclusive = false) }),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text(
-                                text = stringResource(R.string.decline),
-                                color = lightBlue07,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.W700,
-                            )
+                            Text(text = stringResource(R.string.decline), color = lightBlue07, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Box(
                             modifier =
-                                Modifier.height(56.dp)
+                                Modifier
+                                    .height(56.dp)
                                     .weight(1f)
                                     .clip(RoundedCornerShape(56.dp))
                                     .background(brush = gradient)
                                     .clickable(
                                         onClick = {
-                                            scope.launch {
-                                                repository.updateIsAcceptedAgreements(true)
-                                            }
-                                            navController.navigate(route = Screen.HomeRoot.route) {
-                                                popUpTo(Screen.WelcomeScreen.route) {
-                                                    inclusive = true
-                                                }
-                                            }
-                                        }
-                                    ),
+                                            scope.launch { repository.updateIsAcceptedAgreements(true) }
+                                            navController.navigate(route = Screen.HomeRoot.route) { popUpTo(Screen.WelcomeScreen.route) { inclusive = true } }
+                                        }),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text(
-                                text = stringResource(R.string.accept),
-                                color = white,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.W700,
-                            )
+                            Text(text = stringResource(R.string.accept), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                     }
                 else Spacer(modifier = Modifier.height(48.dp))
@@ -185,8 +133,7 @@ fun TermsScreen(navController: NavHostController) {
 private const val paragraph1 = "บริษัท ฟินีม่า จำกัด (ซึ่งต่อไปในประกาศนี้ เรียกว่า "
 private const val company = "“บริษัท”"
 private const val paragraph2Ios = ") ได้พัฒนาแอปพลิเคชัน Thai.ID (ซึ่งต่อไปนี้ในประกาศนี้ เรียกว่า "
-private const val paragraph2Android =
-    ") ได้พัฒนาแอปพลิเคชัน Thai.ID by Finema (ซึ่งต่อไปนี้ในประกาศนี้ เรียกว่า "
+private const val paragraph2Android = ") ได้พัฒนาแอปพลิเคชัน Thai.ID by Finema (ซึ่งต่อไปนี้ในประกาศนี้ เรียกว่า "
 private const val thaidotid = "“Thai.ID”"
 
 private const val paragraph3 =
@@ -222,7 +169,5 @@ private const val section431 =
 private const val section44 = "4.4. กฎหมายที่ใช้บังคับและเขตอำนาจศาล"
 private const val section441 =
     "\n4.4.1. การตีความข้อกำหนดและเงื่อนไขฯ ฉบับนี้ให้อยู่ภายใต้บังคับของกฎหมายแห่งราชอาณาจักรไทย หากข้อความใดของข้อกำหนดและเงื่อนไขฯ ละเมิดกฎหมายดังกล่าว ให้ข้อความนั้นไม่มีผลผูกพันระหว่างบริษัทและท่าน แต่ข้อความอื่นที่เหลืออยู่ยังคงมีผลผูกพัน\n"
-private const val section442 =
-    "\n4.4.2. ข้อพิพาทเกิดขึ้นจากการใช้บริการ Thai.ID ระหว่างบริษัทและท่านให้อยู่ภายใต้เขตอำนาจของศาลยุติธรรมแห่งราชอาณาจักรไทย\n\n"
-private const val agree =
-    "ข้าพเจ้าได้อ่านและรับทราบเนื้อหาของข้อกำหนดและเงื่อนไขฯ ฉบับนี้ จึงได้กด “ยินยอม” เพื่อยอมรับข้อกำหนดและรายละเอียดข้างต้นทั้งหมด"
+private const val section442 = "\n4.4.2. ข้อพิพาทเกิดขึ้นจากการใช้บริการ Thai.ID ระหว่างบริษัทและท่านให้อยู่ภายใต้เขตอำนาจของศาลยุติธรรมแห่งราชอาณาจักรไทย\n\n"
+private const val agree = "ข้าพเจ้าได้อ่านและรับทราบเนื้อหาของข้อกำหนดและเงื่อนไขฯ ฉบับนี้ จึงได้กด “ยินยอม” เพื่อยอมรับข้อกำหนดและรายละเอียดข้างต้นทั้งหมด"

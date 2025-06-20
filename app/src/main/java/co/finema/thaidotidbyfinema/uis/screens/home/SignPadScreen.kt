@@ -5,4 +5,5 @@ import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
 
 @Composable
-fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel) {}
+fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel) {
+}

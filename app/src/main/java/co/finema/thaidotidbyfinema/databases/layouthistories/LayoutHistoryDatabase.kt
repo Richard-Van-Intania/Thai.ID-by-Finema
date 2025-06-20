@@ -13,16 +13,7 @@ abstract class LayoutHistoryDatabase : RoomDatabase() {
         @Volatile private var Instance: LayoutHistoryDatabase? = null
 
         fun getDatabase(context: Context): LayoutHistoryDatabase {
-            return Instance
-                ?: synchronized(this) {
-                    Room.databaseBuilder(
-                            context,
-                            LayoutHistoryDatabase::class.java,
-                            "layout_history_database",
-                        )
-                        .build()
-                        .also { Instance = it }
-                }
+            return Instance ?: synchronized(this) { Room.databaseBuilder(context, LayoutHistoryDatabase::class.java, "layout_history_database").build().also { Instance = it } }
         }
     }
 }

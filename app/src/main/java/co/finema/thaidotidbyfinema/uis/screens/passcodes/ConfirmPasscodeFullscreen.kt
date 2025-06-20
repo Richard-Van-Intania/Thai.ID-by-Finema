@@ -66,12 +66,7 @@ import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun ConfirmPasscodeFullscreen(
-    navController: NavController,
-    tapPasscode: String,
-    onBiometricAuth: () -> Unit,
-    localAuth: MutableState<Boolean>,
-) {
+fun ConfirmPasscodeFullscreen(navController: NavController, tapPasscode: String, onBiometricAuth: () -> Unit, localAuth: MutableState<Boolean>) {
     BackHandler(enabled = true) {}
     val context = LocalContext.current
     val biometricManager = BiometricManager.from(context)
@@ -88,19 +83,11 @@ fun ConfirmPasscodeFullscreen(
     }
     var showSetUpPinSuccess by remember { mutableStateOf(false) }
     if (showSetUpPinSuccess) {
-        FullScreenDialog(
-            painter = painterResource(R.drawable.create_sucess),
-            height = 160.dp,
-            text = stringResource(R.string.set_up_pin_success),
-        )
+        FullScreenDialog(painter = painterResource(R.drawable.create_sucess), height = 160.dp, text = stringResource(R.string.set_up_pin_success))
     }
     var showSetUpBiometricSuccess by remember { mutableStateOf(false) }
     if (showSetUpBiometricSuccess) {
-        FullScreenDialog(
-            painter = painterResource(R.drawable.create_sucess),
-            height = 160.dp,
-            text = stringResource(R.string.enable_biometrics_success),
-        )
+        FullScreenDialog(painter = painterResource(R.drawable.create_sucess), height = 160.dp, text = stringResource(R.string.enable_biometrics_success))
     }
     var enableBiometric by remember { mutableStateOf(false) }
     LaunchedEffect(enableBiometric) {
@@ -111,59 +98,41 @@ fun ConfirmPasscodeFullscreen(
     var showBiometricAskedDialog by remember { mutableStateOf(false) }
     if (showBiometricAskedDialog) {
         Dialog(onDismissRequest = {}) {
-            Box(
-                modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
+            Box(modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(white)
+                .fillMaxWidth()) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(40.dp))
-                    Image(
-                        painter = painterResource(id = R.drawable.fingerprint),
-                        contentDescription = null,
-                        modifier = Modifier.height(96.dp),
-                    )
+                    Image(painter = painterResource(id = R.drawable.fingerprint), contentDescription = null, modifier = Modifier.height(96.dp))
                     Spacer(modifier = Modifier.height(24.dp))
-                    Text(
-                        text = stringResource(R.string.enable_biometrics),
-                        color = primaryBlack,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.W400,
-                        textAlign = TextAlign.Center,
-                    )
+                    Text(text = stringResource(R.string.enable_biometrics), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W400, textAlign = TextAlign.Center)
                     Spacer(modifier = Modifier.height(32.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier =
-                                Modifier.height(56.dp)
+                                Modifier
+                                    .height(56.dp)
                                     .weight(1f)
                                     .background(white)
-                                    .border(
-                                        width = 2.dp,
-                                        color = lightBlue07,
-                                        shape = RoundedCornerShape(56.dp),
-                                    )
+                                    .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
                                     .clip(RoundedCornerShape(56.dp))
                                     .clickable(
                                         onClick = {
                                             showBiometricAskedDialog = false
                                             passAuth = true
-                                        }
-                                    ),
+                                        }),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text(
-                                text = stringResource(R.string.not_now),
-                                color = lightBlue07,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.W700,
-                            )
+                            Text(text = stringResource(R.string.not_now), color = lightBlue07, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Box(
                             modifier =
-                                Modifier.height(56.dp)
+                                Modifier
+                                    .height(56.dp)
                                     .weight(1f)
                                     .clip(RoundedCornerShape(56.dp))
                                     .background(brush = gradient)
@@ -171,16 +140,10 @@ fun ConfirmPasscodeFullscreen(
                                         onClick = {
                                             showBiometricAskedDialog = false
                                             enableBiometric = true
-                                        }
-                                    ),
+                                        }),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text(
-                                text = stringResource(R.string.enable),
-                                color = white,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.W700,
-                            )
+                            Text(text = stringResource(R.string.enable), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                     }
                     Spacer(modifier = Modifier.height(32.dp))
@@ -217,10 +180,9 @@ fun ConfirmPasscodeFullscreen(
     }
     Scaffold(
         bottomBar = {
-            Box(
-                modifier = Modifier.fillMaxWidth().padding(all = 48.dp),
-                contentAlignment = Alignment.Center,
-            ) {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = 48.dp), contentAlignment = Alignment.Center) {
                 TextButton(
                     onClick = {
                         scope.launch { repository.updatePasscodeAsked(true) }
@@ -233,21 +195,14 @@ fun ConfirmPasscodeFullscreen(
                             .invokeOnCompletion { passAuth = true }
                     }
                 ) {
-                    Text(
-                        text = stringResource(R.string.skip),
-                        color = primaryDarkBlue,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.W700,
-                    )
+                    Text(text = stringResource(R.string.skip), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700)
                 }
             }
         }
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(it),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             var confirmPasscode by remember { mutableStateOf("") }
             val shakeController = remember { ShakeController(scope) }
             LaunchedEffect(confirmPasscode) {
@@ -263,10 +218,7 @@ fun ConfirmPasscodeFullscreen(
                         showSetUpPinSuccess = true
                         delay(2.seconds)
                         showSetUpPinSuccess = false
-                        if (
-                            biometricManager.canAuthenticate(BIOMETRIC_STRONG) ==
-                                BiometricManager.BIOMETRIC_SUCCESS
-                        ) {
+                        if (biometricManager.canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS) {
                             showBiometricAskedDialog = true
                         } else {
                             passAuth = true
@@ -277,18 +229,12 @@ fun ConfirmPasscodeFullscreen(
                     }
                 }
             }
-            Text(
-                text = stringResource(R.string.set_up_pin_confirm),
-                color = primaryBlack,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W700,
-            )
+            Text(text = stringResource(R.string.set_up_pin_confirm), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700)
             Spacer(modifier = Modifier.height(48.dp))
             Row(
-                modifier =
-                    Modifier.fillMaxWidth().offset {
-                        IntOffset(shakeController.offset.value.roundToInt(), 0)
-                    },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .offset { IntOffset(shakeController.offset.value.roundToInt(), 0) },
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -305,88 +251,36 @@ fun ConfirmPasscodeFullscreen(
                 if (confirmPasscode.length < 6) OutlinedDot() else FilledDot()
             }
             Spacer(modifier = Modifier.height(48.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                PasscodeButton(
-                    text = "1",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "1" },
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                PasscodeButton(text = "1", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "1" })
                 Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "2",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "2" },
-                )
+                PasscodeButton(text = "2", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "2" })
                 Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "3",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "3" },
-                )
+                PasscodeButton(text = "3", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "3" })
             }
             Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                PasscodeButton(
-                    text = "4",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "4" },
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                PasscodeButton(text = "4", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "4" })
                 Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "5",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "5" },
-                )
+                PasscodeButton(text = "5", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "5" })
                 Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "6",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "6" },
-                )
+                PasscodeButton(text = "6", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "6" })
             }
             Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                PasscodeButton(
-                    text = "7",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "7" },
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                PasscodeButton(text = "7", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "7" })
                 Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "8",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "8" },
-                )
+                PasscodeButton(text = "8", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "8" })
                 Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "9",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "9" },
-                )
+                PasscodeButton(text = "9", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "9" })
             }
             Spacer(modifier = Modifier.height(32.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                BottomButton(
-                    imageVector = Icons.Rounded.Delete,
-                    onClick = { navController.popBackStack() },
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                BottomButton(imageVector = Icons.Rounded.Delete, onClick = { navController.popBackStack() })
                 Spacer(modifier = Modifier.width(32.dp))
-                PasscodeButton(
-                    text = "0",
-                    onClick = { if (confirmPasscode.length < 6) confirmPasscode += "0" },
-                )
+                PasscodeButton(text = "0", onClick = { if (confirmPasscode.length < 6) confirmPasscode += "0" })
                 Spacer(modifier = Modifier.width(32.dp))
-                BottomButton(
-                    imageVector = Icons.AutoMirrored.Rounded.Backspace,
-                    onClick = { confirmPasscode = confirmPasscode.dropLast(1) },
-                )
+                BottomButton(imageVector = Icons.AutoMirrored.Rounded.Backspace, onClick = { confirmPasscode = confirmPasscode.dropLast(1) })
             }
         }
     }

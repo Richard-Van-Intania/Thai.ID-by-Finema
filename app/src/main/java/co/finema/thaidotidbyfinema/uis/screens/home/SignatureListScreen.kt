@@ -24,36 +24,16 @@ import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewM
 import java.time.LocalDateTime
 
 @Composable
-fun SignatureListScreen(
-    navController: NavController,
-    signatureImageViewModel: SignatureImageViewModel,
-) {
+fun SignatureListScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel) {
     val scope = rememberCoroutineScope()
     val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
     LaunchedEffect(signatureImage) { println(signatureImage.size) }
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    signatureImageViewModel.newDateLastUsed(
-                        id = 2,
-                        dateLastUsed = LocalDateTime.now().toString(),
-                    )
-                }
-            ) {}
-        }
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            items(signatureImage) {
-                Text(
-                    "id:${it.id} fileName:${it.fileName} dateCreated:${it.dateCreated} dateLastUsed:${it.dateLastUsed}",
-                    fontSize = 16.sp,
-                )
-            }
+    Scaffold(floatingActionButton = { FloatingActionButton(onClick = { signatureImageViewModel.newDateLastUsed(id = 2, dateLastUsed = LocalDateTime.now().toString()) }) {} }) {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
+            .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+            items(signatureImage) { Text("id:${it.id} fileName:${it.fileName} dateCreated:${it.dateCreated} dateLastUsed:${it.dateLastUsed}", fontSize = 16.sp) }
         }
     }
 }

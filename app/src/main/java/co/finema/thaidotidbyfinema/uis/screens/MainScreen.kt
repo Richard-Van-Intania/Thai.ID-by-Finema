@@ -210,19 +210,12 @@ import co.finema.thaidotidbyfinema.uis.whiteBG
 // }
 
 @Composable
-fun MainScreen(
-    navController: NavHostController,
-    localAuth: MutableState<Boolean>,
-    layoutHistoryViewModel: LayoutHistoryViewModel,
-    layoutHistoryId: MutableIntState,
-) {
+fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean>, layoutHistoryViewModel: LayoutHistoryViewModel, layoutHistoryId: MutableIntState) {
     BackHandler(enabled = true) {}
     val context = LocalContext.current
     val repository = remember { UserConfigRepository(context) }
     val passcodeAsked by repository.passcodeAsked.collectAsState(initial = null)
-    LaunchedEffect(passcodeAsked) {
-        if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreen.route)
-    }
+    LaunchedEffect(passcodeAsked) { if (passcodeAsked == false) navController.navigate(Screen.CreatePasscodeFullscreen.route) }
     val passcode by repository.passcode.collectAsState(initial = "")
     LaunchedEffect(passcode, localAuth.value) {
         if (passcode.isNotEmpty() && !localAuth.value) {
@@ -233,26 +226,19 @@ fun MainScreen(
     val tabController = rememberNavController()
     Scaffold(
         bottomBar = {
-            NavigationBar(
-                modifier =
-                    Modifier.clip(
-                        RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)
-                    ),
-                containerColor = white,
-            ) {
+            NavigationBar(modifier = Modifier.clip(RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)), containerColor = white) {
                 val navBackStackEntry by tabController.currentBackStackEntryAsState()
                 val currentTab = navBackStackEntry?.destination?.route
                 bottomTabs.forEach {
                     Column(
                         modifier =
-                            Modifier.weight(1f)
+                            Modifier
+                                .weight(1f)
                                 .clickable(
                                     onClick = {
                                         if (currentTab != it.route) {
                                             tabController.navigate(it.route) {
-                                                popUpTo(tabController.graph.startDestinationId) {
-                                                    saveState = true
-                                                }
+                                                popUpTo(tabController.graph.startDestinationId) { saveState = true }
                                                 launchSingleTop = true
                                                 restoreState = true
                                             }
@@ -260,27 +246,16 @@ fun MainScreen(
                                     },
                                     indication = null,
                                     interactionSource = remember { MutableInteractionSource() },
-                                ),
+                                          ),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Icon(
-                            imageVector = it.icon!!,
-                            contentDescription = null,
-                            tint =
-                                if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray,
-                        )
-                        Box(
-                            modifier = Modifier.height(24.dp),
-                            contentAlignment = Alignment.Center,
-                        ) {
+                        Icon(imageVector = it.icon!!, contentDescription = null, tint = if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray)
+                        Box(modifier = Modifier.height(24.dp), contentAlignment = Alignment.Center) {
                             Text(
                                 text = stringResource(it.name!!),
-                                color =
-                                    if (currentTab == it.route) primaryDarkBlue
-                                    else secondaryBlueGray,
+                                color = if (currentTab == it.route) primaryDarkBlue else secondaryBlueGray,
                                 fontSize = 12.sp,
-                                fontWeight =
-                                    if (currentTab == it.route) FontWeight.W700 else FontWeight.W400,
+                                fontWeight = if (currentTab == it.route) FontWeight.W700 else FontWeight.W400,
                             )
                         }
                     }
@@ -290,11 +265,7 @@ fun MainScreen(
         backgroundColor = whiteBG,
     ) {
         val counterState = rememberCounterState()
-        NavHost(
-            modifier = Modifier.padding(it),
-            navController = tabController,
-            startDestination = Screen.HomeTab.route,
-        ) {
+        NavHost(modifier = Modifier.padding(it), navController = tabController, startDestination = Screen.HomeTab.route) {
             composable(
                 route = Screen.HomeTab.route,
                 enterTransition = { EnterTransition.None },
@@ -302,11 +273,7 @@ fun MainScreen(
                 popEnterTransition = { EnterTransition.None },
                 popExitTransition = { ExitTransition.None },
             ) {
-                HomeTab(
-                    navController = navController,
-                    layoutHistoryId = layoutHistoryId,
-                    layoutHistoryViewModel = layoutHistoryViewModel,
-                )
+                HomeTab(navController = navController, layoutHistoryId = layoutHistoryId, layoutHistoryViewModel = layoutHistoryViewModel)
             }
             composable(
                 route = Screen.HistoryTab.route,

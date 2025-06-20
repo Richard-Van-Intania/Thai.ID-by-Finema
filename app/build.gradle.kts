@@ -25,10 +25,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -42,9 +39,7 @@ android {
 
 protobuf {
     protoc { artifact = "com.google.protobuf:protoc:3.23.4" }
-    generateProtoTasks {
-        all().forEach { task -> task.builtins { create("java") { option("lite") } } }
-    }
+    generateProtoTasks { all().forEach { task -> task.builtins { create("java") { option("lite") } } } }
 }
 
 dependencies {

@@ -21,13 +21,7 @@ class SignatureImageViewModel(private val signatureImageDao: SignatureImageDao) 
 
     fun addSignatureImage(fileName: String, dateCreated: String, dateLastUsed: String) {
         viewModelScope.launch {
-            signatureImageDao.insertSignatureImage(
-                SignatureImage(
-                    fileName = fileName,
-                    dateCreated = dateCreated,
-                    dateLastUsed = dateLastUsed,
-                )
-            )
+            signatureImageDao.insertSignatureImage(SignatureImage(fileName = fileName, dateCreated = dateCreated, dateLastUsed = dateLastUsed))
             loadSignatureImages()
         }
     }

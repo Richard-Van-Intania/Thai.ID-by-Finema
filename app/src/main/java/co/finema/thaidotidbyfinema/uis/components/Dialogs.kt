@@ -34,25 +34,13 @@ import co.finema.thaidotidbyfinema.uis.white
 
 @Composable
 fun FullScreenDialog(painter: Painter, height: Dp, text: String) {
-    Dialog(
-        onDismissRequest = {},
-        properties =
-            DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false),
-    ) {
-        Column(
-            Modifier.fillMaxSize().background(white),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+    Dialog(onDismissRequest = {}, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
+        Column(Modifier
+            .fillMaxSize()
+            .background(white), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = painter, contentDescription = null, modifier = Modifier.height(height))
             Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = text,
-                color = primaryBlack,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W700,
-                textAlign = TextAlign.Center,
-            )
+            Text(text = text, color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center)
         }
     }
 }
@@ -60,25 +48,17 @@ fun FullScreenDialog(painter: Painter, height: Dp, text: String) {
 @Composable
 fun ErrorDialog(text: String, onClick: () -> Unit) {
     Dialog(onDismissRequest = {}) {
-        Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+        Box(modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(white)
+            .fillMaxWidth()) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(modifier = Modifier.height(40.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.group_40126),
-                    contentDescription = null,
-                    modifier = Modifier.height(96.dp),
-                )
+                Image(painter = painterResource(id = R.drawable.group_40126), contentDescription = null, modifier = Modifier.height(96.dp))
                 Spacer(modifier = Modifier.height(24.dp))
-                Text(
-                    text = text,
-                    color = primaryBlack,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.W400,
-                    textAlign = TextAlign.Center,
-                )
+                Text(text = text, color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W400, textAlign = TextAlign.Center)
                 Spacer(modifier = Modifier.height(32.dp))
                 GradientButton(onClick = onClick, text = stringResource(R.string.ok))
                 Spacer(modifier = Modifier.height(32.dp))

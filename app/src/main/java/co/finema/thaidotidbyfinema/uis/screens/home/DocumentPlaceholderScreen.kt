@@ -90,11 +90,7 @@ fun DocumentPlaceholderScreen(
     val context = LocalContext.current
     var startCameraLive by remember { mutableStateOf(false) }
     var hasCameraPermission by remember { mutableStateOf(false) }
-    val cameraPermissionLauncher =
-        rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.RequestPermission(),
-            onResult = { isGranted -> hasCameraPermission = isGranted },
-        )
+    val cameraPermissionLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission(), onResult = { isGranted -> hasCameraPermission = isGranted })
     LaunchedEffect(hasCameraPermission, startCameraLive) {
         if (hasCameraPermission && startCameraLive) {
             imageUri.value = null
@@ -120,18 +116,14 @@ fun DocumentPlaceholderScreen(
     LaunchedEffect(fileSource) {
         when (fileSource) {
             FileSource.CAMERA -> {
-                hasCameraPermission =
-                    ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
-                        PackageManager.PERMISSION_GRANTED
+                hasCameraPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                 if (!hasCameraPermission) {
                     cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
                 }
                 startCameraLive = true
             }
             FileSource.GALLERY -> {
-                pickImage.launch(
-                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                )
+                pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             FileSource.PDF -> {
                 pickPdf.launch(arrayOf("application/pdf"))
@@ -142,18 +134,16 @@ fun DocumentPlaceholderScreen(
     var showOptionDialog by remember { mutableStateOf(false) }
     if (showOptionDialog) {
         Dialog(onDismissRequest = {}) {
-            Box(
-                modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()
-            ) {
+            Box(modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(white)
+                .fillMaxWidth()) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        modifier = Modifier.padding(all = 24.dp),
-                        text = stringResource(R.string.options),
-                        color = primaryBlack,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.W700,
-                    )
-                    Box(modifier = Modifier.fillMaxWidth().height(2.dp).background(neutral02))
+                    Text(modifier = Modifier.padding(all = 24.dp), text = stringResource(R.string.options), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700)
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(2.dp)
+                        .background(neutral02))
                     OptionButton(
                         imageVector = Icons.Rounded.PhotoCamera,
                         text = R.string.scan_your_card,
@@ -187,17 +177,10 @@ fun DocumentPlaceholderScreen(
                             showOptionDialog = false
                         }
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp),
-                        ) {
-                            Text(
-                                text = stringResource(R.string.cancel),
-                                color = primaryBlack,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.W400,
-                            )
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp)) {
+                            Text(text = stringResource(R.string.cancel), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W400)
                         }
                     }
                 }
@@ -207,26 +190,21 @@ fun DocumentPlaceholderScreen(
     var showDeleteDialog by remember { mutableStateOf(false) }
     if (showDeleteDialog) {
         Dialog(onDismissRequest = {}) {
-            Box(
-                modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
+            Box(modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(white)
+                .fillMaxWidth()) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(40.dp))
-                    Text(
-                        text = stringResource(R.string.do_you_want_to_delete_this_photo),
-                        color = primaryBlack,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.W700,
-                        textAlign = TextAlign.Center,
-                    )
+                    Text(text = stringResource(R.string.do_you_want_to_delete_this_photo), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center)
                     Spacer(modifier = Modifier.height(32.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier =
-                                Modifier.height(56.dp)
+                                Modifier
+                                    .height(56.dp)
                                     .weight(1f)
                                     .clip(RoundedCornerShape(56.dp))
                                     .background(brush = gradient)
@@ -238,38 +216,24 @@ fun DocumentPlaceholderScreen(
                                                 2 -> placeholderFilePath2.value = null
                                             }
                                             showDeleteDialog = false
-                                        }
-                                    ),
+                                        }),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text(
-                                text = stringResource(R.string.delete),
-                                color = white,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.W700,
-                            )
+                            Text(text = stringResource(R.string.delete), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Box(
                             modifier =
-                                Modifier.height(56.dp)
+                                Modifier
+                                    .height(56.dp)
                                     .weight(1f)
                                     .background(white)
-                                    .border(
-                                        width = 2.dp,
-                                        color = lightBlue07,
-                                        shape = RoundedCornerShape(56.dp),
-                                    )
+                                    .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
                                     .clip(RoundedCornerShape(56.dp))
                                     .clickable(onClick = { showDeleteDialog = false }),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Text(
-                                text = stringResource(R.string.cancel),
-                                color = lightBlue07,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.W700,
-                            )
+                            Text(text = stringResource(R.string.cancel), color = lightBlue07, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                     }
                     Spacer(modifier = Modifier.height(32.dp))
@@ -278,21 +242,12 @@ fun DocumentPlaceholderScreen(
         }
     }
     Scaffold(
-        topBar = {
-            AppBarOptBack(
-                containerColor = white,
-                text = stringResource(R.string.add_document),
-                onClick = { navController.popBackStack() },
-            )
-        },
+        topBar = { AppBarOptBack(containerColor = white, text = stringResource(R.string.add_document), onClick = { navController.popBackStack() }) },
         bottomBar = {
-            Box(
-                modifier =
-                    Modifier.background(white)
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp),
-                contentAlignment = Alignment.Center,
-            ) {
+            Box(modifier = Modifier
+                .background(white)
+                .fillMaxWidth()
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center) {
                 GradientButton(
                     onClick = {
                         val now = LocalDateTime.now().toString()
@@ -313,11 +268,10 @@ fun DocumentPlaceholderScreen(
         },
         backgroundColor = whiteBG,
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
+            .padding(horizontal = 16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             when (layoutItems[layoutIndex.intValue].documentLayout) {
                 DocumentLayout.ONE_SIDE_CARD -> {
                     if (placeholderFilePath0.value == null)
@@ -473,31 +427,19 @@ fun DocumentPlaceholderScreen(
 fun AddImageButton(ratio: Float, label: Int, onClick: () -> Unit) {
     Box(
         modifier =
-            Modifier.fillMaxWidth()
+            Modifier
+                .fillMaxWidth()
                 .aspectRatio(ratio)
                 .clip(RoundedCornerShape(cornerRadius))
-                .border(
-                    width = 1.dp,
-                    color = secondaryGray,
-                    shape = RoundedCornerShape(cornerRadius),
-                )
+                .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
                 .background(white)
                 .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Image(
-                painter = painterResource(id = R.drawable.group_284),
-                contentDescription = null,
-                modifier = Modifier.height(56.dp),
-            )
+            Image(painter = painterResource(id = R.drawable.group_284), contentDescription = null, modifier = Modifier.height(56.dp))
             Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = stringResource(label),
-                color = primaryBlack,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W400,
-            )
+            Text(text = stringResource(label), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W400)
         }
     }
 }
@@ -505,55 +447,30 @@ fun AddImageButton(ratio: Float, label: Int, onClick: () -> Unit) {
 @Composable
 fun OptionButton(imageVector: ImageVector, text: Int, onClick: () -> Unit) {
     TextButton(onClick = onClick) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp)) {
             Spacer(modifier = Modifier.width(16.dp))
             Icon(imageVector = imageVector, contentDescription = null)
             Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = stringResource(text),
-                color = primaryBlack,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.W400,
-            )
+            Text(text = stringResource(text), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W400)
         }
     }
 }
 
 @Composable
-fun PlaceholderImagePreview(
-    aspectRatio: Float,
-    placeholderFilePath: MutableState<Uri?>,
-    onClick: () -> Unit,
-) {
-    Box(
-        modifier =
-            Modifier.fillMaxWidth().aspectRatio(aspectRatio).clip(RoundedCornerShape(cornerRadius)),
-        contentAlignment = Alignment.TopEnd,
-    ) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = rememberAsyncImagePainter(model = placeholderFilePath.value),
-            contentDescription = null,
-            contentScale = ContentScale.Fit,
-        )
-        Box(
-            modifier =
-                Modifier.padding(all = 16.dp)
-                    .clip(RoundedCornerShape(32.dp))
-                    .background(black.copy(alpha = 0.55f))
-                    .clickable(onClick = onClick),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp),
-                text = stringResource(R.string.delete),
-                color = white,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.W400,
-            )
+fun PlaceholderImagePreview(aspectRatio: Float, placeholderFilePath: MutableState<Uri?>, onClick: () -> Unit) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .aspectRatio(aspectRatio)
+        .clip(RoundedCornerShape(cornerRadius)), contentAlignment = Alignment.TopEnd) {
+        Image(modifier = Modifier.fillMaxSize(), painter = rememberAsyncImagePainter(model = placeholderFilePath.value), contentDescription = null, contentScale = ContentScale.Fit)
+        Box(modifier = Modifier
+            .padding(all = 16.dp)
+            .clip(RoundedCornerShape(32.dp))
+            .background(black.copy(alpha = 0.55f))
+            .clickable(onClick = onClick), contentAlignment = Alignment.Center) {
+            Text(modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp), text = stringResource(R.string.delete), color = white, fontSize = 20.sp, fontWeight = FontWeight.W400)
         }
     }
 }

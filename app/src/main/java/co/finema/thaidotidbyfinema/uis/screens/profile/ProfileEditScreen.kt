@@ -64,13 +64,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.chrono.ThaiBuddhistDate
 
-val filledStyle =
-    TextStyle(
-        fontFamily = FCIconic,
-        color = primaryBlack,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.W400,
-    )
+val filledStyle = TextStyle(fontFamily = FCIconic, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400)
 
 val thaiItems = listOf("นาย", "นางสาว", "นาง", "เด็กชาย", "เด็กหญิง")
 val engItems = listOf("Mr.", "Miss", "Mrs.", "Master")
@@ -95,9 +89,7 @@ fun ProfileEditScreen(navController: NavController) {
         if (locale.isNotEmpty() && birthDate.isNotEmpty())
             when (locale) {
                 EN -> birthDateText = formatterEN.format(LocalDateTime.parse(birthDate))
-                TH ->
-                    birthDateText =
-                        formatterTH.format(ThaiBuddhistDate.from(LocalDateTime.parse(birthDate)))
+                TH -> birthDateText = formatterTH.format(ThaiBuddhistDate.from(LocalDateTime.parse(birthDate)))
 
                 else -> birthDateText = formatterEN.format(LocalDateTime.parse(birthDate))
             }
@@ -111,10 +103,7 @@ fun ProfileEditScreen(navController: NavController) {
             negativeButton(stringResource(R.string.cancel))
         },
     ) {
-        datepicker(
-            title = stringResource(R.string.date_of_birth),
-            allowedDateValidator = { !it.isAfter(LocalDate.now()) },
-        ) {
+        datepicker(title = stringResource(R.string.date_of_birth), allowedDateValidator = { !it.isAfter(LocalDate.now()) }) {
             val localDateTime: LocalDateTime = it.atStartOfDay()
             scope.launch { userCardRepository.updateBirthDate(localDateTime.toString()) }
         }
@@ -174,14 +163,12 @@ fun ProfileEditScreen(navController: NavController) {
         },
         backgroundColor = white,
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
+            .padding(horizontal = 16.dp)) {
             item {
-                Text(
-                    text = stringResource(R.string.id_number),
-                    color = primaryBlack,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700,
-                )
+                Text(text = stringResource(R.string.id_number), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
                 OutlinedTextField(
                     value = idStringText,
                     onValueChange = {
@@ -191,116 +178,53 @@ fun ProfileEditScreen(navController: NavController) {
                             idStringError = false
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                     textStyle = filledStyle,
-                    placeholder = {
-                        Text(
-                            text = stringResource(R.string.id_number),
-                            color = neutral05,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.W400,
-                        )
-                    },
-                    keyboardOptions =
-                        KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            showKeyboardOnFocus = true,
-                        ),
+                    placeholder = { Text(text = stringResource(R.string.id_number), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, showKeyboardOnFocus = true),
                     singleLine = true,
                     isError = idStringError,
                 )
                 Row(modifier = Modifier.padding(horizontal = 8.dp)) {
-                    if (idStringError)
-                        Text(
-                            text = stringResource(R.string.required),
-                            color = primaryRed,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.W400,
-                        )
+                    if (idStringError) Text(text = stringResource(R.string.required), color = primaryRed, fontSize = 16.sp, fontWeight = FontWeight.W400)
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(
-                        text = "${idStringText.length}/13",
-                        color = neutral05,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.W400,
-                    )
+                    Text(text = "${idStringText.length}/13", color = neutral05, fontSize = 16.sp, fontWeight = FontWeight.W400)
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.date_of_birth),
-                    color = primaryBlack,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700,
-                )
+                Text(text = stringResource(R.string.date_of_birth), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
                 OutlinedTextField(
                     value = birthDateText,
                     onValueChange = {},
                     readOnly = true,
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                     textStyle = filledStyle,
-                    placeholder = {
-                        Text(
-                            text = stringResource(R.string.date_format),
-                            color = neutral05,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.W400,
-                        )
-                    },
-                    trailingIcon = {
-                        IconButton(onClick = { dialogState.show() }) {
-                            Icon(
-                                imageVector = Icons.Rounded.CalendarMonth,
-                                contentDescription = null,
-                                tint = primaryBlack,
-                            )
-                        }
-                    },
+                    placeholder = { Text(text = stringResource(R.string.date_format), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                    trailingIcon = { IconButton(onClick = { dialogState.show() }) { Icon(imageVector = Icons.Rounded.CalendarMonth, contentDescription = null, tint = primaryBlack) } },
                     singleLine = true,
                 )
                 ProfileDetailsHr(text = stringResource(R.string.personal_info_thai))
-                Text(
-                    text = stringResource(R.string.title),
-                    color = primaryBlack,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700,
-                )
-                ExposedDropdownMenuBox(
-                    expanded = thaiExpanded,
-                    onExpandedChange = { thaiExpanded = it },
-                ) {
+                Text(text = stringResource(R.string.title), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
+                ExposedDropdownMenuBox(expanded = thaiExpanded, onExpandedChange = { thaiExpanded = it }) {
                     OutlinedTextField(
                         value = thaiSelectedValue,
                         onValueChange = { thaiSelectedValue = it },
-                        modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
+                        modifier = Modifier
+                            .menuAnchor()
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
                         textStyle = filledStyle,
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.title),
-                                color = neutral05,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.W400,
-                            )
-                        },
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = thaiExpanded)
-                        },
+                        placeholder = { Text(text = stringResource(R.string.title), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = thaiExpanded) },
                         singleLine = true,
                     )
-                    ExposedDropdownMenu(
-                        containerColor = whiteBG,
-                        expanded = thaiExpanded,
-                        onDismissRequest = { thaiExpanded = false },
-                    ) {
+                    ExposedDropdownMenu(containerColor = whiteBG, expanded = thaiExpanded, onDismissRequest = { thaiExpanded = false }) {
                         thaiItems.forEach {
                             DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = it,
-                                        color = primaryBlack,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.W400,
-                                    )
-                                },
+                                text = { Text(text = it, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400) },
                                 onClick = {
                                     thaiSelectedValue = it
                                     thaiExpanded = false
@@ -310,65 +234,28 @@ fun ProfileEditScreen(navController: NavController) {
                         }
                     }
                 }
-                NameTextField(
-                    text = stringResource(R.string.first_name),
-                    value = thaiNameText,
-                    onValueChange = { thaiNameText = it },
-                )
-                NameTextField(
-                    text = stringResource(R.string.middle_name),
-                    value = thaiMiddleNameText,
-                    onValueChange = { thaiMiddleNameText = it },
-                )
-                NameTextField(
-                    text = stringResource(R.string.last_name),
-                    value = thaiSurnameText,
-                    onValueChange = { thaiSurnameText = it },
-                )
+                NameTextField(text = stringResource(R.string.first_name), value = thaiNameText, onValueChange = { thaiNameText = it })
+                NameTextField(text = stringResource(R.string.middle_name), value = thaiMiddleNameText, onValueChange = { thaiMiddleNameText = it })
+                NameTextField(text = stringResource(R.string.last_name), value = thaiSurnameText, onValueChange = { thaiSurnameText = it })
                 ProfileDetailsHr(text = stringResource(R.string.personal_info_eng))
-                Text(
-                    text = stringResource(R.string.title),
-                    color = primaryBlack,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W700,
-                )
-                ExposedDropdownMenuBox(
-                    expanded = engExpanded,
-                    onExpandedChange = { engExpanded = it },
-                ) {
+                Text(text = stringResource(R.string.title), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
+                ExposedDropdownMenuBox(expanded = engExpanded, onExpandedChange = { engExpanded = it }) {
                     OutlinedTextField(
                         value = engSelectedValue,
                         onValueChange = { engSelectedValue = it },
-                        modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
+                        modifier = Modifier
+                            .menuAnchor()
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
                         textStyle = filledStyle,
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.title),
-                                color = neutral05,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.W400,
-                            )
-                        },
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = engExpanded)
-                        },
+                        placeholder = { Text(text = stringResource(R.string.title), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = engExpanded) },
                         singleLine = true,
                     )
-                    ExposedDropdownMenu(
-                        containerColor = whiteBG,
-                        expanded = engExpanded,
-                        onDismissRequest = { engExpanded = false },
-                    ) {
+                    ExposedDropdownMenu(containerColor = whiteBG, expanded = engExpanded, onDismissRequest = { engExpanded = false }) {
                         engItems.forEach {
                             DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = it,
-                                        color = primaryBlack,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.W400,
-                                    )
-                                },
+                                text = { Text(text = it, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400) },
                                 onClick = {
                                     engSelectedValue = it
                                     engExpanded = false
@@ -378,21 +265,9 @@ fun ProfileEditScreen(navController: NavController) {
                         }
                     }
                 }
-                NameTextField(
-                    text = stringResource(R.string.first_name),
-                    value = engNameText,
-                    onValueChange = { engNameText = it },
-                )
-                NameTextField(
-                    text = stringResource(R.string.middle_name),
-                    value = engMiddleNameText,
-                    onValueChange = { engMiddleNameText = it },
-                )
-                NameTextField(
-                    text = stringResource(R.string.last_name),
-                    value = engSurnameText,
-                    onValueChange = { engSurnameText = it },
-                )
+                NameTextField(text = stringResource(R.string.first_name), value = engNameText, onValueChange = { engNameText = it })
+                NameTextField(text = stringResource(R.string.middle_name), value = engMiddleNameText, onValueChange = { engMiddleNameText = it })
+                NameTextField(text = stringResource(R.string.last_name), value = engSurnameText, onValueChange = { engSurnameText = it })
                 Spacer(modifier = Modifier.height(48.dp))
             }
         }
@@ -406,11 +281,11 @@ fun NameTextField(text: String, value: String, onValueChange: (String) -> Unit) 
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
         textStyle = filledStyle,
-        placeholder = {
-            Text(text = text, color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400)
-        },
+        placeholder = { Text(text = text, color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
         singleLine = true,
     )
 }
