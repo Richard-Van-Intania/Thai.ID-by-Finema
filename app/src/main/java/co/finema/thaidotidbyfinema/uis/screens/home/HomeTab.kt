@@ -333,7 +333,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                         Spacer(modifier = Modifier.width(24.dp))
                                         Column(modifier = Modifier.weight(1f)) {
                                             Text(
-                                                text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + "(${index + 1})"),
+                                                text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + " (${index + 1})"),
                                                 color = primaryBlack,
                                                 fontSize = 20.sp, fontWeight = FontWeight.W400, maxLines = 1, overflow = TextOverflow.Ellipsis
                                             )
@@ -377,8 +377,8 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                     Column {
                                         Box(
                                             modifier = Modifier
-                                                .width(184.dp)
-                                                .height(184.dp)
+                                                .width(192.dp)
+                                                .height(192.dp)
                                                 .clip(
                                                     RoundedCornerShape(
                                                         topStart = cornerRadius, topEnd = cornerRadius, bottomStart = 0.dp, bottomEnd = 0.dp
@@ -434,7 +434,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                         }
                                         Box(
                                             modifier = Modifier
-                                                .width(184.dp)
+                                                .width(192.dp)
                                                 .height(56.dp)
                                                 .clip(
                                                     RoundedCornerShape(
@@ -450,8 +450,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                     .padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically
                                                ) {
                                                 Text(
-                                                    modifier = Modifier.weight(1f),
-                                                    text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + "(${index + 1})"),
+                                                    modifier = Modifier.weight(1f), text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + " (${index + 1})"),
                                                     color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400, maxLines = 1, overflow = TextOverflow.Ellipsis
                                                     )
                                                 Spacer(modifier = Modifier.width(8.dp))
