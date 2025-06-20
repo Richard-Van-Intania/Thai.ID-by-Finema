@@ -56,6 +56,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -330,12 +331,11 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                             }
                                         }
                                         Spacer(modifier = Modifier.width(24.dp))
-                                        Column {
+                                        Column(modifier = Modifier.weight(1f)) {
                                             Text(
                                                 text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + "(${index + 1})"),
                                                 color = primaryBlack,
-                                                fontSize = 20.sp,
-                                                fontWeight = FontWeight.W400,
+                                                fontSize = 20.sp, fontWeight = FontWeight.W400, maxLines = 1, overflow = TextOverflow.Ellipsis
                                             )
                                             Spacer(modifier = Modifier.height(4.dp))
                                             Text(
@@ -355,11 +355,9 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                     }
                                                                                                       ).format(formatterShort),
                                                 color = neutral04,
-                                                fontSize = 20.sp,
-                                                fontWeight = FontWeight.W400
+                                                fontSize = 20.sp, fontWeight = FontWeight.W400, maxLines = 1, overflow = TextOverflow.Ellipsis
                                                 )
                                         }
-                                        Spacer(modifier = Modifier.weight(1f))
                                         Spacer(modifier = Modifier.width(8.dp))
                                         IconButton(
                                             onClick = {
@@ -452,12 +450,10 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                     .padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically
                                                ) {
                                                 Text(
+                                                    modifier = Modifier.weight(1f),
                                                     text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + "(${index + 1})"),
-                                                    color = primaryBlack,
-                                                    fontSize = 20.sp,
-                                                    fontWeight = FontWeight.W400,
+                                                    color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400, maxLines = 1, overflow = TextOverflow.Ellipsis
                                                     )
-                                                Spacer(modifier = Modifier.weight(1f))
                                                 Spacer(modifier = Modifier.width(8.dp))
                                                 IconButton(
                                                     onClick = {
