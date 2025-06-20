@@ -71,6 +71,7 @@ import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.gradient
+import co.finema.thaidotidbyfinema.uis.greenDev
 import co.finema.thaidotidbyfinema.uis.lightBlue09
 import co.finema.thaidotidbyfinema.uis.neutral01
 import co.finema.thaidotidbyfinema.uis.neutral04
@@ -349,11 +350,26 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                             }
                         }
                         if (homeViewLayout == ViewLayout.VIEW_LAYOUT_THUMBNAILS) item {
-                            FlowRow(modifier = Modifier.padding(8.dp)) {
+                            FlowRow(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                                 layoutHistory.forEach { item ->
-                                    Text(text = item.id.toString())
+                                    Column {
+                                        Box(
+                                            modifier = Modifier
+                                                .width(176.dp)
+                                                .height(176.dp)
+                                                .background(neutral07)
+                                           ) { Text(text = item.id.toString()) }
+                                        Box(
+                                            modifier = Modifier
+                                                .width(176.dp)
+                                                .height(56.dp)
+                                                .background(greenDev)
+                                           ) { Text(text = item.id.toString()) }
+                                    }
+
                                 }
                             }
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
                 }
