@@ -184,7 +184,6 @@ fun PdfPageSelectScreen(navController: NavController, imageUri: MutableState<Uri
                                                     it.positionChange().x > dragThreshold && currentPageIndex.value > 0 -> {
                                                         pageIndex--
                                                     }
-
                                                     it.positionChange().x < -dragThreshold && currentPageIndex.value < totalPages - 1 -> {
                                                         pageIndex++
                                                     }
