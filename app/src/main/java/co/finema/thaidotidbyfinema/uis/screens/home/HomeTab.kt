@@ -351,20 +351,49 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                         }
                         if (homeViewLayout == ViewLayout.VIEW_LAYOUT_THUMBNAILS) item {
                             FlowRow(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                                layoutHistory.forEach { item ->
+                                layoutHistory.forEachIndexed { index, item ->
                                     Column {
                                         Box(
                                             modifier = Modifier
-                                                .width(176.dp)
-                                                .height(176.dp)
-                                                .background(neutral07)
+                                                .width(184.dp)
+                                                .height(184.dp)
+                                                .background(greenDev)
+                                                .clickable(
+                                                    onClick = {
+                                                        //
+                                                    }),
+                                            contentAlignment = Alignment.Center,
                                            ) { Text(text = item.id.toString()) }
                                         Box(
                                             modifier = Modifier
-                                                .width(176.dp)
+                                                .width(184.dp)
                                                 .height(56.dp)
-                                                .background(greenDev)
-                                           ) { Text(text = item.id.toString()) }
+                                                .background(white),
+                                            contentAlignment = Alignment.Center,
+                                           ) {
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically
+                                               ) {
+                                                Text(
+                                                    text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + " (${index + 1})"),
+                                                    color = primaryBlack,
+                                                    fontSize = 20.sp,
+                                                    fontWeight = FontWeight.W400,
+                                                    )
+                                                Spacer(modifier = Modifier.weight(1f))
+                                                Spacer(modifier = Modifier.width(8.dp))
+                                                IconButton(
+                                                    onClick = {
+                                                        //
+                                                    }) {
+                                                    Icon(imageVector = Icons.Rounded.MoreHoriz, contentDescription = null, tint = blue05)
+                                                }
+
+                                            }
+
+                                        }
                                     }
 
                                 }
