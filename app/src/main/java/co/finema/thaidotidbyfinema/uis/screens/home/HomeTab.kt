@@ -61,11 +61,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.core.net.toUri
 import androidx.navigation.NavController
+import co.finema.thaidotidbyfinema.EN
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.TH
 import co.finema.thaidotidbyfinema.ViewLayout
 import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
+import co.finema.thaidotidbyfinema.formatterShort
 import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
@@ -82,6 +85,7 @@ import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 @Composable
 fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryViewModel, layoutHistoryId: MutableIntState) {
@@ -91,6 +95,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
     val repository = remember { UserConfigRepository(context) }
     val scope = rememberCoroutineScope()
     val isSelectedNeverShowAgain by repository.isSelectedNeverShowAgain.collectAsState(initial = false)
+    val locale by repository.locale.collectAsState(initial = null)
     var showAskDialog by remember { mutableStateOf(false) }
     if (showAskDialog) {
         Dialog(onDismissRequest = {}) {
@@ -333,7 +338,26 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                 fontWeight = FontWeight.W400,
                                             )
                                             Spacer(modifier = Modifier.height(4.dp))
-                                            Text(text = item.dateCreated, color = neutral04, fontSize = 20.sp, fontWeight = FontWeight.W400)
+                                            Text(
+                                                text = LocalDateTime.parse(item.dateCreated).plusYears(
+                                                    when (locale) {
+                                                        EN -> {
+                                                            0
+                                                        }
+
+                                                        TH -> {
+                                                            543
+                                                        }
+
+                                                        else -> {
+                                                            0
+                                                        }
+                                                    }
+                                                                                                      ).format(formatterShort),
+                                                color = neutral04,
+                                                fontSize = 20.sp,
+                                                fontWeight = FontWeight.W400
+                                                )
                                         }
                                         Spacer(modifier = Modifier.weight(1f))
                                         Spacer(modifier = Modifier.width(8.dp))
