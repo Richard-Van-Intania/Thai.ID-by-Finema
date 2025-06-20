@@ -302,9 +302,9 @@ fun HomeTab(
                             )
                         }
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(12.dp))
                 if (layoutHistory.isEmpty()) {
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(28.dp))
                     Image(
                         painter = painterResource(id = R.drawable.group_40772),
                         contentDescription = null,
