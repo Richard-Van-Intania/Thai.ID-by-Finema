@@ -20,13 +20,14 @@ import co.finema.thaidotidbyfinema.uis.gradient
 import co.finema.thaidotidbyfinema.uis.white
 
 @Composable
-fun GradientButton(onClick: () -> Unit, text: String) {
+fun GradientButton(onClick: () -> Unit, text: String, enabled: Boolean = true) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .height(56.dp)
         .clip(RoundedCornerShape(56.dp))
         .background(brush = gradient)
-        .clickable(onClick = onClick), contentAlignment = Alignment.Center) {
+        .clickable(enabled = enabled, onClick = onClick), contentAlignment = Alignment.Center
+       ) {
         Text(text = text, color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
     }
 }

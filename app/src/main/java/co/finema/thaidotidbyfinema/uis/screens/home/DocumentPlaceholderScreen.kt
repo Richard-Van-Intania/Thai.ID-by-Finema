@@ -86,6 +86,7 @@ fun DocumentPlaceholderScreen(
     imageIndex: MutableIntState,
     pdfUrl: MutableState<Uri?>,
     layoutHistoryViewModel: LayoutHistoryViewModel,
+    savedLayoutHistory: MutableState<Boolean>,
 ) {
     val context = LocalContext.current
     var startCameraLive by remember { mutableStateOf(false) }
@@ -215,6 +216,7 @@ fun DocumentPlaceholderScreen(
                                                 1 -> placeholderFilePath1.value = null
                                                 2 -> placeholderFilePath2.value = null
                                             }
+                                            savedLayoutHistory.value = false
                                             showDeleteDialog = false
                                         }),
                             contentAlignment = Alignment.Center,
@@ -249,7 +251,15 @@ fun DocumentPlaceholderScreen(
                 .fillMaxWidth()
                 .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center) {
                 GradientButton(
+                    enabled = when (layoutItems[layoutIndex.intValue].documentLayout) {
+                        DocumentLayout.ONE_SIDE_CARD -> placeholderFilePath0.value != null
+                        DocumentLayout.TWO_SIDE_CARD -> placeholderFilePath1.value != null && placeholderFilePath2.value != null
+                        DocumentLayout.ONE_SIDE_HALF_A4 -> placeholderFilePath0.value != null
+                        DocumentLayout.TWO_SIDE_HALF_A4 -> placeholderFilePath1.value != null && placeholderFilePath2.value != null
+                        DocumentLayout.FULL_A4 -> placeholderFilePath0.value != null
+                    },
                     onClick = {
+                        if (!savedLayoutHistory.value) {
                         val now = LocalDateTime.now().toString()
                         layoutHistoryViewModel.addLayoutHistory(
                             documentLayout = layoutItems[layoutIndex.intValue].documentLayout.name,
@@ -259,7 +269,9 @@ fun DocumentPlaceholderScreen(
                             layoutRawImagefileName1 = placeholderFilePath1.value?.toString(),
                             layoutRawImagefileName2 = placeholderFilePath2.value?.toString(),
                             userDefinedName = null,
-                        )
+                                                               )
+                            savedLayoutHistory.value = true
+                        }
                         navController.navigate(route = Screen.CreateCertifiedScreen.route)
                     },
                     text = stringResource(R.string.make_a_cert),

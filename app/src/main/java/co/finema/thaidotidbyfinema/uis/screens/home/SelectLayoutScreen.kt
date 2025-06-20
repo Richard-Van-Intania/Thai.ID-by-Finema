@@ -157,6 +157,7 @@ fun SelectLayoutScreen(
     placeholderFilePath0: MutableState<Uri?>,
     placeholderFilePath1: MutableState<Uri?>,
     placeholderFilePath2: MutableState<Uri?>,
+    savedLayoutHistory: MutableState<Boolean>,
 ) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
@@ -218,6 +219,7 @@ fun SelectLayoutScreen(
                         placeholderFilePath0.value = null
                         placeholderFilePath1.value = null
                         placeholderFilePath2.value = null
+                        savedLayoutHistory.value = false
                         navController.navigate(route = Screen.DocumentPlaceholderScreen.route)
                     },
                     text = stringResource(R.string.next),

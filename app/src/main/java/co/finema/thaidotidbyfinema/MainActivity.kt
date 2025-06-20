@@ -149,6 +149,7 @@ class MainActivity : FragmentActivity() {
                 val imageUri = remember { mutableStateOf<Uri?>(null) }
                 val pdfUrl = remember { mutableStateOf<Uri?>(null) }
                 val layoutHistoryId = remember { mutableIntStateOf(0) }
+                val savedLayoutHistory = remember { mutableStateOf(false) }
                 NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
                     composable(route = Screen.LoadingScreen.route) { LoadingScreen(navController = navController) }
                     navigation(startDestination = Screen.WelcomeScreen.route, route = Screen.OnboardingRoot.route) {
@@ -174,7 +175,7 @@ class MainActivity : FragmentActivity() {
                                 layoutIndex = layoutIndex,
                                 placeholderFilePath0 = placeholderFilePath0,
                                 placeholderFilePath1 = placeholderFilePath1,
-                                placeholderFilePath2 = placeholderFilePath2,
+                                placeholderFilePath2 = placeholderFilePath2, savedLayoutHistory = savedLayoutHistory,
                             )
                         }
                         composable(route = Screen.DocumentPlaceholderScreen.route) {
@@ -186,8 +187,7 @@ class MainActivity : FragmentActivity() {
                                 placeholderFilePath2 = placeholderFilePath2,
                                 imageUri = imageUri,
                                 imageIndex = imageIndex,
-                                pdfUrl = pdfUrl,
-                                layoutHistoryViewModel = layoutHistoryViewModel,
+                                pdfUrl = pdfUrl, layoutHistoryViewModel = layoutHistoryViewModel, savedLayoutHistory = savedLayoutHistory,
                             )
                         }
                         composable(route = Screen.CameraScreen.route) { CameraScreen(navController = navController, imageUri = imageUri) }
