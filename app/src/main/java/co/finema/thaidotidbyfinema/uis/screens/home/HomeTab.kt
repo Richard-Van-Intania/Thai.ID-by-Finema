@@ -71,7 +71,6 @@ import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.gradient
-import co.finema.thaidotidbyfinema.uis.greenDev
 import co.finema.thaidotidbyfinema.uis.lightBlue09
 import co.finema.thaidotidbyfinema.uis.neutral01
 import co.finema.thaidotidbyfinema.uis.neutral04
@@ -328,7 +327,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                         Spacer(modifier = Modifier.width(24.dp))
                                         Column {
                                             Text(
-                                                text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + " (${index + 1})"),
+                                                text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + "(${index + 1})"),
                                                 color = primaryBlack,
                                                 fontSize = 20.sp,
                                                 fontWeight = FontWeight.W400,
@@ -357,7 +356,17 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                             modifier = Modifier
                                                 .width(184.dp)
                                                 .height(184.dp)
-                                                .background(greenDev)
+                                                .clip(
+                                                    RoundedCornerShape(
+                                                        topStart = cornerRadius, topEnd = cornerRadius, bottomStart = 0.dp, bottomEnd = 0.dp
+                                                                      )
+                                                     )
+                                                .border(
+                                                    width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(
+                                                        topStart = cornerRadius, topEnd = cornerRadius, bottomStart = 0.dp, bottomEnd = 0.dp
+                                                                                                                   )
+                                                       )
+                                                .background(neutral01)
                                                 .clickable(
                                                     onClick = {
                                                         //
@@ -368,6 +377,11 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                             modifier = Modifier
                                                 .width(184.dp)
                                                 .height(56.dp)
+                                                .clip(
+                                                    RoundedCornerShape(
+                                                        topStart = 0.dp, topEnd = 0.dp, bottomStart = cornerRadius, bottomEnd = cornerRadius
+                                                                      )
+                                                     )
                                                 .background(white),
                                             contentAlignment = Alignment.Center,
                                            ) {
@@ -377,7 +391,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                     .padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically
                                                ) {
                                                 Text(
-                                                    text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + " (${index + 1})"),
+                                                    text = item.userDefinedName ?: (stringResource(R.string.untitled_document) + "(${index + 1})"),
                                                     color = primaryBlack,
                                                     fontSize = 20.sp,
                                                     fontWeight = FontWeight.W400,
