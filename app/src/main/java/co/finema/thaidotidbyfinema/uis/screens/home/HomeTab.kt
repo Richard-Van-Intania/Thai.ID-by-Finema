@@ -30,9 +30,12 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.BorderColor
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Sync
@@ -74,9 +77,12 @@ import co.finema.thaidotidbyfinema.repositories.UserConfigRepository
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.blue05
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
+import co.finema.thaidotidbyfinema.uis.components.HorizontalLine
 import co.finema.thaidotidbyfinema.uis.gradient
+import co.finema.thaidotidbyfinema.uis.lightBlue07
 import co.finema.thaidotidbyfinema.uis.lightBlue09
 import co.finema.thaidotidbyfinema.uis.neutral01
+import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.neutral04
 import co.finema.thaidotidbyfinema.uis.neutral07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
@@ -89,7 +95,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 @Composable
-fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryViewModel, layoutHistoryId: MutableIntState) {
+fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryViewModel, currentLayoutHistoryId: MutableIntState) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
     val context = LocalContext.current
@@ -140,6 +146,122 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                         text = stringResource(R.string.make_a_cert),
                     )
                     Spacer(modifier = Modifier.height(32.dp))
+                }
+            }
+        }
+    }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    if (showDeleteDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(white)
+                    .fillMaxWidth()
+               ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
+                      ) {
+                    Spacer(modifier = Modifier.height(40.dp))
+                    Text(
+                        text = stringResource(R.string.do_you_want_to_delete_this_document), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center
+                        )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .height(56.dp)
+                                .weight(1f)
+                                .clip(RoundedCornerShape(56.dp))
+                                .background(brush = gradient)
+                                .clickable(
+                                    onClick = {
+                                        showDeleteDialog = false
+                                        layoutHistoryViewModel.removeLayoutHistory(currentLayoutHistoryId.intValue)
+                                    }),
+                            contentAlignment = Alignment.Center,
+                           ) {
+                            Text(text = stringResource(R.string.delete), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Box(
+                            modifier = Modifier
+                                .height(56.dp)
+                                .weight(1f)
+                                .background(white)
+                                .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
+                                .clip(RoundedCornerShape(56.dp))
+                                .clickable(onClick = {
+                                    showDeleteDialog = false
+                                }),
+                            contentAlignment = Alignment.Center,
+                           ) {
+                            Text(text = stringResource(R.string.cancel), color = lightBlue07, fontSize = 24.sp, fontWeight = FontWeight.W700)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
+            }
+        }
+    }
+    var showOptionDialog by remember { mutableStateOf(false) }
+    if (showOptionDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(white)
+                    .fillMaxWidth()
+               ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(modifier = Modifier.padding(all = 24.dp), text = stringResource(R.string.options), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2.dp)
+                            .background(neutral02)
+                       )
+                    OptionButton(
+                        imageVector = Icons.Rounded.Description,
+                        text = R.string.see_preview,
+                        onClick = {
+                            showOptionDialog = false
+                            navController.navigate(route = Screen.DocumentPreviewScreen.route)
+                        },
+                                )
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    OptionButton(
+                        imageVector = Icons.Rounded.BorderColor,
+                        text = R.string.rename,
+                        onClick = {
+                            //
+                            showOptionDialog = false
+                        },
+                                )
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    OptionButton(
+                        imageVector = Icons.Rounded.Delete,
+                        text = R.string.delete_doc,
+                        onClick = {
+                            showOptionDialog = false
+                            showDeleteDialog = true
+                        },
+                                )
+                    HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
+                    TextButton(
+                        onClick = {
+                            showOptionDialog = false
+                        }) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp)
+                           ) {
+                            Text(text = stringResource(R.string.cancel), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W400)
+                        }
+                    }
                 }
             }
         }
@@ -286,7 +408,8 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                 .background(neutral01)
                                                 .clickable(
                                                     onClick = {
-                                                        //
+                                                        navController.navigate(route = Screen.DocumentPreviewScreen.route)
+                                                        currentLayoutHistoryId.intValue = item.id
                                                     })
                                         ) {
                                             Column(
@@ -361,7 +484,8 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                         Spacer(modifier = Modifier.width(8.dp))
                                         IconButton(
                                             onClick = {
-                                                //
+                                                currentLayoutHistoryId.intValue = item.id
+                                                showOptionDialog = true
                                             }
                                         ) {
                                             Icon(imageVector = Icons.Rounded.MoreHoriz, contentDescription = null, tint = blue05)
@@ -392,7 +516,8 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                 .background(neutral01)
                                                 .clickable(
                                                     onClick = {
-                                                        //
+                                                        navController.navigate(route = Screen.DocumentPreviewScreen.route)
+                                                        currentLayoutHistoryId.intValue = item.id
                                                     }),
                                             contentAlignment = Alignment.Center,
                                            ) {
@@ -456,7 +581,8 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                                 Spacer(modifier = Modifier.width(8.dp))
                                                 IconButton(
                                                     onClick = {
-                                                        //
+                                                        currentLayoutHistoryId.intValue = item.id
+                                                        showOptionDialog = true
                                                     }) {
                                                     Icon(imageVector = Icons.Rounded.MoreHoriz, contentDescription = null, tint = blue05)
                                                 }

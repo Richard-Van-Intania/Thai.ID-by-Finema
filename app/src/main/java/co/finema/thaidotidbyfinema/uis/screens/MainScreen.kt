@@ -51,7 +51,7 @@ import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 
 @Composable
-fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean>, layoutHistoryViewModel: LayoutHistoryViewModel, layoutHistoryId: MutableIntState) {
+fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean>, layoutHistoryViewModel: LayoutHistoryViewModel, currentLayoutHistoryId: MutableIntState) {
     BackHandler(enabled = true) {}
     val context = LocalContext.current
     val repository = remember { UserConfigRepository(context) }
@@ -114,7 +114,7 @@ fun MainScreen(navController: NavHostController, localAuth: MutableState<Boolean
                 popEnterTransition = { EnterTransition.None },
                 popExitTransition = { ExitTransition.None },
             ) {
-                HomeTab(navController = navController, layoutHistoryId = layoutHistoryId, layoutHistoryViewModel = layoutHistoryViewModel)
+                HomeTab(navController = navController, currentLayoutHistoryId = currentLayoutHistoryId, layoutHistoryViewModel = layoutHistoryViewModel)
             }
             composable(
                 route = Screen.HistoryTab.route,

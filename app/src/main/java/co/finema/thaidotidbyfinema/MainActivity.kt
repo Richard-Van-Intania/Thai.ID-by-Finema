@@ -148,7 +148,7 @@ class MainActivity : FragmentActivity() {
                 val imageIndex = remember { mutableIntStateOf(0) }
                 val imageUri = remember { mutableStateOf<Uri?>(null) }
                 val pdfUrl = remember { mutableStateOf<Uri?>(null) }
-                val layoutHistoryId = remember { mutableIntStateOf(0) }
+                val currentLayoutHistoryId = remember { mutableIntStateOf(0) }
                 val savedLayoutHistory = remember { mutableStateOf(false) }
                 NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
                     composable(route = Screen.LoadingScreen.route) { LoadingScreen(navController = navController) }
@@ -159,7 +159,7 @@ class MainActivity : FragmentActivity() {
                     }
                     navigation(startDestination = Screen.MainScreen.route, route = Screen.HomeRoot.route) {
                         composable(route = Screen.MainScreen.route) {
-                            MainScreen(navController = navController, localAuth = localAuth, layoutHistoryViewModel = layoutHistoryViewModel, layoutHistoryId = layoutHistoryId)
+                            MainScreen(navController = navController, localAuth = localAuth, layoutHistoryViewModel = layoutHistoryViewModel, currentLayoutHistoryId = currentLayoutHistoryId)
                         }
                         composable(route = Screen.CreatePasscodeFullscreen.route) { CreatePasscodeFullscreen(navController = navController) }
                         composable(route = "${Screen.ConfirmPasscodeFullscreen.route}/{tapPasscode}", arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) { backStackEntry ->
@@ -204,7 +204,7 @@ class MainActivity : FragmentActivity() {
                             )
                         }
                         composable(route = Screen.DocumentPreviewScreen.route) {
-                            DocumentPreviewScreen(navController = navController, layoutHistoryViewModel = layoutHistoryViewModel, layoutHistoryId = layoutHistoryId)
+                            DocumentPreviewScreen(navController = navController, layoutHistoryViewModel = layoutHistoryViewModel, currentLayoutHistoryId = currentLayoutHistoryId)
                         }
                         composable(route = Screen.CreateCertifiedScreen.route) {
                             CreateCertifiedScreen(
