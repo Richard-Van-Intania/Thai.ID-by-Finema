@@ -150,6 +150,64 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
             }
         }
     }
+    var userDefinedName by remember { mutableStateOf("") }
+    var showEditNameDialog by remember { mutableStateOf(false) }
+    if (showEditNameDialog) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(white)
+                    .fillMaxWidth()
+               ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
+                      ) {
+                    Spacer(modifier = Modifier.height(40.dp))
+                    Text(
+                        text = stringResource(R.string.edit_document_name), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center
+                        )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .height(56.dp)
+                                .weight(1f)
+                                .background(white)
+                                .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
+                                .clip(RoundedCornerShape(56.dp))
+                                .clickable(onClick = {
+                                    // here
+                                    showEditNameDialog = false
+                                }),
+                            contentAlignment = Alignment.Center,
+                           ) {
+                            Text(text = stringResource(R.string.cancel), color = lightBlue07, fontSize = 24.sp, fontWeight = FontWeight.W700)
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Box(
+                            modifier = Modifier
+                                .height(56.dp)
+                                .weight(1f)
+                                .clip(RoundedCornerShape(56.dp))
+                                .background(brush = gradient)
+                                .clickable(
+                                    onClick = {
+                                        showEditNameDialog = false
+
+                                    }),
+                            contentAlignment = Alignment.Center,
+                           ) {
+                            Text(text = stringResource(R.string.save), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
+            }
+        }
+    }
     var showDeleteDialog by remember { mutableStateOf(false) }
     if (showDeleteDialog) {
         Dialog(onDismissRequest = {}) {
@@ -236,8 +294,8 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                         imageVector = Icons.Rounded.BorderColor,
                         text = R.string.rename,
                         onClick = {
-                            //
                             showOptionDialog = false
+                            showEditNameDialog = true
                         },
                                 )
                     HorizontalLine(modifier = Modifier.padding(horizontal = 16.dp))
