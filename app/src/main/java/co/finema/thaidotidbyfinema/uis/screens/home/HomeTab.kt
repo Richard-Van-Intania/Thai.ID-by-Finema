@@ -28,6 +28,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -39,6 +40,8 @@ import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Sync
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.collectAsState
@@ -84,9 +87,11 @@ import co.finema.thaidotidbyfinema.uis.lightBlue09
 import co.finema.thaidotidbyfinema.uis.neutral01
 import co.finema.thaidotidbyfinema.uis.neutral02
 import co.finema.thaidotidbyfinema.uis.neutral04
+import co.finema.thaidotidbyfinema.uis.neutral05
 import co.finema.thaidotidbyfinema.uis.neutral07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
+import co.finema.thaidotidbyfinema.uis.screens.profile.filledStyle
 import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
@@ -103,6 +108,9 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
     val scope = rememberCoroutineScope()
     val isSelectedNeverShowAgain by repository.isSelectedNeverShowAgain.collectAsState(initial = false)
     val locale by repository.locale.collectAsState(initial = null)
+    val snackbarState = remember { SnackbarHostState() }
+    val editNameSuccessfully = stringResource(R.string.edit_name_successfully)
+    val deleteDocSuccessfully = stringResource(R.string.delete_doc_successfully)
     var showAskDialog by remember { mutableStateOf(false) }
     if (showAskDialog) {
         Dialog(onDismissRequest = {}) {
@@ -163,13 +171,29 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(horizontal = 16.dp),
                       ) {
-                    Spacer(modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = stringResource(R.string.edit_document_name), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center
+                        text = stringResource(R.string.edit_document_name), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700
                         )
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = userDefinedName,
+                        onValueChange = {
+                            if (it.trim().length < 41) {
+                                userDefinedName = it.trim()
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        textStyle = filledStyle,
+                        placeholder = { Text(text = stringResource(R.string.enter_new_document_name_here), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                        singleLine = true,
+                                     )
+                    Text(
+                        modifier = Modifier.fillMaxWidth(), text = "${userDefinedName.length}/40", color = neutral05, fontSize = 16.sp, fontWeight = FontWeight.W400, textAlign = TextAlign.End
+                        )
+                    Spacer(modifier = Modifier.height(24.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier = Modifier
@@ -179,8 +203,8 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                 .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
                                 .clip(RoundedCornerShape(56.dp))
                                 .clickable(onClick = {
-                                    // here
                                     showEditNameDialog = false
+                                    userDefinedName = ""
                                 }),
                             contentAlignment = Alignment.Center,
                            ) {
@@ -196,7 +220,8 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                 .clickable(
                                     onClick = {
                                         showEditNameDialog = false
-
+                                        layoutHistoryViewModel.newUserDefinedName(currentLayoutHistoryId.intValue, userDefinedName)
+                                        scope.launch { snackbarState.showSnackbar(editNameSuccessfully) }.invokeOnCompletion { userDefinedName = "" }
                                     }),
                             contentAlignment = Alignment.Center,
                            ) {
@@ -238,6 +263,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                     onClick = {
                                         showDeleteDialog = false
                                         layoutHistoryViewModel.removeLayoutHistory(currentLayoutHistoryId.intValue)
+                                        scope.launch { snackbarState.showSnackbar(deleteDocSuccessfully) }
                                     }),
                             contentAlignment = Alignment.Center,
                            ) {
@@ -324,7 +350,7 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
             }
         }
     }
-    Scaffold(backgroundColor = whiteBG) {
+    Scaffold(backgroundColor = whiteBG, snackbarHost = { SnackbarHost(hostState = snackbarState) }) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
