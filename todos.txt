@@ -1,2 +1,2 @@
 - move save template last
-- impl dialog editname delete nav to preview
+- check snack
