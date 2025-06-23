@@ -32,6 +32,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
@@ -39,6 +41,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,6 +76,7 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 import coil.compose.rememberAsyncImagePainter
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 @Composable
@@ -89,6 +93,9 @@ fun DocumentPlaceholderScreen(
     savedLayoutHistory: MutableState<Boolean>,
 ) {
     val context = LocalContext.current
+    val snackbarState = remember { SnackbarHostState() }
+    val enableBiometricsSuccess = stringResource(R.string.delete_photo_successfully)
+    val scope = rememberCoroutineScope()
     var startCameraLive by remember { mutableStateOf(false) }
     var hasCameraPermission by remember { mutableStateOf(false) }
     val cameraPermissionLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission(), onResult = { isGranted -> hasCameraPermission = isGranted })
@@ -218,6 +225,7 @@ fun DocumentPlaceholderScreen(
                                             }
                                             savedLayoutHistory.value = false
                                             showDeleteDialog = false
+                                            scope.launch { snackbarState.showSnackbar(enableBiometricsSuccess) }
                                         }),
                             contentAlignment = Alignment.Center,
                         ) {
@@ -244,6 +252,7 @@ fun DocumentPlaceholderScreen(
         }
     }
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarState) },
         topBar = { AppBarOptBack(containerColor = white, text = stringResource(R.string.add_document), onClick = { navController.popBackStack() }) },
         bottomBar = {
             Box(modifier = Modifier
