@@ -219,9 +219,12 @@ fun HomeTab(navController: NavController, layoutHistoryViewModel: LayoutHistoryV
                                 .background(brush = gradient)
                                 .clickable(
                                     onClick = {
-                                        showEditNameDialog = false
-                                        layoutHistoryViewModel.newUserDefinedName(currentLayoutHistoryId.intValue, userDefinedName)
-                                        scope.launch { snackbarState.showSnackbar(editNameSuccessfully) }.invokeOnCompletion { userDefinedName = "" }
+                                        if (userDefinedName.isNotEmpty()) {
+                                            showEditNameDialog = false
+                                            layoutHistoryViewModel.newUserDefinedName(currentLayoutHistoryId.intValue, userDefinedName)
+                                            scope.launch { snackbarState.showSnackbar(editNameSuccessfully) }.invokeOnCompletion { userDefinedName = "" }
+                                        }
+
                                     }),
                             contentAlignment = Alignment.Center,
                            ) {
