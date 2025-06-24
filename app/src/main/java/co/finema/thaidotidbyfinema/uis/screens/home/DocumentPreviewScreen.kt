@@ -187,7 +187,6 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
                     DocumentLayout.ONE_SIDE_CARD, DocumentLayout.ONE_SIDE_HALF_A4, DocumentLayout.FULL_A4 -> {
                         DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, placeholderFilePath = it.layoutRawImagefileName0?.toUri())
                     }
-
                     DocumentLayout.TWO_SIDE_CARD, DocumentLayout.TWO_SIDE_HALF_A4 -> {
                         DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, placeholderFilePath = it.layoutRawImagefileName1?.toUri())
                         Spacer(modifier = Modifier.height(32.dp))
