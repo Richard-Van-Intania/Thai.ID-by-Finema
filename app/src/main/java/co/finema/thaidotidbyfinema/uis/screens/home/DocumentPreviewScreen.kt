@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -51,6 +52,7 @@ import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistory
 import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
+import co.finema.thaidotidbyfinema.enums.DocumentLayout
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
 import co.finema.thaidotidbyfinema.uis.gradient
@@ -174,6 +176,23 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
                 .fillMaxSize()
                 .padding(it)
                 .padding(horizontal = 16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
-              ) {}
+              ) {
+            currentLayoutHistory?.let {
+                when (DocumentLayout.valueOf(it.documentLayout)) {
+                    DocumentLayout.ONE_SIDE_CARD -> {}
+                    DocumentLayout.TWO_SIDE_CARD -> {}
+                    DocumentLayout.ONE_SIDE_HALF_A4 -> {}
+                    DocumentLayout.TWO_SIDE_HALF_A4 -> {}
+                    DocumentLayout.FULL_A4 -> {}
+                }
+            } ?: run {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it), contentAlignment = Alignment.Center
+                   ) { CircularProgressIndicator() }
+            }
+
+        }
     }
 }
