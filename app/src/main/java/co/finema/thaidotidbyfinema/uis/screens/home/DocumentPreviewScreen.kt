@@ -185,12 +185,12 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
             currentLayoutHistory?.let {
                 when (DocumentLayout.valueOf(it.documentLayout)) {
                     DocumentLayout.ONE_SIDE_CARD, DocumentLayout.ONE_SIDE_HALF_A4, DocumentLayout.FULL_A4 -> {
-                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, placeholderFilePath = it.layoutRawImagefileName0?.toUri())
+                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, imageUri = it.layoutRawImagefileName0?.toUri())
                     }
                     DocumentLayout.TWO_SIDE_CARD, DocumentLayout.TWO_SIDE_HALF_A4 -> {
-                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, placeholderFilePath = it.layoutRawImagefileName1?.toUri())
+                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, imageUri = it.layoutRawImagefileName1?.toUri())
                         Spacer(modifier = Modifier.height(32.dp))
-                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, placeholderFilePath = it.layoutRawImagefileName2?.toUri())
+                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, imageUri = it.layoutRawImagefileName2?.toUri())
                     }
                 }
             } ?: run {
@@ -206,13 +206,13 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
 }
 
 @Composable
-fun DocumentImagePreview(aspectRatio: Float, placeholderFilePath: Uri?) {
+fun DocumentImagePreview(aspectRatio: Float, imageUri: Uri?) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(aspectRatio)
             .clip(RoundedCornerShape(cornerRadius)), contentAlignment = Alignment.TopEnd
        ) {
-        Image(modifier = Modifier.fillMaxSize(), painter = rememberAsyncImagePainter(model = placeholderFilePath), contentDescription = null, contentScale = ContentScale.Fit)
+        Image(modifier = Modifier.fillMaxSize(), painter = rememberAsyncImagePainter(model = imageUri), contentDescription = null, contentScale = ContentScale.Fit)
     }
 }
