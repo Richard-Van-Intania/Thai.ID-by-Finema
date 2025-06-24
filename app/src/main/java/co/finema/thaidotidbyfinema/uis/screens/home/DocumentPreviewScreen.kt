@@ -22,9 +22,11 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -36,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistory
 import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
 import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.components.GradientButton
@@ -51,6 +54,10 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
     val snackbarState = remember { SnackbarHostState() }
     val deleteDocSuccessfully = stringResource(R.string.delete_doc_successfully)
     val layoutHistory by layoutHistoryViewModel.layoutHistory.collectAsState()
+    val currentLayoutHistory = remember { mutableStateOf<LayoutHistory?>(null) }
+    LaunchedEffect(currentLayoutHistoryId.intValue, layoutHistory) {
+        for (history in layoutHistory) if (history.id == currentLayoutHistoryId.intValue) currentLayoutHistory.value = history
+    }
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarState) },
         topBar = {
