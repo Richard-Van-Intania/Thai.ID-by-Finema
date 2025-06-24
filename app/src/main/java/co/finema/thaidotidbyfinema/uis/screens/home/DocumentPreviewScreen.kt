@@ -23,6 +23,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -48,6 +50,7 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
     val scope = rememberCoroutineScope()
     val snackbarState = remember { SnackbarHostState() }
     val deleteDocSuccessfully = stringResource(R.string.delete_doc_successfully)
+    val layoutHistory by layoutHistoryViewModel.layoutHistory.collectAsState()
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarState) },
         topBar = {
