@@ -210,37 +210,35 @@ fun DocumentPlaceholderScreen(
                     Spacer(modifier = Modifier.height(32.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
-                            modifier =
-                                Modifier
-                                    .height(56.dp)
-                                    .weight(1f)
-                                    .clip(RoundedCornerShape(56.dp))
-                                    .background(brush = gradient)
-                                    .clickable(
-                                        onClick = {
-                                            when (imageIndex.intValue) {
-                                                0 -> placeholderFilePath0.value = null
-                                                1 -> placeholderFilePath1.value = null
-                                                2 -> placeholderFilePath2.value = null
-                                            }
-                                            savedLayoutHistory.value = false
-                                            showDeleteDialog = false
-                                            scope.launch { snackbarState.showSnackbar(enableBiometricsSuccess) }
-                                        }),
+                            modifier = Modifier
+                                .height(56.dp)
+                                .weight(1f)
+                                .clip(RoundedCornerShape(56.dp))
+                                .background(brush = gradient)
+                                .clickable(
+                                    onClick = {
+                                        when (imageIndex.intValue) {
+                                            0 -> placeholderFilePath0.value = null
+                                            1 -> placeholderFilePath1.value = null
+                                            2 -> placeholderFilePath2.value = null
+                                        }
+                                        savedLayoutHistory.value = false
+                                        showDeleteDialog = false
+                                        scope.launch { snackbarState.showSnackbar(enableBiometricsSuccess) }
+                                    }),
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(text = stringResource(R.string.delete), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Box(
-                            modifier =
-                                Modifier
-                                    .height(56.dp)
-                                    .weight(1f)
-                                    .background(white)
-                                    .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
-                                    .clip(RoundedCornerShape(56.dp))
-                                    .clickable(onClick = { showDeleteDialog = false }),
+                            modifier = Modifier
+                                .height(56.dp)
+                                .weight(1f)
+                                .background(white)
+                                .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
+                                .clip(RoundedCornerShape(56.dp))
+                                .clickable(onClick = { showDeleteDialog = false }),
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(text = stringResource(R.string.cancel), color = lightBlue07, fontSize = 24.sp, fontWeight = FontWeight.W700)
@@ -269,16 +267,16 @@ fun DocumentPlaceholderScreen(
                     },
                     onClick = {
                         if (!savedLayoutHistory.value) {
-                        val now = LocalDateTime.now().toString()
-                        layoutHistoryViewModel.addLayoutHistory(
-                            documentLayout = layoutItems[layoutIndex.intValue].documentLayout.name,
-                            dateCreated = now,
-                            dateLastUsed = now,
-                            layoutRawImagefileName0 = placeholderFilePath0.value?.toString(),
-                            layoutRawImagefileName1 = placeholderFilePath1.value?.toString(),
-                            layoutRawImagefileName2 = placeholderFilePath2.value?.toString(),
-                            userDefinedName = null,
-                                                               )
+                            val now = LocalDateTime.now().toString()
+                            layoutHistoryViewModel.addLayoutHistory(
+                                documentLayout = layoutItems[layoutIndex.intValue].documentLayout.name,
+                                dateCreated = now,
+                                dateLastUsed = now,
+                                layoutRawImagefileName0 = placeholderFilePath0.value?.toString(),
+                                layoutRawImagefileName1 = placeholderFilePath1.value?.toString(),
+                                layoutRawImagefileName2 = placeholderFilePath2.value?.toString(),
+                                userDefinedName = null,
+                                                                   )
                             savedLayoutHistory.value = true
                         }
                         navController.navigate(route = Screen.CreateCertifiedScreen.route)
@@ -447,14 +445,13 @@ fun DocumentPlaceholderScreen(
 @Composable
 fun AddImageButton(ratio: Float, label: Int, onClick: () -> Unit) {
     Box(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .aspectRatio(ratio)
-                .clip(RoundedCornerShape(cornerRadius))
-                .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
-                .background(white)
-                .clickable(onClick = onClick),
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(ratio)
+            .clip(RoundedCornerShape(cornerRadius))
+            .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
+            .background(white)
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
