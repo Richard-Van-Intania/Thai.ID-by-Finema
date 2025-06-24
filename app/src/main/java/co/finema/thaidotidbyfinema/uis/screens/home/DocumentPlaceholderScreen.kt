@@ -296,13 +296,13 @@ fun DocumentPlaceholderScreen(
                     if (placeholderFilePath0.value == null)
                         AddImageButton(
                             ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            label = R.string.add_card,
+                            label = R.string.add_a_document_image,
                             onClick = {
                                 imageIndex.intValue = 0
                                 fileSource = null
                                 showOptionDialog = true
                             },
-                        )
+                                      )
                     else
                         PlaceholderImagePreview(
                             aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
@@ -311,7 +311,7 @@ fun DocumentPlaceholderScreen(
                                 imageIndex.intValue = 0
                                 showDeleteDialog = true
                             },
-                        )
+                                               )
                 }
                 DocumentLayout.TWO_SIDE_CARD -> {
                     if (placeholderFilePath1.value == null)
