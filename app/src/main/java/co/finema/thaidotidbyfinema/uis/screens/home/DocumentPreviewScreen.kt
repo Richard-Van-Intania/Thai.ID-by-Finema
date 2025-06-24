@@ -2,6 +2,8 @@
 
 package co.finema.thaidotidbyfinema.uis.screens.home
 
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,15 +44,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
+import co.finema.thaidotidbyfinema.cornerRadius
 import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistory
 import co.finema.thaidotidbyfinema.databases.layouthistories.LayoutHistoryViewModel
 import co.finema.thaidotidbyfinema.enums.DocumentLayout
@@ -60,12 +65,12 @@ import co.finema.thaidotidbyfinema.uis.lightBlue07
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
+import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: LayoutHistoryViewModel, currentLayoutHistoryId: MutableIntState) {
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val snackbarState = remember { SnackbarHostState() }
     val deleteDocSuccessfully = stringResource(R.string.delete_doc_successfully)
@@ -179,11 +184,15 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
               ) {
             currentLayoutHistory?.let {
                 when (DocumentLayout.valueOf(it.documentLayout)) {
-                    DocumentLayout.ONE_SIDE_CARD -> {}
-                    DocumentLayout.TWO_SIDE_CARD -> {}
-                    DocumentLayout.ONE_SIDE_HALF_A4 -> {}
-                    DocumentLayout.TWO_SIDE_HALF_A4 -> {}
-                    DocumentLayout.FULL_A4 -> {}
+                    DocumentLayout.ONE_SIDE_CARD, DocumentLayout.ONE_SIDE_HALF_A4, DocumentLayout.FULL_A4 -> {
+                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, placeholderFilePath = it.layoutRawImagefileName0?.toUri())
+                    }
+
+                    DocumentLayout.TWO_SIDE_CARD, DocumentLayout.TWO_SIDE_HALF_A4 -> {
+                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, placeholderFilePath = it.layoutRawImagefileName1?.toUri())
+                        Spacer(modifier = Modifier.height(32.dp))
+                        DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, placeholderFilePath = it.layoutRawImagefileName2?.toUri())
+                    }
                 }
             } ?: run {
                 Box(
@@ -194,5 +203,17 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
             }
 
         }
+    }
+}
+
+@Composable
+fun DocumentImagePreview(aspectRatio: Float, placeholderFilePath: Uri?) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(aspectRatio)
+            .clip(RoundedCornerShape(cornerRadius)), contentAlignment = Alignment.TopEnd
+       ) {
+        Image(modifier = Modifier.fillMaxSize(), painter = rememberAsyncImagePainter(model = placeholderFilePath), contentDescription = null, contentScale = ContentScale.Fit)
     }
 }
