@@ -313,48 +313,7 @@ fun DocumentPlaceholderScreen(
                             },
                                                )
                 }
-                DocumentLayout.TWO_SIDE_CARD -> {
-                    if (placeholderFilePath1.value == null)
-                        AddImageButton(
-                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            label = R.string.add_card_1,
-                            onClick = {
-                                imageIndex.intValue = 1
-                                fileSource = null
-                                showOptionDialog = true
-                            },
-                        )
-                    else
-                        PlaceholderImagePreview(
-                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            placeholderFilePath = placeholderFilePath1,
-                            onClick = {
-                                imageIndex.intValue = 1
-                                showDeleteDialog = true
-                            },
-                        )
-                    Spacer(modifier = Modifier.height(32.dp))
-                    if (placeholderFilePath2.value == null)
-                        AddImageButton(
-                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            label = R.string.add_card_2,
-                            onClick = {
-                                imageIndex.intValue = 2
-                                fileSource = null
-                                showOptionDialog = true
-                            },
-                        )
-                    else
-                        PlaceholderImagePreview(
-                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            placeholderFilePath = placeholderFilePath2,
-                            onClick = {
-                                imageIndex.intValue = 2
-                                showDeleteDialog = true
-                            },
-                        )
-                }
-                DocumentLayout.TWO_SIDE_HALF_A4 -> {
+                DocumentLayout.TWO_SIDE_CARD, DocumentLayout.TWO_SIDE_HALF_A4 -> {
                     if (placeholderFilePath1.value == null)
                         AddImageButton(
                             ratio = layoutItems[layoutIndex.intValue].aspectRatio,
@@ -364,7 +323,7 @@ fun DocumentPlaceholderScreen(
                                 fileSource = null
                                 showOptionDialog = true
                             },
-                        )
+                                      )
                     else
                         PlaceholderImagePreview(
                             aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
@@ -373,7 +332,7 @@ fun DocumentPlaceholderScreen(
                                 imageIndex.intValue = 1
                                 showDeleteDialog = true
                             },
-                        )
+                                               )
                     Spacer(modifier = Modifier.height(32.dp))
                     if (placeholderFilePath2.value == null)
                         AddImageButton(
@@ -384,7 +343,7 @@ fun DocumentPlaceholderScreen(
                                 fileSource = null
                                 showOptionDialog = true
                             },
-                        )
+                                      )
                     else
                         PlaceholderImagePreview(
                             aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
@@ -393,7 +352,7 @@ fun DocumentPlaceholderScreen(
                                 imageIndex.intValue = 2
                                 showDeleteDialog = true
                             },
-                        )
+                                               )
                 }
             }
         }
