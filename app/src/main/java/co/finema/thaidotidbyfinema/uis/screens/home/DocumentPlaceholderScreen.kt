@@ -292,7 +292,7 @@ fun DocumentPlaceholderScreen(
             .padding(it)
             .padding(horizontal = 16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             when (layoutItems[layoutIndex.intValue].documentLayout) {
-                DocumentLayout.ONE_SIDE_CARD -> {
+                DocumentLayout.ONE_SIDE_CARD, DocumentLayout.ONE_SIDE_HALF_A4, DocumentLayout.FULL_A4 -> {
                     if (placeholderFilePath0.value == null)
                         AddImageButton(
                             ratio = layoutItems[layoutIndex.intValue].aspectRatio,
@@ -354,27 +354,6 @@ fun DocumentPlaceholderScreen(
                             },
                         )
                 }
-                DocumentLayout.ONE_SIDE_HALF_A4 -> {
-                    if (placeholderFilePath0.value == null)
-                        AddImageButton(
-                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            label = R.string.add_a_document_image,
-                            onClick = {
-                                imageIndex.intValue = 0
-                                fileSource = null
-                                showOptionDialog = true
-                            },
-                        )
-                    else
-                        PlaceholderImagePreview(
-                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            placeholderFilePath = placeholderFilePath0,
-                            onClick = {
-                                imageIndex.intValue = 0
-                                showDeleteDialog = true
-                            },
-                        )
-                }
                 DocumentLayout.TWO_SIDE_HALF_A4 -> {
                     if (placeholderFilePath1.value == null)
                         AddImageButton(
@@ -412,27 +391,6 @@ fun DocumentPlaceholderScreen(
                             placeholderFilePath = placeholderFilePath2,
                             onClick = {
                                 imageIndex.intValue = 2
-                                showDeleteDialog = true
-                            },
-                        )
-                }
-                DocumentLayout.FULL_A4 -> {
-                    if (placeholderFilePath0.value == null)
-                        AddImageButton(
-                            ratio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            label = R.string.add_a_document_image,
-                            onClick = {
-                                imageIndex.intValue = 0
-                                fileSource = null
-                                showOptionDialog = true
-                            },
-                        )
-                    else
-                        PlaceholderImagePreview(
-                            aspectRatio = layoutItems[layoutIndex.intValue].aspectRatio,
-                            placeholderFilePath = placeholderFilePath0,
-                            onClick = {
-                                imageIndex.intValue = 0
                                 showDeleteDialog = true
                             },
                         )
