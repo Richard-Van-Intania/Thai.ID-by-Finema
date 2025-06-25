@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "co.finema.thaidotidbyfinema"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "co.finema.thaidotidbyfinema"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 

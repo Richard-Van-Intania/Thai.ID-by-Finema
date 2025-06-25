@@ -21,6 +21,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -49,8 +50,21 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                     .weight(1f)
                     .clip(RoundedCornerShape(1.dp))
                     .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(1.dp))
-                    .background(white)
-               ) {}
+                    .background(white),
+                contentAlignment = Alignment.Center,
+               ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                   ) {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = primaryDarkBlue)
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = primaryDarkBlue)
+                    }
+                }
+            }
             Box(modifier = Modifier.padding(vertical = 24.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth()
