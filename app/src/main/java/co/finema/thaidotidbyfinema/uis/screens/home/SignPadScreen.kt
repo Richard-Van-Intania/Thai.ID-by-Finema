@@ -18,17 +18,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
+import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
@@ -54,14 +62,33 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                 contentAlignment = Alignment.Center,
                ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
                    ) {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = primaryDarkBlue)
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = primaryDarkBlue)
+                    Box(modifier = Modifier
+                        .layout { measurable, constraints ->
+                            val placeable = measurable.measure(
+                                constraints.copy(
+                                    minWidth = constraints.minHeight,
+                                    maxWidth = constraints.maxHeight,
+                                    minHeight = constraints.minWidth,
+                                    maxHeight = constraints.maxWidth,
+                                                )
+                                                              )
+                            layout(placeable.height, placeable.width) {
+                                placeable.placeRelative(0, 0)
+                            }
+                        }
+                        .graphicsLayer {
+                            rotationZ = 90f
+                            transformOrigin = TransformOrigin(0f, 0f)
+                        }) {
+                        Text(
+                            text = stringResource(R.string.sign_your_name), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400
+                            )
                     }
                 }
             }
