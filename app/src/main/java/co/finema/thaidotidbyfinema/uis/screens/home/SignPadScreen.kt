@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -21,10 +22,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Replay
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
@@ -62,10 +65,22 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                 contentAlignment = Alignment.Center,
                ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
                    ) {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = primaryDarkBlue)
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                            .rotate(90f)
+                            .clickable(onClick = { })
+                            .padding(8.dp)
+                       ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Replay, contentDescription = null, tint = primaryDarkBlue
+                            )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(R.string.clear), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400
+                            )
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     Box(modifier = Modifier
@@ -91,6 +106,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                             )
                     }
                 }
+                // here
             }
             Box(modifier = Modifier.padding(vertical = 24.dp)) {
                 Row(
