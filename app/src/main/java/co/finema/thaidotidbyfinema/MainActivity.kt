@@ -149,6 +149,7 @@ class MainActivity : FragmentActivity() {
                 val imageUri = remember { mutableStateOf<Uri?>(null) }
                 val pdfUrl = remember { mutableStateOf<Uri?>(null) }
                 val currentLayoutHistoryId = remember { mutableIntStateOf(0) }
+                val currentSignatureImageId = remember { mutableIntStateOf(0) }
                 val savedLayoutHistory = remember { mutableStateOf(false) }
                 NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
                     composable(route = Screen.LoadingScreen.route) { LoadingScreen(navController = navController) }
@@ -215,8 +216,16 @@ class MainActivity : FragmentActivity() {
                                 placeholderFilePath2 = placeholderFilePath2,
                             )
                         }
-                        composable(route = Screen.SignatureListScreen.route) { SignatureListScreen(navController = navController, signatureImageViewModel = signatureImageViewModel) }
-                        composable(route = Screen.SignPadScreen.route) { SignPadScreen(navController = navController, signatureImageViewModel = signatureImageViewModel) }
+                        composable(route = Screen.SignatureListScreen.route) {
+                            SignatureListScreen(
+                                navController = navController, signatureImageViewModel = signatureImageViewModel, currentSignatureImageId = currentSignatureImageId
+                                               )
+                        }
+                        composable(route = Screen.SignPadScreen.route) {
+                            SignPadScreen(
+                                navController = navController, signatureImageViewModel = signatureImageViewModel, currentSignatureImageId = currentSignatureImageId
+                                         )
+                        }
 
                         // here
                         composable(route = Screen.ProfileDetailsScreen.route) { ProfileDetailsScreen(navController = navController) }

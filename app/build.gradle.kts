@@ -96,4 +96,5 @@ dependencies {
     implementation(libs.androidx.camera.extensions)
     implementation(libs.coil.compose)
     implementation(libs.cropify)
+    implementation(libs.sain)
 }

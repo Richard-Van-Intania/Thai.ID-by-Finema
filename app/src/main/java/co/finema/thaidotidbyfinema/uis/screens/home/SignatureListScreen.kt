@@ -12,6 +12,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,7 +25,7 @@ import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewM
 import java.time.LocalDateTime
 
 @Composable
-fun SignatureListScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel) {
+fun SignatureListScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
     val scope = rememberCoroutineScope()
     val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
     LaunchedEffect(signatureImage) { println(signatureImage.size) }

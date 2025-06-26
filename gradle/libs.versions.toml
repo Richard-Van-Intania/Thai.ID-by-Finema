@@ -28,6 +28,7 @@ playServicesBase = "18.7.0"
 protobufJavalite = "4.31.1"
 roomRuntime = "2.7.2"
 runtimeLivedata = "1.8.3"
+sain = "2.0.9"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -82,6 +83,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufJavalite" }
+sain = { module = "io.github.joelkanyi:sain", version.ref = "sain" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

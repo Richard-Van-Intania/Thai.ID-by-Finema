@@ -2,6 +2,8 @@
 
 package co.finema.thaidotidbyfinema.uis.screens.home
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,13 +26,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Replay
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,14 +49,22 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
+import co.finema.thaidotidbyfinema.uis.greenDev
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
+import io.github.joelkanyi.sain.Sain
 
 @Composable
-fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel) {
+fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
+    BackHandler(enabled = true) {}
+    val configuration = LocalConfiguration.current
+    val screenHeightDp = configuration.screenHeightDp
+    var imageBitmap by remember {
+        mutableStateOf<ImageBitmap?>(null)
+    }
     Scaffold(backgroundColor = whiteBG) {
         Column(
             modifier = Modifier
@@ -106,7 +124,21 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                             )
                     }
                 }
-                // here
+                Sain(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 8.dp),
+                    signatureHeight = (screenHeightDp - 200).dp,
+                    signaturePadColor = greenDev,
+                    signatureThickness = 8.dp,
+                    signatureBorderStroke = BorderStroke(
+                        color = Color.Transparent,
+                        width = 0.dp,
+                                                        ),
+                    onComplete = { signatureBitmap ->
+                        imageBitmap = signatureBitmap
+                    },
+                    ) {}
             }
             Box(modifier = Modifier.padding(vertical = 24.dp)) {
                 Row(
@@ -130,5 +162,4 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
         }
     }
 }
-
 
