@@ -46,12 +46,14 @@ fun FullScreenDialog(painter: Painter, height: Dp, text: String) {
 }
 
 @Composable
-fun ErrorDialog(text: String, onClick: () -> Unit) {
+fun ErrorDialog(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     Dialog(onDismissRequest = {}) {
-        Box(modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(white)
-            .fillMaxWidth()) {
+        Box(
+            modifier = modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(white)
+                .fillMaxWidth()
+           ) {
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -66,3 +68,4 @@ fun ErrorDialog(text: String, onClick: () -> Unit) {
         }
     }
 }
+

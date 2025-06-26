@@ -26,7 +26,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Replay
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,14 +43,19 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
+import co.finema.thaidotidbyfinema.getFileInstance
+import co.finema.thaidotidbyfinema.saveImageBitmapAsJpeg
+import co.finema.thaidotidbyfinema.uis.components.ErrorDialog
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.secondaryGray
@@ -51,13 +63,42 @@ import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 import io.github.joelkanyi.sain.Sain
 import io.github.joelkanyi.sain.rememberSignatureState
+import java.time.LocalDateTime
 
 @Composable
 fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
     BackHandler(enabled = true) {}
+    val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
+    var showErrorsDialog by remember { mutableStateOf(false) }
+    if (showErrorsDialog) {
+        ErrorDialog(
+            modifier = Modifier.rotate(90f),
+            text = stringResource(R.string.wrong),
+            onClick = {
+                showErrorsDialog = false
+            },
+                   )
+    }
     val signatureState = rememberSignatureState()
+    var savedSignature by remember { mutableStateOf(false) }
+    val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
+    var maxId by remember { mutableIntStateOf(0) }
+    LaunchedEffect(Unit) {
+        for (signature in signatureImage) {
+            maxId = signature.id
+        }
+    }
+    LaunchedEffect(savedSignature, signatureImage) {
+        if (savedSignature) {
+            for (signature in signatureImage) {
+                if (signature.id > currentSignatureImageId.intValue) currentSignatureImageId.intValue = signature.id
+            }
+            if (currentSignatureImageId.intValue > maxId) navController.popBackStack()
+            println(currentSignatureImageId.intValue)
+        }
+    }
     Scaffold(backgroundColor = whiteBG) {
         Column(
             modifier = Modifier
@@ -143,7 +184,16 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                             .height(72.dp)
                             .clip(RoundedCornerShape(72.dp))
                             .clickable(onClick = {
-                                //
+                                signatureState.signature?.let { signature ->
+                                    val photoFile = getFileInstance(context)
+                                    if (saveImageBitmapAsJpeg(signature, photoFile)) {
+                                        val now = LocalDateTime.now().toString()
+                                        signatureImageViewModel.addSignatureImage(photoFile.toUri().toString(), now, now)
+                                        savedSignature = true
+                                    } else {
+                                        showErrorsDialog = true
+                                    }
+                                }
                             })
                          )
                     Spacer(modifier = Modifier.weight(1f))
