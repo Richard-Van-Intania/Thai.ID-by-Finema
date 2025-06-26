@@ -68,6 +68,7 @@ import java.time.LocalDateTime
 @Composable
 fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
     BackHandler(enabled = true) {}
+    val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
@@ -83,7 +84,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
     }
     val signatureState = rememberSignatureState()
     var savedSignature by remember { mutableStateOf(false) }
-    val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
+
     var maxId by remember { mutableIntStateOf(0) }
     LaunchedEffect(Unit) {
         for (signature in signatureImage) {
