@@ -30,8 +30,8 @@ fun CreateCertifiedScreen(
                 .fillMaxSize()
                 .padding(it), contentAlignment = Alignment.Center
            ) {
-            Text("SignPadScreen", modifier = Modifier.clickable(onClick = {
-                navController.navigate(route = Screen.SignPadScreen.route)
+            Text("SignatureListScreen", modifier = Modifier.clickable(onClick = {
+                navController.navigate(route = Screen.SignatureListScreen.route)
             }))
         }
 
