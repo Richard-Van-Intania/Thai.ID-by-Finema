@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
-import co.finema.thaidotidbyfinema.uis.greenDev
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 import co.finema.thaidotidbyfinema.uis.secondaryGray
@@ -89,7 +88,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                     Row(
                         verticalAlignment = Alignment.CenterVertically, modifier = Modifier
                             .rotate(90f)
-                            .clickable(onClick = { })
+                            .clickable(onClick = { imageBitmap = null })
                             .padding(8.dp)
                        ) {
                         Icon(
@@ -127,10 +126,10 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                 Sain(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(all = 8.dp),
+                        .padding(all = 64.dp),
                     signatureHeight = (screenHeightDp - 200).dp,
-                    signaturePadColor = greenDev,
-                    signatureThickness = 8.dp,
+                    signaturePadColor = white,
+                    signatureThickness = 4.dp,
                     signatureBorderStroke = BorderStroke(
                         color = Color.Transparent,
                         width = 0.dp,
