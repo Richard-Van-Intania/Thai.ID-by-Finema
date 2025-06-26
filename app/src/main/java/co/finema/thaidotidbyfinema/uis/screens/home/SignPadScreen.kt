@@ -27,16 +27,11 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Replay
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
@@ -55,15 +50,14 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 import io.github.joelkanyi.sain.Sain
+import io.github.joelkanyi.sain.rememberSignatureState
 
 @Composable
 fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
     BackHandler(enabled = true) {}
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
-    var imageBitmap by remember {
-        mutableStateOf<ImageBitmap?>(null)
-    }
+    val signatureState = rememberSignatureState()
     Scaffold(backgroundColor = whiteBG) {
         Column(
             modifier = Modifier
@@ -88,7 +82,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                     Row(
                         verticalAlignment = Alignment.CenterVertically, modifier = Modifier
                             .rotate(90f)
-                            .clickable(onClick = { imageBitmap = null })
+                            .clickable(onClick = { signatureState.clearSignatureLines() })
                             .padding(8.dp)
                        ) {
                         Icon(
@@ -127,6 +121,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(all = 64.dp),
+                    state = signatureState,
                     signatureHeight = (screenHeightDp - 200).dp,
                     signaturePadColor = white,
                     signatureThickness = 4.dp,
@@ -134,9 +129,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                         color = Color.Transparent,
                         width = 0.dp,
                                                         ),
-                    onComplete = { signatureBitmap ->
-                        imageBitmap = signatureBitmap
-                    },
+                    onComplete = {},
                     ) {}
             }
             Box(modifier = Modifier.padding(vertical = 24.dp)) {
@@ -144,12 +137,14 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                     modifier = Modifier.fillMaxWidth()
                    ) {
                     Image(
-                        painter = painterResource(id = R.drawable.buttontrueactive),
+                        painter = painterResource(id = if (signatureState.signatureLines.isEmpty()) R.drawable.buttontrue else R.drawable.buttontrueactive),
                         contentDescription = null,
                         modifier = Modifier
                             .height(72.dp)
                             .clip(RoundedCornerShape(72.dp))
-                            .clickable(onClick = {})
+                            .clickable(onClick = {
+                                //
+                            })
                          )
                     Spacer(modifier = Modifier.weight(1f))
                     IconButton(onClick = { navController.popBackStack() }) {
