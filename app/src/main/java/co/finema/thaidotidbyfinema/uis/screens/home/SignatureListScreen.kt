@@ -83,34 +83,36 @@ fun SignatureListScreen(navController: NavController, signatureImageViewModel: S
                 )
             Spacer(modifier = Modifier.height(16.dp))
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
+                modifier = Modifier.fillMaxSize(),
                       ) {
                 items(signatureImage) { signature ->
-                    Box(
+                    Column {
+                        Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(80.dp)
+                            .height(88.dp)
                             .clip(RoundedCornerShape(4.dp))
                             .border(width = 1.dp, color = blue02, shape = RoundedCornerShape(4.dp))
                             .background(neutral01)
                             .clickable(
                                 onClick = {
-                                    //
+                                    signatureImageViewModel.removeSignatureImage(signature.id)
                                 }), contentAlignment = Alignment.Center
-                       ) {
+                           ) {
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 32.dp, end = 24.dp), verticalAlignment = Alignment.CenterVertically
+                                .fillMaxSize()
+                                .padding(all = 16.dp), verticalAlignment = Alignment.CenterVertically
                            ) {
-                            Image(painter = rememberAsyncImagePainter(model = signature.fileName.toUri()), contentDescription = null, modifier = Modifier.height(40.dp))
+                            Image(
+                                painter = rememberAsyncImagePainter(model = signature.fileName.toUri()), contentDescription = null,
+                                 )
                             Spacer(modifier = Modifier.weight(1f))
                             Text(text = "Last item")
                         }
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
 
                 }
             }

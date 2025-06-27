@@ -2,6 +2,7 @@
 
 package co.finema.thaidotidbyfinema.uis.screens.home
 
+import android.graphics.Matrix
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -39,7 +40,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
@@ -53,8 +57,8 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
-import co.finema.thaidotidbyfinema.getFileInstance
-import co.finema.thaidotidbyfinema.saveImageBitmapAsJpeg
+import co.finema.thaidotidbyfinema.getFileInstancePNG
+import co.finema.thaidotidbyfinema.saveImageBitmapAsPng
 import co.finema.thaidotidbyfinema.uis.components.ErrorDialog
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
@@ -165,7 +169,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                         .padding(all = 64.dp),
                     state = signatureState,
                     signatureHeight = (screenHeightDp - 200).dp,
-                    signaturePadColor = white,
+                    signaturePadColor = Color.Transparent,
                     signatureThickness = 4.dp,
                     signatureBorderStroke = BorderStroke(
                         color = Color.Transparent,
@@ -186,8 +190,9 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                             .clip(RoundedCornerShape(72.dp))
                             .clickable(onClick = {
                                 signatureState.signature?.let { signature ->
-                                    val photoFile = getFileInstance(context)
-                                    if (saveImageBitmapAsJpeg(signature, photoFile)) {
+                                    val rotatedBitmap = rotateImageBitmap(signature, -90f)
+                                    val photoFile = getFileInstancePNG(context)
+                                    if (saveImageBitmapAsPng(rotatedBitmap, photoFile)) {
                                         val now = LocalDateTime.now().toString()
                                         signatureImageViewModel.addSignatureImage(photoFile.toUri().toString(), now, now)
                                         savedSignature = true
@@ -207,3 +212,11 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
     }
 }
 
+fun rotateImageBitmap(imageBitmap: ImageBitmap, degrees: Float): ImageBitmap {
+    val androidBitmap = imageBitmap.asAndroidBitmap()
+    val matrix = Matrix().apply { postRotate(degrees) }
+    val rotatedBitmap = android.graphics.Bitmap.createBitmap(
+        androidBitmap, 0, 0, androidBitmap.width, androidBitmap.height, matrix, true
+                                                            )
+    return rotatedBitmap.asImageBitmap()
+}

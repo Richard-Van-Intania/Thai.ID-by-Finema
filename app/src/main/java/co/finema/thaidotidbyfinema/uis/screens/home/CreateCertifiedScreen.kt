@@ -41,7 +41,7 @@ fun CreateCertifiedScreen(
             Text("SignPadScreen", modifier = Modifier.clickable(onClick = {
                 navController.navigate(route = Screen.SignPadScreen.route)
             }))
-            Image(painter = rememberAsyncImagePainter(model = Uri.parse("file:///data/user/0/co.finema.thaidotidbyfinema/files/thaidotidbyfinema/IMG_2025-06-27-00-44-43-814.JPEG")), contentDescription = null, )
+            Image(painter = rememberAsyncImagePainter(model = Uri.parse("file:///data/user/0/co.finema.thaidotidbyfinema/files/thaidotidbyfinema/IMG_2025-06-27-22-46-55-890.PNG")), contentDescription = null, )
         }
 
     }
