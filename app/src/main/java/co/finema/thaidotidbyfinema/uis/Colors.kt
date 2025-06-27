@@ -17,6 +17,7 @@ val secondaryBlueGray = Color(0xFFB2BAC7)
 val secondaryGray = Color(0xFFD6DAE1)
 val primaryRed = Color(0xFFB3001B)
 val greenDev = Color(0xFF92F822)
+val blue02 = Color(0xFFE5EBF4)
 val blue05 = Color(0xFF8EACD0)
 val whiteBG = Color(0xFFF6F7F9)
 val white = Color.White
@@ -26,4 +27,4 @@ val success06 = Color(0xFF26B941)
 
 val gradient = Brush.horizontalGradient(colors = listOf(primaryDarkBlue, lightBlue07))
 
-// #ECEEF2 #8895A8 success06 #26B941 blue05 #8EACD0 #092548 #F6F7F9
+// #ECEEF2 #8895A8 success06 #26B941 blue05 #8EACD0 #092548 #F6F7F9 #E5EBF4
