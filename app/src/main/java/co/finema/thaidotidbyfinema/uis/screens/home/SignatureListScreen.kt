@@ -91,6 +91,7 @@ fun SignatureListScreen(navController: NavController, signatureImageViewModel: S
                                 .clickable(
                                     onClick = {
                                         signatureImageViewModel.removeSignatureImage(deleteSignatureImageId)
+                                        if (deleteSignatureImageId == currentSignatureImageId.intValue) currentSignatureImageId.intValue = 0
                                         showDeleteDialog = false
                                     }),
                             contentAlignment = Alignment.Center,
