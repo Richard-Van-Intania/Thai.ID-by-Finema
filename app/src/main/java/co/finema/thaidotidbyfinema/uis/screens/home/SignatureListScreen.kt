@@ -78,7 +78,7 @@ fun SignatureListScreen(navController: NavController, signatureImageViewModel: S
                       ) {
                     Spacer(modifier = Modifier.height(40.dp))
                     Text(
-                        text = stringResource(R.string.do_you_want_to_delete_this_document), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center
+                        text = stringResource(R.string.do_you_want_to_delete_this_photo), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center
                         )
                     Spacer(modifier = Modifier.height(32.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -90,8 +90,8 @@ fun SignatureListScreen(navController: NavController, signatureImageViewModel: S
                                 .background(brush = gradient)
                                 .clickable(
                                     onClick = {
-                                        showDeleteDialog = false
                                         signatureImageViewModel.removeSignatureImage(deleteSignatureImageId)
+                                        showDeleteDialog = false
                                     }),
                             contentAlignment = Alignment.Center,
                            ) {
