@@ -214,6 +214,8 @@ class MainActivity : FragmentActivity() {
                                 placeholderFilePath0 = placeholderFilePath0,
                                 placeholderFilePath1 = placeholderFilePath1,
                                 placeholderFilePath2 = placeholderFilePath2,
+                                signatureImageViewModel = signatureImageViewModel,
+                                currentSignatureImageId = currentSignatureImageId
                             )
                         }
                         composable(route = Screen.SignatureListScreen.route) {
