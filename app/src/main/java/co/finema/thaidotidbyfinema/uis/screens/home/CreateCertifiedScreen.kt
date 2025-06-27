@@ -27,6 +27,7 @@ fun CreateCertifiedScreen(
     placeholderFilePath1: MutableState<Uri?>,
     placeholderFilePath2: MutableState<Uri?>,
 ) {
+
     Scaffold {
         it
         Column(
