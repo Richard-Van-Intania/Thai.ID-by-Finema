@@ -121,6 +121,20 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                     .background(white),
                 contentAlignment = Alignment.Center,
                ) {
+                Sain(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 8.dp),
+                    state = signatureState,
+                    signatureHeight = (screenHeightDp - 200).dp,
+                    signaturePadColor = Color.Transparent,
+                    signatureThickness = 8.dp,
+                    signatureBorderStroke = BorderStroke(
+                        color = Color.Transparent,
+                        width = 0.dp,
+                                                        ),
+                    onComplete = {},
+                    ) {}
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -163,20 +177,6 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                             )
                     }
                 }
-                Sain(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = 64.dp),
-                    state = signatureState,
-                    signatureHeight = (screenHeightDp - 200).dp,
-                    signaturePadColor = Color.Transparent,
-                    signatureThickness = 4.dp,
-                    signatureBorderStroke = BorderStroke(
-                        color = Color.Transparent,
-                        width = 0.dp,
-                                                        ),
-                    onComplete = {},
-                    ) {}
             }
             Box(modifier = Modifier.padding(vertical = 24.dp)) {
                 Row(
