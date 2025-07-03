@@ -79,7 +79,6 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
     var showErrorsDialog by remember { mutableStateOf(false) }
     if (showErrorsDialog) {
         ErrorDialog(
-            modifier = Modifier.rotate(90f),
             text = stringResource(R.string.wrong),
             onClick = {
                 showErrorsDialog = false
