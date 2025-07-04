@@ -46,7 +46,6 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -74,8 +73,6 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
     BackHandler(enabled = true) {}
     val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
     val context = LocalContext.current
-    val configuration = LocalConfiguration.current
-    val screenHeightDp = configuration.screenHeightDp
     var showErrorsDialog by remember { mutableStateOf(false) }
     if (showErrorsDialog) {
         ErrorDialog(
