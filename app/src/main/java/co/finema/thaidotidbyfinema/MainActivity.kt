@@ -3,6 +3,7 @@
 package co.finema.thaidotidbyfinema
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
@@ -95,6 +96,7 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val signatureImageDatabase = SignatureImageDatabase.getDatabase(this)
         val signatureImageDao = signatureImageDatabase.signatureImageDao()
         val signatureImageViewModel = SignatureImageViewModel(signatureImageDao)

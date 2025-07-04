@@ -114,20 +114,20 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .weight(1f)
-                    .clip(RoundedCornerShape(1.dp))
-                    .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(1.dp))
-                    .background(white),
+                    .weight(1f),
                 contentAlignment = Alignment.Center,
                ) {
                 Sain(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .width(424.264.dp)
+                        .clip(RoundedCornerShape(1.dp))
+                        .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(1.dp))
+                        .background(white)
                         .padding(all = 8.dp),
                     state = signatureState,
-                    signatureHeight = (screenHeightDp - 200).dp,
+                    signatureHeight = 600.dp,
                     signaturePadColor = Color.Transparent,
-                    signatureThickness = 8.dp,
+                    signatureThickness = 4.dp,
                     signatureBorderStroke = BorderStroke(
                         color = Color.Transparent,
                         width = 0.dp,
