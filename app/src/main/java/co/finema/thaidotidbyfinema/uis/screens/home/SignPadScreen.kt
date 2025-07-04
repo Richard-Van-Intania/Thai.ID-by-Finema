@@ -31,9 +31,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,12 +66,13 @@ import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
 import io.github.joelkanyi.sain.Sain
 import io.github.joelkanyi.sain.rememberSignatureState
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 @Composable
 fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
     BackHandler(enabled = true) {}
-    val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
+    val scope = rememberCoroutineScope()
     val context = LocalContext.current
     var showErrorsDialog by remember { mutableStateOf(false) }
     if (showErrorsDialog) {
@@ -82,22 +83,12 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
             },
                    )
     }
-    val signatureState = rememberSignatureState()
     var savedSignature by remember { mutableStateOf(false) }
-
-    var maxId by remember { mutableIntStateOf(0) }
-    LaunchedEffect(Unit) {
-        for (signature in signatureImage) {
-            maxId = signature.id
-        }
-    }
-    LaunchedEffect(savedSignature, signatureImage) {
+    val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
+    LaunchedEffect(savedSignature) {
         if (savedSignature) {
-            for (signature in signatureImage) {
-                if (signature.id > currentSignatureImageId.intValue) currentSignatureImageId.intValue = signature.id
-            }
-            if (currentSignatureImageId.intValue > maxId) navController.popBackStack()
-            println(currentSignatureImageId.intValue)
+            currentSignatureImageId.intValue = signatureImage.last().id
+            navController.popBackStack()
         }
     }
     Scaffold(backgroundColor = whiteBG) {
@@ -107,6 +98,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                 .padding(it)
                 .padding(horizontal = 16.dp),
               ) {
+            val signatureState = rememberSignatureState()
             Spacer(modifier = Modifier.height(80.dp))
             Box(
                 modifier = Modifier
@@ -190,8 +182,7 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
                                     val photoFile = getFileInstancePNG(context)
                                     if (saveImageBitmapAsPng(rotatedBitmap, photoFile)) {
                                         val now = LocalDateTime.now().toString()
-                                        signatureImageViewModel.addSignatureImage(photoFile.toUri().toString(), now, now)
-                                        savedSignature = true
+                                        scope.launch { signatureImageViewModel.addSignatureImage(photoFile.toUri().toString(), now, now) }.invokeOnCompletion { savedSignature = true }
                                     } else {
                                         showErrorsDialog = true
                                     }

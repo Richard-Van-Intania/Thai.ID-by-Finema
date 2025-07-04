@@ -99,7 +99,7 @@ fun CreateCertifiedScreen(
                 navController.navigate(route = Screen.SignPadScreen.route)
             }))
             Spacer(modifier = Modifier.height(40.dp))
-            Image(
+            if (signatureUri != null) Image(
                 modifier = Modifier.fillMaxWidth(),
                 painter = rememberAsyncImagePainter(model = signatureUri),
                 contentDescription = null,

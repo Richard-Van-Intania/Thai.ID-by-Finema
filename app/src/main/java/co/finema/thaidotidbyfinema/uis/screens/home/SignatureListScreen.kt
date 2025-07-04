@@ -34,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,10 +57,12 @@ import co.finema.thaidotidbyfinema.uis.neutral01
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.white
 import coil.compose.rememberAsyncImagePainter
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignatureListScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
+    val scope = rememberCoroutineScope()
     val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
     var deleteSignatureImageId by remember { mutableIntStateOf(0) }
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -90,7 +93,7 @@ fun SignatureListScreen(navController: NavController, signatureImageViewModel: S
                                 .background(brush = gradient)
                                 .clickable(
                                     onClick = {
-                                        signatureImageViewModel.removeSignatureImage(deleteSignatureImageId)
+                                        scope.launch { signatureImageViewModel.removeSignatureImage(deleteSignatureImageId) }
                                         if (deleteSignatureImageId == currentSignatureImageId.intValue) currentSignatureImageId.intValue = 0
                                         showDeleteDialog = false
                                     }),
