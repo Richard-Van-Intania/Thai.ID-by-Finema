@@ -73,9 +73,7 @@ import java.time.LocalDateTime
 fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
     BackHandler(enabled = true) {}
     var showErrorsDialog by remember { mutableStateOf(false) }
-    if (showErrorsDialog) {
-        ErrorDialog(text = stringResource(R.string.wrong), onClick = { showErrorsDialog = false })
-    }
+    if (showErrorsDialog) ErrorDialog(text = stringResource(R.string.wrong), onClick = { showErrorsDialog = false })
     var savedSignature by remember { mutableStateOf(false) }
     val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
     LaunchedEffect(savedSignature) {
