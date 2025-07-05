@@ -3,13 +3,8 @@
 package co.finema.thaidotidbyfinema.uis.screens.home
 
 import android.net.Uri
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -32,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -41,11 +35,9 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import co.finema.thaidotidbyfinema.R
 import co.finema.thaidotidbyfinema.databases.signatureimages.SignatureImageViewModel
-import co.finema.thaidotidbyfinema.uis.Screen
 import co.finema.thaidotidbyfinema.uis.primaryBlack
 import co.finema.thaidotidbyfinema.uis.white
 import co.finema.thaidotidbyfinema.uis.whiteBG
-import coil.compose.rememberAsyncImagePainter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,12 +81,7 @@ fun CreateCertifiedScreen(
      backgroundColor = whiteBG,
     ) {
         Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("SignatureListScreen", modifier = Modifier.clickable(onClick = { navController.navigate(route = Screen.SignatureListScreen.route) }))
-            Spacer(modifier = Modifier.height(40.dp))
-            Text("SignPadScreen", modifier = Modifier.clickable(onClick = { navController.navigate(route = Screen.SignPadScreen.route) }))
-            Spacer(modifier = Modifier.height(40.dp))
-            if (signatureUri != null)
-             Image(modifier = Modifier.fillMaxWidth(), painter = rememberAsyncImagePainter(model = signatureUri), contentDescription = null, contentScale = ContentScale.Fit)
+            // here
         }
     }
 }
