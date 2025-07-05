@@ -43,28 +43,23 @@ import co.finema.thaidotidbyfinema.uis.secondaryGray
 data class TipsData(val imageResource: Int, val head: Int, val body: Int)
 
 val tipsList =
-    listOf(
-        TipsData(imageResource = R.drawable.welcome3, head = R.string.certified_true_copy, body = R.string.easily_make),
-        TipsData(imageResource = R.drawable.welcome2, head = R.string.identity_wallet, body = R.string.securely_store),
-        TipsData(imageResource = R.drawable.welcome4, head = R.string.conveniently_create, body = R.string.create_and_verify),
-        TipsData(imageResource = R.drawable.welcome5, head = R.string.save_and_share, body = R.string.save_and_share_documents),
-    )
+ listOf(
+  TipsData(imageResource = R.drawable.welcome3, head = R.string.certified_true_copy, body = R.string.easily_make),
+  TipsData(imageResource = R.drawable.welcome2, head = R.string.identity_wallet, body = R.string.securely_store),
+  TipsData(imageResource = R.drawable.welcome4, head = R.string.conveniently_create, body = R.string.create_and_verify),
+  TipsData(imageResource = R.drawable.welcome5, head = R.string.save_and_share, body = R.string.save_and_share_documents),
+ )
 
 @Composable
 fun OnboardScreen(navController: NavHostController) {
     Scaffold(
-        bottomBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 48.dp), contentAlignment = Alignment.Center) {
-                GradientButton(onClick = { navController.navigate(route = Screen.TermsScreen.route) }, text = stringResource(R.string.log_in))
-            }
-        }
+     bottomBar = {
+         Box(modifier = Modifier.fillMaxWidth().padding(all = 48.dp), contentAlignment = Alignment.Center) {
+             GradientButton(onClick = { navController.navigate(route = Screen.TermsScreen.route) }, text = stringResource(R.string.log_in))
+         }
+     }
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-            .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(48.dp))
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
                 TextButton(onClick = { navController.navigate(route = Screen.TermsScreen.route) }) {
@@ -88,11 +83,7 @@ fun OnboardScreen(navController: NavHostController) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 repeat(pagerState.pageCount) { iteration ->
                     val color = if (pagerState.currentPage == iteration) primaryRed else secondaryGray
-                    Box(modifier = Modifier
-                        .padding(horizontal = 4.dp)
-                        .clip(CircleShape)
-                        .background(color)
-                        .size(12.dp))
+                    Box(modifier = Modifier.padding(horizontal = 4.dp).clip(CircleShape).background(color).size(12.dp))
                 }
             }
             Spacer(modifier = Modifier.weight(2f))

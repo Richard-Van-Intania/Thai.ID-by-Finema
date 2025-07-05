@@ -87,21 +87,21 @@ fun ProfileEditScreen(navController: NavController) {
     LaunchedEffect(idString) { idStringText = idString }
     LaunchedEffect(locale, birthDate) {
         if (locale.isNotEmpty() && birthDate.isNotEmpty())
-            when (locale) {
-                EN -> birthDateText = formatterEN.format(LocalDateTime.parse(birthDate))
-                TH -> birthDateText = formatterTH.format(ThaiBuddhistDate.from(LocalDateTime.parse(birthDate)))
+         when (locale) {
+             EN -> birthDateText = formatterEN.format(LocalDateTime.parse(birthDate))
+             TH -> birthDateText = formatterTH.format(ThaiBuddhistDate.from(LocalDateTime.parse(birthDate)))
 
-                else -> birthDateText = formatterEN.format(LocalDateTime.parse(birthDate))
-            }
+             else -> birthDateText = formatterEN.format(LocalDateTime.parse(birthDate))
+         }
     }
     val dialogState = rememberMaterialDialogState()
     MaterialDialog(
-        dialogState = dialogState,
-        onCloseRequest = {},
-        buttons = {
-            positiveButton(stringResource(R.string.ok))
-            negativeButton(stringResource(R.string.cancel))
-        },
+     dialogState = dialogState,
+     onCloseRequest = {},
+     buttons = {
+         positiveButton(stringResource(R.string.ok))
+         negativeButton(stringResource(R.string.cancel))
+     },
     ) {
         datepicker(title = stringResource(R.string.date_of_birth), allowedDateValidator = { !it.isAfter(LocalDate.now()) }) {
             val localDateTime: LocalDateTime = it.atStartOfDay()
@@ -135,57 +135,52 @@ fun ProfileEditScreen(navController: NavController) {
     var engSurnameText by remember { mutableStateOf("") }
     LaunchedEffect(engSurname) { engSurnameText = engSurname }
     Scaffold(
-        topBar = {
-            AppBarOptBack(
-                containerColor = white,
-                text = stringResource(R.string.id_card_info),
-                onClick = {
-                    focusManager.clearFocus()
-                    if (idStringText.isEmpty() || idStringText.length == 13) {
-                        scope
-                            .launch {
-                                userCardRepository.updateIdString(idStringText)
-                                userCardRepository.updateThaiPrefix(thaiSelectedValue.trim())
-                                userCardRepository.updateThaiName(thaiNameText.trim())
-                                userCardRepository.updateThaiMiddleName(thaiMiddleNameText.trim())
-                                userCardRepository.updateThaiSurname(thaiSurnameText.trim())
-                                userCardRepository.updateEngPrefix(engSelectedValue.trim())
-                                userCardRepository.updateEngName(engNameText.trim())
-                                userCardRepository.updateEngMiddleName(engMiddleNameText.trim())
-                                userCardRepository.updateEngSurname(engSurnameText.trim())
-                            }
-                            .invokeOnCompletion { navController.popBackStack() }
-                    } else {
-                        idStringError = true
-                    }
-                },
-            )
-        },
-        backgroundColor = white,
+     topBar = {
+         AppBarOptBack(
+          containerColor = white,
+          text = stringResource(R.string.id_card_info),
+          onClick = {
+              focusManager.clearFocus()
+              if (idStringText.isEmpty() || idStringText.length == 13) {
+                  scope
+                   .launch {
+                       userCardRepository.updateIdString(idStringText)
+                       userCardRepository.updateThaiPrefix(thaiSelectedValue.trim())
+                       userCardRepository.updateThaiName(thaiNameText.trim())
+                       userCardRepository.updateThaiMiddleName(thaiMiddleNameText.trim())
+                       userCardRepository.updateThaiSurname(thaiSurnameText.trim())
+                       userCardRepository.updateEngPrefix(engSelectedValue.trim())
+                       userCardRepository.updateEngName(engNameText.trim())
+                       userCardRepository.updateEngMiddleName(engMiddleNameText.trim())
+                       userCardRepository.updateEngSurname(engSurnameText.trim())
+                   }
+                   .invokeOnCompletion { navController.popBackStack() }
+              } else {
+                  idStringError = true
+              }
+          },
+         )
+     },
+     backgroundColor = white,
     ) {
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-            .padding(horizontal = 16.dp)) {
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
             item {
                 Text(text = stringResource(R.string.id_number), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
                 OutlinedTextField(
-                    value = idStringText,
-                    onValueChange = {
-                        val value = it.trim()
-                        if ((regexNumber.matches(value) && value.length < 14) || value.isEmpty()) {
-                            idStringText = value
-                            idStringError = false
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    textStyle = filledStyle,
-                    placeholder = { Text(text = stringResource(R.string.id_number), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, showKeyboardOnFocus = true),
-                    singleLine = true,
-                    isError = idStringError,
+                 value = idStringText,
+                 onValueChange = {
+                     val value = it.trim()
+                     if ((regexNumber.matches(value) && value.length < 14) || value.isEmpty()) {
+                         idStringText = value
+                         idStringError = false
+                     }
+                 },
+                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                 textStyle = filledStyle,
+                 placeholder = { Text(text = stringResource(R.string.id_number), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, showKeyboardOnFocus = true),
+                 singleLine = true,
+                 isError = idStringError,
                 )
                 Row(modifier = Modifier.padding(horizontal = 8.dp)) {
                     if (idStringError) Text(text = stringResource(R.string.required), color = primaryRed, fontSize = 16.sp, fontWeight = FontWeight.W400)
@@ -195,41 +190,36 @@ fun ProfileEditScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = stringResource(R.string.date_of_birth), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
                 OutlinedTextField(
-                    value = birthDateText,
-                    onValueChange = {},
-                    readOnly = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    textStyle = filledStyle,
-                    placeholder = { Text(text = stringResource(R.string.date_format), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
-                    trailingIcon = { IconButton(onClick = { dialogState.show() }) { Icon(imageVector = Icons.Rounded.CalendarMonth, contentDescription = null, tint = primaryBlack) } },
-                    singleLine = true,
+                 value = birthDateText,
+                 onValueChange = {},
+                 readOnly = true,
+                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                 textStyle = filledStyle,
+                 placeholder = { Text(text = stringResource(R.string.date_format), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                 trailingIcon = { IconButton(onClick = { dialogState.show() }) { Icon(imageVector = Icons.Rounded.CalendarMonth, contentDescription = null, tint = primaryBlack) } },
+                 singleLine = true,
                 )
                 ProfileDetailsHr(text = stringResource(R.string.personal_info_thai))
                 Text(text = stringResource(R.string.title), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
                 ExposedDropdownMenuBox(expanded = thaiExpanded, onExpandedChange = { thaiExpanded = it }) {
                     OutlinedTextField(
-                        value = thaiSelectedValue,
-                        onValueChange = { thaiSelectedValue = it },
-                        modifier = Modifier
-                            .menuAnchor()
-                            .fillMaxWidth()
-                            .padding(top = 8.dp),
-                        textStyle = filledStyle,
-                        placeholder = { Text(text = stringResource(R.string.title), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = thaiExpanded) },
-                        singleLine = true,
+                     value = thaiSelectedValue,
+                     onValueChange = { thaiSelectedValue = it },
+                     modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
+                     textStyle = filledStyle,
+                     placeholder = { Text(text = stringResource(R.string.title), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = thaiExpanded) },
+                     singleLine = true,
                     )
                     ExposedDropdownMenu(containerColor = whiteBG, expanded = thaiExpanded, onDismissRequest = { thaiExpanded = false }) {
                         thaiItems.forEach {
                             DropdownMenuItem(
-                                text = { Text(text = it, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400) },
-                                onClick = {
-                                    thaiSelectedValue = it
-                                    thaiExpanded = false
-                                    focusManager.clearFocus()
-                                },
+                             text = { Text(text = it, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                             onClick = {
+                                 thaiSelectedValue = it
+                                 thaiExpanded = false
+                                 focusManager.clearFocus()
+                             },
                             )
                         }
                     }
@@ -241,26 +231,23 @@ fun ProfileEditScreen(navController: NavController) {
                 Text(text = stringResource(R.string.title), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
                 ExposedDropdownMenuBox(expanded = engExpanded, onExpandedChange = { engExpanded = it }) {
                     OutlinedTextField(
-                        value = engSelectedValue,
-                        onValueChange = { engSelectedValue = it },
-                        modifier = Modifier
-                            .menuAnchor()
-                            .fillMaxWidth()
-                            .padding(top = 8.dp),
-                        textStyle = filledStyle,
-                        placeholder = { Text(text = stringResource(R.string.title), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = engExpanded) },
-                        singleLine = true,
+                     value = engSelectedValue,
+                     onValueChange = { engSelectedValue = it },
+                     modifier = Modifier.menuAnchor().fillMaxWidth().padding(top = 8.dp),
+                     textStyle = filledStyle,
+                     placeholder = { Text(text = stringResource(R.string.title), color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = engExpanded) },
+                     singleLine = true,
                     )
                     ExposedDropdownMenu(containerColor = whiteBG, expanded = engExpanded, onDismissRequest = { engExpanded = false }) {
                         engItems.forEach {
                             DropdownMenuItem(
-                                text = { Text(text = it, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400) },
-                                onClick = {
-                                    engSelectedValue = it
-                                    engExpanded = false
-                                    focusManager.clearFocus()
-                                },
+                             text = { Text(text = it, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+                             onClick = {
+                                 engSelectedValue = it
+                                 engExpanded = false
+                                 focusManager.clearFocus()
+                             },
                             )
                         }
                     }
@@ -279,13 +266,11 @@ fun NameTextField(text: String, value: String, onValueChange: (String) -> Unit) 
     Spacer(modifier = Modifier.height(32.dp))
     Text(text = text, color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
     OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp),
-        textStyle = filledStyle,
-        placeholder = { Text(text = text, color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
-        singleLine = true,
+     value = value,
+     onValueChange = onValueChange,
+     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+     textStyle = filledStyle,
+     placeholder = { Text(text = text, color = neutral05, fontSize = 20.sp, fontWeight = FontWeight.W400) },
+     singleLine = true,
     )
 }

@@ -110,33 +110,33 @@ class MainActivity : FragmentActivity() {
         // biometric below
         executor = ContextCompat.getMainExecutor(this)
         biometricPrompt =
-            BiometricPrompt(
-                this,
-                executor,
-                object : BiometricPrompt.AuthenticationCallback() {
-                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                        super.onAuthenticationError(errorCode, errString)
-                        biometricAuth.value = false
-                    }
+         BiometricPrompt(
+          this,
+          executor,
+          object : BiometricPrompt.AuthenticationCallback() {
+              override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                  super.onAuthenticationError(errorCode, errString)
+                  biometricAuth.value = false
+              }
 
-                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                        super.onAuthenticationSucceeded(result)
-                        biometricAuth.value = true
-                    }
+              override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                  super.onAuthenticationSucceeded(result)
+                  biometricAuth.value = true
+              }
 
-                    override fun onAuthenticationFailed() {
-                        super.onAuthenticationFailed()
-                        biometricAuth.value = false
-                    }
-                },
-            )
+              override fun onAuthenticationFailed() {
+                  super.onAuthenticationFailed()
+                  biometricAuth.value = false
+              }
+          },
+         )
         promptInfo =
-            BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login")
-                .setSubtitle("Please start yours biometric")
-                .setAllowedAuthenticators(BIOMETRIC_STRONG)
-                .setNegativeButtonText("Cancel")
-                .build()
+         BiometricPrompt.PromptInfo.Builder()
+          .setTitle("Biometric login")
+          .setSubtitle("Please start yours biometric")
+          .setAllowedAuthenticators(BIOMETRIC_STRONG)
+          .setNegativeButtonText("Cancel")
+          .build()
         val startBiometricAuth = { biometricPrompt.authenticate(promptInfo) }
         enableEdgeToEdge()
         setContent {
@@ -174,36 +174,39 @@ class MainActivity : FragmentActivity() {
                         }
                         composable(route = Screen.SelectLayoutScreen.route) {
                             SelectLayoutScreen(
-                                navController = navController,
-                                layoutIndex = layoutIndex,
-                                placeholderFilePath0 = placeholderFilePath0,
-                                placeholderFilePath1 = placeholderFilePath1,
-                                placeholderFilePath2 = placeholderFilePath2, savedLayoutHistory = savedLayoutHistory,
+                             navController = navController,
+                             layoutIndex = layoutIndex,
+                             placeholderFilePath0 = placeholderFilePath0,
+                             placeholderFilePath1 = placeholderFilePath1,
+                             placeholderFilePath2 = placeholderFilePath2,
+                             savedLayoutHistory = savedLayoutHistory,
                             )
                         }
                         composable(route = Screen.DocumentPlaceholderScreen.route) {
                             DocumentPlaceholderScreen(
-                                navController = navController,
-                                layoutIndex = layoutIndex,
-                                placeholderFilePath0 = placeholderFilePath0,
-                                placeholderFilePath1 = placeholderFilePath1,
-                                placeholderFilePath2 = placeholderFilePath2,
-                                imageUri = imageUri,
-                                imageIndex = imageIndex,
-                                pdfUrl = pdfUrl, layoutHistoryViewModel = layoutHistoryViewModel, savedLayoutHistory = savedLayoutHistory,
+                             navController = navController,
+                             layoutIndex = layoutIndex,
+                             placeholderFilePath0 = placeholderFilePath0,
+                             placeholderFilePath1 = placeholderFilePath1,
+                             placeholderFilePath2 = placeholderFilePath2,
+                             imageUri = imageUri,
+                             imageIndex = imageIndex,
+                             pdfUrl = pdfUrl,
+                             layoutHistoryViewModel = layoutHistoryViewModel,
+                             savedLayoutHistory = savedLayoutHistory,
                             )
                         }
                         composable(route = Screen.CameraScreen.route) { CameraScreen(navController = navController, imageUri = imageUri) }
                         composable(route = Screen.PdfPageSelectScreen.route) { PdfPageSelectScreen(navController = navController, pdfUrl = pdfUrl, imageUri = imageUri) }
                         composable(route = Screen.CropImageScreen.route) {
                             CropImageScreen(
-                                navController = navController,
-                                imageUri = imageUri,
-                                layoutIndex = layoutIndex,
-                                imageIndex = imageIndex,
-                                placeholderFilePath0 = placeholderFilePath0,
-                                placeholderFilePath1 = placeholderFilePath1,
-                                placeholderFilePath2 = placeholderFilePath2,
+                             navController = navController,
+                             imageUri = imageUri,
+                             layoutIndex = layoutIndex,
+                             imageIndex = imageIndex,
+                             placeholderFilePath0 = placeholderFilePath0,
+                             placeholderFilePath1 = placeholderFilePath1,
+                             placeholderFilePath2 = placeholderFilePath2,
                             )
                         }
                         composable(route = Screen.DocumentPreviewScreen.route) {
@@ -211,24 +214,20 @@ class MainActivity : FragmentActivity() {
                         }
                         composable(route = Screen.CreateCertifiedScreen.route) {
                             CreateCertifiedScreen(
-                                navController = navController,
-                                layoutIndex = layoutIndex,
-                                placeholderFilePath0 = placeholderFilePath0,
-                                placeholderFilePath1 = placeholderFilePath1,
-                                placeholderFilePath2 = placeholderFilePath2,
-                                signatureImageViewModel = signatureImageViewModel,
-                                currentSignatureImageId = currentSignatureImageId
+                             navController = navController,
+                             layoutIndex = layoutIndex,
+                             placeholderFilePath0 = placeholderFilePath0,
+                             placeholderFilePath1 = placeholderFilePath1,
+                             placeholderFilePath2 = placeholderFilePath2,
+                             signatureImageViewModel = signatureImageViewModel,
+                             currentSignatureImageId = currentSignatureImageId,
                             )
                         }
                         composable(route = Screen.SignatureListScreen.route) {
-                            SignatureListScreen(
-                                navController = navController, signatureImageViewModel = signatureImageViewModel, currentSignatureImageId = currentSignatureImageId
-                                               )
+                            SignatureListScreen(navController = navController, signatureImageViewModel = signatureImageViewModel, currentSignatureImageId = currentSignatureImageId)
                         }
                         composable(route = Screen.SignPadScreen.route) {
-                            SignPadScreen(
-                                navController = navController, signatureImageViewModel = signatureImageViewModel, currentSignatureImageId = currentSignatureImageId
-                                         )
+                            SignPadScreen(navController = navController, signatureImageViewModel = signatureImageViewModel, currentSignatureImageId = currentSignatureImageId)
                         }
 
                         // here
@@ -237,17 +236,15 @@ class MainActivity : FragmentActivity() {
                         composable(route = Screen.SettingsScreen.route) { SettingsScreen(navController = navController, onBiometricAuth = startBiometricAuth) }
                         composable(route = Screen.EnterPasscodeTurnOffFullscreen.route) { EnterPasscodeTurnOffFullscreen(navController = navController, onBiometricAuth = startBiometricAuth) }
                         composable(route = Screen.CreateNewPasscodeFullscreen.route) { CreateNewPasscodeFullscreen(navController = navController) }
-                        composable(
-                            route = "${Screen.ConfirmNewPasscodeFullscreen.route}/{tapPasscode}", arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })
-                                  ) { backStackEntry ->
+                        composable(route = "${Screen.ConfirmNewPasscodeFullscreen.route}/{tapPasscode}", arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) { backStackEntry
+                            ->
                             val tapPasscode = backStackEntry.arguments?.getString("tapPasscode") ?: ""
                             ConfirmNewPasscodeFullscreen(navController = navController, tapPasscode = tapPasscode)
                         }
                         composable(route = Screen.EnterPasscodeChangeFullscreen.route) { EnterPasscodeChangeFullscreen(navController = navController, onBiometricAuth = startBiometricAuth) }
                         composable(route = Screen.CreatePasscodeChangeFullscreen.route) { CreatePasscodeChangeFullscreen(navController = navController) }
-                        composable(
-                            route = "${Screen.ConfirmPasscodeChangeFullscreen.route}/{tapPasscode}", arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })
-                                  ) { backStackEntry ->
+                        composable(route = "${Screen.ConfirmPasscodeChangeFullscreen.route}/{tapPasscode}", arguments = listOf(navArgument("tapPasscode") { defaultValue = "" })) {
+                         backStackEntry ->
                             val tapPasscode = backStackEntry.arguments?.getString("tapPasscode") ?: ""
                             ConfirmPasscodeChangeFullscreen(navController = navController, tapPasscode = tapPasscode)
                         }

@@ -20,25 +20,25 @@ class LayoutHistoryViewModel(private val layoutHistoryDao: LayoutHistoryDao) : V
     }
 
     fun addLayoutHistory(
-        documentLayout: String,
-        dateCreated: String,
-        dateLastUsed: String,
-        layoutRawImagefileName0: String?,
-        layoutRawImagefileName1: String?,
-        layoutRawImagefileName2: String?,
-        userDefinedName: String?,
+     documentLayout: String,
+     dateCreated: String,
+     dateLastUsed: String,
+     layoutRawImagefileName0: String?,
+     layoutRawImagefileName1: String?,
+     layoutRawImagefileName2: String?,
+     userDefinedName: String?,
     ) {
         viewModelScope.launch {
             layoutHistoryDao.insertLayoutHistory(
-                LayoutHistory(
-                    documentLayout = documentLayout,
-                    dateCreated = dateCreated,
-                    dateLastUsed = dateLastUsed,
-                    layoutRawImagefileName0 = layoutRawImagefileName0,
-                    layoutRawImagefileName1 = layoutRawImagefileName1,
-                    layoutRawImagefileName2 = layoutRawImagefileName2,
-                    userDefinedName = userDefinedName,
-                )
+             LayoutHistory(
+              documentLayout = documentLayout,
+              dateCreated = dateCreated,
+              dateLastUsed = dateLastUsed,
+              layoutRawImagefileName0 = layoutRawImagefileName0,
+              layoutRawImagefileName1 = layoutRawImagefileName1,
+              layoutRawImagefileName2 = layoutRawImagefileName2,
+              userDefinedName = userDefinedName,
+             )
             )
             loadLayoutHistory()
         }

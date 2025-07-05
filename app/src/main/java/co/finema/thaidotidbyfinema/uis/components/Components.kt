@@ -34,17 +34,13 @@ import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 @Composable
 fun AppBarOptBack(containerColor: Color, text: String, onClick: (() -> Unit)? = null) {
     CenterAlignedTopAppBar(
-        title = { Text(text = text, color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
-        navigationIcon = { if (onClick != null) IconButton(onClick = onClick) { Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null) } },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = containerColor, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
+     title = { Text(text = text, color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
+     navigationIcon = { if (onClick != null) IconButton(onClick = onClick) { Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null) } },
+     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = containerColor, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
     )
 }
 
-@Composable
-fun HorizontalLine(modifier: Modifier = Modifier) = Box(modifier = modifier
-    .fillMaxWidth()
-    .height(1.dp)
-    .background(neutral02))
+@Composable fun HorizontalLine(modifier: Modifier = Modifier) = Box(modifier = modifier.fillMaxWidth().height(1.dp).background(neutral02))
 
 @Composable
 fun ProfileDetailsHr(text: String) {

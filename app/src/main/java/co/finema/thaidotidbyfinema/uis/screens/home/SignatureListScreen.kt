@@ -62,58 +62,45 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignatureListScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
-    val scope = rememberCoroutineScope()
-    val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
     var deleteSignatureImageId by remember { mutableIntStateOf(0) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     if (showDeleteDialog) {
         Dialog(onDismissRequest = {}) {
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(white)
-                    .fillMaxWidth()
-               ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
-                      ) {
+            Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
+                Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(40.dp))
-                    Text(
-                        text = stringResource(R.string.do_you_want_to_delete_this_photo), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center
-                        )
+                    Text(text = stringResource(R.string.do_you_want_to_delete_this_photo), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center)
                     Spacer(modifier = Modifier.height(32.dp))
+                    val scope = rememberCoroutineScope()
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
-                            modifier = Modifier
-                                .height(56.dp)
-                                .weight(1f)
-                                .clip(RoundedCornerShape(56.dp))
-                                .background(brush = gradient)
-                                .clickable(
-                                    onClick = {
-                                        scope.launch { signatureImageViewModel.removeSignatureImage(deleteSignatureImageId) }
-                                        if (deleteSignatureImageId == currentSignatureImageId.intValue) currentSignatureImageId.intValue = 0
-                                        showDeleteDialog = false
-                                    }),
-                            contentAlignment = Alignment.Center,
-                           ) {
+                         modifier =
+                          Modifier.height(56.dp)
+                           .weight(1f)
+                           .clip(RoundedCornerShape(56.dp))
+                           .background(brush = gradient)
+                           .clickable(
+                            onClick = {
+                                scope.launch { signatureImageViewModel.removeSignatureImage(deleteSignatureImageId) }
+                                if (deleteSignatureImageId == currentSignatureImageId.intValue) currentSignatureImageId.intValue = 0
+                                showDeleteDialog = false
+                            }
+                           ),
+                         contentAlignment = Alignment.Center,
+                        ) {
                             Text(text = stringResource(R.string.delete), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Box(
-                            modifier = Modifier
-                                .height(56.dp)
-                                .weight(1f)
-                                .background(white)
-                                .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
-                                .clip(RoundedCornerShape(56.dp))
-                                .clickable(onClick = {
-                                    showDeleteDialog = false
-                                }),
-                            contentAlignment = Alignment.Center,
-                           ) {
+                         modifier =
+                          Modifier.height(56.dp)
+                           .weight(1f)
+                           .background(white)
+                           .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
+                           .clip(RoundedCornerShape(56.dp))
+                           .clickable(onClick = { showDeleteDialog = false }),
+                         contentAlignment = Alignment.Center,
+                        ) {
                             Text(text = stringResource(R.string.cancel), color = lightBlue07, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                     }
@@ -123,72 +110,59 @@ fun SignatureListScreen(navController: NavController, signatureImageViewModel: S
         }
     }
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = stringResource(R.string.your_saved_signature), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) { Icon(imageVector = Icons.Rounded.Close, contentDescription = null) }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
-                                  )
-        },
-        backgroundColor = white,
-            ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
-              ) {
+     topBar = {
+         CenterAlignedTopAppBar(
+          title = { Text(text = stringResource(R.string.your_saved_signature), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
+          navigationIcon = { IconButton(onClick = { navController.popBackStack() }) { Icon(imageVector = Icons.Rounded.Close, contentDescription = null) } },
+          colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
+         )
+     },
+     backgroundColor = white,
+    ) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.choose_your_signature),
-                color = primaryBlack,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.W700,
-                textAlign = TextAlign.Left
-                )
+             modifier = Modifier.fillMaxWidth(),
+             text = stringResource(R.string.choose_your_signature),
+             color = primaryBlack,
+             fontSize = 22.sp,
+             fontWeight = FontWeight.W700,
+             textAlign = TextAlign.Left,
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                      ) {
+            val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(signatureImage) { signature ->
                     Column {
                         Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(88.dp)
-                            .clip(RoundedCornerShape(4.dp))
-                            .border(width = 1.dp, color = blue02, shape = RoundedCornerShape(4.dp))
-                            .background(neutral01)
-                            .clickable(
-                                onClick = {
-                                    currentSignatureImageId.intValue = signature.id
-                                    navController.popBackStack()
-                                }), contentAlignment = Alignment.Center
-                           ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(all = 16.dp), verticalAlignment = Alignment.CenterVertically
-                           ) {
-                            Image(
-                                painter = rememberAsyncImagePainter(model = signature.fileName.toUri()), contentDescription = null,
-                                 )
-                            Spacer(modifier = Modifier.weight(1f))
-                            Image(
-                                painter = painterResource(id = R.drawable.vector), contentDescription = null, modifier = Modifier
-                                    .height(24.dp)
-                                    .clip(RoundedCornerShape(24.dp))
-                                    .clickable {
-                                        deleteSignatureImageId = signature.id
-                                        showDeleteDialog = true
-                                    })
-                            Spacer(modifier = Modifier.width(8.dp))
-                        }
+                         modifier =
+                          Modifier.fillMaxWidth()
+                           .height(88.dp)
+                           .clip(RoundedCornerShape(4.dp))
+                           .border(width = 1.dp, color = blue02, shape = RoundedCornerShape(4.dp))
+                           .background(neutral01)
+                           .clickable(
+                            onClick = {
+                                currentSignatureImageId.intValue = signature.id
+                                navController.popBackStack()
+                            }
+                           ),
+                         contentAlignment = Alignment.Center,
+                        ) {
+                            Row(modifier = Modifier.fillMaxSize().padding(all = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Image(painter = rememberAsyncImagePainter(model = signature.fileName.toUri()), contentDescription = null)
+                                Spacer(modifier = Modifier.weight(1f))
+                                Image(
+                                 painter = painterResource(id = R.drawable.vector),
+                                 contentDescription = null,
+                                 modifier =
+                                  Modifier.height(24.dp).clip(RoundedCornerShape(24.dp)).clickable {
+                                      deleteSignatureImageId = signature.id
+                                      showDeleteDialog = true
+                                  },
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                            }
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                     }

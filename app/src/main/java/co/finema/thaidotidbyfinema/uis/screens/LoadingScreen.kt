@@ -40,7 +40,5 @@ fun LoadingScreen(navController: NavController) {
             null -> {}
         }
     }
-    Scaffold { Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(it), contentAlignment = Alignment.Center) { CircularProgressIndicator() } }
+    Scaffold { Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) { CircularProgressIndicator() } }
 }

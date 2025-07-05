@@ -37,28 +37,23 @@ import co.finema.thaidotidbyfinema.uis.primaryDarkBlue
 fun WelcomeScreen(navController: NavHostController) {
     BackHandler(enabled = true) {}
     Scaffold(
-        bottomBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 48.dp), contentAlignment = Alignment.Center) {
-                GradientButton(onClick = { navController.navigate(route = Screen.OnboardScreen.route) }, text = stringResource(R.string.get_started))
-            }
-        }
+     bottomBar = {
+         Box(modifier = Modifier.fillMaxWidth().padding(all = 48.dp), contentAlignment = Alignment.Center) {
+             GradientButton(onClick = { navController.navigate(route = Screen.OnboardScreen.route) }, text = stringResource(R.string.get_started))
+         }
+     }
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-            .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(80.dp))
             Image(painter = painterResource(id = R.drawable.thai_id_logo), contentDescription = null, modifier = Modifier.height(40.dp))
             Spacer(modifier = Modifier.weight(1f))
             Image(painter = painterResource(id = R.drawable.welcome1), contentDescription = null, modifier = Modifier.height(328.dp))
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(color = primaryBlack, fontSize = 40.sp, fontWeight = FontWeight.W700)) { append(text = stringResource(R.string.welcome_to)) }
-                    withStyle(style = SpanStyle(color = primaryDarkBlue, fontSize = 40.sp, fontWeight = FontWeight.W700)) { append(" Thai.ID") }
-                }
+             buildAnnotatedString {
+                 withStyle(style = SpanStyle(color = primaryBlack, fontSize = 40.sp, fontWeight = FontWeight.W700)) { append(text = stringResource(R.string.welcome_to)) }
+                 withStyle(style = SpanStyle(color = primaryDarkBlue, fontSize = 40.sp, fontWeight = FontWeight.W700)) { append(" Thai.ID") }
+             }
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = stringResource(R.string.a_credible_solution), color = neutral07, fontSize = 24.sp, fontWeight = FontWeight.W400, textAlign = TextAlign.Center)

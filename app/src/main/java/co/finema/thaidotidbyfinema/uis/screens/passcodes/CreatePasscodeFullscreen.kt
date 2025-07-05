@@ -57,33 +57,29 @@ fun CreatePasscodeFullscreen(navController: NavController) {
         FullScreenDialog(painter = painterResource(R.drawable.create_sucess), height = 160.dp, text = stringResource(R.string.set_up_pin_success))
     }
     Scaffold(
-        bottomBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 48.dp), contentAlignment = Alignment.Center) {
-                val context = LocalContext.current
-                val repository = remember { UserConfigRepository(context) }
-                val scope = rememberCoroutineScope()
-                TextButton(
-                    onClick = {
-                        scope.launch { repository.updatePasscodeAsked(true) }
-                        scope
-                            .launch {
-                                showSetUpPinSuccess = true
-                                delay(2.seconds)
-                                showSetUpPinSuccess = false
-                            }
-                            .invokeOnCompletion { navController.popBackStack() }
-                    }
-                ) {
-                    Text(text = stringResource(R.string.skip), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700)
-                }
-            }
-        }
+     bottomBar = {
+         Box(modifier = Modifier.fillMaxWidth().padding(all = 48.dp), contentAlignment = Alignment.Center) {
+             val context = LocalContext.current
+             val repository = remember { UserConfigRepository(context) }
+             val scope = rememberCoroutineScope()
+             TextButton(
+              onClick = {
+                  scope.launch { repository.updatePasscodeAsked(true) }
+                  scope
+                   .launch {
+                       showSetUpPinSuccess = true
+                       delay(2.seconds)
+                       showSetUpPinSuccess = false
+                   }
+                   .invokeOnCompletion { navController.popBackStack() }
+              }
+             ) {
+                 Text(text = stringResource(R.string.skip), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700)
+             }
+         }
+     }
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize().padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             var tapPasscode by remember { mutableStateOf("") }
             LaunchedEffect(tapPasscode) {
                 if (tapPasscode.length == 6) {
@@ -131,10 +127,7 @@ fun CreatePasscodeFullscreen(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(32.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                Box(modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .background(white))
+                Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(text = "0", onClick = { if (tapPasscode.length < 6) tapPasscode += "0" })
                 Spacer(modifier = Modifier.width(32.dp))

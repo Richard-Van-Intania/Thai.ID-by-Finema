@@ -20,23 +20,29 @@ class SignatureImageViewModel(private val signatureImageDao: SignatureImageDao) 
     }
 
     suspend fun addSignatureImage(fileName: String, dateCreated: String, dateLastUsed: String) {
-        viewModelScope.launch {
-            signatureImageDao.insertSignatureImage(SignatureImage(fileName = fileName, dateCreated = dateCreated, dateLastUsed = dateLastUsed))
-            loadSignatureImages()
-        }.join()
+        viewModelScope
+         .launch {
+             signatureImageDao.insertSignatureImage(SignatureImage(fileName = fileName, dateCreated = dateCreated, dateLastUsed = dateLastUsed))
+             loadSignatureImages()
+         }
+         .join()
     }
 
     suspend fun newDateLastUsed(id: Int, dateLastUsed: String) {
-        viewModelScope.launch {
-            signatureImageDao.updateLastUsed(id = id, dateLastUsed = dateLastUsed)
-            loadSignatureImages()
-        }.join()
+        viewModelScope
+         .launch {
+             signatureImageDao.updateLastUsed(id = id, dateLastUsed = dateLastUsed)
+             loadSignatureImages()
+         }
+         .join()
     }
 
     suspend fun removeSignatureImage(id: Int) {
-        viewModelScope.launch {
-            signatureImageDao.deleteSignatureImage(id = id)
-            loadSignatureImages()
-        }.join()
+        viewModelScope
+         .launch {
+             signatureImageDao.deleteSignatureImage(id = id)
+             loadSignatureImages()
+         }
+         .join()
     }
 }

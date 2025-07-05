@@ -77,59 +77,51 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
     val layoutHistory by layoutHistoryViewModel.layoutHistory.collectAsState()
     var currentLayoutHistory by remember { mutableStateOf<LayoutHistory?>(null) }
     var loading by remember { mutableStateOf(false) }
-    LaunchedEffect(currentLayoutHistoryId.intValue, layoutHistory) {
-        for (history in layoutHistory) if (history.id == currentLayoutHistoryId.intValue) currentLayoutHistory = history
-    }
+    LaunchedEffect(currentLayoutHistoryId.intValue, layoutHistory) { for (history in layoutHistory) if (history.id == currentLayoutHistoryId.intValue) currentLayoutHistory = history }
     var showDeleteDialog by remember { mutableStateOf(false) }
     if (showDeleteDialog) {
         Dialog(onDismissRequest = {}) {
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(white)
-                    .fillMaxWidth()
-               ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
-                      ) {
+            Box(modifier = Modifier.clip(RoundedCornerShape(8.dp)).background(white).fillMaxWidth()) {
+                Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(40.dp))
                     Text(
-                        text = stringResource(R.string.do_you_want_to_delete_this_document), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700, textAlign = TextAlign.Center
-                        )
+                     text = stringResource(R.string.do_you_want_to_delete_this_document),
+                     color = primaryBlack,
+                     fontSize = 24.sp,
+                     fontWeight = FontWeight.W700,
+                     textAlign = TextAlign.Center,
+                    )
                     Spacer(modifier = Modifier.height(32.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
-                            modifier = Modifier
-                                .height(56.dp)
-                                .weight(1f)
-                                .clip(RoundedCornerShape(56.dp))
-                                .background(brush = gradient)
-                                .clickable(
-                                    onClick = {
-                                        loading = true
-                                        showDeleteDialog = false
-                                        layoutHistoryViewModel.removeLayoutHistory(currentLayoutHistoryId.intValue)
-                                        scope.launch { snackbarState.showSnackbar(deleteDocSuccessfully) }.invokeOnCompletion { navController.popBackStack() }
-                                    }),
-                            contentAlignment = Alignment.Center,
-                           ) {
+                         modifier =
+                          Modifier.height(56.dp)
+                           .weight(1f)
+                           .clip(RoundedCornerShape(56.dp))
+                           .background(brush = gradient)
+                           .clickable(
+                            onClick = {
+                                loading = true
+                                showDeleteDialog = false
+                                layoutHistoryViewModel.removeLayoutHistory(currentLayoutHistoryId.intValue)
+                                scope.launch { snackbarState.showSnackbar(deleteDocSuccessfully) }.invokeOnCompletion { navController.popBackStack() }
+                            }
+                           ),
+                         contentAlignment = Alignment.Center,
+                        ) {
                             Text(text = stringResource(R.string.delete), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Box(
-                            modifier = Modifier
-                                .height(56.dp)
-                                .weight(1f)
-                                .background(white)
-                                .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
-                                .clip(RoundedCornerShape(56.dp))
-                                .clickable(onClick = {
-                                    showDeleteDialog = false
-                                }),
-                            contentAlignment = Alignment.Center,
-                           ) {
+                         modifier =
+                          Modifier.height(56.dp)
+                           .weight(1f)
+                           .background(white)
+                           .border(width = 2.dp, color = lightBlue07, shape = RoundedCornerShape(56.dp))
+                           .clip(RoundedCornerShape(56.dp))
+                           .clickable(onClick = { showDeleteDialog = false }),
+                         contentAlignment = Alignment.Center,
+                        ) {
                             Text(text = stringResource(R.string.cancel), color = lightBlue07, fontSize = 24.sp, fontWeight = FontWeight.W700)
                         }
                     }
@@ -139,80 +131,45 @@ fun DocumentPreviewScreen(navController: NavController, layoutHistoryViewModel: 
         }
     }
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarState) },
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = currentLayoutHistory?.userDefinedName ?: stringResource(R.string.sample_document), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700
-                        )
-                },
-                navigationIcon = { IconButton(onClick = { navController.popBackStack() }) { Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null) } },
-                actions = {
-                    IconButton(onClick = {
-                        if (!loading) showDeleteDialog = true
-                    }) {
-                        Icon(imageVector = Icons.Rounded.Delete, contentDescription = null, tint = primaryBlack)
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
-                                  )
-        },
-        bottomBar = {
-            Box(
-                modifier = Modifier
-                    .background(white)
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center
-               ) {
-                GradientButton(
-                    enabled = !loading,
-                    onClick = {
-                        navController.navigate(route = Screen.CreateCertifiedScreen.route)
-                    },
-                    text = stringResource(R.string.make_a_cert),
-                              )
-            }
-        },
-        backgroundColor = whiteBG,
-            ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(horizontal = 16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
-              ) {
+     snackbarHost = { SnackbarHost(hostState = snackbarState) },
+     topBar = {
+         CenterAlignedTopAppBar(
+          title = { Text(text = currentLayoutHistory?.userDefinedName ?: stringResource(R.string.sample_document), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
+          navigationIcon = { IconButton(onClick = { navController.popBackStack() }) { Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null) } },
+          actions = { IconButton(onClick = { if (!loading) showDeleteDialog = true }) { Icon(imageVector = Icons.Rounded.Delete, contentDescription = null, tint = primaryBlack) } },
+          colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
+         )
+     },
+     bottomBar = {
+         Box(modifier = Modifier.background(white).fillMaxWidth().padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center) {
+             GradientButton(enabled = !loading, onClick = { navController.navigate(route = Screen.CreateCertifiedScreen.route) }, text = stringResource(R.string.make_a_cert))
+         }
+     },
+     backgroundColor = whiteBG,
+    ) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             currentLayoutHistory?.let {
                 when (DocumentLayout.valueOf(it.documentLayout)) {
-                    DocumentLayout.ONE_SIDE_CARD, DocumentLayout.ONE_SIDE_HALF_A4, DocumentLayout.FULL_A4 -> {
+                    DocumentLayout.ONE_SIDE_CARD,
+                    DocumentLayout.ONE_SIDE_HALF_A4,
+                    DocumentLayout.FULL_A4 -> {
                         DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, imageUri = it.layoutRawImagefileName0?.toUri())
                     }
-                    DocumentLayout.TWO_SIDE_CARD, DocumentLayout.TWO_SIDE_HALF_A4 -> {
+                    DocumentLayout.TWO_SIDE_CARD,
+                    DocumentLayout.TWO_SIDE_HALF_A4 -> {
                         DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, imageUri = it.layoutRawImagefileName1?.toUri())
                         Spacer(modifier = Modifier.height(32.dp))
                         DocumentImagePreview(aspectRatio = layoutItems[DocumentLayout.valueOf(it.documentLayout).index].aspectRatio, imageUri = it.layoutRawImagefileName2?.toUri())
                     }
                 }
-            } ?: run {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it), contentAlignment = Alignment.Center
-                   ) { CircularProgressIndicator() }
-            }
-
+            } ?: run { Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) { CircularProgressIndicator() } }
         }
     }
 }
 
 @Composable
 fun DocumentImagePreview(aspectRatio: Float, imageUri: Uri?) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(aspectRatio)
-            .clip(RoundedCornerShape(cornerRadius)), contentAlignment = Alignment.TopEnd
-       ) {
+    Box(modifier = Modifier.fillMaxWidth().aspectRatio(aspectRatio).clip(RoundedCornerShape(cornerRadius)), contentAlignment = Alignment.TopEnd) {
         Image(modifier = Modifier.fillMaxSize(), painter = rememberAsyncImagePainter(model = imageUri), contentDescription = null, contentScale = ContentScale.Fit)
     }
 }

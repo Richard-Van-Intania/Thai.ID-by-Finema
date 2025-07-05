@@ -19,13 +19,13 @@ import co.finema.thaidotidbyfinema.uis.white
 fun PolicyAndSafetyScreen(navController: NavController) {
     Scaffold(topBar = { AppBarOptBack(containerColor = white, text = stringResource(R.string.privacy_policy), onClick = { navController.popBackStack() }) }, backgroundColor = white) {
         AndroidView(
-            modifier = Modifier.padding(it),
-            factory = {
-                WebView(it).apply {
-                    webViewClient = WebViewClient()
-                    loadUrl("https://thai.id/privacy")
-                }
-            },
+         modifier = Modifier.padding(it),
+         factory = {
+             WebView(it).apply {
+                 webViewClient = WebViewClient()
+                 loadUrl("https://thai.id/privacy")
+             }
+         },
         )
     }
 }

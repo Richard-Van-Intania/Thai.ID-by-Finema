@@ -35,10 +35,7 @@ const val email = "contact@thai.id"
 @Composable
 fun SupportScreen(navController: NavController) {
     Scaffold(topBar = { AppBarOptBack(containerColor = white, text = stringResource(R.string.help_support), onClick = { navController.popBackStack() }) }, backgroundColor = white) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-            .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             val context = LocalContext.current
             val subject = stringResource(R.string.subject)
             val body = stringResource(R.string.body)
@@ -49,11 +46,11 @@ fun SupportScreen(navController: NavController) {
             Text(text = stringResource(R.string.if_you_encounter), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400, textAlign = TextAlign.Center, lineHeight = 32.sp)
             Spacer(modifier = Modifier.height(8.dp))
             TextButton(
-                onClick = {
-                    val uri = "mailto:$email".toUri().buildUpon().appendQueryParameter("subject", subject).appendQueryParameter("body", body).build()
-                    val intent = Intent(Intent.ACTION_SENDTO).apply { data = uri }
-                    if (intent.resolveActivity(context.packageManager) != null) context.startActivity(intent)
-                }
+             onClick = {
+                 val uri = "mailto:$email".toUri().buildUpon().appendQueryParameter("subject", subject).appendQueryParameter("body", body).build()
+                 val intent = Intent(Intent.ACTION_SENDTO).apply { data = uri }
+                 if (intent.resolveActivity(context.packageManager) != null) context.startActivity(intent)
+             }
             ) {
                 Text(text = email, color = blue05, fontSize = 20.sp, fontWeight = FontWeight.W700, textDecoration = TextDecoration.Underline)
             }

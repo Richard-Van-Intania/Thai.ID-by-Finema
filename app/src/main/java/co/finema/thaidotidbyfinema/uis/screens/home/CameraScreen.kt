@@ -58,28 +58,23 @@ fun CameraScreen(navController: NavController, imageUri: MutableState<Uri?>) {
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
     LaunchedEffect(imageUri.value) { if (imageUri.value != null) navController.navigate(route = Screen.CropImageScreen.route) }
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = stringResource(R.string.scan_your_card), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700) },
-                navigationIcon = { IconButton(onClick = { navController.popBackStack() }) { Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = white) } },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = black, navigationIconContentColor = white, actionIconContentColor = white),
-            )
-        },
-        bottomBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center) {
-                IconButton(onClick = { imageCapture?.let { takePhoto(context, it) { uri -> imageUri.value = uri } } }) {
-                    Icon(imageVector = Icons.Rounded.Camera, contentDescription = null, tint = white, modifier = Modifier.size(64.dp))
-                }
-            }
-        },
-        backgroundColor = black,
+     topBar = {
+         CenterAlignedTopAppBar(
+          title = { Text(text = stringResource(R.string.scan_your_card), color = white, fontSize = 24.sp, fontWeight = FontWeight.W700) },
+          navigationIcon = { IconButton(onClick = { navController.popBackStack() }) { Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = white) } },
+          colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = black, navigationIconContentColor = white, actionIconContentColor = white),
+         )
+     },
+     bottomBar = {
+         Box(modifier = Modifier.fillMaxWidth().padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center) {
+             IconButton(onClick = { imageCapture?.let { takePhoto(context, it) { uri -> imageUri.value = uri } } }) {
+                 Icon(imageVector = Icons.Rounded.Camera, contentDescription = null, tint = white, modifier = Modifier.size(64.dp))
+             }
+         }
+     },
+     backgroundColor = black,
     ) {
-        CameraPreviewView(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-            .padding(horizontal = 16.dp), onImageCaptureReady = { capture -> imageCapture = capture })
+        CameraPreviewView(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), onImageCaptureReady = { capture -> imageCapture = capture })
     }
 }
 
@@ -87,28 +82,28 @@ fun CameraScreen(navController: NavController, imageUri: MutableState<Uri?>) {
 fun CameraPreviewView(modifier: Modifier, onImageCaptureReady: (ImageCapture) -> Unit) {
     val lifecycleOwner = LocalLifecycleOwner.current
     AndroidView(
-        factory = { context ->
-            val previewView = PreviewView(context)
-            val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-            cameraProviderFuture.addListener(
-                {
-                    val cameraProvider = cameraProviderFuture.get()
-                    val preview = Preview.Builder().build().also { it.surfaceProvider = previewView.surfaceProvider }
-                    val imageCaptureUseCase = ImageCapture.Builder().build()
-                    onImageCaptureReady(imageCaptureUseCase)
-                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-                    try {
-                        cameraProvider.unbindAll()
-                        cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, imageCaptureUseCase)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                },
-                ContextCompat.getMainExecutor(context),
-            )
-            previewView
-        },
-        modifier = modifier,
+     factory = { context ->
+         val previewView = PreviewView(context)
+         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+         cameraProviderFuture.addListener(
+          {
+              val cameraProvider = cameraProviderFuture.get()
+              val preview = Preview.Builder().build().also { it.surfaceProvider = previewView.surfaceProvider }
+              val imageCaptureUseCase = ImageCapture.Builder().build()
+              onImageCaptureReady(imageCaptureUseCase)
+              val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+              try {
+                  cameraProvider.unbindAll()
+                  cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, imageCaptureUseCase)
+              } catch (e: Exception) {
+                  e.printStackTrace()
+              }
+          },
+          ContextCompat.getMainExecutor(context),
+         )
+         previewView
+     },
+     modifier = modifier,
     )
 }
 
@@ -116,16 +111,16 @@ fun takePhoto(context: Context, imageCapture: ImageCapture, onImageSaved: (Uri?)
     val photoFile = getFileInstance(context)
     val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
     imageCapture.takePicture(
-        outputOptions,
-        ContextCompat.getMainExecutor(context),
-        object : ImageCapture.OnImageSavedCallback {
-            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                onImageSaved(outputFileResults.savedUri)
-            }
+     outputOptions,
+     ContextCompat.getMainExecutor(context),
+     object : ImageCapture.OnImageSavedCallback {
+         override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+             onImageSaved(outputFileResults.savedUri)
+         }
 
-            override fun onError(exception: ImageCaptureException) {
-                onImageSaved(null)
-            }
-        },
+         override fun onError(exception: ImageCaptureException) {
+             onImageSaved(null)
+         }
+     },
     )
 }

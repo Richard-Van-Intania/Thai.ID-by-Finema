@@ -72,16 +72,9 @@ import java.time.LocalDateTime
 @Composable
 fun SignPadScreen(navController: NavController, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState) {
     BackHandler(enabled = true) {}
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     var showErrorsDialog by remember { mutableStateOf(false) }
     if (showErrorsDialog) {
-        ErrorDialog(
-            text = stringResource(R.string.wrong),
-            onClick = {
-                showErrorsDialog = false
-            },
-                   )
+        ErrorDialog(text = stringResource(R.string.wrong), onClick = { showErrorsDialog = false })
     }
     var savedSignature by remember { mutableStateOf(false) }
     val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
@@ -92,107 +85,72 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
         }
     }
     Scaffold(backgroundColor = whiteBG) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(horizontal = 16.dp),
-              ) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
             val signatureState = rememberSignatureState()
             Spacer(modifier = Modifier.height(80.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f),
-                contentAlignment = Alignment.Center,
-               ) {
+            Box(modifier = Modifier.fillMaxSize().weight(1f), contentAlignment = Alignment.Center) {
                 Sain(
-                    modifier = Modifier
-                        .width(424.264.dp)
-                        .clip(RoundedCornerShape(1.dp))
-                        .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(1.dp))
-                        .background(white)
-                        .padding(all = 8.dp),
-                    state = signatureState,
-                    signatureHeight = 600.dp,
-                    signaturePadColor = Color.Transparent,
-                    signatureThickness = 4.dp,
-                    signatureBorderStroke = BorderStroke(
-                        color = Color.Transparent,
-                        width = 0.dp,
-                                                        ),
-                    onComplete = {},
-                    ) {}
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                   ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                            .rotate(90f)
-                            .clickable(onClick = { signatureState.clearSignatureLines() })
-                            .padding(8.dp)
-                       ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Replay, contentDescription = null, tint = primaryDarkBlue
-                            )
+                 modifier =
+                  Modifier.width(424.264.dp).clip(RoundedCornerShape(1.dp)).border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(1.dp)).background(white).padding(all = 8.dp),
+                 state = signatureState,
+                 signatureHeight = 600.dp,
+                 signaturePadColor = Color.Transparent,
+                 signatureThickness = 4.dp,
+                 signatureBorderStroke = BorderStroke(color = Color.Transparent, width = 0.dp),
+                 onComplete = {},
+                ) {}
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.rotate(90f).clickable(onClick = { signatureState.clearSignatureLines() }).padding(8.dp)) {
+                        Icon(imageVector = Icons.Rounded.Replay, contentDescription = null, tint = primaryDarkBlue)
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(R.string.clear), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400
-                            )
+                        Text(text = stringResource(R.string.clear), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400)
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    Box(modifier = Modifier
-                        .layout { measurable, constraints ->
-                            val placeable = measurable.measure(
-                                constraints.copy(
-                                    minWidth = constraints.minHeight,
-                                    maxWidth = constraints.maxHeight,
-                                    minHeight = constraints.minWidth,
-                                    maxHeight = constraints.maxWidth,
-                                                )
-                                                              )
-                            layout(placeable.height, placeable.width) {
-                                placeable.placeRelative(0, 0)
-                            }
-                        }
-                        .graphicsLayer {
-                            rotationZ = 90f
-                            transformOrigin = TransformOrigin(0f, 0f)
-                        }) {
-                        Text(
-                            text = stringResource(R.string.sign_your_name), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400
+                    Box(
+                     modifier =
+                      Modifier.layout { measurable, constraints ->
+                           val placeable =
+                            measurable.measure(
+                             constraints.copy(minWidth = constraints.minHeight, maxWidth = constraints.maxHeight, minHeight = constraints.minWidth, maxHeight = constraints.maxWidth)
                             )
+                           layout(placeable.height, placeable.width) { placeable.placeRelative(0, 0) }
+                       }
+                       .graphicsLayer {
+                           rotationZ = 90f
+                           transformOrigin = TransformOrigin(0f, 0f)
+                       }
+                    ) {
+                        Text(text = stringResource(R.string.sign_your_name), color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W400)
                     }
                 }
             }
             Box(modifier = Modifier.padding(vertical = 24.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                   ) {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    val scope = rememberCoroutineScope()
+                    val context = LocalContext.current
                     Image(
-                        painter = painterResource(id = if (signatureState.signatureLines.isEmpty()) R.drawable.buttontrue else R.drawable.buttontrueactive),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(72.dp)
-                            .clip(RoundedCornerShape(72.dp))
-                            .clickable(onClick = {
-                                signatureState.signature?.let { signature ->
-                                    val rotatedBitmap = rotateImageBitmap(signature, -90f)
-                                    val photoFile = getFileInstancePNG(context)
-                                    if (saveImageBitmapAsPng(rotatedBitmap, photoFile)) {
-                                        val now = LocalDateTime.now().toString()
-                                        scope.launch { signatureImageViewModel.addSignatureImage(photoFile.toUri().toString(), now, now) }.invokeOnCompletion { savedSignature = true }
-                                    } else {
-                                        showErrorsDialog = true
-                                    }
+                     painter = painterResource(id = if (signatureState.signatureLines.isEmpty()) R.drawable.buttontrue else R.drawable.buttontrueactive),
+                     contentDescription = null,
+                     modifier =
+                      Modifier.height(72.dp)
+                       .clip(RoundedCornerShape(72.dp))
+                       .clickable(
+                        onClick = {
+                            signatureState.signature?.let { signature ->
+                                val rotatedBitmap = rotateImageBitmap(signature, -90f)
+                                val photoFile = getFileInstancePNG(context)
+                                if (saveImageBitmapAsPng(rotatedBitmap, photoFile)) {
+                                    val now = LocalDateTime.now().toString()
+                                    scope.launch { signatureImageViewModel.addSignatureImage(photoFile.toUri().toString(), now, now) }.invokeOnCompletion { savedSignature = true }
+                                } else {
+                                    showErrorsDialog = true
                                 }
-                            })
-                         )
+                            }
+                        }
+                       ),
+                    )
                     Spacer(modifier = Modifier.weight(1f))
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = primaryDarkBlue)
-                    }
+                    IconButton(onClick = { navController.popBackStack() }) { Icon(imageVector = Icons.Rounded.Close, contentDescription = null, tint = primaryDarkBlue) }
                 }
             }
         }
@@ -202,8 +160,6 @@ fun SignPadScreen(navController: NavController, signatureImageViewModel: Signatu
 fun rotateImageBitmap(imageBitmap: ImageBitmap, degrees: Float): ImageBitmap {
     val androidBitmap = imageBitmap.asAndroidBitmap()
     val matrix = Matrix().apply { postRotate(degrees) }
-    val rotatedBitmap = android.graphics.Bitmap.createBitmap(
-        androidBitmap, 0, 0, androidBitmap.width, androidBitmap.height, matrix, true
-                                                            )
+    val rotatedBitmap = android.graphics.Bitmap.createBitmap(androidBitmap, 0, 0, androidBitmap.width, androidBitmap.height, matrix, true)
     return rotatedBitmap.asImageBitmap()
 }

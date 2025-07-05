@@ -43,17 +43,13 @@ import co.finema.thaidotidbyfinema.uis.white
 fun CreatePasscodeChangeFullscreen(navController: NavController) {
     BackHandler(enabled = true) {}
     Scaffold(
-        bottomBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 48.dp), contentAlignment = Alignment.Center) {
-                TextButton(onClick = { navController.popBackStack() }) { Text(text = stringResource(R.string.cancel), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700) }
-            }
-        }
+     bottomBar = {
+         Box(modifier = Modifier.fillMaxWidth().padding(all = 48.dp), contentAlignment = Alignment.Center) {
+             TextButton(onClick = { navController.popBackStack() }) { Text(text = stringResource(R.string.cancel), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700) }
+         }
+     }
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize().padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             var tapPasscode by remember { mutableStateOf("") }
             LaunchedEffect(tapPasscode) {
                 if (tapPasscode.length == 6) {
@@ -101,10 +97,7 @@ fun CreatePasscodeChangeFullscreen(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(32.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                Box(modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .background(white))
+                Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
                 Spacer(modifier = Modifier.width(32.dp))
                 PasscodeButton(text = "0", onClick = { if (tapPasscode.length < 6) tapPasscode += "0" })
                 Spacer(modifier = Modifier.width(32.dp))

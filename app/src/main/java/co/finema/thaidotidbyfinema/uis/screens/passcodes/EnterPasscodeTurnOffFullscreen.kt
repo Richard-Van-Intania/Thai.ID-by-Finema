@@ -69,15 +69,15 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
     LaunchedEffect(passAuth) {
         if (passAuth) {
             scope
-                .launch {
-                    repository.updateSalt("")
-                    repository.updatePasscode("")
-                    if (useBiometric) {
-                        repository.updateUseBiometric(false)
-                        snackbarState.showSnackbar(disableBiometricsSuccess)
-                    }
-                }
-                .invokeOnCompletion { navController.popBackStack() }
+             .launch {
+                 repository.updateSalt("")
+                 repository.updatePasscode("")
+                 if (useBiometric) {
+                     repository.updateUseBiometric(false)
+                     snackbarState.showSnackbar(disableBiometricsSuccess)
+                 }
+             }
+             .invokeOnCompletion { navController.popBackStack() }
         }
     }
     var showErrorsDialog by remember { mutableStateOf(false) }
@@ -99,18 +99,14 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
         }
     }
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(bottom = 48.dp)) },
-        bottomBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 48.dp), contentAlignment = Alignment.Center) {
-                TextButton(onClick = { navController.popBackStack() }) { Text(text = stringResource(R.string.cancel), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700) }
-            }
-        },
+     snackbarHost = { SnackbarHost(hostState = snackbarState, modifier = Modifier.padding(bottom = 48.dp)) },
+     bottomBar = {
+         Box(modifier = Modifier.fillMaxWidth().padding(all = 48.dp), contentAlignment = Alignment.Center) {
+             TextButton(onClick = { navController.popBackStack() }) { Text(text = stringResource(R.string.cancel), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700) }
+         }
+     },
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize().padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             var tapPasscode by remember { mutableStateOf("") }
             val passcode by repository.passcode.collectAsState(initial = "")
             val salt by repository.salt.collectAsState(initial = "")
@@ -125,18 +121,14 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
                     }
                 }
             }
-            if (passcode.isEmpty() || salt.isEmpty()) Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(it), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+            if (passcode.isEmpty() || salt.isEmpty()) Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
             else {
                 Text(text = stringResource(R.string.enter_current_pin), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700)
                 Spacer(modifier = Modifier.height(48.dp))
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .offset { IntOffset(shakeController.offset.value.roundToInt(), 0) },
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
+                 modifier = Modifier.fillMaxWidth().offset { IntOffset(shakeController.offset.value.roundToInt(), 0) },
+                 horizontalArrangement = Arrangement.Center,
+                 verticalAlignment = Alignment.CenterVertically,
                 ) {
                     if (tapPasscode.isEmpty()) OutlinedDot() else FilledDot()
                     Spacer(modifier = Modifier.width(24.dp))
@@ -177,10 +169,7 @@ fun EnterPasscodeTurnOffFullscreen(navController: NavController, onBiometricAuth
                 Spacer(modifier = Modifier.height(32.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
                     if (useBiometric) BottomButton(imageVector = Icons.Rounded.Fingerprint, onClick = { onBiometricAuth() })
-                    else Box(modifier = Modifier
-                        .size(80.dp)
-                        .clip(CircleShape)
-                        .background(white))
+                    else Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(white))
                     Spacer(modifier = Modifier.width(32.dp))
                     PasscodeButton(text = "0", onClick = { if (tapPasscode.length < 6) tapPasscode += "0" })
                     Spacer(modifier = Modifier.width(32.dp))

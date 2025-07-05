@@ -48,60 +48,44 @@ fun LocalizationSettingsScreen(navController: NavController) {
         val context = LocalContext.current
         val repository = remember { UserConfigRepository(context) }
         val locale by repository.locale.collectAsState(initial = null)
-        if (locale == null) Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(it), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
-        else Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-            .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                val scope = rememberCoroutineScope()
-                TextButton(
-                    onClick = {
-                        if (locale != EN)
-                            scope.launch {
-                                repository.updateLocale(EN)
-                                navController.navigate(route = Screen.LoadingScreen.route)
-                                (context as? Activity)?.recreate()
-                            }
-                    }
-                ) {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "English (EN)", color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
-                        Spacer(modifier = Modifier.weight(1f))
-                        Image(
-                            painter = painterResource(id = if (locale == EN) R.drawable.lang_check else R.drawable.lang_uncheck),
-                            contentDescription = null,
-                            modifier = Modifier.height(24.dp),
-                        )
-                    }
-                }
-                HorizontalDivider(thickness = 1.dp, color = neutral02)
-                TextButton(
-                    onClick = {
-                        if (locale != TH)
-                            scope.launch {
-                                repository.updateLocale(TH)
-                                navController.navigate(route = Screen.LoadingScreen.route)
-                                (context as? Activity)?.recreate()
-                            }
-                    }
-                ) {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = "ไทย (TH)", color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
-                        Spacer(modifier = Modifier.weight(1f))
-                        Image(
-                            painter = painterResource(id = if (locale == TH) R.drawable.lang_check else R.drawable.lang_uncheck),
-                            contentDescription = null,
-                            modifier = Modifier.height(24.dp),
-                        )
-                    }
-                }
-                HorizontalDivider(thickness = 1.dp, color = neutral02)
-            }
+        if (locale == null) Box(modifier = Modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+        else
+         Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+             val scope = rememberCoroutineScope()
+             TextButton(
+              onClick = {
+                  if (locale != EN)
+                   scope.launch {
+                       repository.updateLocale(EN)
+                       navController.navigate(route = Screen.LoadingScreen.route)
+                       (context as? Activity)?.recreate()
+                   }
+              }
+             ) {
+                 Row(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                     Text(text = "English (EN)", color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
+                     Spacer(modifier = Modifier.weight(1f))
+                     Image(painter = painterResource(id = if (locale == EN) R.drawable.lang_check else R.drawable.lang_uncheck), contentDescription = null, modifier = Modifier.height(24.dp))
+                 }
+             }
+             HorizontalDivider(thickness = 1.dp, color = neutral02)
+             TextButton(
+              onClick = {
+                  if (locale != TH)
+                   scope.launch {
+                       repository.updateLocale(TH)
+                       navController.navigate(route = Screen.LoadingScreen.route)
+                       (context as? Activity)?.recreate()
+                   }
+              }
+             ) {
+                 Row(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                     Text(text = "ไทย (TH)", color = primaryBlack, fontSize = 20.sp, fontWeight = FontWeight.W700)
+                     Spacer(modifier = Modifier.weight(1f))
+                     Image(painter = painterResource(id = if (locale == TH) R.drawable.lang_check else R.drawable.lang_uncheck), contentDescription = null, modifier = Modifier.height(24.dp))
+                 }
+             }
+             HorizontalDivider(thickness = 1.dp, color = neutral02)
+         }
     }
 }

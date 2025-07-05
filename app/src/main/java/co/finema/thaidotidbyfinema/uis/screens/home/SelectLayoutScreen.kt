@@ -74,90 +74,90 @@ import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.launch
 
 data class LayoutItemButtonData(
-    val explanation: Int,
-    val example: Int,
-    val image1: Int,
-    val image2: Int?,
-    val bottomText: Int,
-    val unselectedFilePath: Int,
-    val selectedFilePath: Int,
-    val documentLayout: DocumentLayout,
-    val widthFactor: Float,
-    val aspectRatio: Float,
+ val explanation: Int,
+ val example: Int,
+ val image1: Int,
+ val image2: Int?,
+ val bottomText: Int,
+ val unselectedFilePath: Int,
+ val selectedFilePath: Int,
+ val documentLayout: DocumentLayout,
+ val widthFactor: Float,
+ val aspectRatio: Float,
 )
 
 val layoutItems =
-    listOf(
-        LayoutItemButtonData(
-            explanation = R.string.oneSideCard_explanation,
-            example = R.string.oneSideCard_example,
-            image1 = R.drawable.luna_id_card_new,
-            image2 = null,
-            bottomText = R.string.oneSideCard_layout,
-            unselectedFilePath = R.drawable.card1,
-            selectedFilePath = R.drawable.card2,
-            documentLayout = DocumentLayout.ONE_SIDE_CARD,
-            widthFactor = 0.25f,
-            aspectRatio = (8.6 / 5.4).toFloat(),
-        ),
-        LayoutItemButtonData(
-            explanation = R.string.twoSideCard_explanation,
-            example = R.string.twoSideCard_example,
-            image1 = R.drawable.luffy_license_new,
-            image2 = R.drawable.luffy_license2_new,
-            bottomText = R.string.twoSideCard_layout,
-            unselectedFilePath = R.drawable.card2_1,
-            selectedFilePath = R.drawable.card2_2,
-            documentLayout = DocumentLayout.TWO_SIDE_CARD,
-            widthFactor = 0.25f,
-            aspectRatio = (8.6 / 5.4).toFloat(),
-        ),
-        LayoutItemButtonData(
-            explanation = R.string.twoHalfA4_explanation,
-            example = R.string.twoHalfA4_example,
-            image1 = R.drawable.house_front_new,
-            image2 = R.drawable.house_back_new,
-            bottomText = R.string.twoHalfA4_layout,
-            unselectedFilePath = R.drawable.house1,
-            selectedFilePath = R.drawable.house2,
-            documentLayout = DocumentLayout.TWO_SIDE_HALF_A4,
-            widthFactor = 0.375f,
-            aspectRatio = (297.0 / 210.0).toFloat(),
-        ),
-        LayoutItemButtonData(
-            explanation = R.string.oneHalfA4_explanation,
-            example = R.string.oneHalfA4_example,
-            image1 = R.drawable.bookbank_new,
-            image2 = null,
-            bottomText = R.string.oneHalfA4_layout,
-            unselectedFilePath = R.drawable.bookbank1,
-            selectedFilePath = R.drawable.bookbank2,
-            documentLayout = DocumentLayout.ONE_SIDE_HALF_A4,
-            widthFactor = 0.375f,
-            aspectRatio = (1.0 / 1.0).toFloat(),
-        ),
-        LayoutItemButtonData(
-            explanation = R.string.fullA4_explanation,
-            example = R.string.fullA4_example,
-            image1 = R.drawable.transcript_new,
-            image2 = null,
-            bottomText = R.string.fullA4_layout,
-            unselectedFilePath = R.drawable.doc1,
-            selectedFilePath = R.drawable.doc2,
-            documentLayout = DocumentLayout.FULL_A4,
-            widthFactor = 0.5f,
-            aspectRatio = (210.0 / 297.0).toFloat(),
-        ),
-    )
+ listOf(
+  LayoutItemButtonData(
+   explanation = R.string.oneSideCard_explanation,
+   example = R.string.oneSideCard_example,
+   image1 = R.drawable.luna_id_card_new,
+   image2 = null,
+   bottomText = R.string.oneSideCard_layout,
+   unselectedFilePath = R.drawable.card1,
+   selectedFilePath = R.drawable.card2,
+   documentLayout = DocumentLayout.ONE_SIDE_CARD,
+   widthFactor = 0.25f,
+   aspectRatio = (8.6 / 5.4).toFloat(),
+  ),
+  LayoutItemButtonData(
+   explanation = R.string.twoSideCard_explanation,
+   example = R.string.twoSideCard_example,
+   image1 = R.drawable.luffy_license_new,
+   image2 = R.drawable.luffy_license2_new,
+   bottomText = R.string.twoSideCard_layout,
+   unselectedFilePath = R.drawable.card2_1,
+   selectedFilePath = R.drawable.card2_2,
+   documentLayout = DocumentLayout.TWO_SIDE_CARD,
+   widthFactor = 0.25f,
+   aspectRatio = (8.6 / 5.4).toFloat(),
+  ),
+  LayoutItemButtonData(
+   explanation = R.string.twoHalfA4_explanation,
+   example = R.string.twoHalfA4_example,
+   image1 = R.drawable.house_front_new,
+   image2 = R.drawable.house_back_new,
+   bottomText = R.string.twoHalfA4_layout,
+   unselectedFilePath = R.drawable.house1,
+   selectedFilePath = R.drawable.house2,
+   documentLayout = DocumentLayout.TWO_SIDE_HALF_A4,
+   widthFactor = 0.375f,
+   aspectRatio = (297.0 / 210.0).toFloat(),
+  ),
+  LayoutItemButtonData(
+   explanation = R.string.oneHalfA4_explanation,
+   example = R.string.oneHalfA4_example,
+   image1 = R.drawable.bookbank_new,
+   image2 = null,
+   bottomText = R.string.oneHalfA4_layout,
+   unselectedFilePath = R.drawable.bookbank1,
+   selectedFilePath = R.drawable.bookbank2,
+   documentLayout = DocumentLayout.ONE_SIDE_HALF_A4,
+   widthFactor = 0.375f,
+   aspectRatio = (1.0 / 1.0).toFloat(),
+  ),
+  LayoutItemButtonData(
+   explanation = R.string.fullA4_explanation,
+   example = R.string.fullA4_example,
+   image1 = R.drawable.transcript_new,
+   image2 = null,
+   bottomText = R.string.fullA4_layout,
+   unselectedFilePath = R.drawable.doc1,
+   selectedFilePath = R.drawable.doc2,
+   documentLayout = DocumentLayout.FULL_A4,
+   widthFactor = 0.5f,
+   aspectRatio = (210.0 / 297.0).toFloat(),
+  ),
+ )
 
 @Composable
 fun SelectLayoutScreen(
-    navController: NavController,
-    layoutIndex: MutableIntState,
-    placeholderFilePath0: MutableState<Uri?>,
-    placeholderFilePath1: MutableState<Uri?>,
-    placeholderFilePath2: MutableState<Uri?>,
-    savedLayoutHistory: MutableState<Boolean>,
+ navController: NavController,
+ layoutIndex: MutableIntState,
+ placeholderFilePath0: MutableState<Uri?>,
+ placeholderFilePath1: MutableState<Uri?>,
+ placeholderFilePath2: MutableState<Uri?>,
+ savedLayoutHistory: MutableState<Boolean>,
 ) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp
@@ -170,16 +170,12 @@ fun SelectLayoutScreen(
     LaunchedEffect(hideInstruction) { if (!hideInstruction) showInstructionDialog = true }
     if (showInstructionDialog) {
         Dialog(
-            onDismissRequest = {},
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false, usePlatformDefaultWidth = false, decorFitsSystemWindows = false),
+         onDismissRequest = {},
+         properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false, usePlatformDefaultWidth = false, decorFitsSystemWindows = false),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .hazeEffect(state = hazeState)
-                    .background(Color.Black.copy(alpha = 0.5f))
-                    .padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
+             modifier = Modifier.fillMaxSize().hazeEffect(state = hazeState).background(Color.Black.copy(alpha = 0.5f)).padding(horizontal = 16.dp),
+             horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(modifier = Modifier.height(48.dp))
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
@@ -193,14 +189,14 @@ fun SelectLayoutScreen(
                 Image(painter = painterResource(id = R.drawable.vector_24), contentDescription = null, modifier = Modifier.height(72.dp))
                 Spacer(modifier = Modifier.weight(2f))
                 TextButton(
-                    onClick = {
-                        scope.launch { repository.updateHideInstruction(true) }
-                        showInstructionDialog = false
-                    }
+                 onClick = {
+                     scope.launch { repository.updateHideInstruction(true) }
+                     showInstructionDialog = false
+                 }
                 ) {
                     Text(
-                        text = stringResource(R.string.do_not_show),
-                        style = TextStyle(color = white, fontSize = 24.sp, textDecoration = TextDecoration.Underline, fontFamily = FCIconic, fontWeight = FontWeight.W400),
+                     text = stringResource(R.string.do_not_show),
+                     style = TextStyle(color = white, fontSize = 24.sp, textDecoration = TextDecoration.Underline, fontFamily = FCIconic, fontWeight = FontWeight.W400),
                     )
                 }
                 Spacer(modifier = Modifier.height(56.dp))
@@ -208,72 +204,57 @@ fun SelectLayoutScreen(
         }
     }
     Scaffold(
-        modifier = Modifier.hazeSource(state = hazeState),
-        topBar = { AppBarOptBack(containerColor = white, text = stringResource(R.string.select_document_format), onClick = { navController.popBackStack() }) },
-        bottomBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center) {
-                GradientButton(
-                    onClick = {
-                        placeholderFilePath0.value = null
-                        placeholderFilePath1.value = null
-                        placeholderFilePath2.value = null
-                        savedLayoutHistory.value = false
-                        navController.navigate(route = Screen.DocumentPlaceholderScreen.route)
-                    },
-                    text = stringResource(R.string.next),
-                )
-            }
-        },
-        backgroundColor = white,
+     modifier = Modifier.hazeSource(state = hazeState),
+     topBar = { AppBarOptBack(containerColor = white, text = stringResource(R.string.select_document_format), onClick = { navController.popBackStack() }) },
+     bottomBar = {
+         Box(modifier = Modifier.fillMaxWidth().padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 48.dp), contentAlignment = Alignment.Center) {
+             GradientButton(
+              onClick = {
+                  placeholderFilePath0.value = null
+                  placeholderFilePath1.value = null
+                  placeholderFilePath2.value = null
+                  savedLayoutHistory.value = false
+                  navController.navigate(route = Screen.DocumentPlaceholderScreen.route)
+              },
+              text = stringResource(R.string.next),
+             )
+         }
+     },
+     backgroundColor = white,
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-            .padding(horizontal = 16.dp)) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp)) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(cornerRadius))
-                    .border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius))
-                    .background(whiteBG)
+             modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(cornerRadius)).border(width = 1.dp, color = secondaryGray, shape = RoundedCornerShape(cornerRadius)).background(whiteBG)
             ) {
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(24.dp))
                     Box(
-                        modifier = Modifier
-                            .padding(horizontal = (screenWidthDp * 0.15).dp)
-                            .aspectRatio((210.0 / 297.0).toFloat())
-                            .background(white)
-                            .border(width = 1.dp, color = secondaryGray),
-                        contentAlignment = Alignment.Center,
+                     modifier = Modifier.padding(horizontal = (screenWidthDp * 0.15).dp).aspectRatio((210.0 / 297.0).toFloat()).background(white).border(width = 1.dp, color = secondaryGray),
+                     contentAlignment = Alignment.Center,
                     ) {
                         Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
-                                painter = painterResource(id = layoutItems[layoutIndex.intValue].image1),
-                                contentDescription = null,
-                                modifier = Modifier.width((screenWidthDp * layoutItems[layoutIndex.intValue].widthFactor).dp),
+                             painter = painterResource(id = layoutItems[layoutIndex.intValue].image1),
+                             contentDescription = null,
+                             modifier = Modifier.width((screenWidthDp * layoutItems[layoutIndex.intValue].widthFactor).dp),
                             )
                             if (layoutItems[layoutIndex.intValue].image2 != null) {
                                 Spacer(modifier = Modifier.height(32.dp))
                                 Image(
-                                    painter = painterResource(id = layoutItems[layoutIndex.intValue].image2!!),
-                                    contentDescription = null,
-                                    modifier = Modifier.width((screenWidthDp * layoutItems[layoutIndex.intValue].widthFactor).dp),
+                                 painter = painterResource(id = layoutItems[layoutIndex.intValue].image2!!),
+                                 contentDescription = null,
+                                 modifier = Modifier.width((screenWidthDp * layoutItems[layoutIndex.intValue].widthFactor).dp),
                                 )
                             }
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = stringResource(layoutItems[layoutIndex.intValue].explanation),
-                        color = primaryBlack,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.W700,
-                        textAlign = TextAlign.Center,
+                     text = stringResource(layoutItems[layoutIndex.intValue].explanation),
+                     color = primaryBlack,
+                     fontSize = 18.sp,
+                     fontWeight = FontWeight.W700,
+                     textAlign = TextAlign.Center,
                     )
                     Text(text = stringResource(layoutItems[layoutIndex.intValue].example), color = primaryBlack, fontSize = 16.sp, fontWeight = FontWeight.W400, textAlign = TextAlign.Center)
                     Spacer(modifier = Modifier.height(16.dp))
@@ -293,19 +274,16 @@ fun SelectLayoutScreen(
 
 @Composable
 fun LayoutItemButton(layoutItem: LayoutItemButtonData, isSelected: Boolean, onClick: () -> Unit) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-        .width(120.dp)
-        .clickable(onClick = onClick)
-        .padding(horizontal = 8.dp)) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(120.dp).clickable(onClick = onClick).padding(horizontal = 8.dp)) {
         Spacer(modifier = Modifier.height(16.dp))
         Image(painter = painterResource(id = if (isSelected) layoutItem.selectedFilePath else layoutItem.unselectedFilePath), contentDescription = null, modifier = Modifier.height(80.dp))
         Spacer(modifier = Modifier.height(8.dp))
         Box(contentAlignment = Alignment.Center, modifier = Modifier.height(32.dp)) {
             BasicText(
-                text = stringResource(layoutItem.bottomText),
-                maxLines = 1,
-                style = TextStyle(fontFamily = FCIconic, color = primaryBlack, fontSize = 16.sp, fontWeight = if (isSelected) FontWeight.W700 else FontWeight.W400),
-                autoSize = TextAutoSize.StepBased(maxFontSize = 16.sp),
+             text = stringResource(layoutItem.bottomText),
+             maxLines = 1,
+             style = TextStyle(fontFamily = FCIconic, color = primaryBlack, fontSize = 16.sp, fontWeight = if (isSelected) FontWeight.W700 else FontWeight.W400),
+             autoSize = TextAutoSize.StepBased(maxFontSize = 16.sp),
             )
         }
         Spacer(modifier = Modifier.height(8.dp))

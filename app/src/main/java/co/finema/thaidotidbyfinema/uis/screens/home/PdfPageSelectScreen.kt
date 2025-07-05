@@ -83,13 +83,13 @@ fun PdfPageSelectScreen(navController: NavController, imageUri: MutableState<Uri
         pdfUrl.value?.let { uri ->
             isLoading = true
             imageBitmap =
-                withContext(Dispatchers.IO) {
-                    val file = context.getFileFromContentUri(uri)
-                    file?.let {
-                        totalPages = getPdfPageCount(it)
-                        renderPdfPage(it, pageIndex)?.asImageBitmap()
-                    }
-                }
+             withContext(Dispatchers.IO) {
+                 val file = context.getFileFromContentUri(uri)
+                 file?.let {
+                     totalPages = getPdfPageCount(it)
+                     renderPdfPage(it, pageIndex)?.asImageBitmap()
+                 }
+             }
             isLoading = false
         }
     }
@@ -98,102 +98,96 @@ fun PdfPageSelectScreen(navController: NavController, imageUri: MutableState<Uri
         ErrorDialog(text = stringResource(R.string.wrong), onClick = { showErrorsDialog = false })
     }
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = stringResource(R.string.select_one_page), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            imageUri.value = null
-                            pdfUrl.value = null
-                            navController.popBackStack()
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { expanded = !expanded }) { Icon(imageVector = Icons.Rounded.FormatListNumberedRtl, contentDescription = null) }
-                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                        for (page in 1..totalPages) {
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        text = page.toString(),
-                                        color = primaryBlack,
-                                        fontSize = 24.sp,
-                                        fontWeight = if (currentPageIndex.value == page - 1) FontWeight.W700 else FontWeight.W400,
-                                        textAlign = TextAlign.Center,
-                                    )
-                                },
-                                onClick = { pageIndex = page - 1 },
-                            )
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
-            )
-        },
-        bottomBar = {
-            Box(modifier = Modifier
-                .background(white)
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 24.dp), contentAlignment = Alignment.Center) {
-                GradientButton(
-                    onClick = {
-                        imageBitmap?.let { imageBitmap ->
-                            val bitmap = imageBitmap.asAndroidBitmap()
-                            val newBitmap = createBitmap(bitmap.width, bitmap.height)
-                            val canvas = android.graphics.Canvas(newBitmap)
-                            canvas.drawColor(android.graphics.Color.WHITE)
-                            canvas.drawBitmap(bitmap, 0f, 0f, null)
-                            val photoFile = getFileInstance(context)
-                            if (saveImageBitmapAsJpeg(newBitmap.asImageBitmap(), photoFile)) {
-                                imageUri.value = photoFile.toUri()
-                                navController.navigate(route = Screen.CropImageScreen.route)
-                            } else {
-                                showErrorsDialog = true
-                            }
-                        }
-                    },
-                    text = stringResource(R.string.next),
-                )
-            }
-        },
-        containerColor = whiteBG,
+     topBar = {
+         CenterAlignedTopAppBar(
+          title = { Text(text = stringResource(R.string.select_one_page), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
+          navigationIcon = {
+              IconButton(
+               onClick = {
+                   imageUri.value = null
+                   pdfUrl.value = null
+                   navController.popBackStack()
+               }
+              ) {
+                  Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null)
+              }
+          },
+          actions = {
+              IconButton(onClick = { expanded = !expanded }) { Icon(imageVector = Icons.Rounded.FormatListNumberedRtl, contentDescription = null) }
+              DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                  for (page in 1..totalPages) {
+                      DropdownMenuItem(
+                       text = {
+                           Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = page.toString(),
+                            color = primaryBlack,
+                            fontSize = 24.sp,
+                            fontWeight = if (currentPageIndex.value == page - 1) FontWeight.W700 else FontWeight.W400,
+                            textAlign = TextAlign.Center,
+                           )
+                       },
+                       onClick = { pageIndex = page - 1 },
+                      )
+                  }
+              }
+          },
+          colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
+         )
+     },
+     bottomBar = {
+         Box(modifier = Modifier.background(white).fillMaxWidth().padding(horizontal = 16.dp, vertical = 24.dp), contentAlignment = Alignment.Center) {
+             GradientButton(
+              onClick = {
+                  imageBitmap?.let { imageBitmap ->
+                      val bitmap = imageBitmap.asAndroidBitmap()
+                      val newBitmap = createBitmap(bitmap.width, bitmap.height)
+                      val canvas = android.graphics.Canvas(newBitmap)
+                      canvas.drawColor(android.graphics.Color.WHITE)
+                      canvas.drawBitmap(bitmap, 0f, 0f, null)
+                      val photoFile = getFileInstance(context)
+                      if (saveImageBitmapAsJpeg(newBitmap.asImageBitmap(), photoFile)) {
+                          imageUri.value = photoFile.toUri()
+                          navController.navigate(route = Screen.CropImageScreen.route)
+                      } else {
+                          showErrorsDialog = true
+                      }
+                  }
+              },
+              text = stringResource(R.string.next),
+             )
+         }
+     },
+     containerColor = whiteBG,
     ) { padding ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(padding), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
             when {
                 isLoading -> CircularProgressIndicator()
                 imageBitmap != null -> {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .pointerInput(totalPages, currentPageIndex.value) {
-                                awaitPointerEventScope {
-                                    while (true) {
-                                        val down = awaitPointerEvent().changes.firstOrNull() ?: continue
-                                        if (down.pressed) {
-                                            val drag = awaitHorizontalDragOrCancellation(down.id)
-                                            drag?.let {
-                                                val dragThreshold = 100
-                                                when {
-                                                    it.positionChange().x > dragThreshold && currentPageIndex.value > 0 -> {
-                                                        pageIndex--
-                                                    }
-                                                    it.positionChange().x < -dragThreshold && currentPageIndex.value < totalPages - 1 -> {
-                                                        pageIndex++
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                        contentAlignment = Alignment.Center,
+                     modifier =
+                      Modifier.fillMaxSize().pointerInput(totalPages, currentPageIndex.value) {
+                          awaitPointerEventScope {
+                              while (true) {
+                                  val down = awaitPointerEvent().changes.firstOrNull() ?: continue
+                                  if (down.pressed) {
+                                      val drag = awaitHorizontalDragOrCancellation(down.id)
+                                      drag?.let {
+                                          val dragThreshold = 100
+                                          when {
+                                              it.positionChange().x > dragThreshold && currentPageIndex.value > 0 -> {
+                                                  pageIndex--
+                                              }
+                                              it.positionChange().x < -dragThreshold && currentPageIndex.value < totalPages - 1 -> {
+                                                  pageIndex++
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      },
+                     contentAlignment = Alignment.Center,
                     ) {
                         Image(bitmap = imageBitmap!!, contentDescription = null, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Fit)
                     }

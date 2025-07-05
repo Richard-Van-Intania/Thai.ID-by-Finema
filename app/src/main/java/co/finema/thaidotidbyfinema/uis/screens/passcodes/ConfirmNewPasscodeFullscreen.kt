@@ -56,24 +56,20 @@ fun ConfirmNewPasscodeFullscreen(navController: NavController, tapPasscode: Stri
         FullScreenDialog(painter = painterResource(R.drawable.create_sucess), height = 160.dp, text = stringResource(R.string.create_new_pin_sucess))
     }
     Scaffold(
-        bottomBar = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 48.dp), contentAlignment = Alignment.Center) {
-                TextButton(
-                    onClick = {
-                        navController.popBackStack()
-                        navController.popBackStack()
-                    }
-                ) {
-                    Text(text = stringResource(R.string.cancel), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700)
-                }
-            }
-        }
+     bottomBar = {
+         Box(modifier = Modifier.fillMaxWidth().padding(all = 48.dp), contentAlignment = Alignment.Center) {
+             TextButton(
+              onClick = {
+                  navController.popBackStack()
+                  navController.popBackStack()
+              }
+             ) {
+                 Text(text = stringResource(R.string.cancel), color = primaryDarkBlue, fontSize = 20.sp, fontWeight = FontWeight.W700)
+             }
+         }
+     }
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize().padding(it), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             val context = LocalContext.current
             val repository = remember { UserConfigRepository(context) }
             val scope = rememberCoroutineScope()
@@ -100,11 +96,9 @@ fun ConfirmNewPasscodeFullscreen(navController: NavController, tapPasscode: Stri
             Text(text = stringResource(R.string.set_up_pin_confirm), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700)
             Spacer(modifier = Modifier.height(48.dp))
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .offset { IntOffset(shakeController.offset.value.roundToInt(), 0) },
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
+             modifier = Modifier.fillMaxWidth().offset { IntOffset(shakeController.offset.value.roundToInt(), 0) },
+             horizontalArrangement = Arrangement.Center,
+             verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (confirmPasscode.isEmpty()) OutlinedDot() else FilledDot()
                 Spacer(modifier = Modifier.width(24.dp))

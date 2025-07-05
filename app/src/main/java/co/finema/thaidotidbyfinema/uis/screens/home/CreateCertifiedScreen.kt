@@ -50,10 +50,13 @@ import coil.compose.rememberAsyncImagePainter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateCertifiedScreen(
-    navController: NavController,
-    layoutIndex: MutableIntState,
-    placeholderFilePath0: MutableState<Uri?>,
-    placeholderFilePath1: MutableState<Uri?>, placeholderFilePath2: MutableState<Uri?>, signatureImageViewModel: SignatureImageViewModel, currentSignatureImageId: MutableIntState
+ navController: NavController,
+ layoutIndex: MutableIntState,
+ placeholderFilePath0: MutableState<Uri?>,
+ placeholderFilePath1: MutableState<Uri?>,
+ placeholderFilePath2: MutableState<Uri?>,
+ signatureImageViewModel: SignatureImageViewModel,
+ currentSignatureImageId: MutableIntState,
 ) {
     val signatureImage by signatureImageViewModel.signatureImage.collectAsState()
     var signatureUri by remember { mutableStateOf<Uri?>(null) }
@@ -67,46 +70,31 @@ fun CreateCertifiedScreen(
         }
     }
     Scaffold(
-        topBar = {
-        CenterAlignedTopAppBar(
-            title = {
-                Text(
-                    text = stringResource(R.string.make_document), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700
-                    )
-            },
-            navigationIcon = { IconButton(onClick = { navController.popBackStack() }) { Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null) } },
-            actions = {
-                IconButton(onClick = {
-                    //
-                }) {
-                    Icon(imageVector = Icons.Rounded.IosShare, contentDescription = null, tint = primaryBlack)
-                }
-            },
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
-                              )
-    }, backgroundColor = whiteBG) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally
+     topBar = {
+         CenterAlignedTopAppBar(
+          title = { Text(text = stringResource(R.string.make_document), color = primaryBlack, fontSize = 24.sp, fontWeight = FontWeight.W700) },
+          navigationIcon = { IconButton(onClick = { navController.popBackStack() }) { Icon(imageVector = Icons.Rounded.ArrowBackIosNew, contentDescription = null) } },
+          actions = {
+              IconButton(
+               onClick = {
+                   //
+               }
               ) {
-            Text("SignatureListScreen", modifier = Modifier.clickable(onClick = {
-                navController.navigate(route = Screen.SignatureListScreen.route)
-            }))
+                  Icon(imageVector = Icons.Rounded.IosShare, contentDescription = null, tint = primaryBlack)
+              }
+          },
+          colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = white, navigationIconContentColor = primaryBlack, actionIconContentColor = primaryBlack),
+         )
+     },
+     backgroundColor = whiteBG,
+    ) {
+        Column(modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("SignatureListScreen", modifier = Modifier.clickable(onClick = { navController.navigate(route = Screen.SignatureListScreen.route) }))
             Spacer(modifier = Modifier.height(40.dp))
-            Text("SignPadScreen", modifier = Modifier.clickable(onClick = {
-                navController.navigate(route = Screen.SignPadScreen.route)
-            }))
+            Text("SignPadScreen", modifier = Modifier.clickable(onClick = { navController.navigate(route = Screen.SignPadScreen.route) }))
             Spacer(modifier = Modifier.height(40.dp))
-            if (signatureUri != null) Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = rememberAsyncImagePainter(model = signatureUri),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                 )
-
+            if (signatureUri != null)
+             Image(modifier = Modifier.fillMaxWidth(), painter = rememberAsyncImagePainter(model = signatureUri), contentDescription = null, contentScale = ContentScale.Fit)
         }
-
     }
 }

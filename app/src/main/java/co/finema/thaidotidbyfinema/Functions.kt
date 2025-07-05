@@ -34,7 +34,6 @@ fun saveImageBitmapAsJpeg(imageBitmap: ImageBitmap, file: File): Boolean {
     return success
 }
 
-
 fun saveImageBitmapAsPng(imageBitmap: ImageBitmap, file: File): Boolean {
     val androidBitmap = imageBitmap.asAndroidBitmap()
     var success = false
